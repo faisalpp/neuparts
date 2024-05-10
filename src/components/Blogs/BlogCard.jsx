@@ -1,19 +1,21 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import Link from 'next/link';
 
 const BlogCard = ({ image, title, date, readMore }) => {
-    return (
-        <div className='xl:p-6 2xl:p-[30px] grid grid-cols-1 gap-5'>
-            <img src={image ? image : '/no-image.jfif'} alt="" className='w-full h-48 lg:h-52 xl:h-[238px]' />
-            <div className='flex flex-col gap-[10px]'>
-                <span className='text-xs text-b24 font-semibold uppercase'>{date}</span>
-                <h3 className='font-bold lg:text-lg xl:text-xl'>{title}</h3>
-            </div>
-            <div>
-                <Link to={`/blog/${readMore}`} className='px-5 py-[10px] rounded border border-b3  text-b3 font-bold hover:bg-b3 hover:text-white duration-300 text-xs'>Read More</Link>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="grid grid-cols-1 gap-5 xl:p-6 2xl:p-[30px]">
+      <img src={image ? image : '/no-image.jfif'} alt="" className="h-48 w-full lg:h-52 xl:h-[238px]" />
+      <div className="flex flex-col gap-[10px]">
+        <span className="text-xs font-semibold uppercase text-b24">{date}</span>
+        <h3 className="font-bold lg:text-lg xl:text-xl">{title}</h3>
+      </div>
+      <div>
+        <Link href={`/blog/${readMore}`} className="rounded border border-b3 px-5 py-[10px]  text-xs font-bold text-b3 duration-300 hover:bg-b3 hover:text-white">
+          Read More
+        </Link>
+      </div>
+    </div>
+  );
+};
 
-export default BlogCard
+export default BlogCard;

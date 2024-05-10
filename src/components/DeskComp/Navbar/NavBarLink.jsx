@@ -1,14 +1,17 @@
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { Menu } from '@headlessui/react'
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu } from '@headlessui/react';
 
 const NavBarLink = ({ name, url, bold }) => {
-
-  const location = useLocation()
+  const location = useLocation();
 
   return (
-    <Menu.Item as="div" className="px-2" ><Link to={url} className={`flex w-full px-2 first:mt-0 mt-1 cursor-pointer text-xs text-reg py-2   hover:bg-b5 ${location.pathname.includes(url)  ?'bg-b5/50 rounded-md':null} font-normal`} >{name}</Link></Menu.Item>
-  )
-}
+    <Menu.Item as="div" className="px-2">
+      <Link href={url} className={`text-reg mt-1 flex w-full cursor-pointer px-2 py-2 text-xs first:mt-0   hover:bg-b5 ${location.pathname.includes(url) ? 'rounded-md bg-b5/50' : null} font-normal`}>
+        {name}
+      </Link>
+    </Menu.Item>
+  );
+};
 
-export default NavBarLink
+export default NavBarLink;
