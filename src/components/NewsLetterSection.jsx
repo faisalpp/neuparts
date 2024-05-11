@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import InputCheckbox from './InputCheckbox'
 import Link from 'next/link'
 import Image from 'next/image'
-// import {subscribeNewLetter} from '../api/frontEnd'
-// import Toast from '../utils/Toast'
 
 const NewsLetterSection = ({ backimage }) => {
 

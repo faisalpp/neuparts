@@ -1,14 +1,14 @@
-import React from 'react'
-import { AiOutlineArrowLeft } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import Link from 'next/link';
 
 const BackHome = ({ className }) => {
-    return (
-        <Link to="/" className={'flex gap-2 font-semibold text-sm items-center text-b3 ' + className}>
-            <AiOutlineArrowLeft />
-            <span>Back to Home</span>
-        </Link>
-    )
-}
+  return (
+    <Link href="/" className={'flex items-center gap-2 text-sm font-semibold text-b3 ' + className}>
+      <AiOutlineArrowLeft />
+      <span>Back to Home</span>
+    </Link>
+  );
+};
 
-export default BackHome
+export default BackHome;

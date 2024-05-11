@@ -1,38 +1,44 @@
-import React from 'react'
-import DropDown from './DropDown/DropDown'
-import { Link } from 'react-router-dom';
+import React from 'react';
+import DropDown from './DropDown/DropDown';
+import Link from 'next/link';
 
 const ProductSection = ({ productstype, onClose, isFilter }) => {
-    const handleFilterClick = (event) => {
-        event.stopPropagation();
-    };
-    const modalClass = isFilter ? 'maxlg:flex top-0 maxlg:bottom-0' : 'maxlg:-bottom-[420px] maxlg:opacity-0 maxlg:pointer-events-none';
+  const handleFilterClick = (event) => {
+    event.stopPropagation();
+  };
+  const modalClass = isFilter ? 'maxlg:flex top-0 maxlg:bottom-0' : 'maxlg:-bottom-[420px] maxlg:opacity-0 maxlg:pointer-events-none';
 
-    const CosRatingMenu = ({ menu,k }) => (
-        <ul className='flex flex-col gap-3'>
-             {k ? menu[k].map((item, index) => (
-                <li key={index} >
-                     <Link to={item.link} className='text-sm text-b22'>{item.name}</Link>
-                </li>
-            )):null}
-        </ul>
-    );
-    return (
-        <div className={`maxlg:fixed maxlg:left-0 maxlg:right-0 maxlg:z-50 lg:sticky lg:top-10 maxlg:bg-black/20 items-end lg:h-full duration-300 lg:w-[320px] ${modalClass}`} onClick={onClose}>
-            <div className='[&>div]:maxlg:px-10 maxlg:max-h-[398px] maxlg:pb-10 maxlg:rounded-tl-2xl maxlg:rounded-tr-2xl maxlg:bg-white maxlg:overflow-y-auto lg:h-auto border border-gray-300 rounded-2xl lg:px-6 lg:pb-6 lg:pt-2 w-full' onClick={handleFilterClick}>
-                <div className='lg:hidden maxlg:sticky top-0 flex maxlg:py-4 justify-end lg:pb-4 items-center border-b maxlg:bg-white z-50 maxlg:shadow-md'>
-                    <button onClick={onClose} className='text-sm font-semibold lg:hidden px-2 py-1 hover:bg-black/5 rounded duration-300'>
-                        Close
-                    </button>
-                </div>
-                {productstype ? productstype.map((product, index) => (
-                    <DropDown title={Object.keys(product)} color="text-b22" key={index}>
-                        <CosRatingMenu menu={product} k={Object.keys(product)} />
-                    </DropDown>
-                )):null}
-            </div>
+  const CosRatingMenu = ({ menu, k }) => (
+    <ul className="flex flex-col gap-3">
+      {k
+        ? menu[k].map((item, index) => (
+            <li key={index}>
+              <Link href={item.link} className="text-sm text-b22">
+                {item.name}
+              </Link>
+            </li>
+          ))
+        : null}
+    </ul>
+  );
+  return (
+    <div className={`items-end duration-300 lg:sticky lg:top-10 lg:h-full lg:w-[320px] maxlg:fixed maxlg:left-0 maxlg:right-0 maxlg:z-50 maxlg:bg-black/20 ${modalClass}`} onClick={onClose}>
+      <div className="w-full rounded-2xl border border-gray-300 lg:h-auto lg:px-6 lg:pb-6 lg:pt-2 maxlg:max-h-[398px] maxlg:overflow-y-auto maxlg:rounded-tl-2xl maxlg:rounded-tr-2xl maxlg:bg-white maxlg:pb-10 [&>div]:maxlg:px-10" onClick={handleFilterClick}>
+        <div className="top-0 z-50 flex items-center justify-end border-b lg:hidden lg:pb-4 maxlg:sticky maxlg:bg-white maxlg:py-4 maxlg:shadow-md">
+          <button onClick={onClose} className="rounded px-2 py-1 text-sm font-semibold duration-300 hover:bg-black/5 lg:hidden">
+            Close
+          </button>
         </div>
-    )
-}
+        {productstype
+          ? productstype.map((product, index) => (
+              <DropDown title={Object.keys(product)} color="text-b22" key={index}>
+                <CosRatingMenu menu={product} k={Object.keys(product)} />
+              </DropDown>
+            ))
+          : null}
+      </div>
+    </div>
+  );
+};
 
-export default ProductSection
+export default ProductSection;

@@ -1,9 +1,9 @@
-'use client'
-import React from 'react'
-import { MdKeyboardDoubleArrowUp } from 'react-icons/md'
+'use client';
+
+import React from 'react';
+import { MdKeyboardDoubleArrowUp } from 'react-icons/md';
 
 const ScrollToTop = () => {
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -12,11 +12,11 @@ const ScrollToTop = () => {
   };
 
   return (
-    <div onClick={() => scrollToTop()} className='fixed z-50 bottom-10 right-5 flex flex-col cursor-pointer rounded-md text-black items-center justify-center bg-b4 w-10 2xl:w-20 xl:w-20 lg:w-20 py-2' >
-      <MdKeyboardDoubleArrowUp className='text-xl' />
-      <h6 className='hidden 2xl:flex xl:flex lg:flex text-xs font-semibold px-1 text-center' >Back To Top</h6>
+    <div onClick={() => scrollToTop()} className="fixed bottom-10 right-5 z-50 flex w-10 cursor-pointer flex-col items-center justify-center rounded-md bg-b4 py-2 text-black lg:w-20 xl:w-20 2xl:w-20">
+      <MdKeyboardDoubleArrowUp className="text-xl" />
+      <h6 className="hidden px-1 text-center text-xs font-semibold lg:flex xl:flex 2xl:flex">Back To Top</h6>
     </div>
-  )
-}
+  );
+};
 
-export default ScrollToTop
+export default ScrollToTop;
