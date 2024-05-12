@@ -1,5 +1,5 @@
 'use client';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { Transition } from '@headlessui/react';
 
@@ -16,7 +16,7 @@ const DropDown = ({ title, children }) => {
           <div className="flex w-full items-center justify-end">{isShowing ? <RiArrowDropUpLine className="text-2xl" /> : <RiArrowDropDownLine className="text-2xl" />}</div>
         </div>
         {/* Body */}
-        <Transition as={Fragment} show={isShowing} className="mt-3 flex h-auto cursor-pointer flex-col gap-2">
+        <Transition as="div" show={isShowing} className="mt-3 flex h-auto cursor-pointer flex-col gap-2">
           {children}
         </Transition>
       </div>

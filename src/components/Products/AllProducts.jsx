@@ -88,7 +88,7 @@ const AllProducts = () => {
     setParams({ isSale: true, salePrice: { $gte: 200, $lte: 8000 }, sort: 1, ...queryParamsObject });
   };
 
-  const [filterLoading, setFilterLoading] = useState(true);
+  const [filterLoading, setFilterLoading] = useState(false);
   const [initLoad, setInitLoad] = useState(true);
 
   const getAppliancesBySection = async () => {};

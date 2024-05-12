@@ -1,8 +1,9 @@
 import React from 'react'
 import { AiFillStar, AiOutlineQuestionCircle } from 'react-icons/ai';
-import StackableSvg from '../svgs/StackableSvg';
-import SteamSvg from '../svgs/SteamSvg';
-import GasSvg from '../svgs/GasSvg';
+import StackableSvg from '@/components/svgs/StackableSvg';
+import SteamSvg from '@/components/svgs/SteamSvg';
+import GasSvg from '@/components/svgs/GasSvg';
+import Image from 'next/image';
 
 
 const WasherCard = () => {
@@ -11,7 +12,7 @@ const WasherCard = () => {
       <div className='flex flex-col items-center w-full lg:w-[380px] xl:w-[450px]' >
         <h4 className='text-xl font-semibold' >Washer</h4>
         <div className='flex flex-col items-center py-10 bg-white border-[1px] border-b3 rounded-xl w-full' >
-          <img src='/p1.webp' className='w-52' alt='' />
+          <Image width={400} height={400} quality={100} src='/p1.webp' className='w-52 h-auto' alt='p1' />
           <div className='flex flex-col space-y-5 px-10 w-full mt-5' >
             <p className='text-sm font-semibold' >White GE 1.7 cu. ft. Over the Range Microwave with Convenience Cooking Controls for long text</p>
             <div className='flex items-center space-x-5' ><h4 className='font-bold lg:text-xl text-xl text-b3 ' >$279.00</h4><strike className="text-sm text-black/60" >$279.00</strike><span className='flex bg-b4 lg:text-[10px] text-[10px] text-black px-4 py-1 font-semibold rounded-full' >-27%</span></div>

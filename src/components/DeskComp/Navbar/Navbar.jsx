@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from 'react';
 import { AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi';
@@ -6,62 +7,26 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import { FiPhone } from 'react-icons/fi';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
 import NavDropDown from '../Navbar/NavDropDown';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { resetUser } from '../../../store/userSlice';
-import { resetAdmin } from '../../../store/adminSlice';
 import { Menu } from '@headlessui/react';
-import { AdminSignout } from '../../../api/admin/auth';
-import { Signout } from '../../../api/user/auth';
-import { showSCart, hideSCart } from '../../../store/cartSlice';
-import { getNabarAppliances, searchAppliance } from '../../../api/frontEnd';
-import Toast from '../../../utils/Toast';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const Navbar = () => {
   const [megMenu, setMegMenu] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const isUser = useSelector((state) => state.user.auth);
-  const isAdmin = useSelector((state) => state.admin.auth);
-  const UserfirstName = useSelector((state) => state.user.firstName);
-  const AdminfirstName = useSelector((state) => state.admin.firstName);
+  const isUser = '';
+  const isAdmin = '';
+  const UserfirstName = '';
+  const AdminfirstName = '';
 
-  const cartCount = useSelector((state) => state?.cart?.cart?.cartCount) || 0;
-  const sCart = useSelector((state) => state.cart.sCart);
+  const cartCount = 0;
+  const sCart = '';
 
   const handleAdminLogout = async (e) => {
     e.preventDefault();
-
-    const res = await AdminSignout();
-    if (res.status === 200) {
-      Toast(res.data.msg, 'success', 1000);
-      dispatch(resetAdmin());
-      navigate('/');
-    } else if (res.code === 'ERR_BAD_REQUEST') {
-      dispatch(resetAdmin());
-      Toast('Session Expired!', 'error', 1000);
-      navigate('/');
-    } else {
-      Toast(res.data.message, 'error', 1000);
-    }
   };
 
   const handleLogout = async (e) => {
     e.preventDefault();
-
-    const res = await Signout();
-    if (res.status === 200) {
-      Toast(res.data.msg, 'success', 1000);
-      dispatch(resetUser());
-      navigate('/login');
-    } else if (res.code === 'ERR_BAD_REQUEST') {
-      dispatch(resetUser());
-      Toast('Session Expired!', 'error', 1000);
-      navigate('/login');
-    } else {
-      Toast(res.data.message, 'error', 1000);
-    }
   };
 
   const [applianceTypes, setApplianceTypes] = useState([]);
@@ -69,17 +34,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const getAppliances = async () => {
-      const res = await getNabarAppliances();
-      if (res.status === 200) {
-        let data = [];
-        if (res.data.categories.length > 0) {
-          const filt = await res.data.categories.map((item) => data.push({ name: item.title, url: '/appliances/' + item.slug }));
-          setApplianceTypes([...data, { name: 'View All Categories', url: '/applianceTypes' }]);
-        }
-        setLoading(false);
-      } else {
-        setApplianceTypes([]);
-      }
     };
     getAppliances();
   }, []);
@@ -88,7 +42,6 @@ const Navbar = () => {
 
   const handleEnterKey = async (e) => {
     if (e.key === 'Enter') {
-      navigate(`/appliances/?query=${search}`);
     }
   };
 
@@ -97,9 +50,9 @@ const Navbar = () => {
       <div className="relative bg-b1">
         {/* Navbar Start */}
         <div className="maincontainer grid-cols-12 items-center py-5 lg:grid">
-          <NavLink to="/">
-            <img className="col-start-1 col-end-3" src="/neu.webp" alt="logo" />
-          </NavLink>
+          <Link href="/">
+            <Image width={200} height={200} quality={100} className="col-start-1 w-full h-auto col-end-3" src="/neu.webp" alt="logo" />
+          </Link>
           {/* Search Start */}
           <div className="col-start-4 col-end-8 flex h-10 w-full items-center space-x-2 rounded-lg bg-white px-2 ">
             <AiOutlineSearch className="text-black" />
@@ -110,7 +63,7 @@ const Navbar = () => {
           <div className="col-start-9 col-end-13 flex w-full justify-end space-x-2">
             <div
               onClick={() => {
-                sCart ? dispatch(hideSCart()) : dispatch(showSCart());
+                sCart ? '' : '';
               }}
               className="flex h-10 w-max cursor-pointer items-center rounded-md bg-b2 px-4 text-white"
             >
@@ -129,19 +82,19 @@ const Navbar = () => {
                 {/* Mark this component as `static` */}
                 <Menu.Items as="div" className="absolute -right-24 top-12 z-[100] h-auto w-56 rounded-sm bg-white py-5 text-black shadow-lg">
                   <Menu.Item as="div" className="px-4">
-                    <NavLink to="/admin/dashboard" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
+                    <Link href="/admin/dashboard" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
                       Dashboard
-                    </NavLink>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item as="div" className="px-4">
-                    <NavLink to="" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
+                    <Link href="" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
                       Orders
-                    </NavLink>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item as="div" className="px-4">
-                    <NavLink to="" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
+                    <Link href="" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
                       Change Password
-                    </NavLink>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item as="div" className="px-4">
                     <div onClick={handleAdminLogout} className="top__menu_item">
@@ -161,19 +114,19 @@ const Navbar = () => {
                 {/* Mark this component as `static` */}
                 <Menu.Items as="div" className="absolute -right-24 top-12 z-[100] h-auto w-56 rounded-sm bg-white py-5 text-black shadow-lg">
                   <Menu.Item as="div" className="px-4">
-                    <NavLink to="/my-account/profile" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
+                    <Link href="/my-account/profile" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
                       My Account
-                    </NavLink>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item as="div" className="px-4">
-                    <NavLink to="/my-account/order-history" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
+                    <Link href="/my-account/order-history" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
                       Order History
-                    </NavLink>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item as="div" className="px-4">
-                    <NavLink to="/my-account/my-favourites" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
+                    <Link href="/my-account/my-favourites" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
                       Favorites
-                    </NavLink>
+                    </Link>
                   </Menu.Item>
                   <Menu.Item as="div" className="px-4">
                     <div onClick={handleLogout} className="top__menu_item">
@@ -184,15 +137,15 @@ const Navbar = () => {
               </Menu>
             ) : null}
             {isAdmin || isUser ? null : (
-              <NavLink to="/login">
+              <Link href="/login">
                 <div className="flex h-10 w-32 cursor-pointer items-center rounded-md bg-b2 px-2 text-white">
                   <BiUserCircle />
                   <span className="ml-1 text-xs font-medium">My Account</span>
                 </div>
-              </NavLink>
+              </Link>
             )}
 
-            {/* {isAuth ? <NavLink to="/my-account/profile" ><div className='flex items-center px-2 bg-b2 h-10 w-32 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></NavLink> : <NavLink to="/login" ><div className='flex items-center px-2 bg-b2 h-10 w-32 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></NavLink>} */}
+            {/* {isAuth ? <Link href="/my-account/profile" ><div className='flex items-center px-2 bg-b2 h-10 w-32 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link> : <Link href="/login" ><div className='flex items-center px-2 bg-b2 h-10 w-32 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link>} */}
             <div
               onClick={() => {
                 megMenu ? setMegMenu(false) : setMegMenu(true);
@@ -265,7 +218,7 @@ const Navbar = () => {
 
           <div className="maincontainer grid grid-cols-12 items-center">
             <div className="col-start-1 col-end-5 flex items-center space-x-4 xl:space-x-8 2xl:space-x-14">
-              {/* <NavLink to='/' ><div className='flex items-center font-reg text-xs cursor-pointer text-white/80 hover:text-b6' ><span >Home</span></div></NavLink>  */}
+              {/* <Link to='/' ><div className='flex items-center font-reg text-xs cursor-pointer text-white/80 hover:text-b6' ><span >Home</span></div></Link>  */}
               <NavDropDown
                 icon={<RiArrowDropDownLine className="text-2xl" />}
                 title="Deals"

@@ -1,6 +1,8 @@
 import React from 'react'
 import { AiFillStar, AiOutlineCheckCircle, AiOutlineArrowRight } from 'react-icons/ai'
-import { NavLink, useParams } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const ModelBuyingOptionCard = ({ image,bestValue, cosmaticcondition, rating,price,modelNo,itemId,slugg }) => {
 
@@ -12,14 +14,14 @@ const ModelBuyingOptionCard = ({ image,bestValue, cosmaticcondition, rating,pric
     return <div className='flex items-center' >{starIcons}</div>; // Render the array of star icons
   };
 
-  const {slug} = useParams()
+  const slug = useRouter().query.slug;
   const img = image?.find((item) => item.file === 'image')
   return (
     <>
       <div className={`flex flex-col items-center space-y-5 px-6 pt-12 pb-4 w-full ${slug === slugg ? 'bg-b8':null} border  border-b8`} >
         <div className='flex w-full text-white justify-center' >{bestValue}</div>
         <div className='bg-white w-full flex justify-center py-8'>
-          <img src={img?.data} className='w-52' alt='p1' />
+          <Image width={400} height={400} quality={100} src={img?.data} className='w-52 h-auto' alt='p1' />
         </div>
         <div className='flex flex-col items-center justify-center pt-8 gap-7 text-center' >
           <div className='flex items-center' >
@@ -36,7 +38,7 @@ const ModelBuyingOptionCard = ({ image,bestValue, cosmaticcondition, rating,pric
           {slug === slugg ?
             <div className='border-b7 border cursor-not-allowed text-b7 bg-white py-2 rounded-md font-semibold w-[250px]' >Selected</div>
             :
-            <NavLink to={`/product/${slugg}`} className='border-b7 border bg-b7 text-white py-2 rounded-md font-semibold w-[250px] flex gap-1 items-center justify-center' >View Appliance <AiOutlineArrowRight /></NavLink>
+            <Link href={`/product/${slugg}`} className='border-b7 border bg-b7 text-white py-2 rounded-md font-semibold w-[250px] flex gap-1 items-center justify-center' >View Appliance <AiOutlineArrowRight /></Link>
           }
         </div>
       </div>

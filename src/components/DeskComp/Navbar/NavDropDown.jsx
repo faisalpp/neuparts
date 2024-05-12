@@ -1,5 +1,5 @@
-import { Menu } from '@headlessui/react'
 import React from 'react'
+import { Menu } from '@headlessui/react'
 import NavBarLink from './NavBarLink'
 
 const NavDropDown = ({ title, links, icon, bold }) => {

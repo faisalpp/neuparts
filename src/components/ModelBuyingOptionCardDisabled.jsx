@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import React from 'react'
 import { AiFillStar, AiOutlineCheckCircle, AiOutlineArrowRight } from 'react-icons/ai'
-import { NavLink, useParams } from 'react-router-dom';
 
 const ModelBuyingOptionCard = ({ image,bestValue, cosmaticcondition, rating,price,modelNo,itemId }) => {
 
@@ -18,7 +18,7 @@ const ModelBuyingOptionCard = ({ image,bestValue, cosmaticcondition, rating,pric
         <div className='absolute bg-b31/40 w-full h-full top-0' ></div>
         <div className='flex w-full text-white justify-center' >{bestValue}</div>
         <div className='bg-white w-full flex justify-center py-8'>
-          <img src={image?.data} className='w-52' alt='p1' />
+          <Image width={400} height={400} quality={100} src={image?.data} className='w-52 h-auto' alt='p1' />
           {/* {image?.data} */}
         </div>
         <div className='flex flex-col items-center justify-center pt-8 gap-7 text-center' >

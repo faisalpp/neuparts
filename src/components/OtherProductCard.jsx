@@ -1,20 +1,20 @@
 import React from 'react';
-import { AiFillStar, AiOutlineQuestionCircle } from 'react-icons/ai';
+import { AiFillStar } from 'react-icons/ai';
 import { IoBagCheckOutline } from 'react-icons/io5';
 import ToolTip from './ToolTip';
-import { Link, useParams } from 'react-router-dom';
+import Image from 'next/image';
+import Link from 'next/link';
 
-const OtherProductCard = ({ rating, disabled, disabledImg, product }) => {
+const OtherProductCard = ({slug, rating, disabled, disabledImg, product }) => {
   const StarIconPrinter = ({ numberOfTimes }) => {
     const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
-      <AiFillStar className="text-base" /> // Render the star icon component for each iteration
+      <AiFillStar key={index} className="text-base" /> // Render the star icon component for each iteration
     ));
 
     return starIcons; // Render the array of star icons
   };
 
   const firstImg = product?.media?.find((item) => item.file === 'image');
-  const { slug } = useParams();
 
   return (
     <>
@@ -37,7 +37,7 @@ const OtherProductCard = ({ rating, disabled, disabledImg, product }) => {
               <StarIconPrinter numberOfTimes={product?.rating} />
             </div>
             <div className="relative my-3 flex w-full items-center justify-center">
-              <img src={firstImg?.data} className="h-[135px] w-28" alt="product" />
+              <Image width={400} height={400} quality={100} src={firstImg?.data} className="h-[135px] w-28" alt="product" />
             </div>
             <div className="flex flex-col space-y-3 px-2">
               <div className="flex items-center">
@@ -79,7 +79,7 @@ const OtherProductCard = ({ rating, disabled, disabledImg, product }) => {
             </div>
             <div className="relative my-3 flex w-full items-center justify-center">
               {disabled === 'true' ? <div className="absolute z-20 flex h-full w-28 bg-white/50"></div> : null}
-              <img src={disabledImg?.data} className="h-[135px] w-28" alt="product" />
+              <Image width={400} height={400} quality={100} src={disabledImg?.data} className="h-[135px] w-28" alt="product" />
             </div>
             <div className="flex flex-col space-y-3">
               <div className="flex items-center">

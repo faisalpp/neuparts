@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 const PaymentOptions = ({ price }) => {
@@ -36,7 +37,7 @@ const PaymentOptions = ({ price }) => {
                 Powered by
               </span>
             </div>
-            <img src="/affirm.webp" alt="affirm" className='w-[70px]' />
+            <Image width={400} height={400} quality={100} src="/affirm.webp" alt="affirm" className='w-[70px] h-auto' />
           </div>
           <div className='flex flex-col gap-5' >
             <p className='text-xs text-center text-b15 font-medium' >Vestibulum habitant hac sollicitudin convallis hendrerit. In pretium eget amet nibh vulputate felis vitae neque aliquam. Nibh nam varius ut.</p>

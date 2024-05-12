@@ -4,7 +4,7 @@ import ModelBuyingOptionCardDisabled from './ModelBuyingOptionCardDisabled'
 import { AiFillStar, AiOutlineDollarCircle } from 'react-icons/ai'
 import { FaFire } from 'react-icons/fa'
 import { FiLink2 } from 'react-icons/fi'
-import { NavLink, useParams } from 'react-router-dom'
+import Link from 'next/link'
 
 const ModelBuyingOptionsSection = ({threeStar,fourStar,fiveStar,modelNo,title,disabledImg,rating}) => {
 
@@ -56,7 +56,7 @@ const ModelBuyingOptionsSection = ({threeStar,fourStar,fiveStar,modelNo,title,di
             </div>
           </div>
         </div>
-        <div className='py-5 text-center' ><NavLink to={`/products/buying-options/?modelNo=${modelNo}`} className='text-b7 font-semibold mt-5 flex items-center justify-center mx-auto gap-1'><FiLink2 stroke-width="3" /> View More Buying Options</NavLink></div>
+        <div className='py-5 text-center' ><Link href={`/products/buying-options/?modelNo=${modelNo}`} className='text-b7 font-semibold mt-5 flex items-center justify-center mx-auto gap-1'><FiLink2 stroke-width="3" /> View More Buying Options</Link></div>
       </div>
     </>
   )
