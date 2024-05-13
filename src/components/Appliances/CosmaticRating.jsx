@@ -1,6 +1,4 @@
 import React from 'react'
-import ProductSliderCard from '../../components/Appliances/ProductSliderCard'
-import { useState } from 'react'
 import ProductCardSlider from '../ProductCardSlider'
 
 const CosmaticRating = ({ section }) => {

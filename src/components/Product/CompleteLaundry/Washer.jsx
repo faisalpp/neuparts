@@ -1,13 +1,13 @@
 import React from 'react'
 import { AiFillStar } from 'react-icons/ai'
 import ToolTip from '../../ToolTip'
-import { useSelector } from 'react-redux'
 import { BsArrowRightShort } from 'react-icons/bs'
 import { FaQuestion } from 'react-icons/fa'
+import Image from 'next/image'
 
 const Washer = () => {
 
-    const WASHER = useSelector((state)=>state.laundary?.washer)
+    const WASHER = '';
     
 
     const StarIconPrinter = ({ numberOfTimes }) => {
@@ -35,7 +35,7 @@ const Washer = () => {
             <div className='py-6 pr-7 2xl:pr-12 bg-white border-[1px] border-b3 rounded-xl w-full' >
                 <div className='flex flex-col 2xl:flex-row xl:flex-row gap-4 xl:gap-0 items-start w-full'>
                     <div className='max-w-[195px] w-full h-[209px]'>
-                        <img src={WASHER?.media} className='w-full h-full object-contain' alt='' />
+                        <Image width={400} height={400} quality={400} src={WASHER?.media} className='w-full h-full object-contain' alt='' />
                     </div>
                     <div className='grid grid-cols-1 2xl:pl-7 2xl:p-0 gap-4 w-full' >
                         <p className='font-semibold line-clamp-1 leading-5 mb-2' >{WASHER.title}</p>
@@ -64,7 +64,7 @@ const Washer = () => {
                         <ul className='flex flex-col gap-y-3 text-black  w-full' >
                             {/* <li>. Lorem ipsum dolor alter miler amigos</li> */}
                             {WASHER?.bulletDescription?.length > 0 ?
-                             WASHER?.bulletDescription.slice(0,3).map((bullet)=><li className="text-[11px]" >{bullet}</li>)
+                             WASHER?.bulletDescription.slice(0,3).map((bullet,index)=><li key={index} className="text-[11px]" >{bullet}</li>)
                             :null}
                         </ul>
                         <div className='flex flex-col'>
@@ -72,7 +72,7 @@ const Washer = () => {
                             <div className='flex flex-wrap gap-2 mt-2' >
                             {WASHER.tags ? WASHER.tags.map((item,index)=> <> 
                             {item.selected?<ExtendTag id={item.id} name={item.el} selected={item.selected} />:null}
-                            {item.selected ? <div key={index} className={`flex items-center cursor-pointer hover:shadow-md space-x-1 border-[1px] border-[rgba(0,0,0,0.15)]} rounded-md px-3 py-2 w-fit h-fit`} >{item.icon !== '' ?<img src={`/tags/${item.icon}.png`} className='h-6 w-6' />:null}<span><h5 className='text-[10px] font-medium' >{item.name}</h5></span></div>:null}
+                            {item.selected ? <div key={index} className={`flex items-center cursor-pointer hover:shadow-md space-x-1 border-[1px] border-[rgba(0,0,0,0.15)]} rounded-md px-3 py-2 w-fit h-fit`} >{item.icon !== '' ?<Image width={400} height={400} quality={400} alt='' src={`/tags/${item.icon}.png`} className='h-6 w-6' />:null}<span><h5 className='text-[10px] font-medium' >{item.name}</h5></span></div>:null}
                             </>):null}
                             </div>
                         </div>

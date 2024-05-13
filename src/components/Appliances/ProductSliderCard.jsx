@@ -1,7 +1,7 @@
-import React from 'react'
-import { AiOutlineDollar, AiFillStar } from 'react-icons/ai'
-import { BsFire } from 'react-icons/bs'
-import ProductSlider from '../ProductSlider'
+import React from 'react';
+import { AiFillStar } from 'react-icons/ai';
+import ProductSlider from '../ProductSlider';
+import Image from 'next/image';
 
 const ProductSliderCard = ({ title, product, customStyle }) => {
   const products = [
@@ -29,56 +29,89 @@ const ProductSliderCard = ({ title, product, customStyle }) => {
   ];
   const StarIconPrinter = ({ numberOfTimes }) => {
     const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
-      <AiFillStar key={index} className='text-b7 text-xl' /> // Render the star icon component for each iteration
+      <AiFillStar key={index} className="text-xl text-b7" /> // Render the star icon component for each iteration
     ));
 
-    return <div className='flex mt-2 items-center' >{starIcons}</div>; // Render the array of star icons
+    return <div className="mt-2 flex items-center">{starIcons}</div>; // Render the array of star icons
   };
   return (
     <div className={customStyle}>
-      <div className='flex flex-col maxmd:max-w-[330px] relative maxmd:mx-auto bg-white w-full h-auto rounded-md p-4 sm:p-6 md:p-8 lg:p-6 shadow-md' >
-        {product.rating === '3' ? <div className='absolute top-0 left-2 flex items-center bg-b9 w-fit px-3 rounded-b-2xl ml-2 justify-center h-9 gap-x-2 text-white' >
-          <img src="/svgs/monetization_on.webp" className='w-6 h-6 object-contain p-[1px]' alt="monetization_on" /><span className='text-xs 2xl:text-base font-bold' >Best Value</span></div> : null}
-        {product.rating === '4' ? <div className='absolute top-0 left-2  flex items-center bg-b3 w-fit px-3 rounded-b-2xl ml-2 justify-center h-9 gap-x-2 text-white' >
-          <img src="/svgs/local_fire_department.webp" className='w-6 h-6 object-contain p-[1px]' alt="local_fire_department" /> <span className='text-xs 2xl:text-base font-bold' >Most Popular</span></div> : null}
-        {product.rating === '5' ? <div className='absolute top-0 left-2  flex items-center bg-b7 w-fit rounded-b-2xl ml-2 justify-center px-3 h-9 gap-x-2 text-white' >
-          <img src="/svgs/star_rate_half.webp" className='w-6 h-6 object-contain p-[1px]' alt="star_rate_half" />
-          <span className='text-xs 2xl:text-base font-bold' >Premium Condition</span></div> : null}
-        <div className='flex flex-col items-center justify-center mt-6 w-full' >
-          <div className='flex justify-center items-center text-center gap-x-1 text-[#242424] text-base 2xl:text-[22px]' ><h4 className='font-bold' >{title}:</h4><span className='font-medium' >{product.rating} star</span></div>
-          <div className='flex gap-x-3 mb-4' ><StarIconPrinter numberOfTimes={product.rating} /></div>
-          {product.rating === '3' ? <h4 className='text-b3 font-semibold text-center text-base' >Moderate Cosmetic Damage</h4> : null}
-          {product.rating === '4' ? <h4 className='text-b3 font-semibold text-center text-base' >Minor Cosmetic Damage</h4> : null}
-          {product.rating === '5' ? <h4 className='text-b3 font-semibold text-center text-base' >very Minor To No Cosmetic Damage</h4> : null}
-          <div className='relative pt-5 w-full' >
+      <div className="relative flex h-auto w-full flex-col rounded-md bg-white p-4 shadow-md sm:p-6 md:p-8 lg:p-6 maxmd:mx-auto maxmd:max-w-[330px]">
+        {product.rating === '3' ? (
+          <div className="absolute left-2 top-0 ml-2 flex h-9 w-fit items-center justify-center gap-x-2 rounded-b-2xl bg-b9 px-3 text-white">
+            <Image width={200} height={200} src="/svgs/monetization_on.webp" className="h-6 w-6 object-contain p-[1px]" alt="monetization_on" />
+            <span className="text-xs font-bold 2xl:text-base">Best Value</span>
+          </div>
+        ) : null}
+        {product.rating === '4' ? (
+          <div className="absolute left-2 top-0  ml-2 flex h-9 w-fit items-center justify-center gap-x-2 rounded-b-2xl bg-b3 px-3 text-white">
+            <Image width={200} height={200} src="/svgs/local_fire_department.webp" className="h-6 w-6 object-contain p-[1px]" alt="local_fire_department" /> <span className="text-xs font-bold 2xl:text-base">Most Popular</span>
+          </div>
+        ) : null}
+        {product.rating === '5' ? (
+          <div className="absolute left-2 top-0  ml-2 flex h-9 w-fit items-center justify-center gap-x-2 rounded-b-2xl bg-b7 px-3 text-white">
+            <Image width={200} height={200} src="/svgs/star_rate_half.webp" className="h-6 w-6 object-contain p-[1px]" alt="star_rate_half" />
+            <span className="text-xs font-bold 2xl:text-base">Premium Condition</span>
+          </div>
+        ) : null}
+        <div className="mt-6 flex w-full flex-col items-center justify-center">
+          <div className="flex items-center justify-center gap-x-1 text-center text-base text-[#242424] 2xl:text-[22px]">
+            <h4 className="font-bold">{title}:</h4>
+            <span className="font-medium">{product.rating} star</span>
+          </div>
+          <div className="mb-4 flex gap-x-3">
+            <StarIconPrinter numberOfTimes={product.rating} />
+          </div>
+          {product.rating === '3' ? <h4 className="text-center text-base font-semibold text-b3">Moderate Cosmetic Damage</h4> : null}
+          {product.rating === '4' ? <h4 className="text-center text-base font-semibold text-b3">Minor Cosmetic Damage</h4> : null}
+          {product.rating === '5' ? <h4 className="text-center text-base font-semibold text-b3">very Minor To No Cosmetic Damage</h4> : null}
+          <div className="relative w-full pt-5">
             <ProductSlider image={product.image} />
           </div>
 
-          <div className='flex flex-col gap-y-3 w-full mt-10' >
-            <div className='flex items-center justify-between gap-x-3' >
-              <span className='font-semibold text-xs sm:text-sm md:text-base text-b15' >Cosmetic Damage</span>
-              {product.rating === '3' ? <span className='text-[rgba(17,16,16,0.64)] text-xs sm:text-sm md:text-base'>Moderate</span> : null}
-              {product.rating === '4' ? <span className='text-[rgba(17,16,16,0.64)] text-xs sm:text-sm md:text-base'>Minor</span> : null}
-              {product.rating === '5' ? <span className='text-[rgba(17,16,16,0.64)] text-xs sm:text-sm md:text-base'>Very Minor-None</span> : null}
+          <div className="mt-10 flex w-full flex-col gap-y-3">
+            <div className="flex items-center justify-between gap-x-3">
+              <span className="text-xs font-semibold text-b15 sm:text-sm md:text-base">Cosmetic Damage</span>
+              {product.rating === '3' ? <span className="text-xs text-[rgba(17,16,16,0.64)] sm:text-sm md:text-base">Moderate</span> : null}
+              {product.rating === '4' ? <span className="text-xs text-[rgba(17,16,16,0.64)] sm:text-sm md:text-base">Minor</span> : null}
+              {product.rating === '5' ? <span className="text-xs text-[rgba(17,16,16,0.64)] sm:text-sm md:text-base">Very Minor-None</span> : null}
             </div>
-            <div className='flex justify-between items-center mb-4' >
-              <span className='font-semibold text-xs sm:text-sm md:text-base text-b15' >Discount</span>
-              <div className='flex items-center gap-x-4' >
-                <div className='flex gap-x-1' >
-                  {product.rating === '3' ? <><span className='flex bg-b7 w-2 mt-2' ></span><span className='flex bg-b4 w-2 mt-1' ></span><span className='flex bg-b4 w-2 h-5' ></span></> : null}
-                  {product.rating === '4' ? <><span className='flex bg-b4 w-2 mt-2' ></span><span className='flex bg-b7 w-2 mt-1' ></span><span className='flex bg-b4 w-2 h-5' ></span></> : null}
-                  {product.rating === '5' ? <><span className='flex bg-b4 w-2 mt-2' ></span><span className='flex bg-b4 w-2 mt-1' ></span><span className='flex bg-b7 w-2 h-5' ></span></> : null}
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-xs font-semibold text-b15 sm:text-sm md:text-base">Discount</span>
+              <div className="flex items-center gap-x-4">
+                <div className="flex gap-x-1">
+                  {product.rating === '3' ? (
+                    <>
+                      <span className="mt-2 flex w-2 bg-b7"></span>
+                      <span className="mt-1 flex w-2 bg-b4"></span>
+                      <span className="flex h-5 w-2 bg-b4"></span>
+                    </>
+                  ) : null}
+                  {product.rating === '4' ? (
+                    <>
+                      <span className="mt-2 flex w-2 bg-b4"></span>
+                      <span className="mt-1 flex w-2 bg-b7"></span>
+                      <span className="flex h-5 w-2 bg-b4"></span>
+                    </>
+                  ) : null}
+                  {product.rating === '5' ? (
+                    <>
+                      <span className="mt-2 flex w-2 bg-b4"></span>
+                      <span className="mt-1 flex w-2 bg-b4"></span>
+                      <span className="flex h-5 w-2 bg-b7"></span>
+                    </>
+                  ) : null}
                 </div>
-                {product.rating === '3' ? <span className='font-semibold text-xs md:text-sm' >Massive</span> : null}
-                {product.rating === '4' ? <span className='font-semibold text-xs md:text-sm' >Huge</span> : null}
-                {product.rating === '5' ? <span className='font-semibold text-xs md:text-sm' >Greate</span> : null}
+                {product.rating === '3' ? <span className="text-xs font-semibold md:text-sm">Massive</span> : null}
+                {product.rating === '4' ? <span className="text-xs font-semibold md:text-sm">Huge</span> : null}
+                {product.rating === '5' ? <span className="text-xs font-semibold md:text-sm">Greate</span> : null}
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductSliderCard
+export default ProductSliderCard;

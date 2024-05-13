@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const NeuShieldPopup = ({ closeModal }) => {
   return (
@@ -10,7 +11,7 @@ const NeuShieldPopup = ({ closeModal }) => {
           <IoCloseOutline className="text-3xl" />
         </button>
         <div>
-          <img src="/neushieldround.webp" className="mx-auto h-16 w-16" alt="neushield" />
+          <Image width={400} height={400} quality={100} src="/neushieldround.webp" className="mx-auto h-16 w-16" alt="neushield" />
         </div>
         <h2 className="text-center text-2xl font-bold">1 Year Neu Shield Warranty Included</h2>
         <div>

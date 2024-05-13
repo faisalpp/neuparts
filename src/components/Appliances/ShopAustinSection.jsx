@@ -1,6 +1,7 @@
 import React from 'react';
 import { HiOutlineShoppingCart } from 'react-icons/hi';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const ShopAustinSection = () => {
   return (
@@ -14,7 +15,7 @@ const ShopAustinSection = () => {
           </Link>
         </div>
         <div>
-          <img src="/shopaustin.webp" className="h-auto w-full rounded-3xl 3xl:h-[560px]" alt="shopaustin" />
+          <Image width={400} height={400} quality={100} src="/shopaustin.webp" className="h-auto w-full rounded-3xl 3xl:h-[560px]" alt="shopaustin" />
         </div>
       </div>
     </div>

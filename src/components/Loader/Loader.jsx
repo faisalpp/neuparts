@@ -1,11 +1,12 @@
-import React from 'react'
+import Image from 'next/image';
+import React from 'react';
 
 const Loader = () => {
   return (
-     <div className='fixed flex items-center justify-center top-0 w-full h-screen z-40 bg-white/80' >
-        <img src='/loading.gif' className='h-12' />
-      </div> 
-  )
-}
+    <div className="fixed top-0 z-40 flex h-screen w-full items-center justify-center bg-white/80">
+      <Image width={400} height={400} quality={100} src="/loading.gif" className="h-12 w-auto" alt="loading" />
+    </div>
+  );
+};
 
-export default Loader
+export default Loader;

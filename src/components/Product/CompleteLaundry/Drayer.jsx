@@ -2,12 +2,12 @@ import React from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import { BsArrowRightShort } from 'react-icons/bs';
 import { FaQuestion } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import ToolTip from '../../ToolTip';
+import Image from 'next/image';
 
 const Drayer = () => {
-  const DRYER = useSelector((state) => state.laundary?.dryer);
+  const DRYER = '';
 
   const StarIconPrinter = ({ numberOfTimes }) => {
     const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
@@ -46,7 +46,7 @@ const Drayer = () => {
           <div className="w-full rounded-xl border-[1px] border-b3 bg-white py-6 pr-7 2xl:pr-12">
             <div className="flex w-full flex-col items-start gap-4 xl:flex-row xl:gap-0 2xl:flex-row">
               <div className="h-[209px] w-full max-w-[195px]">
-                <img src={DRYER.media} className="h-full w-full object-contain" alt="" />
+                <Image width={400} height={400} quality={100} src={DRYER.media} className="h-full w-full object-contain" alt="" />
               </div>
               <div className="grid w-full grid-cols-1 gap-4 2xl:p-0 2xl:pl-7">
                 <p className="mb-2 line-clamp-1 font-semibold leading-5">{DRYER.title}</p>
@@ -78,7 +78,13 @@ const Drayer = () => {
                 </div>
                 <ul className="flex w-full flex-col gap-y-3  text-black">
                   {/* <li>. Lorem ipsum dolor alter miler amigos</li> */}
-                  {DRYER?.bulletDescription?.length > 0 ? DRYER?.bulletDescription.slice(0, 3).map((bullet) => <li className="text-[11px]">{bullet}</li>) : null}
+                  {DRYER?.bulletDescription?.length > 0
+                    ? DRYER?.bulletDescription.slice(0, 3).map((bullet, index) => (
+                        <li key={index} className="text-[11px]">
+                          {bullet}
+                        </li>
+                      ))
+                    : null}
                 </ul>
                 <div className="flex flex-col">
                   <h5 className="text-sm font-semibold xl:text-xs">Dryer Options</h5>
@@ -89,7 +95,7 @@ const Drayer = () => {
                             {item.selected ? <ExtendTag id={item.id} name={item.el} selected={item.selected} /> : null}
                             {item.selected ? (
                               <div key={index} className={`border-[rgba(0,0,0,0.15)]} flex h-fit w-fit cursor-pointer items-center space-x-1 rounded-md border-[1px] px-3 py-2 hover:shadow-md`}>
-                                {item.icon !== '' ? <img src={`/tags/${item.icon}.png`} className="h-6 w-6" /> : null}
+                                {item.icon !== '' ? <Image width={400} height={400} quality={100} alt="" src={`/tags/${item.icon}.png`} className="h-6 w-6" /> : null}
                                 <span>
                                   <h5 className="text-[10px] font-medium">{item.name}</h5>
                                 </span>

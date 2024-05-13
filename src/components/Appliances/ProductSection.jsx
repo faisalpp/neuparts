@@ -1,15 +1,14 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import ProductType from './ProductType';
 import ProductCard from './ProductCard';
 import RelatedProducts from './RelatedProducts';
-import { useState } from 'react';
-import { BsChevronDown } from 'react-icons/bs';
-import { Link, NavLink } from 'react-router-dom';
-import FilterSvg from '../../svgs/FilterSvg';
+import FilterSvg from '@/components/svgs/FilterSvg';
 import { AiOutlineArrowRight } from 'react-icons/ai';
-import CarotSvg from '../../svgs/CarotSvg';
+import CarotSvg from '@/components/svgs/CarotSvg';
+import Link from 'next/link';
 
-const ProductSection = ({ menu, data, category }) => {
+const ProductSection = ({ categorySlug, menu, data, category }) => {
   const [isFilter, setIsFilter] = useState(false);
   const handleCloseFilter = () => {
     setIsFilter(false);
@@ -40,9 +39,9 @@ const ProductSection = ({ menu, data, category }) => {
                   <h3 className="mt-10 text-2xl font-bold text-b18 lg:text-base lg:font-semibold maxlg:text-center">{section.title}</h3>
                   <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                     {section.sectionItemsId.map((product, index) => (
-                      <NavLink key={index} to={`/appliances/?category=${category.toLowerCase().replace(/\s/g, '-').replace('&', '%26')}&rating=${product.rating}`}>
-                        <ProductCard key={product.title} title={product.title} image={product.image} rating={product.rating} />
-                      </NavLink>
+                      <Link key={index} href={`/appliances/?category=${category.toLowerCase().replace(/\s/g, '-').replace('&', '%26')}&rating=${product.rating}`}>
+                        <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} rating={product.rating} />
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -54,9 +53,9 @@ const ProductSection = ({ menu, data, category }) => {
                   <RelatedProducts title={section.title} />
                   <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                     {section.sectionItemsId.map((product, index) => (
-                      <NavLink key={index} to={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
-                        <ProductCard key={product.title} title={product.title} image={product.image} />
-                      </NavLink>
+                      <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
+                        <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} />
+                      </Link>
                     ))}
                   </div>
                   <Link href="" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
@@ -70,9 +69,9 @@ const ProductSection = ({ menu, data, category }) => {
                   <RelatedProducts title={section.title} />
                   <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-2">
                     {section.sectionItemsId.map((product, index) => (
-                      <NavLink key={index} to={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
-                        <ProductCard key={product.title} title={product.title} image={product.image} />
-                      </NavLink>
+                      <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
+                        <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} />
+                      </Link>
                     ))}
                   </div>
                   <Link href="" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
@@ -87,9 +86,9 @@ const ProductSection = ({ menu, data, category }) => {
                   <RelatedProducts title={section.title} />
                   <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                     {section.sectionItemsId.map((product, index) => (
-                      <NavLink key={index} to={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
-                        <ProductCard key={product.title} brandname={product.title} brandimage={product.image} />
-                      </NavLink>
+                      <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
+                        <ProductCard categorySlug={categorySlug} key={product.title} brandname={product.title} brandimage={product.image} />
+                      </Link>
                     ))}
                   </div>
                   <Link href="" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
@@ -104,9 +103,9 @@ const ProductSection = ({ menu, data, category }) => {
                   <RelatedProducts title={section.title} />
                   <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                     {section.sectionItemsId.map((product, index) => (
-                      <NavLink key={index} to={`/appliances/?category=${category.toLowerCase()}&${section.type.replace(/\&/, 'and')}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
-                        <ProductCard key={product.title} colorname={product.title} colorimage={product.image} />
-                      </NavLink>
+                      <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type.replace(/\&/, 'and')}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
+                        <ProductCard categorySlug={categorySlug} key={product.title} colorname={product.title} colorimage={product.image} />
+                      </Link>
                     ))}
                   </div>
                   <Link href="" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import DeskNavbar from './DeskComp/Navbar/Navbar';
 import MobNavbar from './MobComp/Navbar';
-// import SideCart from './SideCart'
+import SideCart from './SideCart';
 
 const Navbar = () => {
   const [isDesktop, setIsDesktop] = useState(false);
@@ -23,8 +23,8 @@ const Navbar = () => {
 
   return (
     <>
-      {isDesktop? <DeskNavbar /> : <MobNavbar />}
-      {/* <SideCart /> */}
+      {isDesktop ? <DeskNavbar /> : <MobNavbar />}
+      <SideCart />
     </>
   );
 };

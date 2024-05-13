@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const FreeCurbsideReturn = ({ closeModal }) => {
   return (
@@ -10,10 +11,10 @@ const FreeCurbsideReturn = ({ closeModal }) => {
           <IoCloseOutline className="text-3xl" />
         </button>
         <div>
-          <img src="/curbside.webp" className="mx-auto h-16 w-16" alt="neushield" />
+          <Image width={400} height={400} quality={100} src="/curbside.webp" className="mx-auto h-16 w-16" alt="neushield" />
         </div>
         <h2 className="text-center text-2xl font-bold">Free Curbside Returns</h2>
-        <p className="text-center">Shop with confidence. Upon delivery, if you decide the appliance isn't for you, we will return it free of charge!</p>
+        <p className="text-center">Shop with confidence. Upon delivery, if you decide the appliance isn&apos;t for you, we will return it free of charge!</p>
         <div className="mt-2 flex justify-center">
           <button type="button" onClick={closeModal} className="rounded-md bg-b3 px-10 py-3 text-center font-semibold uppercase text-white">
             OK

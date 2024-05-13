@@ -298,7 +298,7 @@ const Product = ({slug}) => {
                 </div> : null}
 
               <button onClick={() => handleOpenModal("1")} className='flex space-x-3 items-center px-3 py-2 border-[1px] border-b3 rounded-lg w-fit' >
-                <Image width={200} height={200} quality={100} className='w-full h-auto' src="/shield.webp" alt='' />
+                <Image width={200} height={200} quality={100} className='w-[18px] h-auto' src="/shield.webp" alt='' />
                 <h6 className='text-sm font-bold w-40' >NeuShield 1 Year Applicance Warranty</h6>
               </button>
               {/* Delivery Card */}
@@ -473,7 +473,7 @@ const Product = ({slug}) => {
           <InspectionScoreSection />
 
           {/* Model Buying Options */}
-          <ModelBuyingOptionsSection disabledImg={moreImg} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} modelNo={product?.modelNo} title={product?.title} rating={product?.modelNo} />
+          <ModelBuyingOptionsSection slug={slug} disabledImg={moreImg} threeStar={threeStar} fourStar={fourStar} fiveStar={fiveStar} modelNo={product?.modelNo} title={product?.title} rating={product?.modelNo} />
           {/* Faq Section */}
           <ProductFaqSection />
 

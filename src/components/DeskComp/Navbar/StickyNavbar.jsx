@@ -2,8 +2,9 @@ import React from 'react';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
 import { FiPhone } from 'react-icons/fi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { Link, NavLink } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const StickyNavbar = ({ state, product, addCart }) => {
   // Scroll Sticky Navbar Item to Sections
@@ -29,7 +30,7 @@ const StickyNavbar = ({ state, product, addCart }) => {
           <div className="maincontainer items-center justify-center py-5 lg:flex">
             <div className="max-w-6/12 flex w-6/12 items-center space-x-5">
               <div className="w-fit rounded-lg border-[1px] border-gray-200 px-2 py-1">
-                <img src={frstImg ? frstImg.data : ''} className="w-12" alt="" />
+                <Image width={400} height={400} quality={100} src={frstImg ? frstImg.data : ''} className="h-auto w-12" alt="" />
               </div>
               <p className="text-clip text-2xl font-bold leading-8 md:text-3xl xl:text-[2rem]">{product.title}</p>
             </div>
