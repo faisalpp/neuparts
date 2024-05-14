@@ -32,88 +32,90 @@ const ProductSection = ({ categorySlug, menu, data, category }) => {
         <div className="flex h-full w-full flex-col gap-60px">
           {/* Cosmatic Rating */}
 
-          {data.map((section) => (
+          {data.map((section, index1) => (
             <>
-              {section.cardStyle === 'rating-card' ? (
-                <div>
-                  <h3 className="mt-10 text-2xl font-bold text-b18 lg:text-base lg:font-semibold maxlg:text-center">{section.title}</h3>
-                  <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    {section.sectionItemsId.map((product, index) => (
-                      <Link key={index} href={`/appliances/?category=${category.toLowerCase().replace(/\s/g, '-').replace('&', '%26')}&rating=${product.rating}`}>
-                        <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} rating={product.rating} />
-                      </Link>
-                    ))}
+              <div key={index1}>
+                {section.cardStyle === 'rating-card' ? (
+                  <div>
+                    <h3 className="mt-10 text-2xl font-bold text-b18 lg:text-base lg:font-semibold maxlg:text-center">{section.title}</h3>
+                    <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                      {section.sectionItemsId.map((product, index) => (
+                        <Link key={index} href={`/appliances/?category=${category.toLowerCase().replace(/\s/g, '-').replace('&', '%26')}&rating=${product.rating}`}>
+                          <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} rating={product.rating} />
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ) : null}
+                ) : null}
 
-              {/* Product Styles */}
-              {section.cardStyle === 'general-card' ? (
-                <div>
-                  <RelatedProducts title={section.title} />
-                  <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-                    {section.sectionItemsId.map((product, index) => (
-                      <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
-                        <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} />
-                      </Link>
-                    ))}
+                {/* Product Styles */}
+                {section.cardStyle === 'general-card' ? (
+                  <div>
+                    <RelatedProducts title={section.title} />
+                    <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                      {section.sectionItemsId.map((product, index) => (
+                        <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
+                          <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} />
+                        </Link>
+                      ))}
+                    </div>
+                    <Link href="/" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
+                      <span>View More</span>
+                      <AiOutlineArrowRight className="text-base" />
+                    </Link>
                   </div>
-                  <Link href="" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
-                    <span>View More</span>
-                    <AiOutlineArrowRight className="text-base" />
-                  </Link>
-                </div>
-              ) : null}
-              {section.cardStyle === '2xn-card' ? (
-                <div>
-                  <RelatedProducts title={section.title} />
-                  <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-2">
-                    {section.sectionItemsId.map((product, index) => (
-                      <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
-                        <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} />
-                      </Link>
-                    ))}
+                ) : null}
+                {section.cardStyle === '2xn-card' ? (
+                  <div>
+                    <RelatedProducts title={section.title} />
+                    <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-2">
+                      {section.sectionItemsId.map((product, index) => (
+                        <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
+                          <ProductCard categorySlug={categorySlug} key={product.title} title={product.title} image={product.image} />
+                        </Link>
+                      ))}
+                    </div>
+                    <Link href="/" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
+                      <span>View More</span>
+                      <AiOutlineArrowRight className="text-base" />
+                    </Link>
                   </div>
-                  <Link href="" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
-                    <span>View More</span>
-                    <AiOutlineArrowRight className="text-base" />
-                  </Link>
-                </div>
-              ) : null}
+                ) : null}
 
-              {section.cardStyle === 'brand-card' ? (
-                <div>
-                  <RelatedProducts title={section.title} />
-                  <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                    {section.sectionItemsId.map((product, index) => (
-                      <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
-                        <ProductCard categorySlug={categorySlug} key={product.title} brandname={product.title} brandimage={product.image} />
-                      </Link>
-                    ))}
+                {section.cardStyle === 'brand-card' ? (
+                  <div>
+                    <RelatedProducts title={section.title} />
+                    <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                      {section.sectionItemsId.map((product, index) => (
+                        <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
+                          <ProductCard categorySlug={categorySlug} key={product.title} brandname={product.title} brandimage={product.image} />
+                        </Link>
+                      ))}
+                    </div>
+                    <Link href="/" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
+                      <span>View More</span>
+                      <AiOutlineArrowRight className="text-base" />
+                    </Link>
                   </div>
-                  <Link href="" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
-                    <span>View More</span>
-                    <AiOutlineArrowRight className="text-base" />
-                  </Link>
-                </div>
-              ) : null}
+                ) : null}
 
-              {section.cardStyle === 'color-card' ? (
-                <div>
-                  <RelatedProducts title={section.title} />
-                  <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                    {section.sectionItemsId.map((product, index) => (
-                      <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type.replace(/\&/, 'and')}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
-                        <ProductCard categorySlug={categorySlug} key={product.title} colorname={product.title} colorimage={product.image} />
-                      </Link>
-                    ))}
+                {section.cardStyle === 'color-card' ? (
+                  <div>
+                    <RelatedProducts title={section.title} />
+                    <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                      {section.sectionItemsId.map((product, index) => (
+                        <Link key={index} href={`/appliances/?category=${category.toLowerCase()}&${section.type.replace(/\&/, 'and')}=${product.title.toLowerCase().replace(/\s/g, '-')}`}>
+                          <ProductCard categorySlug={categorySlug} key={product.title} colorname={product.title} colorimage={product.image} />
+                        </Link>
+                      ))}
+                    </div>
+                    <Link href="/" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
+                      <span>View More</span>
+                      <AiOutlineArrowRight className="text-base" />
+                    </Link>
                   </div>
-                  <Link href="" className="mt-6 flex items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-b3 px-4 py-3 text-base font-medium text-b3 duration-300 hover:gap-2 lg:hidden">
-                    <span>View More</span>
-                    <AiOutlineArrowRight className="text-base" />
-                  </Link>
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </>
           ))}
         </div>

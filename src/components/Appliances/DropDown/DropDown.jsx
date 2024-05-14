@@ -1,25 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { Transition } from '@headlessui/react'
+import { Transition } from '@headlessui/react';
 
 const DropDown = ({ color, title, children }) => {
-    const [drp, setDrp] = useState(false);
-    const [isShowing, setIsShowing] = useState(true)
+  const [drp, setDrp] = useState(false);
+  const [isShowing, setIsShowing] = useState(true);
 
-    return (
-        <>
-            <div className='flex flex-col w-full border-b-[1px] py-4 h-auto cursor-pointer' >
-                {/* Controller */}
-                <div className='flex items-center border-b-gray-300' onClick={() => setIsShowing((isShowing) => !isShowing)}><h6 className={`font-bold w-72 text-sm ${color}`} >{title}</h6><div className='flex items-center w-full justify-end' >{isShowing ? <RiArrowDropUpLine className='text-2xl' /> : <RiArrowDropDownLine className='text-2xl' />}</div></div>
-                {/* Body */}
-                <Transition show={isShowing} className='flex flex-col gap-2 h-auto mt-3 cursor-pointer'>
-                    {children}
-                </Transition>
+  return (
+    <>
+      <div className="flex h-auto w-full cursor-pointer flex-col border-b-[1px] py-4">
+        {/* Controller */}
+        <div className="flex items-center border-b-gray-300" onClick={() => setIsShowing((isShowing) => !isShowing)}>
+          <h6 className={`w-72 text-sm font-bold ${color}`}>{title}</h6>
+          <div className="flex w-full items-center justify-end">{isShowing ? <RiArrowDropUpLine className="text-2xl" /> : <RiArrowDropDownLine className="text-2xl" />}</div>
+        </div>
+        {/* Body */}
+        <Transition as="div" show={isShowing} className="mt-3 flex h-auto cursor-pointer flex-col gap-2">
+          {children}
+        </Transition>
+      </div>
+    </>
+  );
+};
 
-            </div>
-
-        </>
-    )
-}
-
-export default DropDown
+export default DropDown;

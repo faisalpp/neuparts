@@ -35,7 +35,7 @@ const ProductCard = ({ categorySlug, title, image, rating, brandimage, brandname
         // Popular Brands
         <div className="populerbrands">
           <div className="flex h-[133px] items-center justify-center rounded-2xl border border-gray-300 p-3">
-            <Image width={400} height={400} quality={100} src={brandimage} className="h-auto max-w-full object-contain" alt={brandname} />
+            <Image width={400} height={400} quality={100} src={brandimage} className="h-[133px] w-auto object-contain" alt={brandname} />
           </div>
           <h3 className="mt-3 px-3 text-center font-semibold">{brandname}</h3>
         </div>

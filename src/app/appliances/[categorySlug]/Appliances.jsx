@@ -11,9 +11,76 @@ import { RiArrowDropRightLine } from 'react-icons/ri';
 import Image from 'next/image';
 
 const Appliances = ({ categorySlug }) => {
-  const [sections, setSections] = useState([]);
-  const [description, setDescription] = useState('');
-  const [catTitle, setCatTitle] = useState('');
+  const [sections, setSections] = useState([
+    {
+      cardStyle: 'head-rating-card',
+      type: 'Washing',
+      title: 'Washing',
+      sectionItemsId: [
+        {
+          title: 'Appliances',
+          rating: '3',
+          image: '/refrigrator.webp',
+        },
+        {
+          title: 'Appliances',
+          rating: '3',
+          image: '/refrigrator.webp',
+        },
+        {
+          title: 'Appliances',
+          rating: '4',
+          image: '/refrigrator.webp',
+        },
+      ],
+    },
+    {
+      cardStyle: 'rating-card',
+      type: 'Rating Card',
+      title: 'Rating Card',
+      sectionItemsId: [
+        {
+          title: 'Appliances',
+          rating: '4',
+          image: '/refrigrator.webp',
+        },
+        {
+          title: 'Appliances',
+          rating: '5',
+          image: '/refrigrator.webp',
+        },
+        {
+          title: 'Appliances',
+          rating: '5',
+          image: '/refrigrator.webp',
+        },
+      ],
+    },
+    {
+      cardStyle: 'brand-card',
+      type: 'Brand Card',
+      title: 'Brand Card',
+      sectionItemsId: [
+        {
+          title: 'Appliances',
+          rating: '4',
+          image: '/refrigrator.webp',
+        },
+        {
+          title: 'Appliances',
+          rating: '5',
+          image: '/refrigrator.webp',
+        },
+        {
+          title: 'Appliances',
+          rating: '5',
+          image: '/refrigrator.webp',
+        },
+      ],
+    },
+  ]);
+  const [description, setDescription] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, architecto. Qui accusantium exercitationem porro commodi?');
+  const [catTitle, setCatTitle] = useState('Appliances');
 
   const [loading, isLoading] = useState(false);
 
