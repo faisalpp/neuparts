@@ -1,17 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { BiLinkExternal, BiPlayCircle } from 'react-icons/bi';
-import ScratchSvg2 from '../../svgs/ScratchSvg2';
+import ScratchSvg2 from '@/components/svgs/ScratchSvg2';
+import Image from 'next/image';
 
 const ApplianceWholeSale = () => {
   return (
     <div className="flex flex-col gap-6 rounded-3xl bg-b8 px-3 2xl:p-7 xs:p-10 3xl:p-10 maxcosm:py-5">
       <a href="http://neuappliancewholesale.com/" target="_new">
-        <img src="/nueapplianceswholesale.webp" alt="nueapplianceswholesale" className="h-16" />
+        <Image width={400} height={400} quality={100} src="/nueapplianceswholesale.webp" alt="nueapplianceswholesale" className="h-16 w-auto" />
       </a>
       <div className="flex flex-col gap-3 text-b18">
         <h3 className="text-2xl font-bold">Neu Appliance Wholesale</h3>
-        <p className="leading-6">Wholesale distributor of appliance liquidation inventory like Scratch and dent, customer return or salvage appliances by the truckload. We are appliance dealers' best option for wholesale appliance inventory in bulk.</p>
+        <p className="leading-6">Wholesale distributor of appliance liquidation inventory like Scratch and dent, customer return or salvage appliances by the truckload. We are appliance dealers&apos; best option for wholesale appliance inventory in bulk.</p>
       </div>
       <div className="flex flex-col gap-3 text-b18">
         <p className="font-bold">Our wholesale customers use our services to stock their showrooms with quality appliance inventory supply by the truckload including:</p>

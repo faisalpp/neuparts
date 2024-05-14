@@ -1,20 +1,14 @@
+'use client';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import CdSvg from '../../svgs/CdSvg';
+import CdSvg from '@/components/svgs/CdSvg';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import { getTipBySlug } from '../../api/admin/applianceTips';
 import parse from 'html-react-parser';
-const GetScoop = () => {
-  const { slug } = useParams();
+import Link from 'next/link';
+
+const TipsDetails = ({ slug }) => {
   const [tip, setTip] = useState({});
 
-  const GetTip = async () => {
-    const res = await getTipBySlug({ slug: slug });
-    console.log(res);
-    if (res.status === 200) {
-      setTip(res.data.tip);
-    }
-  };
+  const GetTip = async () => {};
 
   useEffect(() => {
     GetTip();
@@ -39,4 +33,4 @@ const GetScoop = () => {
   );
 };
 
-export default GetScoop;
+export default TipsDetails;

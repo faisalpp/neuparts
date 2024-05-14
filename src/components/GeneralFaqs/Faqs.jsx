@@ -12,11 +12,6 @@ const Faqs = () => {
       title: 'lorem ipsum',
       slug: 'lorem-ipsum',
     },
-    {
-      _id: 1,
-      title: 'lorem ipsum',
-      slug: 'lorem-ipsum',
-    },
   ]);
   const [faqs, setFaqs] = useState([
     {

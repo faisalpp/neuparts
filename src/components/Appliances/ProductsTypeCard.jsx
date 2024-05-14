@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import Image from 'next/image';
 
 const ProductsTypeCard = ({ productstype }) => {
   return (
@@ -16,7 +17,7 @@ const ProductsTypeCard = ({ productstype }) => {
                 </Link>
               </div>
               <div className="inline-flex h-80 w-full items-center justify-center xl:h-96 2xl:h-[393px]">
-                <img src={product.image} className="object-contain" alt={product.title} />
+                <Image width={500} height={500} quality={100} src={product.image} className="h-80 w-full object-contain xl:h-96 2xl:h-[393px]" alt={product.title} />
               </div>
               <div className="mt-6 flex flex-col items-center gap-[10px] text-center">
                 <h3 className="text-lg font-bold 3xl:text-[20px]">{product.title}</h3>

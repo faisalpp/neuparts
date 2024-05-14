@@ -8,7 +8,7 @@ const MeasuringCard = ({ bgcolor, title, description, note }) => {
             </h3>
             <div className='flex flex-col gap-6 leading-6'>
                 {description.map((desc, index) => (
-                    <p>{desc}</p>
+                    <p key={index}>{desc}</p>
                 ))}
             </div>
             {

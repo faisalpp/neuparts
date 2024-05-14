@@ -1,21 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
-import ShieldSvg from '../../svgs/ShieldSvg';
-import ScratchSvg from '../../svgs/ScratchSvg';
-import BoxSvg from '../../svgs/BoxSvg';
-import RoundedTick from '../../svgs/RoundedTick';
+import ShieldSvg from '@/components/svgs/ShieldSvg';
+import ScratchSvg from '@/components/svgs/ScratchSvg';
+import BoxSvg from '@/components/svgs/BoxSvg';
+import RoundedTick from '@/components/svgs/RoundedTick';
 import { HiOutlineShoppingCart } from 'react-icons/hi';
 import { BiPlayCircle } from 'react-icons/bi';
+import Image from 'next/image';
 
 const ApplianceParts = () => {
   return (
     <div className="flex flex-col gap-6 rounded-3xl bg-[#F2F9FC] px-3 2xl:p-7 xs:p-10 3xl:p-10 maxcosm:py-5">
       <Link href="/">
-        <img src="/nueappliancesoutlet.webp" alt="nueappliancesoutlet" className="h-16" />
+        <Image width={400} height={400} quality={100} src="/nueappliancesoutlet.webp" alt="nueappliancesoutlet" className="h-16 w-auto" />
       </Link>
       <div className="flex flex-col gap-3 text-b18">
         <h3 className="text-2xl font-bold">Neu Appliance Outlet</h3>
-        <p className="leading-6">Appliances can be expensive and the need to replace an appliance seems to always happen at an inconvenient time. Our website's live inventory provides our customers with reliable up to date - remote access to all of our discount appliance inventory in real time.</p>
+        <p className="leading-6">Appliances can be expensive and the need to replace an appliance seems to always happen at an inconvenient time. Our website&apos;s live inventory provides our customers with reliable up to date - remote access to all of our discount appliance inventory in real time.</p>
       </div>
       <div className="flex flex-col gap-3 text-b18">
         <p className="font-bold">Neu Appliance Outlet provides the solutions you have been looking for:</p>
@@ -36,7 +37,7 @@ const ApplianceParts = () => {
       </div>
       <div className="flex h-full flex-col justify-between">
         <div className="flex flex-col gap-3 text-b18">
-          <p className="font-bold">Our Website's Tools For Success include:</p>
+          <p className="font-bold">Our Website&apos;s Tools For Success include:</p>
           <ul className="flex flex-col gap-4">
             {toolsList.map((item, index) => (
               <li key={index} className="flex items-center gap-3">

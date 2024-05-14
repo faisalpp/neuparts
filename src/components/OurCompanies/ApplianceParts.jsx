@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { BiLinkExternal, BiPlayCircle } from 'react-icons/bi';
-import SolutionSvg from '../../svgs/SolutionSvg';
+import SolutionSvg from '@/components/svgs/SolutionSvg';
+import Image from 'next/image'
 
 const ApplianceParts = () => {
   return (
     <div className="flex flex-col gap-6 rounded-3xl bg-[rgba(248,211,87,0.08)] px-3 2xl:p-7 xs:p-10 3xl:p-10 maxcosm:py-5">
       <a href="https://www.neuapplianceparts.com/" target="_new">
-        <img src="/nueappliancesparts.webp" alt="nueappliancesparts" className="h-16" />
+        <Image width={400} height={400} src="/nueappliancesparts.webp" alt="nueappliancesparts" className="h-16 w-auto" />
       </a>
       <div className="flex flex-col gap-3 text-b18">
         <h3 className="text-2xl font-bold">Neu Appliance Parts</h3>
@@ -17,7 +18,7 @@ const ApplianceParts = () => {
         <div className="flex flex-col gap-3 text-b18">
           <p className="font-bold">Neu Appliance Parts provides the solution you are looking for:</p>
           <div className="flex flex-col gap-3 text-b18">
-            <p>Our Website's Tools For Success include:</p>
+            <p>Our Website&apos;s Tools For Success include:</p>
             <ul className="flex flex-col gap-2">
               {ToolLists.map((item, index) => (
                 <li key={index} className="flex items-start gap-3 py-[15px]">
