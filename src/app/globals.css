@@ -37,7 +37,9 @@
     @apply border-l-2 border-white rounded-lg px-5 bg-b2 py-2 text-white;
   }
 }
-
+.bg-blue-gradient{
+  background: linear-gradient(0deg, #66CEF5, #66CEF5), linear-gradient(180.58deg, rgba(0, 0, 0, 0.4) 0.38%, rgba(0, 0, 0, 0) 187.96%);
+}
 .maincontainer {
   @apply 3xl:max-w-1680px w-[90%] 2xl:w-[85%] mx-auto;
 }
