@@ -19,37 +19,37 @@
 
 @layer components {
   .xy-center {
-    @apply flex justify-center items-center;
+    @apply flex items-center justify-center;
   }
   .top__menu_button {
-    @apply flex items-center px-4 bg-b2 py-[10px] w-max cursor-pointer rounded-md text-white;
+    @apply flex w-max cursor-pointer items-center rounded-md bg-b2 px-4 py-[10px] text-white;
   }
   .top__menu_item {
-    @apply flex w-full px-2 first:mt-0 mt-1 cursor-pointer text-xs py-2 rounded-md hover:bg-b5 font-normal;
+    @apply mt-1 flex w-full cursor-pointer rounded-md px-2 py-2 text-xs font-normal first:mt-0 hover:bg-b5;
   }
   .nav____item {
-    @apply flex items-center font-normal text-white/80 text-xs cursor-pointer hover:text-b6;
+    @apply flex cursor-pointer items-center text-xs font-normal text-white/80 hover:text-b6;
   }
   .small___nav__item {
-    @apply flex items-center bg-b2 rounded-md py-2 px-3 text-white;
+    @apply flex items-center rounded-md bg-b2 px-3 py-2 text-white;
   }
   .small___nav__subitem {
-    @apply border-l-2 border-white rounded-lg px-5 bg-b2 py-2 text-white;
+    @apply rounded-lg border-l-2 border-white bg-b2 px-5 py-2 text-white;
   }
 }
-.bg-blue-gradient{
-  background: linear-gradient(0deg, #66CEF5, #66CEF5), linear-gradient(180.58deg, rgba(0, 0, 0, 0.4) 0.38%, rgba(0, 0, 0, 0) 187.96%);
+.bg-blue-gradient {
+  background: linear-gradient(180.58deg, rgba(0, 0, 0, 0.4) 0.38%, rgba(0, 0, 0, 0) 187.96%), rgba(102, 206, 245, 0.6);
 }
 .maincontainer {
-  @apply 3xl:max-w-1680px w-[90%] 2xl:w-[85%] mx-auto;
+  @apply mx-auto w-[90%] 2xl:w-[85%] 3xl:max-w-1680px;
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #tour {
-  background-image: url("/map.webp");
+  background-image: url('/map.webp');
   backdrop-filter: blur(2.6px);
   -webkit-backdrop-filter: blur(2.6px);
 }
@@ -62,14 +62,14 @@ body {
 
 /* How It Work Slider */
 .howitworkslider {
-  @apply pb-5 xl:pb-0 [&>div>div]:xl:before:hidden [&>div>div>div>div]:xl:h-full [&>div>div>div]:xl:!w-full [&>div>div]:xl:!grid [&>div>div]:xl:!grid-cols-3 [&>div>div]:gap-7 [&>div>div]:2xl:gap-10 [&>div>div]:3xl:gap-x-[60px];
+  @apply pb-5 xl:pb-0 [&>div>div>div>div]:xl:h-full [&>div>div>div]:xl:!w-full [&>div>div]:gap-7 [&>div>div]:xl:!grid [&>div>div]:xl:!grid-cols-3 [&>div>div]:xl:before:hidden [&>div>div]:2xl:gap-10 [&>div>div]:3xl:gap-x-[60px];
 }
 
 /* ========== */
 
 #news-grid {
-  @apply lg:grid grid-cols-12 flex flex-col justify-center items-center py-5 bg-b4 w-full lg:h-72 xl:h-96 md:h-80 rounded-lg maxmd:px-5;
-  background-image: url("/grid.webp");
+  @apply flex w-full grid-cols-12 flex-col items-center justify-center rounded-lg bg-b4 py-5 md:h-80 lg:grid lg:h-72 xl:h-96 maxmd:px-5;
+  background-image: url('/grid.webp');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -153,10 +153,7 @@ body {
   width: 100%;
 }
 
-.rdp
-  .rdp-table
-  .rdp-cell
-  .rdp-button_reset.rdp-button.rdp-day.rdp-day_selected {
+.rdp .rdp-table .rdp-cell .rdp-button_reset.rdp-button.rdp-day.rdp-day_selected {
   color: white;
   background-color: #22a6ab;
   font-weight: 400;
@@ -167,15 +164,15 @@ body {
 /* Pagination */
 
 .pagination-container {
-  @apply flex gap-6 items-center justify-center;
+  @apply flex items-center justify-center gap-6;
 }
 
 .pagination-container .pagination-item {
-  @apply text-b25 text-sm;
+  @apply text-sm text-b25;
 }
 
 .pagination-container .pagination-item.selected {
-  @apply text-b3 font-bold;
+  @apply font-bold text-b3;
 }
 
 .pagination-container .pagination-item.disabled {
@@ -200,7 +197,7 @@ body {
 .text_between_line:before,
 .text_between_line:after {
   background-color: #d9d9d9;
-  content: "";
+  content: '';
   display: inline-block;
   height: 1px;
   position: relative;
@@ -243,7 +240,7 @@ body {
 
 /* Our story */
 .meetteam {
-  @apply [&>figure:first-child]:maxmd:col-span-2 [&>figure:first-child]:maxmd:mx-auto [&>figure:first-child]:maxmd:w-[200px] [&>figure:first-child>img]:w-40 [&>figure:first-child>img]:h-40;
+  @apply [&>figure:first-child>img]:h-40 [&>figure:first-child>img]:w-40 [&>figure:first-child]:maxmd:col-span-2 [&>figure:first-child]:maxmd:mx-auto [&>figure:first-child]:maxmd:w-[200px];
 }
 
 .meetteam figure:first-child h3 {
@@ -256,14 +253,14 @@ body {
 /* Shop Austin */
 
 .shopaustin {
-  @apply py-10 lg:py-16 xl:py-20 2xl:py-120px mx-auto grid grid-cols-1 lg:grid-cols-2 3xl:grid-cols-[1fr_686px] items-center gap-8 lg:gap-28  2xl:gap-[157px];
+  @apply mx-auto grid grid-cols-1 items-center gap-8 py-10 lg:grid-cols-2 lg:gap-28 lg:py-16 xl:py-20 2xl:gap-[157px] 2xl:py-120px  3xl:grid-cols-[1fr_686px];
 }
 
 .shopaustin h2 {
-  @apply maxmd:text-center font-extrabold text-3xl xl:w-[464px] 2xl:w-full xl:text-[46px] xl:leading-[3rem] 2xl:text-[56px] 2xl:leading-[64px] text-white;
+  @apply text-3xl font-extrabold text-white xl:w-[464px] xl:text-[46px] xl:leading-[3rem] 2xl:w-full 2xl:text-[56px] 2xl:leading-[64px] maxmd:text-center;
 }
 .shopaustin p {
-  @apply maxmd:text-center mt-6 mb-10 text-white text-base xl:text-[20px] 2xl:text-2xl leading-6 xl:leading-8;
+  @apply mb-10 mt-6 text-base leading-6 text-white xl:text-[20px] xl:leading-8 2xl:text-2xl maxmd:text-center;
 }
 
 /* ========= */
@@ -294,7 +291,7 @@ h6.ce-header {
 /* testimonials */
 
 .testimonialreviews h2 {
-  @apply lg:text-3xl xl:text-4xl text-white text-center;
+  @apply text-center text-white lg:text-3xl xl:text-4xl;
 }
 .testimonialreviews .maincard {
   @apply !bg-white;

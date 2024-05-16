@@ -82,7 +82,8 @@ module.exports = withMT({
         'b34': '#11101080',
         't1': '#22A6AB',
         't2': '#333333',
-        "darkpurple": "#7432FF"
+        "darkpurple": "#7432FF",
+        "c-blue": "#00ADEE"
       },
       fontSize: {
         '28px': '28px',
