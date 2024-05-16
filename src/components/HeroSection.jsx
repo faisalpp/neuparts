@@ -19,8 +19,8 @@ const HeroSection = () => {
               </button>
             </div>
             <div className="grid grid-cols-1 gap-2 rounded-lg bg-[#EBF8FE] p-4 md:grid-cols-[auto_auto_160px]">
-              <input type="text" className="border-c-blue w-full rounded-lg border px-6 py-4 text-[#979797] shadow-[0px_0px_16px_rgba(0,0,0,0.08)] placeholder:text-[#979797]" placeholder="Enter model number" />
-              <input type="text" className="border-c-blue w-full rounded-lg border px-6 py-4 text-[#979797] shadow-[0px_0px_16px_rgba(0,0,0,0.08)] placeholder:text-[#979797]" placeholder="Enter part number" />
+              <input type="text" className="border-c-blue outline-none w-full rounded-lg border px-6 py-4 text-[#979797] shadow-[0px_0px_16px_rgba(0,0,0,0.08)] placeholder:text-[#979797]" placeholder="Enter model number" />
+              <input type="text" className="border-c-blue outline-none w-full rounded-lg border px-6 py-4 text-[#979797] shadow-[0px_0px_16px_rgba(0,0,0,0.08)] placeholder:text-[#979797]" placeholder="Enter part number" />
               <button type="button" className="bg-c-blue flex h-full w-full max-w-40 items-center justify-center rounded-lg font-bold text-white">
                 <MdSearch className="mr-2 text-2xl" />
                 Search
