@@ -1,4 +1,4 @@
-import '../globals.css';
+import './globals.css';
 import Navbar from "@/components/Navbar";
 import ScrollToTop from '@/components/DeskComp/ScrollToTop';
 import Footer from '@/components/DeskComp/Footer';

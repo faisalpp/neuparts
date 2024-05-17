@@ -1,5 +1,8 @@
+
 import React from 'react'
-import '../globals.css';
+import '../globals.css'
+import Sidebar from '@/components/Admin/sidebar'
+import Navbar from '@/components/Admin/navbar'
 
 export const metadata = {
   title: 'Neu-Admin',
@@ -15,15 +18,14 @@ const layout = ({children}) => {
     <div className="flex" >
     
      {/* Sidebar Start */}
-      <div className="bg-red-500" >
-       Layout
-      </div>
+     <Sidebar/>
+     <Navbar/>
      {/* Sidebar End */}
      
      {/* Main Content Start */}
-      <main>
+      {/* <main>
         {children}
-      </main>
+      </main> */}
      {/* Main Content Start */}
 
     </div> 
