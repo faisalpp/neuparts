@@ -1,8 +1,10 @@
+"use client"
+
 import React from 'react'
 
 const page = () => {
   return (
-    <div>admin</div>
+     <h1>Dashboard</h1>
   )
 }
 
