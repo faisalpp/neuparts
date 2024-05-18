@@ -67,13 +67,6 @@ body {
 
 /* ========== */
 
-#news-grid {
-  @apply flex w-full grid-cols-12 flex-col items-center justify-center rounded-lg bg-b4 py-5 md:h-80 lg:grid lg:h-72 xl:h-96 maxmd:px-5;
-  background-image: url('/grid.webp');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 #map {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(2.6px);

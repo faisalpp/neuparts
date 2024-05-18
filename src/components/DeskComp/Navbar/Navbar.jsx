@@ -1,12 +1,9 @@
-'use client'
+'use client';
 import { useState, useEffect } from 'react';
-import { AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BiUserCircle } from 'react-icons/bi';
 import { IoMenu } from 'react-icons/io5';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import { FiPhone } from 'react-icons/fi';
-import { TfiHeadphoneAlt } from 'react-icons/tfi';
-import NavDropDown from '../Navbar/NavDropDown';
 import { Menu } from '@headlessui/react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -33,8 +30,7 @@ const Navbar = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getAppliances = async () => {
-    };
+    const getAppliances = async () => {};
     getAppliances();
   }, []);
 
@@ -47,11 +43,11 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="relative bg-b1">
+      <div className="sticky top-0 z-50 bg-b1">
         {/* Navbar Start */}
         <div className="maincontainer grid-cols-12 items-center py-5 lg:grid">
           <Link href="/">
-            <Image width={200} height={200} quality={100} className="col-start-1 w-full h-auto col-end-3" src="/neu.webp" alt="logo" />
+            <Image width={200} height={200} quality={100} className="col-start-1 col-end-3 h-auto w-full" src="/neu.webp" alt="logo" />
           </Link>
 
           <div className="col-start-9 col-end-13 flex w-full justify-end space-x-2">
@@ -153,7 +149,6 @@ const Navbar = () => {
           </div>
         </div>
         {/* Navbar End */}
-
       </div>
     </>
   );

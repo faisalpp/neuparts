@@ -48,7 +48,7 @@ module.exports = withMT({
       colors: {
         'b1': '#071822',
         'b2': '#1B2A34',
-        'b3': '#22A6AB',
+        'b3': '#00ADEE',
         'b4': '#F8D357',
         'b5': '#FAFAFA',
         'b6': '#22A6AB',
@@ -83,7 +83,7 @@ module.exports = withMT({
         't1': '#22A6AB',
         't2': '#333333',
         "darkpurple": "#7432FF",
-        "c-blue": "#00ADEE"
+        "c-orange": "#FF9A3E"
       },
       fontSize: {
         '28px': '28px',
