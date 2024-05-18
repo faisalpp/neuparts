@@ -12,7 +12,7 @@ import Popup from '../../components/AdminDashboard/Popup'
 import { CheckZip } from '../../api/frontEnd';
 import {BsTruck} from 'react-icons/bs'
 import {GoDotFill} from 'react-icons/go'
-import {AiOutlineSearch} from 'react-icons/ai'
+import {AiOutlineSearch,AiFillCloseCircle} from 'react-icons/ai'
 
 
 const PickUpOrder = ({orders,refresh}) => {

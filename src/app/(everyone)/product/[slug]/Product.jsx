@@ -27,7 +27,7 @@ import TruckSvg from '@/components/svgs/TruckSvg'
 import Loader from '@/components/Loader/Loader'
 import Iframe from '@/components/Reusable/Ifram'
 import { format, getDate } from 'date-fns';
-import Popup from '@/components/AdminDashboard/Popup'
+import Popup from '@/components/Popup'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';

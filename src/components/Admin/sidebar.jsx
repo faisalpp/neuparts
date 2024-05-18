@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-const sidebar = () => {
+const Sidebar = () => {
   return (
     <aside class="hidden lg:flex flex-col w-56 h-screen px-5 py-8 overflow-y-auto bg-b1 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
     <Link href="/">
@@ -87,4 +87,4 @@ const sidebar = () => {
   )
 }
 
-export default sidebar
+export default Sidebar

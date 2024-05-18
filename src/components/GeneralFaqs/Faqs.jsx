@@ -5,7 +5,7 @@ import FaqAccordion from '../FaqAccordion';
 import MobileFaqs from './MobileFaqs';
 
 const Faqs = () => {
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 992);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [faqTabs, setFaqTabs] = useState([
     {
       _id: 1,

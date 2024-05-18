@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-const navbar = () => {
+const Navbar = () => {
 
   const [isOpen, setOpen] = useState(false)
 
@@ -80,4 +80,4 @@ const navbar = () => {
   )
 }
 
-export default navbar
+export default Navbar

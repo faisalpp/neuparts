@@ -38,7 +38,7 @@ const PaymentRadio2 = ({ id, title,labelImage, checked, name, customStyle,change
                     <Typography className="font-medium tracking-032 flex items-center gap-1 text-sm text-b16">
                         {
                             labelImage?.length > 0 ?
-                                labelImage.map((img)=><img src={'/payment/' + img} className='h-[23px] object-contain' alt={title} />)
+                                labelImage.map((img,index)=><img key={index} src={'/payment/' + img} className='h-[23px] object-contain' alt={title} />)
                                 : null
                         }
                         <span className={customStyle}>

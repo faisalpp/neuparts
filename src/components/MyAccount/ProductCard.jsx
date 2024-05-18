@@ -11,7 +11,7 @@ import Toast from '../../utils/Toast'
 const ProductCard = ({ data,reload }) => {
     const StarIconPrinter = ({ numberOfTimes }) => {
         const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
-            <AiFillStar className='text-b7 text-lg' /> // Render the star icon component for each iteration
+            <AiFillStar key={index} className='text-b7 text-lg' /> // Render the star icon component for each iteration
         ));
         return <div className='flex items-center' >{starIcons}</div>; // Render the array of star icons
     }

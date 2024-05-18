@@ -1,8 +1,8 @@
 
 import React from 'react'
 import '../globals.css'
-import Sidebar from '@/components/Admin/sidebar'
-import Navbar from '@/components/Admin/navbar'
+import Sidebar from '@/components/Admin/Sidebar'
+import Navbar from '@/components/Admin/Navbar'
 
 export const metadata = {
   title: 'Neu-Admin',
