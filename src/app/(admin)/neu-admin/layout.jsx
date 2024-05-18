@@ -1,8 +1,8 @@
 
 import React from 'react'
 import '../globals.css'
-import Sidebar from '@/components/Admin/Sidebar'
-import Navbar from '@/components/Admin/Navbar'
+import Sidebar from '@/components/AdminDashboard/Sidebar';
+import Navbar from '@/components/AdminDashboard/Navbar';
 
 export const metadata = {
   title: 'Neu-Admin',
@@ -23,9 +23,9 @@ const layout = ({children}) => {
      {/* Sidebar End */}
      
      {/* Main Content Start */}
-      {/* <main>
+      <main>
         {children}
-      </main> */}
+      </main>
      {/* Main Content Start */}
 
     </div> 
