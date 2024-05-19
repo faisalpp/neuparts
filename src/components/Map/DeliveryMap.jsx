@@ -5,6 +5,7 @@ import { Loader } from "@googlemaps/js-api-loader"
 import MobMapForm from '../MobMapForm'
 import MapForm from '../MapForm'
 import axios from 'axios'
+import { RiLoader4Line } from "react-icons/ri";
 // import { GetZipCords } from '../../api/frontEnd'
 // import Toast from '../../utils/Toast'
 
@@ -72,14 +73,14 @@ const DeliveryMap = ({ customStyle }) => {
 
     const Submit = async () => {
         setLoader(true)
-        const res = await axios.get(`/api/check-zipcode?zip=${zip}`)
-        if (res.status === 200) {
-            const cords = res.data.cords
-            loadMap(cords, res.data.zoom);
-            setSuccess(true);
-            setError(false);
-            setLoader(false)
-        }else {
+        try{
+         const res = await axios.get(`/api/check-zipcode?zip=${zip}`)
+         const cords = res.data.cords
+         loadMap(cords, res.data.zoom);
+         setSuccess(true);
+         setError(false);
+         setLoader(false)
+        }catch(error){
             setSuccess(false);
             setError(true);
             setLoader(false)
@@ -110,7 +111,13 @@ const DeliveryMap = ({ customStyle }) => {
             <MapForm zip={zip} setZip={setZip} error={error} success={success} Submit={Submit} loading={loader} />
 
             {/* Map Section Start */}
-            <div id="map" className='w-full xl:h-[686px] lg:h-[490px] md:h-[300px] h-52 rounded-2xl' ></div>
+            <div className="relative w-full xl:h-[686px] lg:h-[490px] md:h-[300px] h-52 rounded-2xl" >
+            {loader && <div className="absolute bg-black/50 flex justify-center items-center h-full rounded-2xl z-20 w-full" >
+              <RiLoader4Line className='text-white text-6xl animate-spin' />
+             </div>}
+             <div id="map" className='w-full xl:h-[686px] lg:h-[490px] md:h-[300px] h-52 rounded-2xl' ></div>
+            </div>
+
         </div >
     )
 }

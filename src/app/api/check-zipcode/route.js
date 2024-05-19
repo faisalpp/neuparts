@@ -26,7 +26,7 @@ export async function GET(req,res){
         isZip = true
       }
     }catch(error){
-        return NextResponse.json({error: error.message}, {status: 500})
+        return NextResponse.json({error:  `No delivery location found for ${zip}`}, {status: error.response.status})
     }
 
 
