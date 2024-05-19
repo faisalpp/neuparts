@@ -33,7 +33,7 @@ const ProductCard2 = ({ sliderstyle, stars, product }) => {
             {product?.isSale ? (
               <div className="flex w-full items-center justify-end space-x-2">
                 <strike className="text-[rgba(17,16,16,0.64)]">${product?.regPrice}</strike>
-                <span className="rounded-xl bg-b4 px-2 py-1 text-xs font-semibold">- {(100 - (product?.salePrice / product?.regPrice) * 100).toFixed(0)}%</span>
+                <span className="rounded-xl bg-b4 px-2 py-1 text-xs font-semibold">{(100 - (product?.salePrice / product?.regPrice) * 100).toFixed(0)}%</span>
               </div>
             ) : null}
           </div>

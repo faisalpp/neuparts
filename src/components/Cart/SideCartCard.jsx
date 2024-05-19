@@ -16,22 +16,21 @@ const SideCartCard = (props) => {
   const [price, setPrice] = useState(props.item.isSale ? props.item.salePrice : props.item.regPrice);
 
   return (
-    <div className="mt-3 flex w-full justify-start gap-3">
+    <div className="mt-3 flex w-full justify-start gap-3 border-b border-[#F2F2F2] py-5">
       <Image width={400} height={400} quality={100} src={props.item.image} className="h-16 w-16" alt="" />
       <div className="flex w-full flex-col justify-center gap-2">
         <p className="line-clamp-2 text-sm font-semibold">{props.item.title}</p>
-        <div className="flex items-center space-x-5">
+        <div className="space-y-2">
+          <span className="text-xs font-medium">Qty: 1</span>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
-              <span className="text-xs font-semibold text-black/50">
-                Cosmetic <br /> Rating
-              </span>
+              <span className="text-xs font-semibold text-b25">Condition</span>
             </div>
             <div className="flex items-center">
               <span>
-                <ToolTip dimension="w-4 h-4" color="text-b3" />
+                <ToolTip dimension="w-4 h-4" color="text-b25" />
               </span>
-              <StarIconPrinter numberOfTimes={props.item.rating} />
+              {/* <StarIconPrinter numberOfTimes={props.item.rating} /> */}
             </div>
           </div>
           <div className="space-x-1">

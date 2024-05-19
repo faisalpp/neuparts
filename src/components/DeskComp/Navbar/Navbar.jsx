@@ -150,10 +150,10 @@ const Navbar = ({ sCart, setsCart }) => {
         {/* Navbar End */}
         {/* Sub Navbar Start */}
         {/* Mega Menu Start */}
-        <div className={`absolute ${megMenu ? 'pb-20 pt-5' : 'max-h-0'} top-20 z-30 w-full overflow-hidden bg-b1 duration-300`}>
+        <div className={`absolute ${megMenu ? 'pb-20 pt-5' : 'max-h-0'} top-20 z-50 w-full overflow-hidden bg-b1 duration-300`}>
           <div className="mx-auto grid grid-cols-12 justify-center px-16 xl:px-20 2xl:px-120px 3xl:max-w-1680px">
             <div className="col-start-1 col-end-2 flex flex-col items-center">
-              <h4 className="font-semibold xl:whitespace-nowrap">How It Works</h4>
+              <h4 className="font-semibold text-white xl:whitespace-nowrap">How It Works</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
                 <Link href="/how-it-works/what-we-sell">What We Sell</Link>
                 <Link href="/how-it-works/rating-system">Rating System</Link>
@@ -165,7 +165,7 @@ const Navbar = ({ sCart, setsCart }) => {
             </div>
 
             <div className="col-start-3 col-end-5 ml-8">
-              <h4 className="font-semibold">Resources</h4>
+              <h4 className="font-semibold text-white">Resources</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
                 <Link href="/appliance-repair">Appliance Repair</Link>
                 <Link href="">Product Reviews</Link>
@@ -176,7 +176,7 @@ const Navbar = ({ sCart, setsCart }) => {
             </div>
 
             <div className="col-start-6 col-end-6 flex flex-col">
-              <h4 className="font-semibold">About Us</h4>
+              <h4 className="font-semibold text-white">About Us</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
                 <Link href="/our-story">Our Story</Link>
                 <Link href="/our-showroom">Our Outlet</Link>
@@ -186,7 +186,7 @@ const Navbar = ({ sCart, setsCart }) => {
             </div>
 
             <div className="col-start-8 col-end-11">
-              <h4 className="font-semibold">Help & Support</h4>
+              <h4 className="font-semibold text-white">Help & Support</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
                 <Link href="/help-and-support">Help Placing an Order Us</Link>
                 <Link href="">Returns and Exchange</Link>
@@ -195,7 +195,7 @@ const Navbar = ({ sCart, setsCart }) => {
             </div>
 
             <div className="col-start-11 col-end-13">
-              <h4 className="font-semibold">Delivery</h4>
+              <h4 className="font-semibold text-white">Delivery</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
                 <Link href="">Important Information</Link>
               </div>
