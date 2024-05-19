@@ -6,22 +6,77 @@ import { BsArrowRightShort } from 'react-icons/bs';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ApplianceSection = ({ title, Style }) => {
+const ApplianceSection = ({ category, title, Style }) => {
   const [applianceTypes, setApplianceTypes] = useState([
     {
-      title: 'Appliance',
-      image: '/p1.webp',
-      link: '',
+      id: 'appliacne',
+      product: [
+        {
+          title: 'Refrigerators',
+          image: '/p1.webp',
+          link: '',
+        },
+        {
+          title: 'Washers & Dryers',
+          image: '/p1.webp',
+          link: '',
+        },
+        {
+          title: 'Dishwashers',
+          image: '/p1.webp',
+          link: '',
+        },
+        {
+          title: 'Washing Machines',
+          image: '/p1.webp',
+          link: '',
+        },
+        {
+          title: 'Microwave',
+          image: '/p1.webp',
+          link: '',
+        },
+        {
+          title: 'Ranges',
+          image: '/p1.webp',
+          link: '',
+        },
+      ],
     },
     {
-      title: 'Appliance',
-      image: '/p1.webp',
-      link: '',
-    },
-    {
-      title: 'Appliance',
-      image: '/p1.webp',
-      link: '',
+      id: 'parts',
+      product: [
+        {
+          title: 'Hoses & Pipes',
+          image: '/parts-door.webp',
+          link: '',
+        },
+        {
+          title: 'Motors & Pulleys',
+          image: '/parts-door.webp',
+          link: '',
+        },
+        {
+          title: 'Bolt & Knots',
+          image: '/parts-door.webp',
+          link: '',
+        },
+        {
+          title: 'Racks & Trays',
+          image: '/parts-door.webp',
+          link: '',
+        },
+        {
+          title: 'Doors',
+          image: '/parts-door.webp',
+          link: '',
+        },
+        {
+          title: 'Sensors',
+          image: '/parts-door.webp',
+          link: '',
+        },
+      ],
     },
   ]);
   const [loading, setLoading] = useState(true);
@@ -41,16 +96,8 @@ const ApplianceSection = ({ title, Style }) => {
     <div className={`flex flex-col items-center bg-b8 px-4 py-10 md:px-10 lg:py-14 xl:py-28 ${Style}`}>
       <h2 className="mb-4 text-center text-xl font-bold xl:text-4xl">{title}</h2>
       <div className="maincontainer mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:gap-10 2xl:gap-x-10 2xl:gap-y-14">
-        {applianceTypes && applianceTypes.map((item, index) => <SProductCard key={index} title={item.title} image={item.image} link={`/appliances/${item.slug}`} />)}
-        {/* All Appliances */}
-        <Link href="/applianceTypes">
-          <div className="maxmd:mx-auto maxmd:max-w-[330px]">
-            <div className="flex flex-col items-center justify-center rounded-xl border-[1px] border-gray-200 bg-white p-10">
-              <Image width={400} height={400} quality={100} alt="all" src="/all.webp" className="h-56" />
-            </div>
-            <h4 className=" mt-2 text-lg font-bold xl:text-xl">All Appliances</h4>
-          </div>
-        </Link>
+        {applianceTypes && category === 'appliance' && applianceTypes[0].product.map((item, index) => <SProductCard key={index} title={item.title} image={item.image} link={`/appliances/${item.slug}`} />)}
+        {applianceTypes && category === 'parts' && applianceTypes[1].product.map((item, index) => <SProductCard key={index} title={item.title} image={item.image} link={`/appliances/${item.slug}`} />)}
       </div>
       <div className="mt-16 flex justify-center">
         <Link href="/applianceTypes" className="flex w-fit items-center rounded-md border-[1px] border-b3 px-4 py-3 font-semibold text-b3">

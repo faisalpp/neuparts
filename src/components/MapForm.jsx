@@ -1,24 +1,47 @@
-import React from 'react'
-import { AiOutlineSearch, AiOutlineCheckCircle } from 'react-icons/ai'
-import { BsArrowRightShort } from 'react-icons/bs'
+import React from 'react';
+import { AiOutlineSearch, AiOutlineCheckCircle } from 'react-icons/ai';
+import { BsArrowRightShort } from 'react-icons/bs';
 
-const MapForm = ({ zip, setZip, Submit, success, error,loading }) => {
-
+const MapForm = ({ zip, setZip, Submit, success, error, loading }) => {
   return (
-    <div className='mapform lg:flex hidden xl:h-[543px] xl:w-[512px] lg:h-[420px] lg:w-[350px] h-fit py-10  w-[380px] rounded-2xl bg-white bg-opacity-30 backdrop-blur-md  shadow-2xl z-30 ' >
-      <div className='flex flex-col  justify-center xl:px-20 lg:px-10 xl:space-y-5 space-y-2' >
-        <h4 className='font-extrabold xl:text-2xl text-xl' >Delivery & Installation</h4>
-        <p className='lg:text-sm xl:text-[16px] font-medium' >We make getting your appliance delivered and installed easy! We offer delivery and installation services to the greater Austin and surrounding areas! Input your Zipcode to see if we offer delivery and installation services in your area! </p>
-        <div className='flex flex-col space-y-1 bg-b7 px-4 py-4 rounded-lg' >
-          <h4 className='text-white text-sm' >Check Your Zip Code</h4>
-          <div className='flex items-center bg-white rounded-sm py-1 px-2 space-x-2'><AiOutlineSearch className='text-gray-400' /><input className='text-xs outline-none' value={zip} onChange={e => setZip(e.target.value)} placeholder='Enter ZIP Code' /></div>
+    <div className="mapform z-30 hidden h-fit w-[380px] rounded-2xl bg-white bg-opacity-30 py-10  shadow-2xl backdrop-blur-md lg:flex lg:h-[420px] lg:w-[350px]  xl:h-[543px] xl:w-[512px] ">
+      <div className="flex flex-col  justify-center space-y-2 lg:px-10 xl:space-y-5 xl:px-20">
+        <h4 className="text-xl font-extrabold xl:text-2xl">Delivery & Installation</h4>
+        <p className="font-medium lg:text-sm xl:text-[16px]">We make getting your appliance delivered and installed easy! We offer delivery and installation services to the greater Austin and surrounding areas! Input your Zipcode to see if we offer delivery and installation services in your area! </p>
+        <div className="flex flex-col space-y-1 rounded-xl bg-[#053C53] px-4 py-4">
+          <h4 className="text-sm text-white font-semibold">Check Your Zip Code</h4>
+          <div className="flex items-center space-x-2 rounded-md bg-white px-2 py-1">
+            <AiOutlineSearch className="text-gray-400" />
+            <input className="text-xs outline-none py-2" value={zip} onChange={(e) => setZip(e.target.value)} placeholder="Enter ZIP Code" />
+          </div>
         </div>
-        <div className='flex justify-center' ><a onClick={Submit} className='flex items-center cursor-pointer bg-b3 w-full justify-center px-4 py-2 rounded-md text-white font-semibold' >{loading ? <span className='lg:text-sm xl:text-[16px] animate-pulse ' >Finding Best Deals</span> : <><span className='lg:text-sm xl:text-[16px]' >Get Our Best Deals</span><BsArrowRightShort className='text-2xl' /></>}</a></div>
-        <div className={` ${success ? 'flex' : 'hidden'} justify-center`} ><a className='flex items-center cursor-pointer bg-b12 w-full px-4 py-2 justify-center space-x-2 rounded-2xl text-white font-semibold' ><AiOutlineCheckCircle className='text-sm' /><span className='text-xs' >Delivery Available</span></a></div>
-        <div className={` ${error ? 'flex' : 'hidden'} justify-center`} ><a className='flex items-center cursor-pointer bg-red-500 w-max px-4 py-2 justify-center space-x-2 rounded-2xl text-white font-semibold' ><AiOutlineCheckCircle className='text-sm' /><span className='text-xs' >Delivery Not Available - Pickup Only</span></a></div>
+        <div className="flex justify-center">
+          <a onClick={Submit} className="flex w-full cursor-pointer items-center justify-center rounded-md bg-b3 px-4 py-3 font-semibold text-white">
+            {loading ? (
+              <span className="animate-pulse lg:text-sm xl:text-[16px] ">Finding Best Deals</span>
+            ) : (
+              <>
+                <span className="lg:text-sm xl:text-[16px]">Find Out</span>
+                <BsArrowRightShort className="text-2xl" />
+              </>
+            )}
+          </a>
+        </div>
+        <div className={` ${success ? 'flex' : 'hidden'} justify-center`}>
+          <a className="flex w-full cursor-pointer items-center justify-center space-x-2 rounded-2xl bg-b12 px-4 py-2 font-semibold text-white">
+            <AiOutlineCheckCircle className="text-sm" />
+            <span className="text-xs">Delivery Available</span>
+          </a>
+        </div>
+        <div className={` ${error ? 'flex' : 'hidden'} justify-center`}>
+          <a className="flex w-max cursor-pointer items-center justify-center space-x-2 rounded-2xl bg-red-500 px-4 py-2 font-semibold text-white">
+            <AiOutlineCheckCircle className="text-sm" />
+            <span className="text-xs">Delivery Not Available - Pickup Only</span>
+          </a>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MapForm
+export default MapForm;

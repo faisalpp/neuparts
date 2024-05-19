@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className='sticky top-0 z-50 flex justify-between bg-b1 text-white py-4 px-4 md:px-10' >
+      <div className='sticky top-0 z-50 flex lg:hidden justify-between bg-b1 text-white py-4 px-4 md:px-10' >
         <div className='flex gap-4 items-center'>
           {mobMenu ? <div onClick={() => setMobMenu(false)} className='flex items-center h-6 w-6 rounded-full text-white' ><IoCloseOutline className='text-white' /></div> : <div onClick={() => setMobMenu(true)} className='flex items-center h-6 w-6 rounded-full text-white' ><IoMenu className='w-6 h-6' /></div>}
           <Image width={300} height={300} quality={100} src="/neu.webp" className='w-32 h-auto' alt='neuappliance' />

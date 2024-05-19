@@ -19,7 +19,7 @@ const ProductCard2 = ({ sliderstyle, stars, product }) => {
       <div className={`group relative flex flex-col rounded-2xl border-2 border-gray-100 bg-white ${sliderstyle ? sliderstyle : 'sm:mx-2'} overflow-hidden`}>
         <span className="absolute right-0 top-0 z-20 mr-1 mt-2 rounded-2xl bg-b4 px-4 py-2 text-xs font-bold">{(100 - (product?.salePrice / product?.regPrice) * 100).toFixed(0)}% Off</span>
         <div className="relative flex w-full justify-center px-3 pt-10 lg:px-5 xl:px-5">
-          <Image src={product?.image ? product?.image : '/p1.webp'} width={400} height={400} quality={100} className=" xl:w-54 h-60 w-[160px] lg:w-52" alt="refrigrator" />
+          <Image src={product?.image ? product?.image : '/popular-parts.webp'} width={400} height={400} quality={100} className=" xl:w-54 h-60 w-[160px] object-contain lg:w-52" alt="refrigrator" />
           <div className="pointer-events-none absolute bottom-0 left-0 right-0 top-0 flex scale-0 items-center justify-center bg-b3/50 opacity-0 duration-300 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
             <Link href={`/product/${product?.slug}`} className="rounded-lg bg-white px-5 py-2 font-semibold text-black duration-300">
               View Details
@@ -42,7 +42,7 @@ const ProductCard2 = ({ sliderstyle, stars, product }) => {
               <h4 className="text-sm font-semibold text-b15">Condition</h4>
               <ToolTip color="text-b15" />
             </div>
-            <div className="bg-c-orange inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-white">New • Open Box</div>
+            <div className="inline-flex items-center rounded-full bg-c-orange px-3 py-1 text-xs font-semibold text-white">New • Open Box</div>
           </div>
           <div className="flex items-center space-x-10">
             <div className="flex text-sm font-semibold text-b15">

@@ -1,8 +1,7 @@
 import './globals.css';
-import Navbar from "@/components/Navbar";
+import Navbar from '@/components/Navbar';
 import ScrollToTop from '@/components/DeskComp/ScrollToTop';
 import Footer from '@/components/DeskComp/Footer';
-
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,7 +14,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar />
         <ScrollToTop />
-         {children}
+        {children}
         <Footer />
       </body>
     </html>

@@ -5,28 +5,28 @@ import ReviewExSlider from '@/components/ReviewExSlider';
 const SatisfiedSection = ({ apiSectionName, title, dots, SectionStyle }) => {
   const [reviews, setReviews] = useState([
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
+      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
+      author: 'John Doe',
       rating: 4,
     },
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
+      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
+      author: 'John Doe',
       rating: 4,
     },
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
+      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
+      author: 'John Doe',
       rating: 4,
     },
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
+      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
+      author: 'John Doe',
       rating: 4,
     },
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
+      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
+      author: 'John Doe',
       rating: 4,
     },
   ]);

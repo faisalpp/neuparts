@@ -13,9 +13,7 @@ import { BsCart3 } from 'react-icons/bs';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-const SideCart = () => {
-  const sCart = '';
-
+const SideCart = ({ sCart, setsCart }) => {
   const route = useRouter();
 
   // Cart Time Slot Functions
@@ -104,7 +102,7 @@ const SideCart = () => {
 
         <button
           onClick={() => {
-            sCart ? '' : '';
+            setsCart(!sCart);
           }}
           className="xy-center absolute -top-14 right-0 z-40 bg-white duration-200 lg:right-6 lg:top-5 maxlg:h-10 maxlg:w-10 maxlg:rounded-full maxlg:hover:bg-b3  maxlg:hover:text-white"
         >
@@ -119,11 +117,11 @@ const SideCart = () => {
           </div>
           {loading ? (
             <div className="xy-center h-full w-full">
-              <Image width={200} height={200} quality={100} alt="" src="/loader-bg.gif" className="ml-2 h-10 w-10" />
+              <Image width={200} height={200} quality={100} alt="Loading" src="/loader-bg.gif" className="ml-2 h-10 w-10" />
             </div>
           ) : products?.length === 0 ? (
             <div className="flex h-full w-full flex-col items-center justify-center space-y-5 px-2">
-              <Image width={200} height={200} quality={100} alt="" className="h-auto w-full" src="/bag.webp" />
+              <Image width={200} height={200} quality={100} alt="Cart" className="h-20 w-20" src="/bag.webp" />
               <h1 className="font-extrabold">Your Cart is Empty</h1>
               <h2 className="text-center">Lorem Ipsum Doller Sit Amet, Consecture Audipicsing Elit</h2>
               <button type="button" className="xy-center w-1/2 rounded-lg bg-b3 py-3 text-sm font-medium text-white">
