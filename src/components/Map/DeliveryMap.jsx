@@ -4,6 +4,7 @@ import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai'
 import { Loader } from "@googlemaps/js-api-loader"
 import MobMapForm from '../MobMapForm'
 import MapForm from '../MapForm'
+import axios from 'axios'
 // import { GetZipCords } from '../../api/frontEnd'
 // import Toast from '../../utils/Toast'
 
@@ -25,7 +26,7 @@ const DeliveryMap = ({ customStyle }) => {
 
     const loadMap = async (result, zipZoom) => {
         const loader = new Loader({
-            apiKey: import.meta.env.VITE_GOOGLE_API_KEY, // Replace with your own API key
+            apiKey: process.env.NEXT_GOOGLE_API_KEY, // Replace with your own API key
             version: 'weekly', // or specify a specific version (e.g., 'weekly', 'weekly.next', 'beta')
         });
 
@@ -69,30 +70,20 @@ const DeliveryMap = ({ customStyle }) => {
 
     const [loader, setLoader] = useState(false)
 
-
     const Submit = async () => {
-        // setLoader(true)
-        // const res = await GetZipCords({ zip: zip });
-        // if (res.status === 401) {
-        //     Toast(res.data.message, 'error', 1000)
-        //     setSuccess(false);
-        //     setError(true);
-        //     setLoader(false)
-        // }
-        // if (res.status === 200) {
-        //     const cords = res.data.cords
-        //     loadMap(cords, res.data.zoom);
-        //     setSuccess(true);
-        //     setError(false);
-        //     setLoader(false)
-        // } else {
-        //     if (res.status === 500 && res.data.message) {
-        //         Toast(res.data.message, 'error', 1000)
-        //     }
-        //     setSuccess(false);
-        //     setError(true);
-        //     setLoader(false)
-        // }
+        setLoader(true)
+        const res = await axios.get(`/api/check-zipcode?zip=${zip}`)
+        if (res.status === 200) {
+            const cords = res.data.cords
+            loadMap(cords, res.data.zoom);
+            setSuccess(true);
+            setError(false);
+            setLoader(false)
+        }else {
+            setSuccess(false);
+            setError(true);
+            setLoader(false)
+        }
     };
 
     useEffect(() => {
