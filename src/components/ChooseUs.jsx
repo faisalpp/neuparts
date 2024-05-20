@@ -1,5 +1,5 @@
 import React from 'react';
-import MapCards from '@/components/HowItWorks/MapCards';
+import MapCards from '@/components/HowItworks/MapCards';
 
 const ChooseUs = () => {
   return (
