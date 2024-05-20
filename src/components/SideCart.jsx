@@ -48,9 +48,9 @@ const SideCart = ({ sCart, setsCart }) => {
   const subTotal = 12;
   const cartCount = 0;
   const products = [
-    { image: '', title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: '379.00', count: 1, salePrice: '279.00', condition: 'new' },
-    { image: '', title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: '379.00', count: 1, salePrice: '279.00', condition: 'certified' },
-    { image: '', title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: '379.00', count: 1, salePrice: '279.00', condition: 'used' },
+    { image: '/popular-parts.webp', title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: '379.00', count: 1, salePrice: '279.00', condition: 'new' },
+    { image: '/popular-parts.webp', title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: '379.00', count: 1, salePrice: '279.00', condition: 'certified' },
+    { image: '/popular-parts.webp', title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: '379.00', count: 1, salePrice: '279.00', condition: 'used' },
   ];
   const orderInfo = '';
 
@@ -168,7 +168,7 @@ const SideCart = ({ sCart, setsCart }) => {
                   }}
                   disabled={zipError ? true : false}
                   type="button"
-                  className={`rounded-lg text-xs text-white ${zipError ? 'cursor-not-allowed bg-b3/75' : 'bg-b3'} flex justify-center gap-2 px-4 py-3`}
+                  className={`rounded-lg text-xs font-medium text-white ${zipError ? 'cursor-not-allowed bg-b3/75' : 'bg-b3'} flex justify-center gap-2 px-4 py-3`}
                 >
                   Proceed to Checkout
                   <AiOutlineArrowRight className="text-base" />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ToolTip from '../ToolTip';
+import FourStar from '@/components/svgs/FourStar';
 import { AiFillStar } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import Image from 'next/image';
@@ -17,7 +18,7 @@ const SideCartCard = (props) => {
 
   return (
     <div className="mt-3 flex w-full justify-start gap-3 border-b border-[#F2F2F2] py-5">
-      <Image width={400} height={400} quality={100} src={props.item.image} className="h-16 w-16" alt="" />
+      <Image width={400} height={400} quality={100} src={props.item.image} className="h-auot w-28 object-contain" alt={props.item.title} />
       <div className="flex w-full flex-col justify-center gap-2">
         <p className="line-clamp-2 text-sm font-semibold">{props.item.title}</p>
         <div className="space-y-2">
@@ -26,10 +27,18 @@ const SideCartCard = (props) => {
             <div className="flex items-center gap-1">
               <span className="text-xs font-semibold text-b25">Condition</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
               <span>
                 <ToolTip dimension="w-4 h-4" color="text-b25" />
               </span>
+              {props.item.condition == 'new' && (
+                <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-[#053C53] px-3 py-1 text-xs font-semibold text-white">
+                  <FourStar />
+                  New
+                </div>
+              )}
+              {props.item.condition == 'certified' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#0070B2] px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>}
+              {props.item.condition == 'used' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div>}
               {/* <StarIconPrinter numberOfTimes={props.item.rating} /> */}
             </div>
           </div>
@@ -40,8 +49,8 @@ const SideCartCard = (props) => {
         </div>
       </div>
       <div>
-        <button type="button" onClick={(e) => props.RemoveFromCart(e, props.indx, props.item.pid, price)}>
-          {props.delState === props.indx ? <RiDeleteBin6Line className="animate-bounce text-xl text-red-500" /> : <RiDeleteBin6Line className="text-xl text-b3" />}
+        <button type="button" onClick={(e) => props.RemoveFromCart(e, props.indx, props.item.pid, price)} className="grid h-6 w-6 place-items-center rounded-full bg-b8">
+          {props.delState === props.indx ? <RiDeleteBin6Line className="animate-bounce text-sm text-red-500" /> : <RiDeleteBin6Line className="text-sm text-b3" />}
         </button>
       </div>
     </div>
