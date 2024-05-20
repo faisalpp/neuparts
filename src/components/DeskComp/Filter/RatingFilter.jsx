@@ -1,130 +1,95 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { Checkbox } from '@material-tailwind/react';
-import { AiFillStar } from 'react-icons/ai';
+import FourStar from '@/components/svgs/FourStar';
 
-const TypeFilter = ({ filters, setFilt, filt }) => {
-  const [f1, setF1] = useState('');
-  const [f2, setF2] = useState('');
-  const [f3, setF3] = useState('');
-
-  const [check1, setCheck1] = useState(filt.rating === 3 ? true : false);
-  const [check2, setCheck2] = useState(filt.rating === 4 ? true : false);
-  const [check3, setCheck3] = useState(filt.rating === 5 ? true : false);
-
-  const getRatingProducts = async (check, rating) => {
-    if (check) {
-      setFilt((prev) => {
-        return { ...prev, rating: rating };
-      });
-    } else {
-      delete filt.rating;
-      setFilt((prev) => {
-        return { ...prev };
-      });
-    }
-  };
-
-  const handleCheckboxChange = (checkboxNumber, checked, rating) => {
-    switch (checkboxNumber) {
-      case 1: {
-        setCheck1(checked);
-        setCheck2((isCheck) => (isCheck ? !isCheck : isCheck));
-        setCheck3((isCheck) => (isCheck ? !isCheck : isCheck));
-        getRatingProducts(checked, rating);
-        break;
-      }
-      case 2: {
-        setCheck2(checked);
-        setCheck1((isCheck) => (isCheck ? !isCheck : isCheck));
-        setCheck3((isCheck) => (isCheck ? !isCheck : isCheck));
-        getRatingProducts(checked, rating);
-        break;
-      }
-      case 3: {
-        setCheck3(checked);
-        setCheck2((isCheck) => (isCheck ? !isCheck : isCheck));
-        setCheck1((isCheck) => (isCheck ? !isCheck : isCheck));
-        getRatingProducts(checked, rating);
-        break;
-      }
-      default:
-        break;
-    }
-  };
-
-  useEffect(() => {
-    setF1(filters.find((obj) => obj._id === 5));
-    setF2(filters.find((obj) => obj._id === 4));
-    setF3(filters.find((obj) => obj._id === 3));
-  }, [filters]);
-
+const TypeFilter = () => {
   return (
     <>
       <DropDown title="Comatic Rating">
-        <>
-          {/* Item Start */}
-          {f1 ? (
-            <div className="flex items-center">
-              <div className="flex items-center space-x-2">
-                <Checkbox ripple={false} checked={check1} onChange={(e) => handleCheckboxChange(1, e.target.checked, 5)} className="checked:bg-b3 checked:text-white" />
-                <span className="flex">
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                </span>
+        {/* Item Start */}
+        <div className="flex items-center">
+          <div className="label-p-0 flex items-center gap-2">
+            <Checkbox ripple={false} checked={true} className="checked:bg-b3 checked:text-white" />
+            <span className="flex">
+              <div className="bg-dark-blue inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white">
+                <FourStar />
+                New
               </div>
-              <div className="flex w-full justify-end text-xs">
-                <span>({f1 ? f1?.count : 0})</span>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-          {/* Item End */}
-          {/* Item Start */}
-          {f2 ? (
-            <div className="flex items-center">
-              <div className="flex items-center space-x-2">
-                <Checkbox ripple={false} checked={check2} onChange={(e) => handleCheckboxChange(2, e.target.checked, 4)} className="checked:bg-b3 checked:text-white" />
-                <span className="flex">
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                </span>
-              </div>
-              <div className="flex w-full justify-end text-xs">
-                <span>({f2 ? f2?.count : 0})</span>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-          {/* Item End */}
-          {/* Item Start */}
-          {f3 ? (
-            <div className="flex items-center">
-              <div className="flex items-center space-x-2">
-                <Checkbox ripple={false} checked={check3} onChange={(e) => handleCheckboxChange(3, e.target.checked, 3)} className="checked:bg-b3 checked:text-white" />
-                <span className="flex">
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                  <AiFillStar className="text-b7" />
-                </span>
-              </div>
-              <div className="flex w-full justify-end text-xs">
-                <span>({f3 ? f3?.count : 0})</span>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-          {/* Item End */}
-        </>
+            </span>
+          </div>
+          <div class="flex w-full justify-end text-xs">
+            <span>(84)</span>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <div className="label-p-0 flex items-center gap-2">
+            <Checkbox ripple={false} checked={false} className="checked:bg-b3 checked:text-white" />
+            <span className="flex">
+              <div className="bg-dark-light-cyan inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white">New / Open Box</div>
+            </span>
+          </div>
+          <div class="flex w-full justify-end text-xs">
+            <span>(84)</span>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <div className="label-p-0 flex items-center gap-2">
+            <Checkbox ripple={false} checked={false} className="checked:bg-b3 checked:text-white" />
+            <span className="flex">
+              <div className="bg-dark-cyan inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>
+            </span>
+          </div>
+          <div class="flex w-full justify-end text-xs">
+            <span>(84)</span>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <div className="label-p-0 flex items-center gap-2">
+            <Checkbox ripple={false} checked={false} className="checked:bg-b3 checked:text-white" />
+            <span className="flex">
+              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade A</div>
+            </span>
+          </div>
+          <div class="flex w-full justify-end text-xs">
+            <span>(84)</span>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <div className="label-p-0 flex items-center gap-2">
+            <Checkbox ripple={false} checked={false} className="checked:bg-b3 checked:text-white" />
+            <span className="flex">
+              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade B</div>
+            </span>
+          </div>
+          <div class="flex w-full justify-end text-xs">
+            <span>(84)</span>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <div className="label-p-0 flex items-center gap-2">
+            <Checkbox ripple={false} checked={false} className="checked:bg-b3 checked:text-white" />
+            <span className="flex">
+              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade C</div>
+            </span>
+          </div>
+          <div class="flex w-full justify-end text-xs">
+            <span>(84)</span>
+          </div>
+        </div>
+        <div className="flex items-center">
+          <div className="label-p-0 flex items-center gap-2">
+            <Checkbox ripple={false} checked={false} className="checked:bg-b3 checked:text-white" />
+            <span className="flex">
+              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div>
+            </span>
+          </div>
+          <div class="flex w-full justify-end text-xs">
+            <span>(84)</span>
+          </div>
+        </div>
+        {/* Item End */}
       </DropDown>
     </>
   );

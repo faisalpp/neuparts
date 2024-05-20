@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { BiUserCircle } from 'react-icons/bi';
+import { BiSearch, BiUserCircle } from 'react-icons/bi';
 import { IoMenu } from 'react-icons/io5';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import { Menu } from '@headlessui/react';
@@ -44,17 +44,21 @@ const Navbar = ({ sCart, setsCart }) => {
     <>
       <div className="sticky top-0 z-50 hidden bg-b1 lg:block">
         {/* Navbar Start */}
-        <div className="maincontainer grid-cols-12 items-center py-5 lg:grid">
-          <Link href="/">
-            <Image width={200} height={30} quality={100} className="col-start-1 col-end-3 h-auto w-full" src="/neu.webp" alt="logo" />
+        <div className="maincontainer items-center justify-between py-5 lg:flex">
+          <Link href="/" className="h-auto w-32">
+            <Image width={200} height={30} quality={100} className="h-auto w-32" src="/neu.webp" alt="logo" />
           </Link>
 
-          <div className="col-start-9 col-end-13 flex w-full justify-end space-x-2">
+          <div className="flex w-full justify-end space-x-2">
+            <button type="button" className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-b2 px-4 text-white">
+              <BiSearch />
+              <span className="ml-1 text-xs font-medium">Search</span>
+            </button>
             <div
               onClick={() => {
                 setsCart(!sCart);
               }}
-              className="flex h-10 w-max cursor-pointer items-center rounded-md bg-b2 px-4 text-white"
+              className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-b2 px-4 text-white"
             >
               <AiOutlineShoppingCart />
               <span className="ml-2 text-xs font-medium">Cart</span>
@@ -126,15 +130,13 @@ const Navbar = ({ sCart, setsCart }) => {
               </Menu>
             ) : null}
             {isAdmin || isUser ? null : (
-              <Link href="/login">
-                <div className="flex h-10 w-32 cursor-pointer items-center rounded-md bg-b2 px-2 text-white">
-                  <BiUserCircle />
-                  <span className="ml-1 text-xs font-medium">My Account</span>
-                </div>
+              <Link href="/login" className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-b2 px-4 text-white">
+                <BiUserCircle />
+                <span className="ml-1 text-xs font-medium">My Account</span>
               </Link>
             )}
 
-            {/* {isAuth ? <Link href="/my-account/profile" ><div className='flex items-center px-2 bg-b2 h-10 w-32 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link> : <Link href="/login" ><div className='flex items-center px-2 bg-b2 h-10 w-32 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link>} */}
+            {/* {isAuth ? <Link href="/my-account/profile" ><div className='flex items-center justify-center bg-b2 h-10 px-4 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link> : <Link href="/login" ><div className='flex items-center px-2 bg-b2 h-10 px-4 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link>} */}
             <div
               onClick={() => {
                 megMenu ? setMegMenu(false) : setMegMenu(true);

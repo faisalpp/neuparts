@@ -12,7 +12,7 @@ const DropDown = ({ title, children }) => {
       <div className="flex h-auto w-full flex-col border-b-[1px] py-4">
         {/* Controller */}
         <div className="flex cursor-pointer items-center border-b-gray-300" onClick={() => setIsShowing((isShowing) => !isShowing)}>
-          <h6 className="w-72 text-sm font-bold">{title}</h6>
+          <h3 className="w-72 text-sm font-bold">{title}</h3>
           <div className="flex w-full items-center justify-end">{isShowing ? <RiArrowDropUpLine className="text-2xl" /> : <RiArrowDropDownLine className="text-2xl" />}</div>
         </div>
         {/* Body */}

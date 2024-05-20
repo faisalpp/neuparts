@@ -12,9 +12,54 @@ import { useRouter } from 'next/navigation';
 const AllProducts = () => {
   const [categoriesFilters, setCategoriesFilters] = useState([
     {
-      title: 'hello',
-      slug: '',
-      productCount: 4,
+      title: 'Appliance Type',
+      category: [
+        {
+          title: 'Refrigirators',
+          slug: '',
+          productCount: 84,
+        },
+        {
+          title: 'Refrigirators',
+          slug: '',
+          productCount: 84,
+        },
+        {
+          title: 'Refrigirators',
+          slug: '',
+          productCount: 84,
+        },
+        {
+          title: 'Refrigirators',
+          slug: '',
+          productCount: 84,
+        },
+      ],
+    },
+    {
+      title: 'Part Type',
+      category: [
+        {
+          title: 'Belts',
+          slug: '',
+          productCount: 84,
+        },
+        {
+          title: 'Doors',
+          slug: '',
+          productCount: 84,
+        },
+        {
+          title: 'Racks',
+          slug: '',
+          productCount: 84,
+        },
+        {
+          title: 'Rollers',
+          slug: '',
+          productCount: 84,
+        },
+      ],
     },
   ]);
   const [ratingFilters, setRatingFilters] = useState([
@@ -31,32 +76,36 @@ const AllProducts = () => {
       count: 4,
     },
   ]);
-  const [saleFilter, setSaleFilter] = useState({});
+  const [saleFilter, setSaleFilter] = useState([{ count: 99 }]);
   const [regularFilter, setRegularFilter] = useState({});
   const [products, setProducts] = useState([
     {
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, autem!',
+      image: '/popular-parts.webp',
+      title: 'Upper Rack for Dish Washers',
       isSale: true,
       salePrice: 279.0,
       regPrice: 230.0,
       rating: 5,
     },
     {
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, autem!',
+      image: '/popular-parts.webp',
+      title: 'Upper Rack for Dish Washers',
       isSale: true,
       salePrice: 279.0,
       regPrice: 230.0,
       rating: 5,
     },
     {
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, autem!',
+      image: '/popular-parts.webp',
+      title: 'Upper Rack for Dish Washers',
       isSale: true,
       salePrice: 279.0,
       regPrice: 230.0,
       rating: 5,
     },
     {
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, autem!',
+      image: '/popular-parts.webp',
+      title: 'Upper Rack for Dish Washers',
       isSale: true,
       salePrice: 279.0,
       regPrice: 230.0,
@@ -105,9 +154,9 @@ const AllProducts = () => {
     <>
       <div className="maincontainer mt-5 flex items-center py-5">
         <div className="flex items-center">
-          <h5 className="text-xs text-blue-400">Home</h5>
+          <h5 className="text-xs text-b3">Home</h5>
           <RiArrowDropRightLine className="text-xl text-gray-500" />
-          <h5 className="text-xs text-gray-400">Products</h5>
+          <h5 className="text-xs text-b1">Products</h5>
         </div>
         <div className="flex w-full items-center justify-end space-x-5">
           <BsGrid className="cursor-pointer" onClick={() => setIsGrid(true)} />

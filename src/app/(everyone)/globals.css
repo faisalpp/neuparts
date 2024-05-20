@@ -309,3 +309,8 @@ h6.ce-header {
 .button-hover {
   @apply bg-b3 duration-200 hover:bg-b3/90;
 }
+
+
+.label-p-0 label{
+  @apply !p-0;
+}

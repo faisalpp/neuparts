@@ -1,15 +1,8 @@
 'use client';
 import React, { useEffect, useState, useRef } from 'react';
-import { AiOutlineArrowRight, AiOutlineClose, AiOutlineShop, AiOutlineShoppingCart } from 'react-icons/ai';
-import { HiOutlineTruck } from 'react-icons/hi';
-import { FaDotCircle } from 'react-icons/fa';
-import { BiLoaderAlt, BiError } from 'react-icons/bi';
+import { AiOutlineArrowRight, AiOutlineClose } from 'react-icons/ai';
 import SideCartCard from './Cart/SideCartCard';
-import { GoDotFill } from 'react-icons/go';
-import { TiTick } from 'react-icons/ti';
-import { BiSearchAlt2 } from 'react-icons/bi';
 import SelectTimeSlot from './Cart/SelectTimeSlot';
-import { BsCart3 } from 'react-icons/bs';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 

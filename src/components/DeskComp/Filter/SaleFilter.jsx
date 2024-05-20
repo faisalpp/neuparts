@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { Checkbox } from '@material-tailwind/react';
 
-const SaleFilter = ({ sale, reg, setFilt, filt }) => {
+const SaleFilter = ({ sale, setFilt }) => {
   const [saleChk, setSaleChk] = useState(true);
   const [regChk, setRegChk] = useState(false);
 
@@ -46,8 +46,8 @@ const SaleFilter = ({ sale, reg, setFilt, filt }) => {
           {/* Item Start */}
           {sale?.length > 0 ? (
             <div className="flex items-center">
-              <div className="flex items-center space-x-2">
-                <Checkbox name="sale" ripple={false} checked={saleChk} onChange={(e) => handleSaleChk(e)} className="checked:bg-b3 checked:text-white" />
+              <div className="label-p-0 flex items-center gap-2">
+                <Checkbox name="sale" ripple={false} checked={true} onChange={(e) => handleSaleChk(e)} className="checked:bg-b3 checked:text-white" />
                 <span className="flex w-max text-sm">Yes</span>
               </div>
               <div className="flex w-full justify-end text-xs">
@@ -59,7 +59,7 @@ const SaleFilter = ({ sale, reg, setFilt, filt }) => {
           )}
           {/* Item End */}
           {/* Item Start */}
-          {reg?.length > 0 ? (
+          {/* {reg?.length > 0 ? (
             <div className="flex items-center">
               <div className="flex items-center space-x-2">
                 <Checkbox name="sale" ripple={false} checked={regChk} onChange={(e) => handleRegChk(e)} className="checked:bg-b3 checked:text-white" />
@@ -71,7 +71,7 @@ const SaleFilter = ({ sale, reg, setFilt, filt }) => {
             </div>
           ) : (
             ''
-          )}
+          )} */}
           {/* Item End */}
         </>
       </DropDown>
