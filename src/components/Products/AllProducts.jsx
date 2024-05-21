@@ -173,7 +173,7 @@ const AllProducts = () => {
         <ProductFilter loading={filterLoading} query={params} setQuery={setParams} saleFilter={saleFilter} regularFilter={regularFilter} categoriesFilters={categoriesFilters} ratingFilters={ratingFilters} onClose={handleCloseFilter} isFilter={isFilter} />
         {/* Filters End */}
 
-        <div className={`grid ${isGrid ? 'grid-cols-1 lg:grid-cols-3 lg:gap-x-2' : 'grid-cols-1'} mb-10 w-full gap-y-5`}>
+        <div className={`grid ${isGrid ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:gap-x-2' : 'grid-cols-1'} mb-10 w-full gap-y-5`}>
           {loading ? (
             <div className="flex w-full items-center justify-center">
               <Image width={400} height={400} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" />

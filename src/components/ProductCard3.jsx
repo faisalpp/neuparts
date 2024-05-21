@@ -17,72 +17,68 @@ const ProductCard3 = ({ isGrid, product }) => {
   return (
     <>
       {isGrid ? (
-        <div className="w-12/12 flex h-fit cursor-pointer flex-col items-center rounded-2xl border-[1px] border-gray-200 py-5">
-          <Link href={`/product/${product.slug}`}>
-            <div className="relative">
-              <Image width={400} height={400} quality={190} src="/popular-parts.webp" alt="Product Feature Image" className={`h-[330px] w-[355px] object-contain`} />
-            </div>
-            <div className="space-y-3">
-              <button type="button" className="flex items-center gap-2 text-b3">
-                <FaRegHeart /> Add to favorites
-              </button>
-              <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
+        <Link href={`/product/${product.slug}`} className="rounded-2xl border-[1px] border-gray-200 py-5">
+          <div className="relative">
+            <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className={`h-[330px] w-full object-contain`} />
+          </div>
+          <div className="space-y-3">
+            <button type="button" className="flex items-center gap-2 text-b3">
+              <FaRegHeart /> Add to favorites
+            </button>
+            <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
 
-              <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
-                <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
-                  Price Range
-                  <Tag />
-                </span>
-                <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">
-                  ${product.salePrice} - ${product.regPrice}
-                </div>
+            <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
+              <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
+                Price Range
+                <Tag />
+              </span>
+              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">
+                ${product.salePrice} - ${product.regPrice}
               </div>
-              <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
-                <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
-                  Discount <br /> Range
-                  <span>%</span>
-                </span>
-                <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">10%-70%</div>
-              </div>
-              <button type="button" className="flex items-center font-semibold text-b3 underline">
-                15 Buying Options →
-              </button>
             </div>
-          </Link>
-        </div>
+            <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
+              <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
+                Discount <br /> Range
+                <span>%</span>
+              </span>
+              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">10%-70%</div>
+            </div>
+            <button type="button" className="flex items-center font-semibold text-b3 underline">
+              15 Buying Options →
+            </button>
+          </div>
+        </Link>
       ) : (
-        <Link className="h-fit" href={`/product/${product.slug}`}>
-          <div className="flex w-full cursor-pointer items-center space-x-2 rounded-2xl border-[1px] border-gray-200 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10">
-            <div className="relative w-44 coxs:w-52">
-              <Image width={400} height={400} quality={190} src="/popular-parts.webp" alt="Product Feature Image" className="h-60 w-60 object-contain" />
-            </div>
+        <Link className="flex w-full cursor-pointer items-center space-x-2 rounded-2xl border-[1px] border-gray-200 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10" href={`/product/${product.slug}`}>
+          <div className="relative w-44 coxs:w-52">
+            <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-60 w-60 object-contain" />
+          </div>
 
-            <div className="flex w-[60%] flex-col gap-3 px-1 lg:px-5 3xl:w-[55%]">
-              <button type="button" className="flex items-center gap-2 text-b3">
-                <FaRegHeart /> Add to favorites
-              </button>
-              <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
+          <div className="flex w-[60%] flex-col gap-3 px-1 lg:px-5 3xl:w-[55%]">
+            <button type="button" className="flex items-center gap-2 text-b3">
+              <FaRegHeart /> Add to favorites
+            </button>
+            <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
 
-              <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
-                <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
-                  Price Range
-                  <Tag />
-                </span>
-                <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">
-                  ${product.salePrice} - ${product.regPrice}
-                </div>
+            <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
+              <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
+                Price Range
+                <Tag />
+              </span>
+              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">
+                ${product.salePrice} - ${product.regPrice}
               </div>
-              <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
-                <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
-                  Discount <br /> Range
-                  <span>%</span>
-                </span>
-                <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">10%-70%</div>
-              </div>
-              <button type="button" className="flex items-center font-semibold text-b3 underline">
-                15 Buying Options →
-              </button>
             </div>
+            <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
+              <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
+                Discount <br /> Range
+                <span>%</span>
+              </span>
+              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">10%-70%</div>
+            </div>
+            <button type="button" className="flex items-center font-semibold text-b3 underline">
+              15 Buying Options →
+            </button>
           </div>
         </Link>
       )}
