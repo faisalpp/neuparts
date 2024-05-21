@@ -27,7 +27,7 @@ const ProductCard3 = ({ isGrid, product }) => {
             </button>
             <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
 
-            <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
+            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
               <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
                 Price Range
                 <Tag />
@@ -36,7 +36,7 @@ const ProductCard3 = ({ isGrid, product }) => {
                 ${product.salePrice} - ${product.regPrice}
               </div>
             </div>
-            <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
+            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
               <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
                 Discount <br /> Range
                 <span>%</span>
@@ -60,7 +60,7 @@ const ProductCard3 = ({ isGrid, product }) => {
             </button>
             <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
 
-            <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
+            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
               <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
                 Price Range
                 <Tag />
@@ -69,7 +69,7 @@ const ProductCard3 = ({ isGrid, product }) => {
                 ${product.salePrice} - ${product.regPrice}
               </div>
             </div>
-            <div className="flex gap-1 sm:items-center lg:mt-5 coxs:gap-2 maxcosm:flex-col">
+            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
               <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
                 Discount <br /> Range
                 <span>%</span>
