@@ -17,9 +17,9 @@ const ProductCard3 = ({ isGrid, product }) => {
   return (
     <>
       {isGrid ? (
-        <Link href={`/product/${product.slug}`} className="rounded-2xl border-[1px] border-gray-200 py-5">
+        <Link href={`/product/${product.slug}`} className="grid place-items-center rounded-2xl border-[1px] border-gray-200 p-4 2xl:p-5">
           <div className="relative">
-            <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className={`h-[330px] w-full object-contain`} />
+            <Image width={400} height={400} quality={100} src={product.image} alt="Product Feature Image" className={`mx-auto h-[220px] w-full object-contain 2xl:w-2/3`} />
           </div>
           <div className="space-y-3">
             <button type="button" className="flex items-center gap-2 text-b3">

@@ -28,12 +28,12 @@ const GallerySlider = ({ page, setPage, totalPages, media, setImg, img }) => {
     <>
       <div className="relative mx-5 my-8">
         <button onClick={btnprev} className="absolute -right-5 top-0 z-40 h-full">
-          <div className="group hidden cursor-pointer rounded-full bg-black/30 px-2 py-2 text-white hover:bg-cyan-500 lg:flex">
+          <div className="group hidden cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-cyan-500 lg:flex">
             <BsArrowRightShort className="text-xl" />
           </div>
         </button>
         <button onClick={btnnext} className="absolute -left-5 top-0 z-40 h-full">
-          <div className="group hidden cursor-pointer rounded-full bg-black/30 px-2 py-2 text-white hover:bg-cyan-500 lg:flex">
+          <div className="group hidden cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-cyan-500 lg:flex">
             <BsArrowLeftShort className="text-xl" />
           </div>
         </button>

@@ -40,7 +40,7 @@ const CosmaticSlider = ({ products, sliderstyle }) => {
 
   const PrevButton = ({ onClick }) => (
     <button onClick={onClick} className="prev-button pointer-events-none absolute -left-3 top-0 z-40 hidden h-full sm:block md:-left-8">
-      <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/30 px-2 py-2 text-white hover:bg-black">
+      <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-black">
         <BsArrowLeftShort className="text-xl" />
       </div>
     </button>
@@ -48,7 +48,7 @@ const CosmaticSlider = ({ products, sliderstyle }) => {
 
   const NextButton = ({ onClick }) => (
     <button onClick={onClick} className="next-button pointer-events-none absolute -right-3 top-0 z-40 hidden h-full sm:block md:-right-8">
-      <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/30 px-2 py-2 text-white hover:bg-black">
+      <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-black">
         <BsArrowRightShort className="text-xl" />
       </div>
     </button>

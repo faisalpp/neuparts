@@ -26,7 +26,7 @@ const StickyNavbar = ({ state, product, addCart }) => {
   return (
     <>
       <div className={`fixed top-0 z-50 ${state ? 'lg:flex' : 'hidden'} w-full flex-col bg-white shadow-lg`}>
-        <div className="bg-gray-100 maxlg:hidden">
+        <div className="maxlg:hidden">
           <div className="maincontainer items-center justify-center py-5 lg:flex">
             <div className="max-w-6/12 flex w-6/12 items-center space-x-5">
               <div className="w-fit rounded-lg border-[1px] border-gray-200 px-2 py-1">
@@ -45,7 +45,7 @@ const StickyNavbar = ({ state, product, addCart }) => {
                   </div>
                 ) : null}
               </div>
-              <div onClick={addCart} className="flex cursor-pointer items-center justify-center rounded-lg bg-b7 px-2 py-3 text-sm text-white  lg:px-10">
+              <div onClick={addCart} className="flex cursor-pointer items-center justify-center rounded-lg button-hover px-2 py-3 text-sm text-white  lg:px-10">
                 <AiOutlineShoppingCart className="text-lg" />
                 <h6 className="ml-2 font-bold">Add To Cart</h6>
               </div>
