@@ -5,7 +5,7 @@ import ToolTip from './ToolTip';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const OtherProductCard = ({slug, rating, disabled, disabledImg, product }) => {
+const OtherProductCard = ({ slug, rating, disabled, disabledImg, product }) => {
   const StarIconPrinter = ({ numberOfTimes }) => {
     const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
       <AiFillStar key={index} className="text-base" /> // Render the star icon component for each iteration
@@ -37,11 +37,11 @@ const OtherProductCard = ({slug, rating, disabled, disabledImg, product }) => {
               <StarIconPrinter numberOfTimes={product?.rating} />
             </div>
             <div className="relative my-3 flex w-full items-center justify-center">
-              <Image width={400} height={400} quality={100} src={firstImg?.data} className="h-[135px] w-28" alt="product" />
+              <Image width={400} height={400} quality={100} src="/popular-parts.webp" className="h-[135px] w-28" alt="product" />
             </div>
             <div className="flex flex-col space-y-3 px-2">
               <div className="flex items-center">
-                <h6 className="text-sm font-semibold text-b3">${product?.isSale ? product?.salePrice : product?.regPrice}</h6>
+                <h6 className="text-sm font-semibold text-b3">$236</h6>
                 {product?.isSale ? (
                   <div className="flex w-full justify-end text-xs text-gray-500">
                     <strike>${product?.regPrice}</strike>
@@ -51,7 +51,7 @@ const OtherProductCard = ({slug, rating, disabled, disabledImg, product }) => {
               <div className="flex items-center">
                 <h6 className="text-xs font-semibold text-gray-500">Discount&nbsp;%</h6>
                 <div className="flex w-full justify-end">
-                  <span className={`${disabled === 'true' ? 'bg-b34/30' : 'bg-b4'} rounded-2xl px-1 py-1 text-[9px] font-semibold lg:px-3 lg:text-[8px]`}>-{(100 - (product?.salePrice / product?.regPrice) * 100).toFixed(0)}%</span>
+                  <span className={`rounded-2xl bg-b4 px-1 py-1 text-[9px] font-semibold lg:px-3 lg:text-[8px]`}>-20%</span>
                 </div>
               </div>
               <div className="flex w-full justify-center">
