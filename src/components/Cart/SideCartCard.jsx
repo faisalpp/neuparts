@@ -18,7 +18,7 @@ const SideCartCard = (props) => {
 
   return (
     <div className="mt-3 flex w-full justify-start gap-3 border-b border-[#F2F2F2] py-5">
-      <Image width={400} height={400} quality={100} src={props.item.image} className="h-auot w-28 object-contain" alt={props.item.title} />
+      <Image width={400} height={400} quality={100} src={props.item.image} className="h-auto w-28 object-contain" alt={props.item.title} />
       <div className="flex w-full flex-col justify-center gap-2">
         <div className="flex w-full justify-between gap-3">
           <h3 className="line-clamp-2 text-sm font-semibold">{props.item.title}</h3>
@@ -37,12 +37,12 @@ const SideCartCard = (props) => {
                 <ToolTip dimension="w-4 h-4" color="text-b25" />
               </span>
               {props.item.condition == 'new' && (
-                <div className="bg-dark-blue inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white">
+                <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
                   <FourStar />
                   New
                 </div>
               )}
-              {props.item.condition == 'certified' && <div className="bg-dark-cyan inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>}
+              {props.item.condition == 'certified' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>}
               {props.item.condition == 'used' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-c-orange px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div>}
               {/* <StarIconPrinter numberOfTimes={props.item.rating} /> */}
             </div>
