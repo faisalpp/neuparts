@@ -25,7 +25,7 @@ const StickyNavbar = ({ state, product, addCart }) => {
 
   return (
     <>
-      <div className={`fixed top-0 z-50 ${state ? 'lg:flex' : 'hidden'} w-full flex-col bg-white shadow-lg`}>
+      <div className={`fixed top-0 z-50 ${state ? 'hidden lg:flex' : 'hidden'} w-full flex-col bg-white shadow-lg`}>
         <div className="maxlg:hidden">
           <div className="maincontainer items-center justify-center py-5 lg:flex">
             <div className="max-w-6/12 flex w-6/12 items-center space-x-5">
@@ -45,7 +45,7 @@ const StickyNavbar = ({ state, product, addCart }) => {
                   </div>
                 ) : null}
               </div>
-              <div onClick={addCart} className="flex cursor-pointer items-center justify-center rounded-lg button-hover px-2 py-3 text-sm text-white  lg:px-10">
+              <div onClick={addCart} className="button-hover flex cursor-pointer items-center justify-center rounded-lg px-2 py-3 text-sm text-white  lg:px-10">
                 <AiOutlineShoppingCart className="text-lg" />
                 <h6 className="ml-2 font-bold">Add To Cart</h6>
               </div>
@@ -59,9 +59,9 @@ const StickyNavbar = ({ state, product, addCart }) => {
               <FaBars />
             </button>
           </div>
-          <div className="bottom-0 left-0 top-12 col-span-9 flex gap-1 bg-white p-4 md:px-10 lg:items-center lg:gap-5 lg:py-0 lg:pl-0 lg:pr-5 xl:pr-10 2xl:gap-5 maxlg:fixed maxlg:hidden maxlg:w-[230px] maxlg:flex-col maxlg:gap-5 [&>button:hover]:border-b-[1px] [&>button:hover]:border-b4 [&>button]:h-5 [&>button]:cursor-pointer [&>button]:text-xs [&>button]:font-normal [&>button]:lg-to-xl:text-[11px]">
+          <div className="bottom-0 left-0 top-12 col-span-9 flex gap-1 bg-white p-4 md:px-10 lg:items-center lg:gap-5 lg:py-0 lg:pl-0 lg:pr-5 xl:pr-10 2xl:gap-5 maxlg:fixed maxlg:hidden maxlg:w-[230px] maxlg:flex-col maxlg:gap-5">
             {NavItems.map((item, index) => (
-              <button key={index} onClick={() => scrollToSection(item.id)}>
+              <button key={index} className="h-8 text-xs font-normal hover:border-b-[1.5px] hover:border-b3 2xl:h-5 lg-to-xl:text-[11px]" onClick={() => scrollToSection(item.id)}>
                 {item.title}
               </button>
             ))}
@@ -85,11 +85,10 @@ const StickyNavbar = ({ state, product, addCart }) => {
 export default StickyNavbar;
 
 const NavItems = [
-  { title: 'Product Information', id: 'product-information' },
+  { title: 'Appliance Information', id: 'product-information' },
   { title: '360° View', id: '360-view' },
-  { title: 'Testimonials View', id: 'testimonials-view' },
-  { title: 'Product Features', id: 'product-features' },
-  { title: 'Inspections', id: 'inspections' },
-  { title: 'Compare', id: 'compare' },
-  { title: 'FAQ', id: 'faq' },
+  { title: 'More Part for your Model', id: 'testimonials-view' },
+  { title: 'Listing Condition', id: 'product-features' },
+  { title: 'Compare Buying Options', id: 'inspections' },
+  { title: 'Warranty and Financing Options', id: 'compare' },
 ];

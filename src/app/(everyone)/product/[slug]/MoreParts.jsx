@@ -89,7 +89,7 @@ const MoreParts = () => {
     },
   ]);
   return (
-    <div className="bg-b3/5">
+    <div className="bg-b3/5" id="testimonials-view">
       <div className="maincontainer flex flex-col justify-center py-10 lg:py-16 xl:py-20 2xl:py-120px">
         <h2 className="mb-4 text-center text-2xl font-bold lg:text-3xl xl:text-4xl">More Parts for Your Model</h2>
         <div className="mt-10">

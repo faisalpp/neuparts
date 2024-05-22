@@ -1,24 +1,12 @@
 'use client';
 import { useEffect } from 'react';
 import { RiArrowDropRightLine } from 'react-icons/ri';
-import { AiFillStar, AiOutlineDollarCircle, AiOutlineSearch, AiFillCloseCircle, AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiFillStar, AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoBagCheckOutline, IoCloseOutline, IoSettingsOutline } from 'react-icons/io5';
-import { GoDotFill } from 'react-icons/go';
-import { BsTruck, BsShopWindow, BsStarHalf, BsArrowRightShort } from 'react-icons/bs';
+import { BsArrowRightShort } from 'react-icons/bs';
 import { useState } from 'react';
 import OtherProductCard from '@/components/OtherProductCard';
 import FaqAccordion from '@/components/FaqAccordion';
-import HiwSection from '@/components/HiwSection';
-import NewProductCards from '@/components/NewProductCards';
-import PaymentOptions from '@/components/PaymentOptions';
-import ProductFeatures from '@/components/ProductFeatures';
-import LaunderySet from '@/components/LaunderySet';
-import MapSection from '@/components/MapSection';
-import InspectionScoreSection from '@/components/InspectionScoreSection';
-import ModelBuyingOptionsSection from '@/components/ModelBuyingOptionsSection';
-// next
-import ProductFaqSection from '@/components/ProductFaqSection';
-import CosmaticSlider from '@/components/CosmaticSlider';
 import ToolTip from '@/components/ToolTip';
 import MoreImagesModal from '@/components/MoreImagesModal';
 import StickyNavbar from '@/components/DeskComp/Navbar/StickyNavbar';
@@ -33,14 +21,16 @@ import Image from 'next/image';
 import FourStar from '@/components/svgs/FourStar';
 import GasSvg from '@/components/svgs/GasSvg';
 import MoreParts from './MoreParts';
+import CompareModel from './CompareModel';
+import WarantySection from './WarantySection';
 
 const Product = ({ slug }) => {
   // Get slug form url
-  const route = useRouter();
   const ordInfo = '';
   const [orderInfo, setOrderInfo] = useState(ordInfo ? ordInfo : { type: 'pickup', location: 'Georgetown, Tx', shipping: 'Free' });
   const [zip, setZip] = useState('');
   const [changeZip, setChangeZip] = useState(true);
+  const [quantity, setQuantity] = useState(1);
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -239,14 +229,6 @@ const Product = ({ slug }) => {
 
   const handleCloseModal = () => {
     setOpenModal('');
-  };
-
-  const StarIconPrinter = ({ numberOfTimes }) => {
-    const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
-      <AiFillStar key={index} className="text-lg text-b7" /> // Render the star icon component for each iteration
-    ));
-
-    return <div className="mt-2 flex items-center">{starIcons}</div>; // Render the array of star icons
   };
 
   const moreImg = product.media ? product.media.find((item) => item.file === 'image') : null;
@@ -492,11 +474,20 @@ const Product = ({ slug }) => {
                 </div>
               ) : null}
 
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex flex-wrap items-center justify-between">
+                <div className="flex items-center gap-2">
                   <label htmlFor="" className="text-xs">
                     Quantity
                   </label>
+                  <div className="relative w-24">
+                    <button type="button" onClick={() => setQuantity(quantity - 1)} className={`+ absolute left-4 top-3 text-sm font-medium leading-3 ${quantity === 1 && 'pointer-events-none text-gray-400'}`}>
+                      -
+                    </button>
+                    <input type="number" value={quantity} className="h-9 w-24 appearance-none rounded-full border border-b3 px-8 text-center outline-none hover:border-b3/90" />
+                    <button type="button" onClick={() => setQuantity(quantity + 1)} className="absolute right-4 top-3 text-sm font-medium leading-3">
+                      +
+                    </button>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <button onClick={() => handleOpenModal('1')} className="flex w-fit items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
@@ -521,7 +512,7 @@ const Product = ({ slug }) => {
                   <span className="ml-2 flex items-center font-bold">Add To Cart {loading2 ? <Image width={200} height={200} quality={100} alt="loader" src="/loader-bg.gif" className="ml-2 h-4 w-4" /> : null}</span>
                 </button>
                 <button type="button" disabled={error || product.stock === 0 ? true : false} onClick={addToCart} className="flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-bold text-white hover:bg-[#071822]/90">
-                  <AiOutlineShoppingCart className="text-lg" />
+                  <Image width={100} height={100} className="h-6 w-5 object-contain" alt="Sell" src="/svgs/sell.webp" />
                   <span className="ml-2 flex items-center font-bold">Buy Now {loading2 ? <Image width={200} height={200} quality={100} alt="loader" src="/loader-bg.gif" className="ml-2 h-4 w-4" /> : null}</span>
                 </button>
               </div>
@@ -599,7 +590,7 @@ const Product = ({ slug }) => {
           <MoreParts />
 
           {/* Review */}
-          <div className="maincontainer flex flex-col bg-white py-10 lg:py-14 xl:py-20">
+          <div id="product-features" className="maincontainer flex flex-col bg-white py-10 lg:py-14 xl:py-60px">
             <div className="flex flex-col items-center justify-center gap-3 rounded-md bg-b8 py-8">
               <div className="mt-2 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
                 <FourStar />
@@ -614,6 +605,10 @@ const Product = ({ slug }) => {
               {product.rating === 5 ? <p className="px-10 text-center text-sm">If your shopping our 5 star appliances then you understand the value of a good deal! 5-star rated appliances get you an open box appliance that works perfectly, with very minor to no cosmetic damage like scratches or dents at a great discount. Our customers purchasing 5 star Cosmetic Cosmetic Rating appliances are generally looking for like new or new appliances while capitalizing on an open box discount vs a &quot;Scratch or Dent&quot; discounted appliance while still obtaining a 100% functional appliance.</p> : null}
             </div>
           </div>
+
+          <CompareModel />
+
+          <WarantySection />
         </>
       )}
     </>
