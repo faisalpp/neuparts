@@ -310,7 +310,33 @@ h6.ce-header {
   @apply bg-b3 duration-200 hover:bg-b3/90;
 }
 
-
-.label-p-0 label{
+.label-p-0 label {
   @apply !p-0;
+}
+.cc-select button {
+  @apply border-b3;
+}
+.cc-select button {
+  @apply border-b3;
+}
+.cc-select button:has(+ label.text-\[11px\]) {
+  @apply border-t-transparent text-lg text-black;
+}
+
+.cc-select button + label.text-\[11px\] {
+  @apply before:border-b3 after:border-b3;
+}
+.cc-select button + label.text-sm {
+  @apply top-3.5 text-base text-dark-gray md:text-lg;
+}
+
+input.remove-arrow::-webkit-outer-spin-button,
+input.remove-arrow::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input.remove-arrow[type='number'] {
+  -moz-appearance: textfield; /* Firefox */
 }

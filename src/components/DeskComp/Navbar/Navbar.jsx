@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BiSearch, BiUserCircle } from 'react-icons/bi';
 import { IoMenu } from 'react-icons/io5';
@@ -7,9 +7,20 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import { Menu } from '@headlessui/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import useClickOutside from '@/hooks/useClickOutside';
 
 const Navbar = ({ sCart, setsCart }) => {
   const [megMenu, setMegMenu] = useState(false);
+  const [searchMenu, setSearchMenu] = useState(false);
+  const searchRef = useRef(null);
+  const MegaMenuRef = useRef(null);
+  const MegaMenuRef2 = useRef(null);
+
+  useClickOutside(searchRef, () => setSearchMenu(false));
+  useClickOutside(MegaMenuRef, () => setMegMenu(false));
+  useClickOutside(MegaMenuRef2, () => setMegMenu(false));
+
   const isUser = '';
   const isAdmin = '';
   const UserfirstName = '';
@@ -25,24 +36,9 @@ const Navbar = ({ sCart, setsCart }) => {
     e.preventDefault();
   };
 
-  const [applianceTypes, setApplianceTypes] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const getAppliances = async () => {};
-    getAppliances();
-  }, []);
-
-  const [search, setSearch] = useState('');
-
-  const handleEnterKey = async (e) => {
-    if (e.key === 'Enter') {
-    }
-  };
-
   return (
     <>
-      <div className="sticky top-0 z-50 hidden bg-b1 lg:block">
+      <div className="sticky top-0 z-[60] hidden bg-b1 lg:block">
         {/* Navbar Start */}
         <div className="maincontainer items-center justify-between py-5 lg:flex">
           <Link href="/" className="h-auto w-32">
@@ -50,10 +46,27 @@ const Navbar = ({ sCart, setsCart }) => {
           </Link>
 
           <div className="flex w-full justify-end space-x-2">
-            <button type="button" className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-b2 px-4 text-white">
-              <BiSearch />
-              <span className="ml-1 text-xs font-medium">Search</span>
-            </button>
+            <div className="relative" ref={searchRef}>
+              <button type="button" onClick={() => setSearchMenu(!searchMenu)} className="flex h-10 items-center justify-center gap-1 rounded-md bg-b2 px-4 text-white">
+                <BiSearch className="w-full max-w-3.5" />
+                <span className="text-xs font-medium">Search</span>
+                <ChevronDownIcon className="w-full max-w-3" />
+              </button>
+              {/* Search Dropdown */}
+              <div className={`${searchMenu ? 'border border-b3 pb-5 pt-3' : 'pointer-events-none max-h-0'} absolute top-0 w-72 overflow-hidden rounded-lg bg-b2  px-4 duration-300`}>
+                <div className="mb-2.5 inline-flex cursor-pointer items-center gap-1 text-b3" onClick={() => setSearchMenu(!searchMenu)}>
+                  <BiSearch className="w-full max-w-3.5" />
+                  <span className="text-xs font-medium">Search</span>
+                  <ChevronDownIcon className="w-full max-w-3" />
+                </div>
+                <input type="text" className="w-full rounded-lg border border-b3 bg-white p-3 text-xs font-medium text-black outline-none placeholder:font-semibold placeholder:text-[#979797]" placeholder="Model Number" />
+                <input type="text" className="mt-2 w-full rounded-lg border border-b3 bg-white p-3 text-xs font-medium text-black outline-none placeholder:font-semibold placeholder:text-[#979797]" placeholder="Part Number" />
+                <button type="button" className="button-hover mt-2 flex h-10 w-full cursor-pointer items-center justify-center rounded-md px-4 text-white">
+                  <BiSearch />
+                  <span className="ml-1 text-xs font-medium">Search</span>
+                </button>
+              </div>
+            </div>
             <div
               onClick={() => {
                 setsCart(!sCart);
@@ -137,22 +150,17 @@ const Navbar = ({ sCart, setsCart }) => {
             )}
 
             {/* {isAuth ? <Link href="/my-account/profile" ><div className='flex items-center justify-center bg-b2 h-10 px-4 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link> : <Link href="/login" ><div className='flex items-center px-2 bg-b2 h-10 px-4 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link>} */}
-            <div
-              onClick={() => {
-                megMenu ? setMegMenu(false) : setMegMenu(true);
-              }}
-              className="flex h-10 w-max cursor-pointer items-center rounded-md bg-b2 px-4 text-white"
-            >
+            <button type="button" onClick={() => setMegMenu(!megMenu)} className="flex h-10 w-max cursor-pointer items-center rounded-md bg-b2 px-4 text-white">
               <IoMenu />
               <span className="ml-2 text-xs font-medium">Menu</span>
-            </div>
+            </button>
             {/* <div onClick={handleLogout} className='flex items-center cursor-pointer text-center px-2 bg-b2 h-10 w-24 rounded-md text-white' ><span className='text-center font-medium text-xs px-5' >Logout</span></div>   */}
           </div>
         </div>
         {/* Navbar End */}
         {/* Sub Navbar Start */}
         {/* Mega Menu Start */}
-        <div className={`absolute ${megMenu ? 'pb-20 pt-5' : 'max-h-0'} top-20 z-50 w-full overflow-hidden bg-b1 duration-300`}>
+        <div className={`absolute ${megMenu ? 'pb-20 pt-5' : 'max-h-0'} top-20 z-[60] w-full overflow-hidden bg-b1 duration-300`}>
           <div className="mx-auto grid grid-cols-12 justify-center px-16 xl:px-20 2xl:px-120px 3xl:max-w-1680px">
             <div className="col-start-1 col-end-2 flex flex-col items-center">
               <h4 className="font-semibold text-white xl:whitespace-nowrap">How It Works</h4>

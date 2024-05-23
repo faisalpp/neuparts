@@ -25,14 +25,14 @@ const StickyNavbar = ({ state, product, addCart }) => {
 
   return (
     <>
-      <div className={`fixed top-0 z-50 ${state ? 'hidden lg:flex' : 'hidden'} w-full flex-col bg-white shadow-lg`}>
+      <div className={`fixed top-0 z-[100] ${state ? 'hidden lg:flex' : 'hidden'} w-full flex-col bg-white shadow-lg`}>
         <div className="maxlg:hidden">
-          <div className="maincontainer items-center justify-center py-5 lg:flex">
+          <div className="maincontainer items-center justify-center py-6 lg:flex">
             <div className="max-w-6/12 flex w-6/12 items-center space-x-5">
-              <div className="w-fit rounded-lg border-[1px] border-gray-200 px-2 py-1">
+              <div className="w-full max-w-12 rounded-lg border-[1px] border-gray-200 px-2 py-1">
                 <Image width={400} height={400} quality={100} src={frstImg ? frstImg.data : ''} className="h-auto w-12" alt="" />
               </div>
-              <p className="text-clip text-2xl font-bold leading-8 md:text-3xl xl:text-[2rem]">{product.title}</p>
+              <p className="line-clamp-2 text-clip text-2xl font-bold leading-8 md:text-3xl xl:text-[2rem]">{product.title}</p>
             </div>
 
             <div className="flex w-6/12 items-center justify-end space-x-5">

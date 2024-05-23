@@ -1,19 +1,9 @@
 import React from 'react';
-import { AiFillStar } from 'react-icons/ai';
 import ToolTip from './ToolTip';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const ProductCard2 = ({ sliderstyle, stars, product }) => {
-  const StarIconPrinter = ({ numberOfTimes }) => {
-    const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
-      <AiFillStar key={index} className="text-lg text-b7" /> // Render the star icon component for each iteration
-    ));
-    return <div className="flex items-center">{starIcons}</div>; // Render the array of star icons
-  };
-
-  const frstImg = product?.media?.find((item) => item.file === 'image');
-
   return (
     <>
       <div className={`group relative flex flex-col rounded-2xl border-2 border-gray-100 bg-white ${sliderstyle ? sliderstyle : 'sm:mx-2'} overflow-hidden`}>

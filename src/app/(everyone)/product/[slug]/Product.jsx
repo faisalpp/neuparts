@@ -23,6 +23,7 @@ import GasSvg from '@/components/svgs/GasSvg';
 import MoreParts from './MoreParts';
 import CompareModel from './CompareModel';
 import WarantySection from './WarantySection';
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const Product = ({ slug }) => {
   // Get slug form url
@@ -39,7 +40,7 @@ const Product = ({ slug }) => {
   // const [product, setProduct] = useState([]);
   const [product, setProduct] = useState({
     productType: 'parent',
-    title: 'Whirlpool Refrigerator Master',
+    title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text',
     slug: 'whirlpool-refrigerator-master',
     category: 'refrigerators',
     feature: 'ice-makers',
@@ -399,26 +400,10 @@ const Product = ({ slug }) => {
             </div>
 
             <div className="mt-4 flex flex-col space-y-5 px-1 lg:col-span-7 lg:mt-0 lg:px-0">
-              <h2 className="text-2xl font-bold leading-8 md:text-3xl lg:w-full xl:text-[2rem]">{product.title}</h2>
+              <h2 className="line-clamp-2 text-2xl font-bold leading-8 lg:w-full">{product.title}</h2>
               <div className="flex w-full items-center justify-between">
-                <div className="flex w-full">
-                  {product.stock > 0 ? (
-                    <div className="flex items-center gap-2">
-                      <span className="flex items-center rounded-full bg-b13 px-3 py-2 text-xs text-white">
-                        <IoBagCheckOutline className="mr-1 text-sm" />
-                        In Stock
-                      </span>
-                      <span className="text-xs text-b16/65">Only 2 left</span>
-                    </div>
-                  ) : (
-                    <span className="flex items-center rounded-full bg-red-500 px-3 py-2 text-xs text-white">
-                      <IoCloseOutline className="mr-1 text-sm" />
-                      Out of Stock
-                    </span>
-                  )}
-                </div>
                 <Link href={`/products/buying-options/?modelNo=${product.modelNo}`} className="cursor-pointer text-xs font-bold text-b3 underline lg:w-80 lg:text-sm">
-                  View More Buying Options
+                  View More Buying Options ↓
                 </Link>
               </div>
               <div className="flex gap-5 whitespace-nowrap sm:items-center maxsm:flex-col">
@@ -443,16 +428,16 @@ const Product = ({ slug }) => {
               </div>
               <div className="mt-2 flex items-center space-x-5 lg:mt-4 lg:space-x-5">
                 <div className="flex items-center gap-2">
-                  <h4 className="w-max text-xs font-semibold text-b16/50 lg:text-sm">
+                  <h4 className="w-max text-base font-semibold text-b16/50">
                     Part <br /> Number
                   </h4>
                   <IoSettingsOutline className="ml-2 text-base text-b16/50" />
                 </div>
-                <span className="text-lg font-bold text-b1 xl:text-xl">LGWM0L2CRV2T2</span>
+                <span className="text-base font-semibold text-b1">LGWM0L2CRV2T2</span>
               </div>
               <div className="mt-2 flex items-center space-x-5 lg:mt-4 lg:space-x-5">
                 <div className="flex items-center gap-1">
-                  <h4 className="w-max text-xs font-semibold text-b16/50 lg:text-sm">Condition</h4>
+                  <h4 className="w-max text-base font-semibold text-b16/50">Condition</h4>
                   <ToolTip color="text-b16/50" />
                 </div>
                 <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
@@ -473,48 +458,65 @@ const Product = ({ slug }) => {
                   </div>
                 </div>
               ) : null}
-
-              <div className="flex flex-wrap items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <label htmlFor="" className="text-xs">
-                    Quantity
-                  </label>
-                  <div className="relative w-24">
-                    <button type="button" onClick={() => setQuantity(quantity - 1)} className={`+ absolute left-4 top-3 text-sm font-medium leading-3 ${quantity === 1 && 'pointer-events-none text-gray-400'}`}>
-                      -
-                    </button>
-                    <input type="number" value={quantity} className="h-9 w-24 appearance-none rounded-full border border-b3 px-8 text-center outline-none hover:border-b3/90" />
-                    <button type="button" onClick={() => setQuantity(quantity + 1)} className="absolute right-4 top-3 text-sm font-medium leading-3">
-                      +
-                    </button>
+              <div className="rounded-lg p-4 shadow-[0px_4px_24px_rgba(0,0,0,0.08)]">
+                <div className="mb-4 flex flex-wrap items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <label htmlFor="" className="text-xs">
+                      Quantity
+                    </label>
+                    <div className="relative w-24">
+                      <button type="button" onClick={() => setQuantity(quantity - 1)} className={`absolute left-2 top-2 grid h-6 w-6 place-items-center rounded-full text-sm font-medium leading-3 text-white ${quantity === 1 ? 'pointer-events-none bg-b3/25 text-gray-400' : 'bg-b3'}`}>
+                        <MinusIcon className="h-4 w-4" />
+                      </button>
+                      <input type="number" value={quantity} className="remove-arrow h-10 w-24 rounded-full bg-[#F3F3F3] px-8 text-center text-sm font-semibold text-black outline-none hover:border-b3/90" />
+                      <button type="button" onClick={() => setQuantity(quantity + 1)} className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full bg-b3 text-sm font-medium leading-3 text-white">
+                        <PlusIcon className="h-4 w-4" />
+                      </button>
+                    </div>
                   </div>
+                  {product.stock > 0 ? (
+                    <div className="flex items-center rounded-full bg-b13 px-3 py-2 text-xs text-white">
+                      <IoBagCheckOutline className="mr-1 text-sm" />2 in stock In Georgetown, TX
+                    </div>
+                  ) : (
+                    <div className="flex items-center rounded-full bg-red-500 px-3 py-2 text-xs text-white">
+                      <IoCloseOutline className="mr-1 text-sm" />
+                      Out of Stock
+                    </div>
+                  )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => handleOpenModal('1')} className="flex w-fit items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
-                    <Image width={200} height={200} quality={100} className="h-auto w-full max-w-[18px]" src="/shield.webp" alt="" />
-                    <span className="w-40 text-sm font-bold">
-                      NeuShield 1 <br /> Year Warranty
-                    </span>
+
+                {/* Buttons */}
+                <div className="grid grid-cols-2 gap-2">
+                  <button type="button" disabled={error || product.stock === 0 ? true : false} onClick={addToCart} className="button-hover flex h-full w-full items-center justify-center rounded-lg py-4 font-medium text-white">
+                    <AiOutlineShoppingCart className="text-lg" />
+                    <span className="ml-2 flex items-center font-medium">Add To Cart {loading2 ? <Image width={200} height={200} quality={100} alt="loader" src="/loader-bg.gif" className="ml-2 h-4 w-4" /> : null}</span>
                   </button>
-                  <button onClick={() => handleOpenModal('1')} className="flex w-fit items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
-                    <TruckSvg />
-                    <span className="w-40 text-sm font-bold">
-                      Available for <br /> Delivery/Pickup
-                    </span>
+                  <button type="button" disabled={error || product.stock === 0 ? true : false} onClick={addToCart} className="flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-medium text-white hover:bg-[#071822]/90">
+                    <Image width={100} height={100} className="h-6 w-5 object-contain" alt="Sell" src="/svgs/sell.webp" />
+                    <span className="ml-2 flex items-center font-medium">Buy Now {loading2 ? <Image width={200} height={200} quality={100} alt="loader" src="/loader-bg.gif" className="ml-2 h-4 w-4" /> : null}</span>
                   </button>
                 </div>
               </div>
-
-              {/* Buttons */}
-              <div className="grid grid-cols-2 gap-2">
-                <button type="button" disabled={error || product.stock === 0 ? true : false} onClick={addToCart} className="button-hover flex h-full w-full items-center justify-center rounded-lg py-4 font-bold text-white">
-                  <AiOutlineShoppingCart className="text-lg" />
-                  <span className="ml-2 flex items-center font-bold">Add To Cart {loading2 ? <Image width={200} height={200} quality={100} alt="loader" src="/loader-bg.gif" className="ml-2 h-4 w-4" /> : null}</span>
-                </button>
-                <button type="button" disabled={error || product.stock === 0 ? true : false} onClick={addToCart} className="flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-bold text-white hover:bg-[#071822]/90">
-                  <Image width={100} height={100} className="h-6 w-5 object-contain" alt="Sell" src="/svgs/sell.webp" />
-                  <span className="ml-2 flex items-center font-bold">Buy Now {loading2 ? <Image width={200} height={200} quality={100} alt="loader" src="/loader-bg.gif" className="ml-2 h-4 w-4" /> : null}</span>
-                </button>
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="flex max-w-44 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
+                  <Image width={200} height={200} quality={100} className="h-auto w-full max-w-[18px]" src="/shield.webp" alt="" />
+                  <span className="text-[10px] font-medium">
+                    NeuShield 1 <br /> Year Warranty
+                  </span>
+                </div>
+                <div className="flex max-w-44 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
+                  <TruckSvg className="h-6 min-w-6" />
+                  <span className="text-[10px] font-medium">Orders Ship Same Day if placed before 12pm CST</span>
+                </div>
+                <div className="flex max-w-44 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
+                  <TruckSvg className="h-6 w-6" />
+                  <span className="text-[10px] font-medium">Hassle Free 30 Day Returns</span>
+                </div>
+                <div className="flex max-w-44 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
+                  <TruckSvg className="h-6 w-6" />
+                  <span className="text-[10px] font-medium">Fast 2-Day Shipping Available</span>
+                </div>
               </div>
 
               {/* Other Product Section */}

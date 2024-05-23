@@ -6,7 +6,7 @@ import MultiRangeSlider from './MultiRangeSlider/MultiRangeSlider';
 import Image from 'next/image';
 import HeaderFilter from '@/components/DeskComp/Filter/HeaderFilter';
 
-const Filter = ({ loading, onClose, isFilter, categoriesFilters, ratingFilters, saleFilter, regularFilter, setQuery, query }) => {
+const Filter = ({ filterheader, onsale, loading, onClose, isFilter, categoriesFilters, ratingFilters, saleFilter, regularFilter, setQuery, query }) => {
   const handleFilterClick = (event) => {
     event.stopPropagation();
   };
@@ -20,7 +20,7 @@ const Filter = ({ loading, onClose, isFilter, categoriesFilters, ratingFilters, 
           <Image width={400} height={400} quality={100} alt="Loader" src="/loader2.gif" className="h-16 w-auto" />
         </div>
       ) : (
-        <div className={`z-40 items-end duration-300 lg:sticky lg:top-10 lg:h-full lg:max-w-[240px] maxlg:fixed maxlg:left-0 maxlg:right-0 maxlg:bg-black/20 ${modalClass}`} onClick={onClose}>
+        <div className={`z-40 items-end duration-300 lg:sticky lg:top-28 lg:h-full lg:max-w-[240px] maxlg:fixed maxlg:left-0 maxlg:right-0 maxlg:bg-black/20 ${modalClass}`} onClick={onClose}>
           <div className="w-full flex-col pb-10 lg:flex maxlg:max-h-[398px] maxlg:overflow-y-auto maxlg:rounded-tl-2xl maxlg:rounded-tr-2xl maxlg:bg-white [&>div]:maxlg:px-10" onClick={handleFilterClick}>
             <div className="top-0 z-40 flex items-center justify-between border-b lg:pb-4 maxlg:sticky maxlg:bg-white maxlg:py-4 maxlg:shadow-md">
               <p className="text-base font-bold">Filters</p>
@@ -40,9 +40,9 @@ const Filter = ({ loading, onClose, isFilter, categoriesFilters, ratingFilters, 
               <TypeFilter key={index} title={item.title} filt={query} setFilt={setQuery} filters={item.category} />
             ))}
             <RatingFilter filt={query} setFilt={setQuery} filters={ratingFilters} />
-            <HeaderFilter />
+            {filterheader != false && <HeaderFilter />}
             <MultiRangeSlider filt={query} setFilt={setQuery} min={9} max={9999} />
-            <SaleFilter filt={query} setFilt={setQuery} sale={saleFilter} reg={regularFilter} />
+            {onsale != false && <SaleFilter filt={query} setFilt={setQuery} sale={saleFilter} reg={regularFilter} />}
           </div>
         </div>
       )}

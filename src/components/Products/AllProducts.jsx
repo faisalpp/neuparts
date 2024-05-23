@@ -124,32 +124,8 @@ const AllProducts = () => {
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
-  const [limit, setLimit] = useState(6);
-  const router = useRouter();
-
-  const GetQueryParams = () => {
-    setInitLoad(true);
-    setLoading(true);
-    // Create a URLSearchParams object from the query string
-    const queryParamsObject = router.query;
-    // const queryParams = new URLSearchParams(router.search);
-    // // Create an object to store the query parameters
-    // const queryParamsObject = {};
-
-    // // Iterate through the query parameters and store them in the object
-    // for (const [key, value] of queryParams.entries()) {
-    //   queryParamsObject[key] = value;
-    // }
-    // console.log(queryParamsObject)
-    setParams({ isSale: true, salePrice: { $gte: 200, $lte: 8000 }, sort: 1, ...queryParamsObject });
-  };
 
   const [filterLoading, setFilterLoading] = useState(false);
-  const [initLoad, setInitLoad] = useState(true);
-
-  const getAppliancesBySection = async () => {};
-
-  const GetAppliancesFilter = async () => {};
 
   const handleCloseFilter = () => {
     setIsFilter(false);

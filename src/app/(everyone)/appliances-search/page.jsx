@@ -1,15 +1,14 @@
 import React from 'react';
-import Product from './Product';
+import Products from './AllProducts';
 import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
 
-const Page = async ({ params }) => {
-  const { slug } = params;
+const page = () => {
   return (
     <>
       <ProductSearchBar />
-      <Product slug={slug} />
+      <Products />
     </>
   );
 };
 
-export default Page;
+export default page;

@@ -3,24 +3,25 @@ import React from 'react';
 import { IoExtensionPuzzleOutline } from 'react-icons/io5';
 import Rotate from '@/components/svgs/Rotate';
 import { FiCheck } from 'react-icons/fi';
+import { BiSearch } from 'react-icons/bi';
 
 const ProductSearchBar = () => {
   return (
-    <div className="hidden bg-[#14313D] lg:block">
+    <div className="sticky top-20 z-50 hidden bg-[#14313D] lg:block">
       <div className="maincontainer flex w-full max-w-6xl items-center justify-center gap-4 py-5 text-white">
-        {/* <h3 className="mr-6 text-sm text-white">Search By</h3>
-      <div className="flex items-center gap-2">
-        <label className="text-xs font-semibold">Model No.</label>
-        <input type="text" className="w-full max-w-40 rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-[#979797] outline-none placeholder:text-[#979797]" placeholder="Enter model number" />
-      </div>
-      <div className="flex items-center gap-2">
-        <label className="text-xs font-semibold">Port No.</label>
-        <input type="text" className="w-full max-w-40 rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-[#979797] outline-none placeholder:text-[#979797]" placeholder="Enter model number" />
-      </div>
-      <button type="button" className="button-hover ml-2 flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white">
-        <BiSearch />
-        <span className="ml-1 text-xs font-medium">Search</span>
-      </button> */}
+        <h3 className="mr-6 text-sm text-white">Search By</h3>
+        <div className="flex items-center gap-2">
+          <label className="text-xs font-semibold">Model No.</label>
+          <input type="text" value="" className="w-full max-w-40 rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-[#979797] outline-none placeholder:text-[#979797]" placeholder="Enter model number" />
+        </div>
+        <div className="flex items-center gap-2">
+          <label className="text-xs font-semibold">Port No.</label>
+          <input type="text" value="" className="w-full max-w-40 rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-[#979797] outline-none placeholder:text-[#979797]" placeholder="Enter model number" />
+        </div>
+        <button type="button" className="button-hover ml-2 flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white">
+          <BiSearch />
+          <span className="ml-1 text-xs font-medium">Search</span>
+        </button>
 
         {/* After Model or Port Enter */}
 
@@ -28,14 +29,15 @@ const ProductSearchBar = () => {
         <IoExtensionPuzzleOutline className="h-6 w-6" />
         Compatibility Check
       </button>
-      <input type="text" className="w-full max-w-96 rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-[#979797] outline-none placeholder:text-[#979797]" placeholder="Enter your Model Number" />
+      <input type="text" value="" className="w-full max-w-96 rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-[#979797] outline-none placeholder:text-[#979797]" placeholder="Enter your Model Number" />
       <button type="button" className="button-hover ml-2 flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white">
         <BiSearch />
         <span className="ml-1 text-xs font-medium">Search</span>
       </button> */}
 
         {/* After Compatible */}
-        <button type="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg border border-[#3F4C54] bg-b2 p-2 text-sm font-semibold">
+
+        {/* <button type="button" className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg border border-[#3F4C54] bg-b2 p-2 text-sm font-semibold">
           <IoExtensionPuzzleOutline className="h-6 w-6" />
           Compatibility Check
         </button>
@@ -57,7 +59,7 @@ const ProductSearchBar = () => {
             <span className="leadin3 block text-xs font-extrabold text-b1">MATCH</span>
             <span className="block text-xs leading-3 text-b1">Parts Shown are compatible with model</span>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
