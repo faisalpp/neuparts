@@ -15,9 +15,9 @@ const GetScoop = ({ ScoopCards, loading }) => {
             <AiOutlineLoading className="animate-spin text-5xl text-white" />
           </div>
         ) : ScoopCards.length > 0 ? (
-          <div className="mx-auto grid w-full max-w-[888px] grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2">
+          <div className="mx-auto flex w-full flex-wrap justify-center gap-x-4 gap-y-6">
             {ScoopCards.map((scoopcard, index) => (
-              <Link key={index} href={`/helpful-appliances-tips/blog/${scoopcard.slug}`} className="h-full w-full">
+              <Link key={index} href={`/helpful-appliances-tips/blog/${scoopcard.slug}`} className="h-full w-full max-w-[435px]">
                 <div className="flex h-full w-full items-center rounded-[19.021px] border border-white/50 bg-white/20 p-5 text-white sm:p-7 xl:p-10">
                   <div className="flex h-[39px] min-w-[39px] items-center justify-center rounded-lg bg-white p-2 sm:h-[56px] sm:min-w-[56px]">
                     <Image width={200} height={200} quality={100} src={scoopcard.thumbnail} alt="" className="h-full w-full object-contain" />

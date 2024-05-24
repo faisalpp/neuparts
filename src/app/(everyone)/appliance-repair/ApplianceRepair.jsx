@@ -38,7 +38,9 @@ const ApplianceRepair = () => {
 
       <ShopAustinSection />
 
-      <SatisfiedSection apiSectionName="appliance-repair-page-review" title="Testimonials" dots={true} />
+      {/* Client Reviews */}
+      <div className="mb-3 xl:mb-10"></div>
+      <SatisfiedSection apiSectionName="appliance-repair-page-review" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

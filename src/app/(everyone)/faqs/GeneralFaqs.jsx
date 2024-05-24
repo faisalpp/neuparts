@@ -9,12 +9,7 @@ import { RiArrowDropRightLine } from 'react-icons/ri';
 import Iframe from '@/components/Reusable/Ifram';
 
 const GeneralFaqs = () => {
-  const [video, setVideo] = useState([]);
-
-  useEffect(() => {
-    const GetSingleVideoMedia = async () => {};
-    GetSingleVideoMedia();
-  }, []);
+  const [video, setVideo] = useState({ url: 'https://www.youtube.com/embed/WQWVW4DUmZ0', type: 'iframe', thumbnail: '/g8.webp' });
 
   return (
     <>
@@ -39,7 +34,8 @@ const GeneralFaqs = () => {
       <ShopAustinSection />
 
       {/* Reviews Section */}
-      <SatisfiedSection apiSectionName="faq-page-review" title="Our Customers Are RAVING About Our Appliance Outlet" dots={true} />
+      <div className="mb-3 xl:mb-10"></div>
+      <SatisfiedSection apiSectionName="faq-page-review" title="Join Thousands of Satisfied Customers." dots={true} />
       {/* End  */}
       <NewsLetterSection backimage="/Newsletter.webp" />
       {/* End Tabs*/}

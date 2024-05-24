@@ -60,7 +60,9 @@ const HelpfulApliancesTips = () => {
       {/* Shop Austin Section */}
       <ShopAustinSection />
 
-      <SatisfiedSection apiSectionName="helpfull-appliance-tips-page-review" title="Testimonials" />
+      {/* Client Reviews */}
+      <div className="mb-3 xl:mb-10"></div>
+      <SatisfiedSection apiSectionName="helpfull-appliance-tips-page-review" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

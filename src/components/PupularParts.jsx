@@ -13,6 +13,7 @@ const PupularParts = () => {
       regPrice: 230.0,
       rating: 5,
       image: '/popular-parts.webp',
+      condtion: 'new',
     },
     {
       title: 'Upper Rack for Dish Washers',
@@ -21,6 +22,7 @@ const PupularParts = () => {
       regPrice: 230.0,
       rating: 5,
       image: '/popular-parts.webp',
+      condtion: 'new-open-box',
     },
     {
       title: 'Upper Rack for Dish Washers',
@@ -29,6 +31,7 @@ const PupularParts = () => {
       regPrice: 230.0,
       rating: 5,
       image: '/popular-parts.webp',
+      condtion: 'used-grade-a',
     },
     {
       title: 'Upper Rack for Dish Washers',
@@ -37,6 +40,7 @@ const PupularParts = () => {
       regPrice: 230.0,
       rating: 5,
       image: '/popular-parts.webp',
+      condtion: 'used-grade-c',
     },
     {
       title: 'Upper Rack for Dish Washers',
@@ -45,6 +49,7 @@ const PupularParts = () => {
       regPrice: 230.0,
       rating: 5,
       image: '/popular-parts.webp',
+      condtion: 'new',
     },
     {
       title: 'Upper Rack for Dish Washers',
@@ -53,6 +58,7 @@ const PupularParts = () => {
       regPrice: 230.0,
       rating: 5,
       image: '/popular-parts.webp',
+      condtion: 'new-open-box',
     },
     {
       title: 'Upper Rack for Dish Washers',
@@ -61,6 +67,7 @@ const PupularParts = () => {
       regPrice: 230.0,
       rating: 5,
       image: '/popular-parts.webp',
+      condtion: 'used-grade-a',
     },
     {
       title: 'Upper Rack for Dish Washers',
@@ -69,6 +76,7 @@ const PupularParts = () => {
       regPrice: 230.0,
       rating: 5,
       image: '/popular-parts.webp',
+      condtion: 'used-grade-c',
     },
   ]);
   return (

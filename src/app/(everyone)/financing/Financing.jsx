@@ -8,6 +8,7 @@ import PriceRangeCard from '@/components/Financing/PriceRangeCard';
 import { AiOutlineArrowDown } from 'react-icons/ai';
 import { BiLinkExternal } from 'react-icons/bi';
 import Link from 'next/link';
+import ShopAustinSection from '@/components/Appliances/ShopAustinSection';
 
 const Financing = () => {
   return (
@@ -44,7 +45,7 @@ const Financing = () => {
 
       {/* Pricing Range Cards */}
 
-      <div className="bg-b8" id="apply-financing">
+      <div className="bg-b3/10" id="apply-financing">
         <div className="maincontainer py-10 pt-5 lg:py-16 xl:py-20 2xl:py-120px [&>*]:text-b18">
           <h2 className="mx-auto w-full max-w-[778px] text-center text-2xl font-bold leading-8 xl:text-32px xl:leading-10">Neu Appliances recommends only purchasing what you can afford, stay in your price range.</h2>
           <p className="mx-auto mt-6 max-w-[640px] text-center leading-6">Acima is a 3rd party and has no affiliation with Neu Appliances. That&apos;s why we can give you our scoop on their offer without their influence.</p>
@@ -67,7 +68,12 @@ const Financing = () => {
         </div>
       </div>
 
-      <SatisfiedSection apiSectionName="financing-page-review" title="Our Customers Are RAVING About Our Appliance Outlet" dots={true} />
+      {/* Shop Austin Section */}
+      <ShopAustinSection />
+
+      {/* Client Reviews */}
+      <div className="mb-3 xl:mb-10"></div>
+      <SatisfiedSection apiSectionName="financing-page-review" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

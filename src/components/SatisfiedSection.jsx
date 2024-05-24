@@ -34,8 +34,8 @@ const SatisfiedSection = ({ apiSectionName, title, dots, SectionStyle }) => {
   return (
     <>
       {reviews?.length > 0 ? (
-        <div className={`maincontainer flex flex-col justify-center py-10 lg:py-16 xl:pb-20 xl:pt-10 2xl:pb-120px ${SectionStyle} ${dots ? 'mb-7' : ''}`}>
-          {title ? <h2 className="pb-7 text-center text-xl font-bold lg:text-2xl xl:pb-20 xl:text-3xl 2xl:text-32px">{title}</h2> : null}
+        <div className={`maincontainer 2xl:pb-20px flex flex-col justify-center py-10 lg:py-16 xl:pb-20 xl:pt-10 ${SectionStyle} ${dots ? 'mb-7' : ''}`}>
+          {title ? <h2 className="pb-7 text-center text-28px font-bold md:pb-14 xl:pb-20 xl:text-32px 2xl:text-4xl">{title}</h2> : null}
           <div className="relative">
             <ReviewExSlider clientreviews={reviews} dots={dots} />
           </div>

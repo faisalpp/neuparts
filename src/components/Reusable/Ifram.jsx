@@ -8,8 +8,8 @@ const Ifram = ({ style, src, title, icon, frameId, divId, genState, setGenState,
   const [isIframe, setIsIframe] = useState(true);
   const [trigger, setTrigger] = useState(false);
   const [isIframeLoader, setIsIframeLoader] = useState(false);
+  const [iframe, setIfrmae] = useState('');
 
-  const iframe = document.getElementById(frameId);
   if (iframe) {
     iframe.addEventListener('load', function () {
       setIsIframeLoader(false);
@@ -38,6 +38,9 @@ const Ifram = ({ style, src, title, icon, frameId, divId, genState, setGenState,
       setGenState(false);
     }
   };
+  useEffect(() => {
+    setIfrmae(document.getElementById(frameId));
+  }, ['']);
 
   useEffect(() => {
     if (trigger) {
@@ -49,10 +52,10 @@ const Ifram = ({ style, src, title, icon, frameId, divId, genState, setGenState,
     <div className={`relative ${style} rounded-2xl`}>
       <div id={divId}></div>
       <div className={`relative ${isIframe || isIframeLoader ? 'flex h-full w-full items-center justify-center' : 'hidden'}`}>
-        <div className="absolute z-[99px] flex h-full w-full rounded-xl bg-black/70"></div>
+        <div className={`absolute z-[99px] flex h-full w-full ${thumbRounded === 'false' ? '' : 'rounded-xl'} bg-black/70`}></div>
         {isIframe ? <AiFillPlayCircle onClick={() => setTrigger(true)} className={`${icon ? icon : 'hidden'} absolute cursor-pointer ${icon} text-white`} /> : null}
         {isIframeLoader ? <TbLoader3 className={`absolute cursor-wait ${icon ? icon : 'hidden'} ${icon} animate-spin text-white`} /> : null}
-        {isIframeLoader || isIframe ? <Image width={1000} height={1000} quality={100} alt="thumbnail" title="thumbnail" src={thumbnail} className={`h-full w-full ${thumbRounded === 'false' ? null : 'rounded-2xl'}`} /> : null}
+        {isIframeLoader || isIframe ? <Image width={1000} height={1000} quality={100} alt="thumbnail" title="thumbnail" src={thumbnail} className={`h-full w-full ${thumbRounded === 'false' ? '' : 'rounded-2xl'}`} /> : null}
       </div>
     </div>
   );

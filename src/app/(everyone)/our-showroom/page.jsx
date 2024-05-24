@@ -1,8 +1,14 @@
 import React from 'react';
 import OurShowroom from './OurShowroom';
+import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
 
 const page = () => {
-  return <OurShowroom />;
+  return (
+    <>
+      <ProductSearchBar />
+      <OurShowroom />
+    </>
+  );
 };
 
 export default page;

@@ -19,7 +19,7 @@ const TypeFilter = () => {
               </div>
             </span>
           </div>
-          <div class="flex w-full justify-end text-xs">
+          <div className="flex w-full justify-end text-xs">
             <span>(84)</span>
           </div>
         </div>
@@ -30,7 +30,7 @@ const TypeFilter = () => {
               <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-3 py-1 text-xs font-semibold text-white">New / Open Box</div>
             </span>
           </div>
-          <div class="flex w-full justify-end text-xs">
+          <div className="flex w-full justify-end text-xs">
             <span>(84)</span>
           </div>
         </div>
@@ -41,7 +41,7 @@ const TypeFilter = () => {
               <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>
             </span>
           </div>
-          <div class="flex w-full justify-end text-xs">
+          <div className="flex w-full justify-end text-xs">
             <span>(84)</span>
           </div>
         </div>
@@ -52,7 +52,7 @@ const TypeFilter = () => {
               <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade A</div>
             </span>
           </div>
-          <div class="flex w-full justify-end text-xs">
+          <div className="flex w-full justify-end text-xs">
             <span>(84)</span>
           </div>
         </div>
@@ -63,7 +63,7 @@ const TypeFilter = () => {
               <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade B</div>
             </span>
           </div>
-          <div class="flex w-full justify-end text-xs">
+          <div className="flex w-full justify-end text-xs">
             <span>(84)</span>
           </div>
         </div>
@@ -74,7 +74,7 @@ const TypeFilter = () => {
               <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade C</div>
             </span>
           </div>
-          <div class="flex w-full justify-end text-xs">
+          <div className="flex w-full justify-end text-xs">
             <span>(84)</span>
           </div>
         </div>
@@ -85,7 +85,7 @@ const TypeFilter = () => {
               <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div>
             </span>
           </div>
-          <div class="flex w-full justify-end text-xs">
+          <div className="flex w-full justify-end text-xs">
             <span>(84)</span>
           </div>
         </div>

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import ApplianceDetail from '@/components/Appliances/ApplianceDetail';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import NewsLetterSection from '@/components/NewsLetterSection';
-import SatisfiedSection from '@/components/SatisfiedSection';
 import RecentStories from '@/components/Blogs/RecentStories';
 import { AiOutlineArrowDown } from 'react-icons/ai';
 import Loader2 from '@/components/Loader/Loader2';
@@ -11,33 +10,60 @@ import Loader2 from '@/components/Loader/Loader2';
 const Blogs = () => {
   const [clicks, setClicks] = useState(0);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(6);
-  const [count, setCount] = useState(0);
   const [blogs, setBlogs] = useState([
     {
-      title: 'Blog',
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
       slug: 'test-blog',
-      createdAt: '',
+      thumbnail: '/blogs/blog1.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
     },
     {
-      title: 'Blog',
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
       slug: 'test-blog',
-      createdAt: '',
+      thumbnail: '/blogs/blog2.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
     },
     {
-      title: 'Blog',
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
       slug: 'test-blog',
-      createdAt: '',
+      thumbnail: '/blogs/blog3.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
     },
     {
-      title: 'Blog',
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
       slug: 'test-blog',
-      createdAt: '',
+      thumbnail: '/blogs/blog4.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
     },
     {
-      title: 'Blog',
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
       slug: 'test-blog',
-      createdAt: '',
+      thumbnail: '/blogs/blog5.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
+    },
+    {
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
+      slug: 'test-blog',
+      thumbnail: '/blogs/blog6.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
+    },
+    {
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
+      slug: 'test-blog',
+      thumbnail: '/blogs/blog7.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
+    },
+    {
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
+      slug: 'test-blog',
+      thumbnail: '/blogs/blog8.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
+    },
+    {
+      title: 'Congue gravida semper fusce eu et elementum. Mi tempor.',
+      slug: 'test-blog',
+      thumbnail: '/blogs/blog9.webp',
+      createdAt: '2023-08-07T20:08:48.296+00:00',
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -85,8 +111,6 @@ const Blogs = () => {
 
           {/* Recent Stories */}
           <RecentStories load={load} data={blogs} LoadMore={LoadMore} />
-
-          <SatisfiedSection apiSectionName="blog-page-review" title="Our Customers Are RAVING About Our Appliance Outlet" dots={true} />
 
           <NewsLetterSection backimage="/Newsletter.webp" />
         </>

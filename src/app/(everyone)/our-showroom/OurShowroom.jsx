@@ -9,12 +9,7 @@ import NewsLetterSection from '@/components/NewsLetterSection';
 import Iframe from '@/components/Reusable/Ifram';
 
 const OurShowroom = () => {
-  const [video, setVideo] = useState([]);
-
-  useEffect(() => {
-    const GetSingleVideoMedia = async () => {};
-    GetSingleVideoMedia();
-  }, []);
+  const [video, setVideo] = useState({ url: 'https://www.youtube.com/embed/WQWVW4DUmZ0', type: 'iframe', thumbnail: '/g8.webp' });
 
   return (
     <>
@@ -40,9 +35,10 @@ const OurShowroom = () => {
       <MassiveAppliance title="Shop Massive Discount Appliances" sliderstyle="mx-2 3xl:mx-5" />
       {/* Shop Austin Section */}
       <ShopAustinSection />
-      {/* Client Reviews */}
 
-      <SatisfiedSection apiSectionName="our-showroom-page-review" title="Testimonials" dots={true} />
+      {/* Client Reviews */}
+      <div className="mb-3 xl:mb-10"></div>
+      <SatisfiedSection apiSectionName="our-showroom-page-review" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

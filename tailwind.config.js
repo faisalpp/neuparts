@@ -28,7 +28,7 @@ module.exports = withMT({
 
       '2xl': '1440px',
 
-      '3xl': '1680px',
+      '3xl': '1650px',
 
       'maxxs': { 'max': '374.5px' },
       'maxcosm': { 'max': '424.5px' },

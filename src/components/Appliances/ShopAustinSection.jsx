@@ -10,8 +10,8 @@ const ShopAustinSection = () => {
         <div className="order-2 lg:order-none">
           <h2>Shop Austin&apos;s Best Scratch and Dent Appliances</h2>
           <p>Offering Austin, Tx the BEST in Discounted Open Box Appliances and Scratch and Dent Appliances. Our Inventory is LIVE and changes QUICKLY, so if you see something you like Snag it ASAP before its gone!</p>
-          <Link href="/" className="inline-flex items-center justify-center gap-2 rounded-lg bg-b4 p-4 text-sm font-semibold maxmd:w-full">
-            <HiOutlineShoppingCart /> <span>Shop Now</span>
+          <Link href="/" className="inline-flex items-center justify-center gap-2 rounded-lg bg-white p-4 text-sm font-semibold text-b3 maxmd:w-full">
+            <HiOutlineShoppingCart className="h-5 w-5" /> <span>Shop Now</span>
           </Link>
         </div>
         <div>

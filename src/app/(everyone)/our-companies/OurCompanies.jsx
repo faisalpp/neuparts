@@ -12,12 +12,7 @@ import { AiOutlineArrowDown } from 'react-icons/ai';
 import Iframe from '@/components/Reusable/Ifram';
 
 const OurCompanies = () => {
-  const [video, setVideo] = useState([]);
-
-  useEffect(() => {
-    const GetSingleVideoMedia = async () => {};
-    GetSingleVideoMedia();
-  }, []);
+  const [video, setVideo] = useState({ url: 'https://www.youtube.com/embed/WQWVW4DUmZ0', type: 'iframe', thumbnail: '/g8.webp' });
 
   return (
     <>
@@ -60,7 +55,9 @@ const OurCompanies = () => {
       <ShopAustinSection />
       {/* Client Reviews */}
 
-      <SatisfiedSection apiSectionName="our-companies-page-review" title="Testimonials" dots={true} />
+      {/* Client Reviews */}
+      <div className="mb-3 xl:mb-10"></div>
+      <SatisfiedSection apiSectionName="our-companies-page-review" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

@@ -71,7 +71,7 @@ const BuyingOtherOptions = ({ slug, otherProducts, modelNo }) => {
   );
   return (
     <div className=" rounded-lg py-5">
-      <div class="mb-3 flex items-center justify-between">
+      <div className="mb-3 flex items-center justify-between">
         <h6 className="font-bold">Product Buying Options</h6>
         <Link href={`/products/buying-options/?modelNo=${modelNo}`} className="flex items-center text-sm font-bold text-b3 hover:underline">
           View All <BsArrowRightShort />

@@ -80,7 +80,7 @@ const Faqs = () => {
               {faqTabs.map((tab) => (
                 <button
                   key={tab._id}
-                  className={`flex items-center justify-between rounded-2xl border border-[rgba(0,0,0,0.15)] p-5 text-left font-semibold xl:p-6 xl:text-lg ${activeTab === tab._id ? 'active bg-b7 text-white' : 'text-b23'}`}
+                  className={`flex items-center justify-between rounded-2xl border border-[rgba(0,0,0,0.15)] p-5 text-left font-semibold xl:p-6 xl:text-lg ${activeTab === tab._id ? 'active bg-b3 text-white' : 'text-b23'}`}
                   onClick={() => {
                     handleTabClick(tab._id);
                     setSlug(tab.slug);

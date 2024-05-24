@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
-import Slider from 'react-slick'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import ReviewExCard from './ReviewExCard';
 import Image from 'next/image';
@@ -29,35 +29,41 @@ const ReviewEXSlider = ({ clientreviews, icon, dots }) => {
         settings: {
           slidesToShow: 2,
         },
-      }
+      },
     ],
   };
 
   const PrevButton = ({ onClick }) => (
-    <button onClick={onClick} className='hidden sm:block prev-button absolute top-0 -left-3 z-40 h-full pointer-events-none'>
-      <div className='flex bg-black/30 hover:bg-cyan-500 cursor-pointer px-2 py-2 rounded-full text-white group pointer-events-auto'>
-        <BsArrowLeftShort className='text-xl' />
+    <button onClick={onClick} className="prev-button pointer-events-none absolute -left-3 top-0 z-40 hidden h-full sm:block">
+      <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-b1/50 px-2 py-2 text-white hover:bg-cyan-500">
+        <BsArrowLeftShort className="text-xl" />
       </div>
     </button>
   );
 
   const NextButton = ({ onClick }) => (
-    <button onClick={onClick} className='hidden sm:block next-button absolute top-0 -right-3 z-40 h-full pointer-events-none'>
-      <div className='flex bg-black/30 hover:bg-cyan-500 cursor-pointer px-2 py-2 rounded-full text-white group pointer-events-auto'>
-        <BsArrowRightShort className='text-xl' />
+    <button onClick={onClick} className="next-button pointer-events-none absolute -right-3 top-0 z-40 hidden h-full sm:block">
+      <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-b1/50 px-2 py-2 text-white hover:bg-cyan-500">
+        <BsArrowRightShort className="text-xl" />
       </div>
     </button>
   );
   return (
-    <div className='reviewslider-wrapper'>
-      {clientreviews.length > 0 ? <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className='relative maxmd:mb-10'>
-        {clientreviews.map((clientreview, index) => (
-          <div key={index}>
-            <ReviewExCard description={clientreview.content} author={clientreview.author} review={clientreview.rating} />
-          </div>
-        ))}
-      </Slider> : <div className='flex items-center justify-center w-full' ><Image width={400} height={400} quality={100} alt='Loader' src="/loader-bg.gif" className="w-10 h-10 " /></div>}
-    </div >
+    <div className="reviewslider-wrapper">
+      {clientreviews.length > 0 ? (
+        <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className="relative maxmd:mb-10">
+          {clientreviews.map((clientreview, index) => (
+            <div key={index}>
+              <ReviewExCard description={clientreview.content} author={clientreview.author} review={clientreview.rating} />
+            </div>
+          ))}
+        </Slider>
+      ) : (
+        <div className="flex w-full items-center justify-center">
+          <Image width={400} height={400} quality={100} alt="Loader" src="/loader-bg.gif" className="h-10 w-10 " />
+        </div>
+      )}
+    </div>
   );
 };
 

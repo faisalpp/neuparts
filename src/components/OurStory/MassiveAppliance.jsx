@@ -7,36 +7,83 @@ import Link from 'next/link';
 const MassiveAppliance = ({ sliderstyle, title, customstyle }) => {
   const [relatedProducts, setRelatedProducts] = useState([
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
-      rating: 4,
+      title: 'Upper Rack for Dish Washers',
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+      condtion: 'new',
     },
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
-      rating: 4,
+      title: 'Upper Rack for Dish Washers',
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+      condtion: 'new-open-box',
     },
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
-      rating: 4,
+      title: 'Upper Rack for Dish Washers',
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+      condtion: 'used-grade-a',
     },
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
-      rating: 4,
+      title: 'Upper Rack for Dish Washers',
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+      condtion: 'used-grade-c',
     },
     {
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus non nam et explicabo assumenda. Molestias aperiam repudiandae ex eum!',
-      author: 'Auhtor',
-      rating: 4,
+      title: 'Upper Rack for Dish Washers',
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+      condtion: 'new',
+    },
+    {
+      title: 'Upper Rack for Dish Washers',
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+      condtion: 'new-open-box',
+    },
+    {
+      title: 'Upper Rack for Dish Washers',
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+      condtion: 'used-grade-a',
+    },
+    {
+      title: 'Upper Rack for Dish Washers',
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+      condtion: 'used-grade-c',
     },
   ]);
 
   return (
     <>
       {relatedProducts?.length > 0 ? (
-        <div className="bg-b8">
+        <div className="bg-b3/10">
           <div className={'maincontainer py-10 lg:py-16 xl:py-20 2xl:py-120px ' + customstyle}>
             <h2 className="mb-5 text-center text-2xl font-bold lg:mb-10 xl:mb-[60px] xl:text-32px">{title}</h2>
 

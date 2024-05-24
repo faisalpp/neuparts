@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import NewsLetterSection from '@/components/NewsLetterSection';
-import SatisfiedSection from '@/components/SatisfiedSection';
 import { FaTwitter } from 'react-icons/fa';
 import { RiLinkedinFill } from 'react-icons/ri';
 import { AiOutlineInstagram } from 'react-icons/ai';
@@ -57,8 +56,6 @@ const BlogArticle = ({ slug }) => {
               </div>
             </div>
           </div>
-
-          <SatisfiedSection apiSectionName="blog-page-review" title="Our Customers Are RAVING About Our Appliance Outlet" dots={true} />
 
           <NewsLetterSection backimage="/Newsletter.webp" />
         </>

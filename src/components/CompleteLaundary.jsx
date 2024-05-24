@@ -91,7 +91,7 @@ const CompleteLaundary = ({ closeModal, subCategory }) => {
             </button>
           </div>
 
-          <div className="">
+          <div>
             <Filter type={type} />
           </div>
         </div>

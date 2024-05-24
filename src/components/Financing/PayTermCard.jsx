@@ -1,18 +1,16 @@
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
 
 const PayTermCard = ({ image, title, description }) => {
-    return (
-        <div className='p-7 xl:py-14 xl:px-10 bg-b8 rounded-3xl'>
-            <div className='w-[88px] h-[88px] rounded-full bg-b3 flex justify-center items-center mx-auto'>
-                <Image width={200} height={200} src={`/svgs/` + image} className='w-10 h-10' alt="timer" />
-            </div>
-            <h3 className='text-xl text-b3 text-center font-bold leading-6 mt-6 mb-4'>{title}</h3>
-            <p className='text-b18 text-center leading-6'>
-                {description}
-            </p>
-        </div>
-    )
-}
+  return (
+    <div className="rounded-3xl bg-b3/10 p-7 xl:px-10 xl:py-14">
+      <div className="mx-auto flex h-[88px] w-[88px] items-center justify-center rounded-full bg-b3">
+        <Image width={200} height={200} src={`/svgs/` + image} className="h-10 w-10" alt="timer" />
+      </div>
+      <h3 className="mb-4 mt-6 text-center text-xl font-bold leading-6 text-b3">{title}</h3>
+      <p className="text-center leading-6 text-b18">{description}</p>
+    </div>
+  );
+};
 
-export default PayTermCard
+export default PayTermCard;

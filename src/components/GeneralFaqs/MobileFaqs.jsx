@@ -6,7 +6,7 @@ import FaqAccordion from '../FaqAccordion';
 const MobileFaqs = ({ title, isOpen, onClick, tabfaqs, activeClass }) => {
   return (
     <div className={`flex flex-col duration-200`}>
-      <button onClick={onClick} className={`flex items-center justify-between rounded-2xl border p-5 text-left font-semibold xl:p-6 xl:text-lg ${activeClass ? 'border-b7 bg-b7 text-white' : 'border-b14 bg-white text-b1'}`}>
+      <button onClick={onClick} className={`flex items-center justify-between rounded-2xl border p-5 text-left font-semibold xl:p-6 xl:text-lg ${activeClass ? 'border-b7 bg-b3 text-white' : 'border-b14 bg-white text-b1'}`}>
         <span>{title}</span>
         <FiChevronDown className={`duration-200 ${activeClass ? 'rotate-180' : ''}`} />
       </button>

@@ -27,7 +27,7 @@ const ApplianceWholeSale = () => {
           ))}
         </ul>
       </div>
-      <div className="inline-flex flex-col gap-2 pt-6 sm:flex-row lg:pt-[57px]">
+      <div className="inline-flex flex-col gap-2 pt-6 sm:flex-row">
         <Link href="https://www.neuappliancewholesale.com" className="flex items-center justify-center gap-1 rounded-lg bg-b3 px-4 py-3 text-xs font-medium text-white">
           <span>Go to Neu Appliance Wholesale</span>
           <span>

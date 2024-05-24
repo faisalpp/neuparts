@@ -9,13 +9,13 @@ const MoreImagesModal = ({ state, setState, medias }) => {
   const [image, setImage] = useState(frstImg ? { file: frstImg.file, data: frstImg.data } : {});
 
   return (
-    <div className={`fixed ${state ? 'flex' : 'hidden'} top-0 z-50 h-screen w-full items-center justify-center bg-black/50`}>
+    <div className={`fixed ${state ? 'flex' : 'hidden'} top-0 z-[120] h-screen w-full items-center justify-center bg-black/50`}>
       <div className="relative flex w-10/12 justify-center">
         <span onClick={() => setState(false)} className="absolute -right-10 cursor-pointer rounded-full bg-b3 px-1 py-1">
           <AiOutlineClose className="text-sm text-white" />
         </span>
         <div className="flex w-full flex-col rounded-xl bg-white py-8">
-          <div className="flex w-full justify-center">
+          <div className="flex w-full justify-center py-8">
             {image.file === 'image' ? <Image width={400} height={400} quality={100} src={image.data} alt="" className="h-auto w-48" /> : null}
             {image.file === 'video' && image.type === 'url' ? <Iframe style="w-6/12" src={image.data} title="Modal Video" icon="text-5xl" frameId={`video-frame-modal-${(Math.random() * 100) / 5}`} divId={`video-frame-modal-wrapper-${(Math.random() * 100) / 5}`} thumbnail={image.thumbnail} /> : null}
             {image.file === 'video' && image.type === 'upload' ? <video className="w-6/12 rounded-2xl" controls src={image.data} /> : null}
@@ -27,7 +27,7 @@ const MoreImagesModal = ({ state, setState, medias }) => {
                   {img.file === 'image' ? (
                     <>
                       <div onClick={() => setImage({ file: img.file, type: img.type, data: img.data, thumbnail: img.preview ? img.preview : '' })} className="absolute h-full w-12 bg-transparent"></div>
-                      <Image width={400} height={400} quality={100} src={img.data} alt="" className="w-12 h-auto" />
+                      <Image width={400} height={400} quality={100} src={img.data} alt="" className="h-[50px] w-[60px] object-contain" />
                     </>
                   ) : null}
                   {img.file === 'video' && img.type === 'url' ? (

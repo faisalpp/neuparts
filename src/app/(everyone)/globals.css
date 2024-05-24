@@ -233,18 +233,6 @@ body {
   background-color: #d9d9d9;
 }
 
-/* Our story */
-.meetteam {
-  @apply [&>figure:first-child>img]:h-40 [&>figure:first-child>img]:w-40 [&>figure:first-child]:maxmd:col-span-2 [&>figure:first-child]:maxmd:mx-auto [&>figure:first-child]:maxmd:w-[200px];
-}
-
-.meetteam figure:first-child h3 {
-  @apply text-lg;
-}
-
-.meetteam figure:first-child span {
-  @apply text-sm;
-}
 /* Shop Austin */
 
 .shopaustin {

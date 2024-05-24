@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import ReviewCard from './ReviewCard';
 
@@ -12,18 +12,26 @@ const ReviewSlider = ({ color, icon }) => {
   const btnprev = () => {
     let width = Box.clientWidth;
     Box.scrollLeft = Box.scrollLeft - width;
-  }
+  };
   const btnnext = () => {
     let width = Box.clientWidth;
     Box.scrollLeft = Box.scrollLeft + width;
-  }
+  };
 
   return (
     <>
-      <div className='relative' >
-        <button onClick={btnprev} className='absolute top-0 -right-3 z-40 h-full'><div className='hidden lg:flex bg-black/30 hover:bg-cyan-500 cursor-pointer px-2 py-2 rounded-full text-white group'><BsArrowRightShort className='text-xl' /></div></button>
-        <button onClick={btnnext} className='absolute top-0 -left-6 z-40 h-full'><div className='hidden lg:flex bg-black/30 hover:bg-cyan-500 cursor-pointer px-2 py-2 rounded-full text-white group'><BsArrowLeftShort className='text-xl' /></div></button>
-        <div id="id" className='flex lg:overflow-x-hidden overflow-x-scroll space-x-5 scroll-smooth' >
+      <div className="relative">
+        <button onClick={btnprev} className="absolute -right-3 top-0 z-40 h-full">
+          <div className="group hidden cursor-pointer rounded-full bg-b1/50 px-2 py-2 text-white hover:bg-cyan-500 lg:flex">
+            <BsArrowRightShort className="text-xl" />
+          </div>
+        </button>
+        <button onClick={btnnext} className="absolute -left-6 top-0 z-40 h-full">
+          <div className="group hidden cursor-pointer rounded-full bg-b1/50 px-2 py-2 text-white hover:bg-cyan-500 lg:flex">
+            <BsArrowLeftShort className="text-xl" />
+          </div>
+        </button>
+        <div id="id" className="flex space-x-5 overflow-x-scroll scroll-smooth lg:overflow-x-hidden">
           <ReviewCard color={color} icon={icon} />
           <ReviewCard color={color} icon={icon} />
           <ReviewCard color={color} icon={icon} />
@@ -31,9 +39,8 @@ const ReviewSlider = ({ color, icon }) => {
           <ReviewCard color={color} icon={icon} />
         </div>
       </div>
-
     </>
-  )
-}
+  );
+};
 
-export default ReviewSlider
+export default ReviewSlider;

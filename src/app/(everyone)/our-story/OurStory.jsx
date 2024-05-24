@@ -10,17 +10,15 @@ import MeetTeam from '@/components/OurStory/MeetTeam';
 import MassiveAppliance from '@/components/OurStory/MassiveAppliance';
 import NewsLetterSection from '@/components/NewsLetterSection';
 import Iframe from '@/components/Reusable/Ifram';
+import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
 
 const OurStory = () => {
-  const [video, setVideo] = useState([]);
-
-  useEffect(() => {
-    const GetSingleVideoMedia = async () => {};
-    GetSingleVideoMedia();
-  }, []);
+  const [video, setVideo] = useState({ url: 'https://www.youtube.com/embed/WQWVW4DUmZ0', type: 'iframe', thumbnail: '/g8.webp' });
 
   return (
     <>
+      <ProductSearchBar />
+
       <div className="maincontainer pt-10 lg:pt-16 xl:pt-20">
         {/* Bread Crumbs Start */}
         <div className="flex items-center">
@@ -51,8 +49,8 @@ const OurStory = () => {
       <MassiveAppliance title="Shop Massive Discount Appliances" sliderstyle="sm:mx-2 3xl:mx-5" />
 
       {/* Client Reviews */}
-
-      <SatisfiedSection apiSectionName="our-story-page-review" title="Testimonials" dots={true} />
+      <div className="mb-3 xl:mb-10"></div>
+      <SatisfiedSection apiSectionName="our-story-page-review" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

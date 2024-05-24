@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { BiLinkExternal, BiPlayCircle } from 'react-icons/bi';
 import SolutionSvg from '@/components/svgs/SolutionSvg';
-import Image from 'next/image'
+import Image from 'next/image';
 
 const ApplianceParts = () => {
   return (

@@ -40,7 +40,7 @@ const ReviewSlider = ({ color, clientreviews, icon }) => {
 
     const PrevButton = ({ onClick }) => (
         <button onClick={onClick} className='hidden sm:block prev-button absolute top-0 -left-3 z-40 h-full pointer-events-none'>
-            <div className='flex carousel__prev bg-black/30 hover:bg-cyan-500 cursor-pointer px-2 py-2 rounded-full text-white group pointer-events-auto'>
+            <div className='flex carousel__prev bg-b1/50 hover:bg-cyan-500 cursor-pointer px-2 py-2 rounded-full text-white group pointer-events-auto'>
                 <BsArrowLeftShort className='text-xl' />
             </div>
         </button>
@@ -48,7 +48,7 @@ const ReviewSlider = ({ color, clientreviews, icon }) => {
 
     const NextButton = ({ onClick }) => (
         <button onClick={onClick} className='hidden sm:block next-button absolute top-0 -right-3 z-40 h-full pointer-events-none'>
-            <div className='flex carousel__next bg-black/30 hover:bg-cyan-500 cursor-pointer px-2 py-2 rounded-full text-white group pointer-events-auto'>
+            <div className='flex carousel__next bg-b1/50 hover:bg-cyan-500 cursor-pointer px-2 py-2 rounded-full text-white group pointer-events-auto'>
                 <BsArrowRightShort className='text-xl' />
             </div>
         </button>

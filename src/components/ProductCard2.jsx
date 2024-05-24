@@ -2,6 +2,7 @@ import React from 'react';
 import ToolTip from './ToolTip';
 import Link from 'next/link';
 import Image from 'next/image';
+import FourStar from './svgs/FourStar';
 
 const ProductCard2 = ({ sliderstyle, stars, product }) => {
   return (
@@ -32,7 +33,17 @@ const ProductCard2 = ({ sliderstyle, stars, product }) => {
               <h4 className="text-sm font-semibold text-b15">Condition</h4>
               <ToolTip color="text-b15" />
             </div>
-            <div className="inline-flex items-center rounded-full bg-c-orange px-3 py-1 text-xs font-semibold text-white">New • Open Box</div>
+            {product?.condtion == 'new' && (
+              <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
+                <FourStar />
+                New
+              </div>
+            )}
+            {product?.condtion == 'certified' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>}
+            {product?.condtion == 'new-open-box' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-3 py-1 text-xs font-semibold text-white">New / Open Box</div>}
+            {product?.condtion == 'used-grade-a' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade B</div>}
+            {product?.condtion == 'used-grade-c' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade C</div>}
+            {product?.condtion == 'used-grade-d' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div>}
           </div>
           <div className="flex items-center space-x-10">
             <div className="flex text-sm font-semibold text-b15">

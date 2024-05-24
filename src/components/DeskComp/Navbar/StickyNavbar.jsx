@@ -5,6 +5,7 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaBars } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
+import FourStar from '@/components/svgs/FourStar';
 
 const StickyNavbar = ({ state, product, addCart }) => {
   // Scroll Sticky Navbar Item to Sections
@@ -29,10 +30,16 @@ const StickyNavbar = ({ state, product, addCart }) => {
         <div className="maxlg:hidden">
           <div className="maincontainer items-center justify-center py-6 lg:flex">
             <div className="max-w-6/12 flex w-6/12 items-center space-x-5">
-              <div className="w-full max-w-12 rounded-lg border-[1px] border-gray-200 px-2 py-1">
-                <Image width={400} height={400} quality={100} src={frstImg ? frstImg.data : ''} className="h-auto w-12" alt="" />
+              <div className="w-full max-w-28 rounded-lg border-[1px] border-gray-200 px-2 py-1">
+                <Image width={400} height={400} quality={100} src={frstImg ? frstImg.data : ''} className="h-auto w-28" alt={product.title} />
               </div>
-              <p className="line-clamp-2 text-clip text-2xl font-bold leading-8 md:text-3xl xl:text-[2rem]">{product.title}</p>
+              <div>
+                <div className="mb-2.5 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
+                  <FourStar />
+                  New
+                </div>
+                <h2 className="line-clamp-2 text-2xl font-bold leading-8">{product.title}</h2>
+              </div>
             </div>
 
             <div className="flex w-6/12 items-center justify-end space-x-5">
