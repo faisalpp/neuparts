@@ -22,20 +22,25 @@ import FourStar from '@/components/svgs/FourStar';
 import GasSvg from '@/components/svgs/GasSvg';
 import MoreParts from './MoreParts';
 import CompareModel from './CompareModel';
+import BuyingOtherOptions from './BuyingOtherOptions';
 import WarantySection from './WarantySection';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const Product = ({ slug }) => {
   // Get slug form url
   const ordInfo = '';
-  const [orderInfo, setOrderInfo] = useState(ordInfo ? ordInfo : { type: 'pickup', location: 'Georgetown, Tx', shipping: 'Free' });
-  const [zip, setZip] = useState('');
-  const [changeZip, setChangeZip] = useState(true);
   const [quantity, setQuantity] = useState(1);
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
+  const [date, setDate] = useState({});
+  const [deliveryPoints, setDeliveryPoints] = useState([
+    { title: 'NeuShield <br /> 30-Day Warranty', image: '/svgs/shield-security.webp' },
+    { title: 'Same Day Shipping on orders received before 1pm CST', image: '/svgs/local_shipping2.webp' },
+    { title: 'Hassle Free 30 Day Returns', image: '/svgs/calendar_clock.webp' },
+    { title: 'Fast 2-Day Shipping Available', image: '/svgs/package_2.webp' },
+  ]);
 
   // const [product, setProduct] = useState([]);
   const [product, setProduct] = useState({
@@ -166,13 +171,52 @@ const Product = ({ slug }) => {
     metaKeywords: 'demo, refrigerator',
     subCategory: '',
   });
-  const [threeStar, setThreeStar] = useState([]);
-  const [fourStar, setFourStar] = useState([]);
-  const [fiveStar, setFiveStar] = useState([]);
-
-  const cartId = '';
-
-  const PRODUCTS = [];
+  const [otherProducts, setOtherProducts] = useState([
+    {
+      slug: 'test',
+      title: 'Upper Rack for Dish Washers',
+      condition: 'new',
+      quantity: 1,
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+    },
+    {
+      slug: 'whirlpool-refrigerator-master',
+      title: 'Upper Rack for Dish Washers',
+      condition: 'new-open-box',
+      quantity: 0,
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+    },
+    {
+      slug: 'whirlpool-refrigerator-master',
+      title: 'Upper Rack for Dish Washers',
+      condition: 'used',
+      quantity: 2,
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+    },
+    {
+      slug: 'whirlpool-refrigerator-master',
+      title: 'Upper Rack for Dish Washers',
+      condition: 'used',
+      quantity: 2,
+      isSale: true,
+      salePrice: 279.0,
+      regPrice: 230.0,
+      rating: 5,
+      image: '/popular-parts.webp',
+    },
+  ]);
 
   const addToCart = async (e) => {
     e.preventDefault();
@@ -190,20 +234,7 @@ const Product = ({ slug }) => {
   });
   const [isFav, setIsFav] = useState(false);
 
-  const CheckFavorite = async () => {};
-
-  const [childKeyFeatures, setChildKeyFeatures] = useState({});
   const GetProduct = async () => {};
-
-  const [zipLoading, setZipLoading] = useState(false);
-
-  const Submit = async () => {};
-
-  useEffect(() => {
-    if (zip.length === 5) {
-      Submit();
-    }
-  }, [zip]);
 
   const [showNavbar, setShowNavbar] = useState(false);
 
@@ -224,40 +255,13 @@ const Product = ({ slug }) => {
 
   const [openModal, setOpenModal] = useState('');
 
-  const handleOpenModal = (modal) => {
-    setOpenModal(modal);
-  };
-
   const handleCloseModal = () => {
     setOpenModal('');
   };
 
   const moreImg = product.media ? product.media.find((item) => item.file === 'image') : null;
 
-  // Tags Elements Extended Start
-  const ExtendTag = ({ name, selected }) => {
-    return (
-      <>
-        {name === 'top-refrigerator-bottom-freezer' ? (
-          <div className="flex h-fit w-fit cursor-pointer flex-col items-center rounded-md border-[1px] border-[rgba(0,0,0,0.15)] px-2 py-2 hover:shadow-md">
-            <h5 className="text-[9px] font-medium">TOP REFRIGERAOTR</h5>
-            <span className="flex h-[1px] w-full bg-[rgba(0,0,0,0.15)]"></span>
-            <h5 className="text-[9px] font-medium">BOTTOM FREEZER</h5>
-          </div>
-        ) : null}
-        {name === 'top-freezer-bottom-refrigerator' ? (
-          <div className="flex h-fit w-fit cursor-pointer flex-col items-center rounded-md border-[1px] border-[rgba(0,0,0,0.15)] px-2 py-2 hover:shadow-md">
-            <h5 className="text-[9px] font-medium">TOP FREEZER</h5>
-            <span className="flex h-[1px] w-full bg-[rgba(0,0,0,0.15)]"></span>
-            <h5 className="text-[9px] font-medium">BOTTOM REFRIGERAOTR</h5>
-          </div>
-        ) : null}
-      </>
-    );
-  };
   // Tags Elements Extended End
-
-  const [date, setDate] = useState({});
 
   const handlePickupDate = () => {
     const currentDate = new Date();
@@ -276,10 +280,6 @@ const Product = ({ slug }) => {
   //  const [isFav,setIsFav] = useState(false)
   const [favLoad, setFavLoad] = useState(false);
 
-  const isUser = '';
-  const userId = '';
-  const isAdmin = '';
-  const adminId = '';
   const handleFavorites = async (e) => {
     e.preventDefault();
   };
@@ -355,24 +355,6 @@ const Product = ({ slug }) => {
                         <>
                           <div key={index} className="relative grid h-[70px] w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px" onClick={() => setMediaViewer({ file: media.file, data: media.data, thumbnail: media.preview ? media.preview : '' })}>
                             <Image width={200} height={200} quality={100} src={media.data} className="w-10 2xl:w-20" alt="product" />
-                            {/* {media.file === 'image' ? (
-                              <>
-                                <div onClick={() => setMediaViewer({ file: media.file, type: media.type, data: media.data, thumbnail: media.preview ? media.preview : '' })} className="absolute h-16 w-10 cursor-pointer bg-transparent"></div>
-                                <Image width={200} height={200} quality={100} src={media.data} className="w-10 2xl:w-20" alt="product" />
-                              </>
-                            ) : null} */}
-                            {/* {media.file === 'video' && media.type === 'url' ? (
-                              <>
-                                <div onClick={() => setMediaViewer({ file: media.file, type: media.type, data: media.data, thumbnail: media.preview ? media.preview : '' })} className="absolute z-10 h-10 w-10 cursor-pointer bg-transparent"></div>
-                                <Iframe style="w-10 2xl:w-20 h-10" thumbRounded="false" src={media.data} title="Modal Video" icon="text-xl" frameId={`video-frame-general-modal-${(Math.random() * 100) / 5}`} divId={`general-video-frame-modal-wrapper-${(Math.random() * 100) / 5}`} thumbnail={media.preview} />
-                              </>
-                            ) : null}
-                            {media.file === 'video' && media.type === 'upload' ? (
-                              <>
-                                <div onClick={() => setMediaViewer({ file: media.file, type: media.type, data: media.data, thumbnail: media.preview ? media.preview : '' })} className="absolute h-10 w-10 cursor-pointer bg-transparent"></div>
-                                <video className="w-10 rounded-2xl 2xl:w-20" controls src={media.data} />
-                              </>
-                            ) : null} */}
                           </div>
                         </>
                       ))
@@ -499,40 +481,16 @@ const Product = ({ slug }) => {
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-2">
-                <div className="flex max-w-44 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
-                  <Image width={200} height={200} quality={100} className="h-auto w-full max-w-[18px]" src="/shield.webp" alt="" />
-                  <span className="text-[10px] font-medium">
-                    NeuShield 1 <br /> Year Warranty
-                  </span>
-                </div>
-                <div className="flex max-w-44 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
-                  <TruckSvg className="h-6 min-w-6" />
-                  <span className="text-[10px] font-medium">Orders Ship Same Day if placed before 12pm CST</span>
-                </div>
-                <div className="flex max-w-44 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
-                  <TruckSvg className="h-6 w-6" />
-                  <span className="text-[10px] font-medium">Hassle Free 30 Day Returns</span>
-                </div>
-                <div className="flex max-w-44 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
-                  <TruckSvg className="h-6 w-6" />
-                  <span className="text-[10px] font-medium">Fast 2-Day Shipping Available</span>
-                </div>
+                {deliveryPoints.map((item, index) => (
+                  <div key={index} className="flex h-full max-w-52 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
+                    <Image width={200} height={200} quality={100} className="h-auto w-full max-w-[18px]" src={item.image} alt={item.title} />
+                    <span className="text-[10px] font-medium" dangerouslySetInnerHTML={{ __html: item.title }}></span>
+                  </div>
+                ))}
               </div>
 
               {/* Other Product Section */}
-              <div className=" rounded-lg py-5">
-                <div class="mb-3 flex items-center justify-between">
-                  <h6 className="font-bold">Product Buying Options</h6>
-                  <Link href={`/products/buying-options/?modelNo=${product.modelNo}`} className="flex items-center text-sm text-b3 hover:underline">
-                    View All <BsArrowRightShort />
-                  </Link>
-                </div>
-                <div className="mt-4 flex grid-cols-3 flex-col items-center space-y-4 lg:mt-0 lg:grid lg:gap-x-5 lg:space-y-0">
-                  {threeStar ? <OtherProductCard slug={slug} product={threeStar} rating={3} /> : <OtherProductCard slug={slug} disabled="true" disabledImg={moreImg} rating={3} />}
-                  {fourStar ? <OtherProductCard slug={slug} product={fourStar} rating={4} /> : <OtherProductCard slug={slug} disabled="true" disabledImg={moreImg} rating={4} />}
-                  {fiveStar ? <OtherProductCard slug={slug} product={fiveStar} rating={5} /> : <OtherProductCard slug={slug} disabled="true" disabledImg={moreImg} rating={5} />}
-                </div>
-              </div>
+              <BuyingOtherOptions slug={slug} otherProducts={otherProducts} modelNo={product.modelNo} />
             </div>
           </div>
 
