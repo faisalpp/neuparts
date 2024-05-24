@@ -20,7 +20,7 @@ const ModelCategories = () => {
     { title: 'Water Inlet Valves', image: '/water-intel.webp' },
   ]);
   return (
-    <div className="py-20">
+    <div className="pb-20">
       <h2 className="mb-10 text-2xl font-semibold text-b1">
         Model <span className="text-dark-red">2345367</span> Appliance Part Categories
       </h2>

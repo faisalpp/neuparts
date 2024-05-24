@@ -1,26 +1,23 @@
 'use client';
 import { useEffect } from 'react';
 import { RiArrowDropRightLine } from 'react-icons/ri';
-import { AiFillStar, AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoBagCheckOutline, IoCloseOutline, IoSettingsOutline } from 'react-icons/io5';
-import { BsArrowRightShort } from 'react-icons/bs';
 import { useState } from 'react';
-import OtherProductCard from '@/components/OtherProductCard';
 import FaqAccordion from '@/components/FaqAccordion';
 import ToolTip from '@/components/ToolTip';
 import MoreImagesModal from '@/components/MoreImagesModal';
 import StickyNavbar from '@/components/DeskComp/Navbar/StickyNavbar';
 import CustomModal from '@/components/Modal/CustomModal';
-import TruckSvg from '@/components/svgs/TruckSvg';
 import Loader from '@/components/Loader/Loader';
 import { format, getDate } from 'date-fns';
 import Popup from '@/components/Popup';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import FourStar from '@/components/svgs/FourStar';
 import GasSvg from '@/components/svgs/GasSvg';
 import MoreParts from './MoreParts';
+import CompatibleAppliance from './CompatibleAppliance';
 import CompareModel from './CompareModel';
 import BuyingOtherOptions from './BuyingOtherOptions';
 import WarantySection from './WarantySection';
@@ -28,7 +25,6 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 const Product = ({ slug }) => {
   // Get slug form url
-  const ordInfo = '';
   const [quantity, setQuantity] = useState(1);
 
   const [error, setError] = useState(false);
@@ -495,7 +491,7 @@ const Product = ({ slug }) => {
           </div>
 
           {/* 360 Degree Product Section */}
-          <div className="rounded-3xl border border-b14">
+          <div className="rounded-3xl">
             <div id="360-view" className="maincontainer flex flex-col items-center gap-5 py-10 lg:py-14 xl:py-20 ">
               <h4 className="text-xl font-bold lg:text-2xl xl:text-3xl 2xl:text-4xl">360° View of This Appliance</h4>
               <div className="relative mb-5 mt-5 w-full">
@@ -504,7 +500,7 @@ const Product = ({ slug }) => {
                   <Image width={400} height={400} quality={100} src="/360angle.webp" alt="product" className="mx-auto h-auto w-80" />
                 </div>
               </div>
-              <p className="font-normal">
+              <p className="my-10 font-normal">
                 Rotate <b>360°</b> to see the product from all angles
               </p>
               <div className="border-gray-[rgba(0,0,0,0.08)] flex w-full rounded-2xl border-2 md:w-2/3 xl:w-1/2">
@@ -547,7 +543,9 @@ const Product = ({ slug }) => {
             </div>
           </div>
 
-          <MoreParts />
+          <CompatibleAppliance />
+
+          {/* <MoreParts /> */}
 
           {/* Review */}
           <div id="product-features" className="maincontainer flex flex-col bg-white py-10 lg:py-14 xl:py-60px">

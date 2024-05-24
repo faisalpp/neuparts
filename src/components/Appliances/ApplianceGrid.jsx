@@ -29,23 +29,21 @@ const ApplianceGrid = ({ isGrid, product }) => {
             <button type="button" className="flex items-center gap-2 text-b3">
               <FaRegHeart /> Add to favorites
             </button>
-            <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
+            <h3 className="line-clamp-2 text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
 
             <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
-              <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
-                Price Range
-                <Tag />
+              <span className="w-[87.1px] text-sm font-semibold leading-4 text-b1">
+                Part <br /> Number
               </span>
+              <Tag />
+              <div className="inline-flex rounded-full border border-black px-3 py-1 text-xs font-medium text-b1">WTWX2342</div>
+            </div>
+            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
+              <span className="text-sm font-semibold text-b1">Price Range</span>
+              <Tag />
               <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">
                 ${product.salePrice} - ${product.regPrice}
               </div>
-            </div>
-            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
-              <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
-                Discount <br /> Range
-                <span>%</span>
-              </span>
-              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">10%-70%</div>
             </div>
             <button type="button" className="flex items-center font-semibold text-b3 underline">
               15 Buying Options →

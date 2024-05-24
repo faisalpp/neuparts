@@ -4,12 +4,16 @@ import ApplianceGrid from '@/components/Appliances/ApplianceGrid';
 import ProductFilter from '@/components/Product/FIlter';
 import ModelCategories from '@/components/Appliances/ModelCategories';
 import { RiArrowDropRightLine } from 'react-icons/ri';
+import { CiSearch } from 'react-icons/ci';
 import { FaBars } from 'react-icons/fa';
 import { BsGrid, BsChevronDown } from 'react-icons/bs';
 import Pagination from '@/components/Pagination/Pagination2';
 import Image from 'next/image';
+import { BiSearch } from 'react-icons/bi';
 
 const AllProducts = () => {
+  const [modelNo, setModelNo] = useState('');
+
   const [categoriesFilters, setCategoriesFilters] = useState([
     {
       title: 'Part Type',
@@ -131,19 +135,32 @@ const AllProducts = () => {
           </div>
           <div>
             <div className="inline-flex rounded-lg border border-b2 px-4 py-3 font-semibold text-b2">Appliance Repair and Replacement parts for 234567</div>
-            <h2 className="mt-4 text-32px font-bold text-b1">Model Number: 234567</h2>
+            <h2 className="mt-4 text-2xl font-bold text-b1 lg:text-32px">Model Number: 234567</h2>
             <p className="mt-2.5 text-xl font-medium text-b1 2xl:text-2xl">Frigidaire 24&quot; Front Control Built-In Dishwasher, 62dba - Stainless Steel</p>
           </div>
         </div>
         {/* End Model Details */}
 
+        {/* Part Number to search */}
+        <div className="my-20 2xl:my-100px">
+          <h2 className="mt-4 text-2xl font-bold text-b1 lg:text-[30px]">Model Number: 234567</h2>
+          <div className="mt-8 flex max-w-[910px] items-center gap-2 maxsm:flex-col">
+            <div className="relative w-full">
+              <CiSearch className="absolute left-4 top-3.5 h-7 w-7 text-b1/30" />
+              <input onChange={(e) => setModelNo(e.target.value)} type="text" value={modelNo} className="h-14 w-full rounded-lg border border-[#F6F7F9] bg-[#F6F7F9] pl-14 text-sm font-medium outline-none duration-200 placeholder:font-medium placeholder:text-b1/30 focus:border-b3" placeholder="Know your part number? Enter it here..." />
+            </div>
+            <button type="button" className="button-hover flex cursor-pointer items-center justify-center rounded-md px-6 py-5 text-white">
+              <BiSearch />
+              <span className="ml-1 text-xs font-medium">Search</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Model Categoris */}
         <ModelCategories />
 
-        {/* Part Number to search */}
-        <div></div>
-
         <h2 className="mb-20 mt-10 text-2xl font-semibold text-b1">
-          Model <span className="text-dark-red">2345367</span> Appliance Part Categories
+          Compatible Parts for Model <span className="text-dark-red">2345367</span>
         </h2>
         {/* Product Filters */}
 
