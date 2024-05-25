@@ -80,7 +80,7 @@ const AboutCeo = () => {
               <div className="pt-[10px]">
                 <figcaption className="text-center font-medium">
                   <h3 className="font-bold text-b18 md:text-[22px] xl:text-28px">{team.name}</h3>
-                  <span className="mb-4 mt-3 inline-flex rounded-full bg-b8 px-4 py-2 text-b3 maxmd:text-xs">{team.role}</span>
+                  <span className="mb-4 mt-3 inline-flex rounded-full bg-b3/10 px-4 py-2 text-b3 maxmd:text-xs">{team.role}</span>
                   <p className="text-sm text-b1">{team.description}</p>
                 </figcaption>
               </div>

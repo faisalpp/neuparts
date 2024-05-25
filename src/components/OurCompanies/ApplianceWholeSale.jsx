@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const ApplianceWholeSale = () => {
   return (
-    <div className="flex flex-col gap-6 rounded-3xl bg-b8 px-3 2xl:p-7 xs:p-10 3xl:p-10 maxcosm:py-5">
+    <div className="flex flex-col gap-6 rounded-3xl bg-b3/10 px-3 2xl:p-7 xs:p-10 3xl:p-10 maxcosm:py-5">
       <a href="http://neuappliancewholesale.com/" target="_new">
         <Image width={400} height={400} quality={100} src="/nueapplianceswholesale.webp" alt="nueapplianceswholesale" className="h-16 w-auto" />
       </a>

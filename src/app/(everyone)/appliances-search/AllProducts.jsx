@@ -129,7 +129,7 @@ const AllProducts = () => {
         {/* Bread Crumbs End */}
 
         {/* Product Model Details */}
-        <div className="mt-8 grid grid-cols-1 items-center gap-10 rounded-lg border border-b3 bg-b8 p-8 md:grid-cols-[220px_auto]">
+        <div className="mt-8 grid grid-cols-1 items-center gap-10 rounded-lg border border-b3 bg-b3/10 p-8 md:grid-cols-[220px_auto]">
           <div className="grid place-items-center rounded-lg bg-white py-7">
             <Image src="/dish-water.webp" className="h-40 w-40 object-contain" alt="Dish Water" width={600} height={600} quality={100} />
           </div>

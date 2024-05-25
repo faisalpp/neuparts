@@ -480,7 +480,7 @@ const Product = ({ slug }) => {
 
           {/* Review */}
           <div id="product-features" className="maincontainer flex flex-col bg-white py-10 lg:py-14 xl:py-60px">
-            <div className="flex flex-col items-center justify-center gap-3 rounded-md bg-b8 py-8">
+            <div className="flex flex-col items-center justify-center gap-3 rounded-md bg-b3/10 py-8">
               <div className="mt-2 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
                 <FourStar />
                 New

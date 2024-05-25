@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import ApplianceDetail from '@/components/Appliances/ApplianceDetail';
 import Faqs from '@/components/GeneralFaqs/Faqs';
+import FaqForm from './FaqForm';
 import ShopAustinSection from '@/components/Appliances/ShopAustinSection';
 import NewsLetterSection from '@/components/NewsLetterSection';
 import SatisfiedSection from '@/components/SatisfiedSection';
@@ -30,6 +31,10 @@ const GeneralFaqs = () => {
 
       {/* Faqs Tabs */}
       <Faqs />
+
+      {/* FAQ's Form */}
+      <FaqForm />
+
       {/* Shop Austin Section */}
       <ShopAustinSection />
 

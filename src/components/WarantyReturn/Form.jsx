@@ -16,7 +16,7 @@ const Form = () => {
     }
   };
   return (
-    <div className="rounded-2xl bg-b8 p-10">
+    <div className="rounded-2xl bg-b3/10 p-10">
       <h3 className="mb-8 text-xl font-semibold text-b18">Order Details</h3>
       <div className="mb-5">
         <label htmlFor="order_id" className="mb-2 block text-xs font-bold text-b18/50">

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { Select, Option } from '@material-tailwind/react';
+import Link from 'next/link';
 
 const HeroSection = () => {
   const [searchBy, setSearchBy] = useState('tab');
@@ -32,14 +33,14 @@ const HeroSection = () => {
             {searchBy == 'tab' && (
               <div className="grid grid-cols-1 gap-2 rounded-lg rounded-t-none bg-[#EBF8FE] p-4 md:grid-cols-[auto_160px]">
                 <div className="relative grid gap-2 md:grid-cols-2">
-                  <input type="text" className="text-dark-gray placeholder:text-dark-gray w-full rounded-lg border border-b3 px-6 py-3 shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none md:py-4" placeholder="Enter model number" />
-                  <input type="text" className="text-dark-gray placeholder:text-dark-gray w-full rounded-lg border border-b3 px-6 py-3 shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none md:py-4" placeholder="Enter part number" />
+                  <input type="text" className="w-full rounded-lg border border-b3 px-6 py-3 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none placeholder:text-dark-gray md:py-4" placeholder="Enter model number" />
+                  <input type="text" className="w-full rounded-lg border border-b3 px-6 py-3 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none placeholder:text-dark-gray md:py-4" placeholder="Enter part number" />
                   <Image width={400} height={400} quality={100} src="/best-result.webp" alt="Best Results" className="absolute -bottom-[3.8rem] left-0 right-0 z-10 mx-auto h-auto w-72" />
                 </div>
-                <button type="button" className="button-hover flex h-full w-full max-w-40 items-center justify-center rounded-lg py-3 font-bold text-white">
+                <Link href="/appliances-search" className="button-hover flex h-full w-full max-w-40 items-center justify-center rounded-lg py-3 font-bold text-white">
                   <MdSearch className="mr-2 text-2xl" />
                   Search
-                </button>
+                </Link>
               </div>
             )}
             {searchBy == 'browse-by' && (
@@ -48,7 +49,7 @@ const HeroSection = () => {
                   <Select
                     label="Select manufacturer"
                     size="md"
-                    className="text-dark-gray bg-white px-6 py-3 shadow-[0px_0px_16px_rgba(0,0,0,0.08)] md:py-4"
+                    className="bg-white px-6 py-3 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] md:py-4"
                     animate={{
                       mount: { y: 0 },
                       unmount: { y: 25 },
@@ -63,7 +64,7 @@ const HeroSection = () => {
                   <Select
                     label="Select category"
                     size="md"
-                    className="text-dark-gray bg-white px-6 py-3 shadow-[0px_0px_16px_rgba(0,0,0,0.08)] md:py-4"
+                    className="bg-white px-6 py-3 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] md:py-4"
                     animate={{
                       mount: { y: 0 },
                       unmount: { y: 25 },
@@ -77,10 +78,10 @@ const HeroSection = () => {
                   </Select>
                   <Image width={400} height={400} quality={100} src="/best-result.webp" alt="Best Results" className="absolute -bottom-[3.8rem] left-0 right-0 z-10 mx-auto h-auto w-72" />
                 </div>
-                <button type="button" className="button-hover flex h-full w-full max-w-40 items-center justify-center rounded-lg py-3 font-bold text-white">
+                <Link href="/appliances-search" className="button-hover flex h-full w-full max-w-40 items-center justify-center rounded-lg py-3 font-bold text-white">
                   <MdSearch className="mr-2 text-2xl" />
                   Search
-                </button>
+                </Link>
               </div>
             )}
           </div>

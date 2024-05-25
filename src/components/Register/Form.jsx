@@ -38,24 +38,24 @@ const Form = () => {
   return (
     <>
       <div className="flex w-full flex-col items-center space-y-10 px-5 py-32 pt-20">
-        <div>
-          <Image width={400} height={400} className="h-auto w-full" src="/login_logo.webp" alt="login_logo" />
-        </div>
-        <form onSubmit={(e) => Submit(e)} className="flex flex-col space-y-8 rounded-2xl border-[1px] border-gray-200 bg-white px-10 py-10 md:w-7/12 lg:w-[512px] xl:w-[512px]">
+        <Link href="/">
+          <Image width={400} height={400} quality={100} className="h-auto w-32" src="/neu-blue.webp" alt="login_logo" />
+        </Link>
+        <form onSubmit={(e) => Submit(e)} className="flex flex-col space-y-8 rounded-2xl border border-b1/10 bg-white px-10 py-10 md:w-7/12 lg:w-[512px] xl:w-[512px]">
           <h4 className="text-xl font-bold">Register</h4>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <h5 className="text-xs font-semibold">First Name</h5>
-            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-full rounded-md border-[1px] border-gray-200 px-4 py-3 text-sm outline-none" placeholder="Jhon" />
+            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-full rounded-md border border-b1/15 px-4 py-3 text-sm outline-none" placeholder="Jhon" />
           </div>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <h5 className="text-xs font-semibold">Last Name</h5>
-            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} className="w-full rounded-md border-[1px] border-gray-200 px-4 py-3 text-sm outline-none" placeholder="Doe" />
+            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} className="w-full rounded-md border border-b1/15 px-4 py-3 text-sm outline-none" placeholder="Doe" />
           </div>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <h5 className="text-xs font-semibold">Email Address</h5>
-            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-md border-[1px] border-gray-200 px-4 py-3 text-sm outline-none" placeholder="youremail@mail.com" />
+            <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-md border border-b1/15 px-4 py-3 text-sm outline-none" placeholder="youremail@mail.com" />
           </div>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <div>
               <label className="mb-2 block text-xs font-semibold text-b16">Country</label>
               <div className="relative">
@@ -74,23 +74,23 @@ const Form = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <h5 className="text-xs font-semibold">Phone</h5>
-            <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-md border-[1px] border-gray-200 px-4 py-3 text-sm outline-none" placeholder="+1 000-000-0000" />
+            <input type="number" value={phone} onChange={(e) => setPhone(e.target.value)} className="w-full rounded-md border border-b1/15 px-4 py-3 text-sm outline-none" placeholder="+1 000-000-0000" />
           </div>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <h5 className="text-xs font-semibold">Password</h5>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-md border-[1px] border-gray-200 px-4 py-3 text-sm outline-none" placeholder="Password" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-md border border-b1/15 px-4 py-3 text-sm outline-none" placeholder="Password" />
           </div>
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-2">
             <h5 className="text-xs font-semibold">Confirm Password</h5>
-            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full rounded-md border-[1px] border-gray-200 px-4 py-3 text-sm outline-none" placeholder="Password" />
+            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full rounded-md border border-b1/15 px-4 py-3 text-sm outline-none" placeholder="Password" />
           </div>
-          <button type={loader ? 'button' : 'submit'} className="flex w-full cursor-pointer items-center justify-center rounded-md bg-b3 py-1">
+          <button type={loader ? 'button' : 'submit'} className="flex w-full cursor-pointer items-center justify-center rounded-md bg-b3 py-3">
             {loader ? (
               <BtnLoader style="w-5 py-1" />
             ) : (
-              <span className="flex w-fit items-center  rounded-md px-4 py-1 text-center font-semibold text-white">
+              <span className="flex w-fit items-center  rounded-md px-4 text-center font-medium text-white">
                 <span className="text-xs">Create Account</span>
                 <BsArrowRightShort className="text-2xl" />
               </span>
@@ -100,7 +100,7 @@ const Form = () => {
             <h5 className="text-sm">
               Have an Account?{' '}
               <Link href="/login">
-                <span className="cursor-pointer text-b3 hover:underline">Login</span>
+                <span className="cursor-pointer font-bold text-b3 underline">Login</span>
               </Link>
             </h5>
           </div>
@@ -108,7 +108,7 @@ const Form = () => {
       </div>
       <div className="flex w-full items-center justify-center text-xs font-normal ">
         <div className="flex py-4 text-[9px] text-black/70 md:w-7/12 xl:w-5/12  coxxl:w-5/12 xss-to-xs:w-10/12 xs-to-sm:w-7/12 lg-to-xl:w-6/12">
-          <h3 className="w-1/2 xl:w-8/12 coxxl:w-8/12 lg-to-xl:w-8/12">© 2023 Neu Appliances</h3>
+          <h3 className="w-1/2 xl:w-8/12 coxxl:w-8/12 lg-to-xl:w-8/12">© 2023 Neu Parts</h3>
           <h3 className="text-end">Terms&nbsp;of&nbsp;Use&nbsp;•&nbsp;Privacy&nbsp;Policy&nbsp;•&nbsp;Help&nbsp;Center</h3>
         </div>
       </div>

@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const RepairWork = () => {
   return (
-    <div className="bg-b8">
+    <div className="bg-b3/10">
       <div className="maincontainer py-10 lg:py-16 xl:py-20 2xl:py-[144px]">
         <div className="flex gap-10 rounded-3xl bg-b3 px-6 py-8 md:p-16 2xl:gap-16 maxlg:flex-col">
           <div className="mx-auto lg:h-[320px] lg:min-w-[320px] xl:h-[352px] xl:min-w-[352px] maxmd:w-[241px]">

@@ -34,10 +34,10 @@ const NewsLetterSection = ({ backimage }) => {
               <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="w-72 rounded-md bg-white px-2 py-2 text-xs outline-none placeholder:font-normal placeholder:text-[#777E90] lg:py-3 xl:py-3" placeholder="Type here" />
               <button className="w-max whitespace-nowrap rounded-md bg-b3 px-7 py-3 text-xs font-bold text-white">Get Updates</button>
             </form>
-            <div className="flex items-center space-x-2 py-2">
+            <div className="label-p-0 flex items-center gap-4 py-2">
               <InputCheckbox />
               {/* <Checkbox color='black' checked ripple={true} /> */}
-              <span className="text-sm font-semibold">Yes, sign me up!</span>
+              <span className="text-b1">Yes, sign me up!</span>
             </div>
             <p className="w-[280px] text-xs xl:w-[350px]">
               Sign up above to get updates delivered directly to your inbox. See our{' '}

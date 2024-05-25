@@ -128,7 +128,7 @@ const SideCart = ({ sCart, setsCart }) => {
             //   </div>
             <>
               <div style={{ height: 'calc(100vh - 200px)' }} className="flex flex-col overflow-y-auto px-5">
-                <div className="flex items-center gap-2 rounded-t-md border border-b8 bg-b8 p-4">
+                <div className="flex items-center gap-2 rounded-t-md border border-b8 bg-b3/10 p-4">
                   <div className="w-[84px] rounded bg-white px-1 py-2">
                     <Image width={200} height={200} quality={100} className="h-auto w-20" src="/oven.webp" alt="calendar_month" />
                   </div>

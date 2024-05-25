@@ -6,7 +6,7 @@ import Image from 'next/image';
 const InspectionScoreSection = () => {
   return (
     <>
-      <div id="inspections" className="bg-b8">
+      <div id="inspections" className="bg-b3/10">
         <div className="maincontainer flex flex-col items-center py-10 lg:py-14 xl:py-20">
           <div className="flex w-full flex-col">
             <div className="flex w-full flex-col items-center gap-5 2xl:gap-10">

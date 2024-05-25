@@ -6,7 +6,7 @@ import { BsArrowRightShort } from 'react-icons/bs';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ApplianceSection = ({ category, title, Style }) => {
+const ApplianceSection = ({ category, title, Style, linktitle }) => {
   const [applianceTypes, setApplianceTypes] = useState([
     {
       id: 'appliacne',
@@ -93,7 +93,7 @@ const ApplianceSection = ({ category, title, Style }) => {
   }, []);
 
   return (
-    <div className={`flex flex-col items-center bg-b8 py-10 lg:py-14 xl:py-28 ${Style}`}>
+    <div className={`flex flex-col items-center bg-b3/10 py-10 lg:py-14 xl:py-28 ${Style}`}>
       <h2 className="mb-4 text-center text-xl font-bold xl:text-4xl">{title}</h2>
       <div className="maincontainer mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:gap-10 2xl:gap-x-10 2xl:gap-y-14">
         {applianceTypes && category === 'appliance' && applianceTypes[0].product.map((item, index) => <SProductCard key={index} title={item.title} image={item.image} link={`/appliances/${item.slug}`} />)}
@@ -101,7 +101,7 @@ const ApplianceSection = ({ category, title, Style }) => {
       </div>
       <div className="mt-16 flex justify-center">
         <Link href="/applianceTypes" className="flex w-fit items-center rounded-md border-[1px] border-b3 px-4 py-3 font-semibold text-b3">
-          <span className="lg:text-sm xl:text-[16px]">View All Categories</span>
+          <span className="lg:text-sm xl:text-[16px]">{linktitle}</span>
           <BsArrowRightShort className="text-2xl" />
         </Link>
       </div>

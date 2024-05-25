@@ -1,7 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { FiChevronDown } from 'react-icons/fi';
-import FaqAccordion from '../FaqAccordion';
+import FaqAccordion from '@/components/FaqAccordion';
 
 const MobileFaqs = ({ title, isOpen, onClick, tabfaqs, activeClass }) => {
   return (

@@ -15,7 +15,7 @@ const ModelBuyingOptionCard = ({ slug, image, bestValue, cosmaticcondition, rati
   const img = image?.find((item) => item.file === 'image');
   return (
     <>
-      <div className={`flex w-full flex-col items-center space-y-5 px-6 pb-4 pt-12 ${slug === slugg ? 'bg-b8' : null} border  border-b8`}>
+      <div className={`flex w-full flex-col items-center space-y-5 px-6 pb-4 pt-12 ${slug === slugg ? 'bg-b3/10' : null} border  border-b8`}>
         <div className="flex w-full justify-center text-white">{bestValue}</div>
         <div className="flex w-full justify-center bg-white py-8">
           <Image width={400} height={400} quality={100} src={img?.data} className="h-auto w-52" alt="p1" />

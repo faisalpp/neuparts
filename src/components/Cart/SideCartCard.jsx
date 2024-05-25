@@ -22,7 +22,7 @@ const SideCartCard = (props) => {
       <div className="flex w-full flex-col justify-center gap-2">
         <div className="flex w-full justify-between gap-3">
           <h3 className="line-clamp-2 text-sm font-semibold">{props.item.title}</h3>
-          <button type="button" onClick={(e) => props.RemoveFromCart(e, props.indx, props.item.pid, price)} className="grid h-6 w-6 place-items-center rounded-full bg-b8">
+          <button type="button" onClick={(e) => props.RemoveFromCart(e, props.indx, props.item.pid, price)} className="grid h-6 w-6 place-items-center rounded-full bg-b3/10">
             {props.delState === props.indx ? <RiDeleteBin6Line className="animate-bounce text-sm text-red-500" /> : <RiDeleteBin6Line className="text-sm text-b3" />}
           </button>
         </div>
