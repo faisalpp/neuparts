@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import { RiArrowDropRightLine } from 'react-icons/ri';
-import { AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart, AiOutlineTag } from 'react-icons/ai';
 import { IoBagCheckOutline, IoCloseOutline, IoSettingsOutline } from 'react-icons/io5';
 import { useState } from 'react';
 import FaqAccordion from '@/components/FaqAccordion';
@@ -16,8 +16,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import FourStar from '@/components/svgs/FourStar';
 import GasSvg from '@/components/svgs/GasSvg';
+import ProductCompatible from '@/components/Product/ProductCompatible';
 import MoreParts from './MoreParts';
 import Rotate360Product from './Rotate360Product';
+import ConditionReview from './ConditionReview';
+import ProductSlider from './ProductSlider';
 import CompatibleAppliance from './CompatibleAppliance';
 import CompareModel from './CompareModel';
 import BuyingOtherOptions from './BuyingOtherOptions';
@@ -404,6 +407,13 @@ const Product = ({ slug }) => {
                   New
                 </div>
               </div>
+              <div className="mt-2 flex items-center space-x-5 rounded-lg border border-b3 bg-b3/10 p-4 lg:mt-4 lg:space-x-5">
+                <div className="flex items-center gap-1">
+                  <h4 className="w-max pr-3 text-base font-semibold text-b16/50">Type</h4>
+                  <AiOutlineTag className="ml-2 h-5 w-5 text-b3" />
+                </div>
+                <span className="text-base font-semibold text-b1">Aftermarket Replacement Part</span>
+              </div>
               {product.isSale ? (
                 <div className="mt-2 hidden items-center gap-4 lg:flex">
                   <div className="flex text-sm font-semibold text-b16/50">
@@ -457,6 +467,10 @@ const Product = ({ slug }) => {
                   </button>
                 </div>
               </div>
+
+              {/* Product Compatibilty */}
+              <ProductCompatible />
+
               <div className="flex flex-wrap items-center gap-2">
                 {deliveryPoints.map((item, index) => (
                   <div key={index} className="flex h-full max-w-52 items-center space-x-3 rounded-lg border-[1px] border-b3 px-3 py-2 text-left">
@@ -479,21 +493,9 @@ const Product = ({ slug }) => {
           {/* <MoreParts /> */}
 
           {/* Review */}
-          <div id="product-features" className="maincontainer flex flex-col bg-white py-10 lg:py-14 xl:py-60px">
-            <div className="flex flex-col items-center justify-center gap-3 rounded-md bg-b3/10 py-8">
-              <div className="mt-2 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
-                <FourStar />
-                New
-              </div>
-              <h3 className="text-[22px]">
-                <span className="font-bold">Condition:</span> <span className="font-medium">Brand New</span>{' '}
-              </h3>
-              <p className="text-[22px] font-medium">What To Expect</p>
-              {product.rating === 3 ? <p className="px-10 text-center text-sm">If you are shopping for bargains you are in the right place! 3-star rated appliances get you an open box appliance that works perfectly, with moderate cosmetic damage like scratches or dents at the largest discounted price we offer. Customers purchasing 3 star appliances capitalize on our deepest discounts in exchange for larger cosmetic blemishes while still obtaining a 100% functional appliance.</p> : null}
-              {product.rating === 4 ? <p className="px-10 text-center text-sm">Our 4 Star line is for Austin&apos;s savviest shoppers! 4-star rated appliances get you an open box appliance that works perfectly, with minor to moderate cosmetic damage like scratches or dents at a great discount. Customers purchasing 4 star cosmetic Cosmetic Rating appliances are generally more accepting of more minor cosmetic blemishes for a deeper discount on the item while still obtaining a 100% functional appliance.</p> : null}
-              {product.rating === 5 ? <p className="px-10 text-center text-sm">If your shopping our 5 star appliances then you understand the value of a good deal! 5-star rated appliances get you an open box appliance that works perfectly, with very minor to no cosmetic damage like scratches or dents at a great discount. Our customers purchasing 5 star Cosmetic Cosmetic Rating appliances are generally looking for like new or new appliances while capitalizing on an open box discount vs a &quot;Scratch or Dent&quot; discounted appliance while still obtaining a 100% functional appliance.</p> : null}
-            </div>
-          </div>
+          <ConditionReview />
+
+          {/* <ProductSlider /> */}
 
           <CompareModel />
 

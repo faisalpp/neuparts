@@ -6,9 +6,9 @@ const MapSection = () => {
   return (
     <>
       <div className="bg-b3/10">
-        <h4 className="py-10 text-center text-xl font-bold lg:py-14 lg:text-2xl xl:py-60px xl:text-3xl 2xl:text-4xl">Neu Local Delivery Area</h4>
+        <h2 className="py-10 text-center text-2xl font-bold lg:py-14 lg:text-3xl xl:py-60px 2xl:text-4xl">Neu Local Delivery Area</h2>
         <div className="maincontainer relative h-full pb-10 lg:pb-14 xl:pb-20">
-          <Image alt="free" width={700} height={700} quality={100} src="/free.webp" className="absolute right-0 top-10 z-40 w-20 lg:-right-8 lg:top-5 lg:w-36 xl:-right-10 xl:top-0 xl:w-52" />
+          <Image alt="free" width={700} height={700} quality={100} src="/free.webp" className="absolute -right-7 -top-8 z-40 w-20 lg:-right-8 lg:top-5 lg:w-36 xl:-right-10 xl:top-0 xl:w-52" />
 
           {/* Map Section End */}
           <DeliveryMap customStyle="flex flex-col lg:grid grid-cols-3 3xl:grid-cols-4 items-center [&>#map_cc]:col-span-2 [&>#ap_cc]:3xl:col-span-3" />

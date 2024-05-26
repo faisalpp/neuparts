@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <>
       <DeskNavbar sCart={sCart} setsCart={setsCart} />
-      <MobNavbar />
+      <MobNavbar sCart={sCart} setsCart={setsCart} />
 
       <SideCart sCart={sCart} setsCart={setsCart} />
     </>

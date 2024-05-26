@@ -9,6 +9,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import useClickOutside from '@/hooks/useClickOutside';
+import NavDropDown from '../Navbar/NavDropDown';
+import { FiPhone } from 'react-icons/fi';
+import { TfiHeadphoneAlt } from 'react-icons/tfi';
 
 const Navbar = ({ sCart, setsCart }) => {
   const [megMenu, setMegMenu] = useState(false);
@@ -16,6 +19,7 @@ const Navbar = ({ sCart, setsCart }) => {
   const searchRef = useRef(null);
   const MegaMenuRef = useRef(null);
   const MegaMenuRef2 = useRef(null);
+  const [applianceTypes, setApplianceTypes] = useState([]);
 
   useClickOutside(searchRef, () => setSearchMenu(false));
   useClickOutside(MegaMenuRef, () => setMegMenu(false));
@@ -211,8 +215,69 @@ const Navbar = ({ sCart, setsCart }) => {
               </div>
             </div>
           </div>
-          {/* Mega Menu End */}
         </div>
+        {/* Mega Menu End */}
+        {/* Mega Menu End */}
+        <div className="bg-white/[0.08] py-4 text-white">
+          <div className="maincontainer grid grid-cols-12 items-center">
+            <div className="col-start-1 col-end-5 flex items-center space-x-4 xl:space-x-8 2xl:space-x-14">
+              {/* <Link to='/' ><div className='flex items-center font-reg text-xs cursor-pointer text-white/80 hover:text-b6' ><span >Home</span></div></Link>  */}
+              <NavDropDown
+                icon={<RiArrowDropDownLine className="text-2xl" />}
+                title="Deals"
+                links={[
+                  { name: 'Recent Arrival', url: '/products/?sort=-1' },
+                  { name: '5 Star Products', url: '/products/?rating=5' },
+                  { name: '4 Star Products', url: '/products/?rating=4' },
+                  { name: '3 Star Products', url: '/products/?rating=3' },
+                ]}
+              />
+              <div className="nav____item">
+                <span>Shop&nbsp;Now</span>
+              </div>
+              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={applianceTypes} bold={600} />
+              <NavDropDown
+                icon={<RiArrowDropDownLine className="text-2xl" />}
+                title="Popular Brands"
+                links={[
+                  { name: 'General Electronics', url: '/products/?brand=general-electronics' },
+                  { name: 'Amana', url: '/products/?brand=amana' },
+                  { name: 'Maytag', url: '/products/?brand=maytag' },
+                  { name: 'Frigdaire', url: '/products/?brand=frigdaire' },
+                  { name: 'Haier', url: '/products/?brand=haier' },
+                  { name: 'Hisense', url: '/products/?brand=hisense' },
+                  { name: 'Kenmore', url: '/products/?brand=Kenmore' },
+                  { name: 'LG', url: '/products/?brand=lg' },
+                  { name: 'KitchenAid', url: '/products/?brand=kitchen-aid' },
+                  { name: 'Samsung', url: '/products/?brand=samsung' },
+                  { name: 'Whirlpool', url: '/products/?brand=whirlpool' },
+                  { name: 'Midea', url: '/products/?brand=midea' },
+                ]}
+                bold={600}
+              />
+              <div className="nav____item">
+                <Link href="/financing">Financing</Link>
+              </div>
+              <div className="nav____item">
+                <span>Testimonials</span>
+              </div>
+              <div className="nav____item">
+                <span>Pricing</span>
+              </div>
+            </div>
+            <div className="col-start-10 col-end-13 flex items-center justify-end space-x-10">
+              <Link href="tel:(512) 992-2714" className="flex cursor-pointer items-center space-x-1 text-b4 hover:text-white">
+                <FiPhone />
+                <span className="w-max text-xs font-medium">(512) 992-2714</span>
+              </Link>
+              <Link href="/help-and-support" className="flex cursor-pointer items-center space-x-1 text-white">
+                <TfiHeadphoneAlt />
+                <span className="w-max text-xs font-medium text-white/80">Need Help?</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+        {/* Sub Navbar End */}
       </div>
     </>
   );

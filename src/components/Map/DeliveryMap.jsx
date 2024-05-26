@@ -103,18 +103,16 @@ const DeliveryMap = ({ customStyle }) => {
         </div>
       </div>
 
-      <MobMapForm zip={zip} setZip={setZip} Submit={Submit} />
-
       <MapForm zip={zip} setZip={setZip} error={error} success={success} Submit={Submit} loading={loader} />
 
       {/* Map Section Start */}
-      <div id="map_cc" className="relative col-span-2 h-52 w-full rounded-2xl md:h-[300px] lg:h-[490px] xl:h-[686px] 3xl:col-span-3">
+      <div id="map_cc" className="relative col-span-2 h-[900px] w-full rounded-2xl lg:h-[490px] xl:h-[686px] 3xl:col-span-3">
         {loader && (
           <div className="absolute z-20 flex h-full w-full items-center justify-center rounded-2xl bg-black/50">
             <RiLoader4Line className="animate-spin text-6xl text-white" />
           </div>
         )}
-        <div id="map" className="h-52 w-full rounded-2xl md:h-[300px] lg:h-[490px] xl:h-[686px]"></div>
+        <div id="map" className="h-[900px] w-full rounded-2xl lg:h-[490px] xl:h-[686px] maxlg:-translate-y-52 maxlg:rounded-t-none"></div>
       </div>
     </div>
   );

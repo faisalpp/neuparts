@@ -64,7 +64,7 @@ body {
 
 /* How It Work Slider */
 .howitworkslider {
-  @apply pb-5 xl:pb-0 [&>div>div>div>div]:xl:h-full [&>div>div>div]:xl:!w-full [&>div>div]:gap-7 [&>div>div]:xl:!grid [&>div>div]:xl:!grid-cols-3 [&>div>div]:xl:before:hidden [&>div>div]:2xl:gap-10 [&>div>div]:3xl:gap-x-[60px];
+  @apply pb-5 xl:pb-0 [&>div>div>div>div]:lg:h-full [&>div>div>div]:lg:!w-full [&>div>div]:gap-4 [&>div>div]:lg:!grid [&>div>div]:lg:!w-full [&>div>div]:lg:!grid-cols-3 [&>div>div]:lg:before:hidden [&>div>div]:2xl:!grid-cols-4;
 }
 
 /* ========== */
@@ -315,7 +315,7 @@ h6.ce-header {
   @apply before:border-b3 after:border-b3;
 }
 .cc-select button + label.text-sm {
-  @apply top-3.5 text-base text-dark-gray md:text-lg;
+  @apply top-4 text-lg text-dark-gray;
 }
 
 input.remove-arrow::-webkit-outer-spin-button,

@@ -14,15 +14,13 @@ const ProductSearchBar = () => {
   const handleSearchTab = () => {
     console.log('yes');
     if (partNo != '' && modelNo === '') {
-      console.log('yes1');
       setStep(1);
     } else if (partNo != '' && modelNo != '') {
-      console.log('yes2');
       setStep(2);
     }
   };
   return (
-    <div className="sticky top-20 z-50 hidden bg-[#14313D] lg:block">
+    <div className="sticky top-[136px] z-50 hidden bg-[#14313D] lg:block">
       <div className="maincontainer flex w-full max-w-7xl items-center justify-center gap-4 py-5 text-white">
         {step == 0 && (
           <>

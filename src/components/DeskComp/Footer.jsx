@@ -62,7 +62,7 @@ const Footer = () => {
           <div className="mt-10 flex flex-col gap-y-5 text-base font-normal text-white/60 hover:[&>a]:cursor-pointer hover:[&>a]:underline">
             <Link href="">Shop Now</Link>
             <Link href="">Shop On Sale</Link>
-            <Link href="/how-it-works/what-we-sell">Live Inventory</Link>
+            <Link href="">Live Inventory</Link>
             <Link href="">Virtual Showroom</Link>
             <Link href="/financing">Financing</Link>
             <Link href="">Discount Appliances in Stock</Link>
@@ -79,12 +79,12 @@ const Footer = () => {
           <Link href="">Our Brands</Link>
           <Link href="">Delivery</Link>
           <Link href="/measuring-guide">Appliance Measuring Guide</Link>
-          <Link href="/do-i-have-electric-or-gas">Do I have Electric or Gas?</Link>
-          <Link href="/appliancetypes">Our Products</Link>
+          <Link href="">Do I have Electric or Gas?</Link>
+          <Link href="">Our Products</Link>
           <Link href="/faqs">FAQ</Link>
-          <Link href="/contact-us">Contact</Link>
+          <Link href="">Contact</Link>
           <Link href="/terms">Terms</Link>
-          <Link href="/refund">Refunds</Link>
+          <Link href="">Refunds</Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
         </div>
         {/* Quick Links Section 2 End */}

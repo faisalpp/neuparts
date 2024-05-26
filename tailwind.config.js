@@ -87,7 +87,7 @@ module.exports = withMT({
         "dark-blue": "#053C53",
         "dark-light-cyan": "#4288A5",
         "dark-cyan": "#0070B2",
-        "dark-gray": "#0070B2",
+        "dark-gray": "#979797",
         "dark-red": "#FB0B0B"
       },
       fontSize: {
