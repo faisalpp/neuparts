@@ -149,7 +149,7 @@ const AllProducts = () => {
               <CiSearch className="absolute left-4 top-3.5 h-7 w-7 text-b1/30" />
               <input onChange={(e) => setModelNo(e.target.value)} type="text" value={modelNo} className="h-14 w-full rounded-lg border border-[#F6F7F9] bg-[#F6F7F9] pl-14 text-sm font-medium outline-none duration-200 placeholder:font-medium placeholder:text-b1/30 focus:border-b3" placeholder="Know your part number? Enter it here..." />
             </div>
-            <button type="button" className="button-hover flex cursor-pointer items-center justify-center rounded-md px-6 py-5 text-white">
+            <button type="button" className="button-hover maxmd:w-full flex cursor-pointer items-center justify-center rounded-md px-6 py-5 text-white">
               <BiSearch />
               <span className="ml-1 text-xs font-medium">Search</span>
             </button>
