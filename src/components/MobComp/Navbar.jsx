@@ -33,7 +33,9 @@ const Navbar = ({ sCart, setsCart }) => {
               <IoMenu className="h-6 w-6" />
             </div>
           )}
-          <Image width={300} height={300} quality={100} src="/neu.webp" className="h-auto w-28" alt="neuappliance" />
+          <Link href="/" className="w-28">
+            <Image width={300} height={300} quality={100} src="/neu.webp" className="h-auto w-28" alt="neuappliance" />
+          </Link>
         </div>
         <div className="flex items-center justify-end gap-5 coxs:gap-8">
           <AiOutlineSearch className="h-6 w-6" />
@@ -211,18 +213,6 @@ const Navbar = ({ sCart, setsCart }) => {
             <div className="small___nav__item space-x-5">
               <BsFillChatSquareHeartFill className="text-2xl" />
               <h4>Testimonaials</h4>
-            </div>
-          </Link>
-          <Link href="/">
-            <div className="small___nav__item space-x-5">
-              <AiOutlineLogin className="text-2xl" />
-              <h4>Login</h4>
-            </div>
-          </Link>
-          <Link href="/">
-            <div className="small___nav__item space-x-5">
-              <AiOutlineLogout className="text-2xl" />
-              <h4>Logout</h4>
             </div>
           </Link>
         </div>

@@ -94,7 +94,7 @@ const ApplianceSection = ({ category, title, Style, linktitle }) => {
 
   return (
     <div className={`flex flex-col items-center bg-b3/10 py-10 lg:py-14 xl:py-28 ${Style}`}>
-      <h2 className="mb-4 text-center text-2xl font-bold md:text-3xl xl:text-4xl">{title}</h2>
+      <h2 className="mb-4 px-3 text-center text-2xl font-bold md:text-3xl xl:text-4xl">{title}</h2>
       <div className="maincontainer mt-10 grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-3 xl:gap-10 2xl:gap-x-10 2xl:gap-y-14">
         {applianceTypes && category === 'appliance' && applianceTypes[0].product.map((item, index) => <SProductCard key={index} title={item.title} image={item.image} link={`/appliances/${item.slug}`} />)}
         {applianceTypes && category === 'parts' && applianceTypes[1].product.map((item, index) => <SProductCard key={index} title={item.title} image={item.image} link={`/appliances/${item.slug}`} />)}
