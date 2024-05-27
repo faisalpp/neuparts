@@ -123,7 +123,7 @@ const AllProducts = () => {
   const [params, setParams] = useState({ isSale: true, salePrice: { $gte: 200, $lte: 8000 }, sort: 1 });
 
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(10);
+  const [totalPages, setTotalPages] = useState(3);
 
   const [filterLoading, setFilterLoading] = useState(false);
 
