@@ -7,19 +7,7 @@ import Link from 'next/link';
 // import { getGalleryImages } from '../api/frontEnd'
 
 const GallerySection = () => {
-  const [media, setMedia] = useState([
-    {image:'/g8.webp'},
-    {image:'/g3.webp'},
-    {image:'/g4.webp'},
-    {image:'/g5.webp'},
-    {image:'/g6.webp'},
-    {image:'/g7.webp'},
-    {image:'/g2.webp'},
-    {image:'/g3.webp'},
-    {image:'/g5.webp'},
-    {image:'/g7.webp'},
-    {image:'/g8.webp'},
-  ]);
+  const [media, setMedia] = useState([{ image: '/g8.webp' }, { image: '/g3.webp' }, { image: '/g4.webp' }, { image: '/g5.webp' }, { image: '/g6.webp' }, { image: '/g7.webp' }, { image: '/g2.webp' }, { image: '/g3.webp' }, { image: '/g5.webp' }, { image: '/g7.webp' }, { image: '/g8.webp' }]);
   const [img, setImg] = useState('/g8.webp');
 
   const [page, setPage] = useState(1);
@@ -61,7 +49,7 @@ const GallerySection = () => {
           </div>
         </div>
         <div className="flex justify-center py-5">
-          <Link href="/" className="flex w-fit items-center rounded-md border-[1px] border-white px-4 py-1 font-semibold text-white xl:py-2">
+          <Link href="/" className="flex w-fit items-center justify-center rounded-md border-[1px] border-white px-4 py-1 font-semibold text-white xl:py-2 maxmd:w-full">
             <span className="text-sm xl:text-[16px]">Shop Now</span>
             <BsArrowRightShort className="text-2xl xl:text-3xl" />
           </Link>

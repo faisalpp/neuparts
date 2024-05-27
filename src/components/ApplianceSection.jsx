@@ -100,7 +100,7 @@ const ApplianceSection = ({ category, title, Style, linktitle }) => {
         {applianceTypes && category === 'parts' && applianceTypes[1].product.map((item, index) => <SProductCard key={index} title={item.title} image={item.image} link={`/appliances/${item.slug}`} />)}
       </div>
       <div className="mt-16 flex justify-center px-3">
-        <Link href="/applianceTypes" className="flex w-fit items-center rounded-md border-[1px] border-b3 px-4 py-3 font-semibold text-b3">
+        <Link href="/applianceTypes" className="flex w-fit items-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3">
           <span className="text-base">{linktitle}</span>
           <BsArrowRightShort className="text-2xl" />
         </Link>

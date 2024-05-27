@@ -6,75 +6,67 @@ import { FaRegHeart } from 'react-icons/fa';
 import Tag from '@/components/svgs/Tag';
 
 const ProductCard3 = ({ isGrid, product }) => {
-  const StarIconPrinter = ({ numberOfTimes }) => {
-    const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
-      <AiFillStar key={index} className="text-lg text-b7" /> // Render the star icon component for each iteration
-    ));
-
-    return <div className="mt-2 flex items-center">{starIcons}</div>; // Render the array of star icons
-  };
-
   return (
     <>
       {isGrid ? (
-        <Link href={`/product/${product.slug}`} className="grid place-items-center rounded-2xl border-[1px] border-gray-200 p-4 2xl:p-5">
+        <Link href={`/product/${product.slug}`} className="grid place-items-center rounded-2xl border border-b16/10 p-2.5 md:p-4 2xl:p-5">
           <div className="relative">
-            <Image width={400} height={400} quality={100} src={product.image} alt="Product Feature Image" className={`mx-auto h-[220px] w-full object-contain 2xl:w-2/3`} />
+            <Image width={400} height={400} quality={100} src={product.image} alt="Product Feature Image" className={`mx-auto h-32 w-full object-contain md:h-[220px] 2xl:w-2/3 maxmd:p-4`} />
           </div>
-          <div className="space-y-3">
-            <button type="button" className="flex items-center gap-2 text-b3">
+          <div className="w-full space-y-3">
+            <button type="button" className="flex items-center gap-2 text-b3 maxmd:text-xs">
               <FaRegHeart /> Add to favorites
             </button>
-            <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
+            <h3 className="text-xs font-semibold md:text-sm lg:text-lg 3xl:text-xl">{product.title}</h3>
 
-            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
-              <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
+            <div className="flex flex-wrap gap-1 sm:items-center coxs:gap-2">
+              <span className="text-10px flex gap-1 text-b1 md:text-sm coxs:gap-2 maxmd:font-semibold">
                 Price Range
                 <Tag />
               </span>
-              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">
+              <div className="text-10px inline-flex w-fit rounded-full bg-b3 px-1.5 py-1 font-medium text-white sm:px-3 md:text-xs">
                 ${product.salePrice} - ${product.regPrice}
               </div>
             </div>
-            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
-              <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
+            <div className="flex flex-wrap items-center gap-1 coxs:gap-2">
+              <span className="text-10px flex items-center gap-1 text-b1 md:text-sm coxs:gap-2 maxmd:font-semibold">
                 Discount <br /> Range
-                <span>%</span>
+                <span className="text-base">%</span>
               </span>
-              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">10%-70%</div>
+              <div className="text-10px inline-flex w-fit rounded-full bg-b3 px-1.5 py-1 font-medium text-white sm:px-3 md:text-xs">10%-70%</div>
             </div>
-            <button type="button" className="flex items-center font-semibold text-b3 underline">
+            <button type="button" className="maxsm:text-10px flex items-center font-semibold text-b3 underline">
               15 Buying Options →
             </button>
           </div>
         </Link>
       ) : (
-        <Link className="flex w-full cursor-pointer items-center space-x-2 rounded-2xl border-[1px] border-gray-200 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10" href={`/product/${product.slug}`}>
-          <div className="relative w-44 coxs:w-52">
-            <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-60 w-60 object-contain" />
-          </div>
+        <Link className="flex w-full cursor-pointer items-center space-x-2 rounded-2xl border border-b16/10 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10" href={`/product/${product.slug}`}>
+          <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4" />
 
-          <div className="flex w-[60%] flex-col gap-3 px-1 lg:px-5 3xl:w-[55%]">
+          <div className="flex w-full flex-col gap-2 px-1 sm:gap-3 md:w-[60%] lg:px-5 3xl:w-[55%]">
             <button type="button" className="flex items-center gap-2 text-b3">
               <FaRegHeart /> Add to favorites
             </button>
             <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
 
-            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
-              <span className="flex gap-1 text-sm text-b1 coxs:gap-2">
-                Price Range
+            <div className="flex flex-wrap items-center gap-1 coxs:gap-2">
+              <span className="text-10px flex gap-1 text-b1 sm:text-sm coxs:gap-2 maxmd:font-semibold">
+                <span className="maxmd:w-16">Price Range</span>
                 <Tag />
               </span>
-              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">
+              <div className="text-10px inline-flex w-fit rounded-full bg-b3 px-3 py-1 font-medium text-white sm:text-xs">
                 ${product.salePrice} - ${product.regPrice}
               </div>
             </div>
-            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
-              <span className="flex items-center gap-1 text-sm text-b1 coxs:gap-2">
-                Discount <br /> Range
-                <span>%</span>
+            <div className="flex flex-wrap items-center gap-1 coxs:gap-2">
+              <span className="text-10px flex items-center gap-1 text-b1 sm:text-sm coxs:gap-2 maxmd:font-semibold">
+                <span className="maxmd:w-16">
+                  Discount <br /> Range
+                </span>
+                <span className="text-base">%</span>
               </span>
-              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">10%-70%</div>
+              <div className="text-10px inline-flex w-fit rounded-full bg-b3 px-3 py-1 font-medium text-white sm:text-xs">10%-70%</div>
             </div>
             <button type="button" className="flex items-center font-semibold text-b3 underline">
               15 Buying Options →

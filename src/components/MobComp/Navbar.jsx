@@ -8,10 +8,12 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { BsFillChatSquareHeartFill } from 'react-icons/bs';
 import { BiUserCircle } from 'react-icons/bi';
+import DropDown from '@/components/DeskComp/Filter/DropDown';
+
 import Link from 'next/link';
 import Image from 'next/image';
 
-const Navbar = ({ sCart, setsCart }) => {
+const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
   const [mobMenu, setMobMenu] = useState(false);
   const [dealMenu, setDealMenu] = useState(false);
   const [productMenu, setProductMenu] = useState(false);
@@ -56,165 +58,193 @@ const Navbar = ({ sCart, setsCart }) => {
         </div>
       </div>
 
-      <div style={{ height: `calc(100vh - 80px)` }} className={`${mobMenu ? 'fixed' : 'hidden'} left-0 top-16 z-50 w-2/3 overflow-y-scroll bg-b1 py-5 lg:hidden`}>
-        <div className="mt-2 flex flex-col space-y-5 px-5">
-          <Link href="/">
-            <div className="small___nav__item space-x-5 text-white">
-              <BiUserCircle className="text-2xl" />
-              <h4>My Account</h4>
-            </div>
+      <div className={`${mobMenu ? 'fixed' : 'hidden'} bottom-0 left-0 right-0 top-16 z-50 w-full overflow-y-auto bg-white py-5 lg:hidden`}>
+        <div className="mt-2 flex flex-col gap-6 px-5">
+          <DropDown title="Deals" titleClass="!text-base text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            test
+          </DropDown>
+          <Link href="/" className="block text-base font-semibold text-b1/65">
+            Shop Now
           </Link>
-          <Link href="/">
-            <div className="small___nav__item space-x-5 text-white">
-              <AiFillHome className="text-2xl" />
-              <h4>Home</h4>
+          <DropDown title="Appliance Category" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            <div className="mt-2 space-y-6">
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Refrigerators
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washer & Dryer Sets
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dishwashers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washing Machines
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dryers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Others
+              </Link>
             </div>
+          </DropDown>
+          <DropDown title="Part Category" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            <div className="mt-2 space-y-6">
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Refrigerators
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washer & Dryer Sets
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dishwashers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washing Machines
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dryers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Others
+              </Link>
+            </div>
+          </DropDown>
+          <DropDown title="Popular Brands" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            <div className="mt-2 space-y-6">
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Refrigerators
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washer & Dryer Sets
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dishwashers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washing Machines
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dryers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Others
+              </Link>
+            </div>
+          </DropDown>
+          <Link href="/" className="block text-base font-semibold text-b1/65">
+            Financing
           </Link>
-          {/* Home Menu */}
-          <div className="mt-2 flex flex-col lg:hidden">
-            {/* Deals Menu Btn */}
-            {dealMenu ? (
-              <div onClick={() => setDealMenu(false)} className="small___nav__item space-x-16 ">
-                <div className="flex items-center space-x-5">
-                  <AiFillGift className="text-2xl" />
-                  <h4>Deals</h4>
-                </div>
-                <RiArrowDropUpLine className="text-2xl" />
-              </div>
-            ) : (
-              <div onClick={() => setDealMenu(true)} className="small___nav__item space-x-16">
-                <div className="flex items-center space-x-5">
-                  <AiFillGift className="text-2xl" />
-                  <h4>Deals</h4>
-                </div>
-                <RiArrowDropDownLine className="text-2xl" />
-              </div>
-            )}
-            {/* Deals Menu Drop Down */}
-            <div className={`${dealMenu ? 'flex' : 'hidden'} mt-5 flex-col space-y-2`}>
-              <div className="small___nav__subitem">
-                <h3>Recent Arrivals</h3>
-              </div>
-              <div className="small___nav__subitem">
-                <h3>4 Stars Products</h3>
-              </div>
-              <div className="small___nav__subitem">
-                <h3>3 Stars Products</h3>
-              </div>
-              <div className="small___nav__subitem">
-                <h3>5 Stars Products</h3>
-              </div>
-            </div>
-          </div>
-          {/* Product Menu */}
-          <div className="mt-2 flex flex-col lg:hidden">
-            {/* Deals Menu Btn */}
-            {productMenu ? (
-              <div onClick={() => setProductMenu(false)} className="small___nav__item space-x-10 ">
-                <div className="flex items-center space-x-5">
-                  <CgSmartHomeWashMachine className="text-2xl" />
-                  <h4>Products</h4>
-                </div>
-                <RiArrowDropUpLine className="text-2xl" />
-              </div>
-            ) : (
-              <div onClick={() => setProductMenu(true)} className="small___nav__item space-x-10 ">
-                <div className="flex items-center space-x-5">
-                  <CgSmartHomeWashMachine className="text-2xl" />
-                  <h4>Products</h4>
-                </div>
-                <RiArrowDropDownLine className="text-2xl" />
-              </div>
-            )}
-            {/* Deals Menu Drop Down */}
-            <div className={`${productMenu ? 'flex' : 'hidden'} mt-5 flex-col space-y-2`}>
-              <Link href="/products">
-                <div className="small___nav__subitem">
-                  <h3>Refrigerators</h3>
-                </div>
+          <DropDown title="How It Works" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            <div className="mt-2 space-y-6">
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Refrigerators
               </Link>
-              <Link href="/products">
-                <div className="small___nav__subitem">
-                  <h3>Washer & Dryers</h3>
-                </div>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washer & Dryer Sets
               </Link>
-              <Link href="/products">
-                <div className="small___nav__subitem">
-                  <h3>Ranges</h3>
-                </div>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dishwashers
               </Link>
-              <Link href="/products">
-                <div className="small___nav__subitem">
-                  <h3>Dishwasher</h3>
-                </div>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washing Machines
               </Link>
-              <Link href="/products">
-                <div className="small___nav__subitem">
-                  <h3>Microwaves</h3>
-                </div>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dryers
               </Link>
-              <Link href="/products">
-                <div className="small___nav__subitem">
-                  <h3>All Categories</h3>
-                </div>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Others
               </Link>
             </div>
-          </div>
-          {/* Brands Menu */}
-          <div className="mt-2 flex flex-col lg:hidden">
-            {/* Brands Menu Btn */}
-            {brandMenu ? (
-              <div onClick={() => setBrandMenu(false)} className="small___nav__item space-x-14 ">
-                <div className="flex items-center space-x-5">
-                  <FaBandcamp className="text-2xl" />
-                  <h4>Brands</h4>
-                </div>
-                <RiArrowDropUpLine className="text-2xl" />
-              </div>
-            ) : (
-              <div onClick={() => setBrandMenu(true)} className="flex items-center space-x-14 rounded-md bg-b2 px-3 py-2 text-white">
-                <div className="flex items-center space-x-5">
-                  <FaBandcamp className="text-2xl" />
-                  <h4>Brands</h4>
-                </div>
-                <RiArrowDropDownLine className="text-2xl" />
-              </div>
-            )}
-            {/* Brands Menu Drop Down */}
-            <div className={`${brandMenu ? 'flex' : 'hidden'} mt-5 flex-col space-y-2`}>
-              <div className="small___nav__subitem">
-                <h3>Refrigerators</h3>
-              </div>
-              <div className="small___nav__subitem">
-                <h3>Washer & Dryers</h3>
-              </div>
-              <div className="small___nav__subitem">
-                <h3>Ranges</h3>
-              </div>
-              <div className="small___nav__subitem">
-                <h3>Dishwasher</h3>
-              </div>
-              <div className="small___nav__subitem">
-                <h3>Microwaves</h3>
-              </div>
-              <div className="small___nav__subitem">
-                <h3>All Categories</h3>
-              </div>
+          </DropDown>
+          <DropDown title="Resources" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            <div className="mt-2 space-y-6">
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Refrigerators
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washer & Dryer Sets
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dishwashers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washing Machines
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dryers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Others
+              </Link>
             </div>
-          </div>
-
-          <Link href="/">
-            <div className="small___nav__item space-x-5">
-              <GiReceiveMoney className="text-2xl" />
-              <h4>Financing</h4>
+          </DropDown>
+          <DropDown title="About Us" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            <div className="mt-2 space-y-6">
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Refrigerators
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washer & Dryer Sets
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dishwashers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washing Machines
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dryers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Others
+              </Link>
             </div>
-          </Link>
-          <Link href="/">
-            <div className="small___nav__item space-x-5">
-              <BsFillChatSquareHeartFill className="text-2xl" />
-              <h4>Testimonaials</h4>
+          </DropDown>
+          <DropDown title="Help & Support" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            <div className="mt-2 space-y-6">
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Refrigerators
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washer & Dryer Sets
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dishwashers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washing Machines
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dryers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Others
+              </Link>
             </div>
-          </Link>
+          </DropDown>
+          <DropDown title="Delivery" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
+            <div className="mt-2 space-y-6">
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Refrigerators
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washer & Dryer Sets
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dishwashers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Washing Machines
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Dryers
+              </Link>
+              <Link href="/" className="block text-sm font-medium text-b1/65">
+                Others
+              </Link>
+            </div>
+          </DropDown>
         </div>
       </div>
     </>

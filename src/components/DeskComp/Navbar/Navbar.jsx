@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BiSearch, BiUserCircle } from 'react-icons/bi';
 import { IoMenu } from 'react-icons/io5';
@@ -13,17 +13,20 @@ import NavDropDown from '../Navbar/NavDropDown';
 import { FiPhone } from 'react-icons/fi';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
 
-const Navbar = ({ sCart, setsCart }) => {
+const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
   const [megMenu, setMegMenu] = useState(false);
   const [searchMenu, setSearchMenu] = useState(false);
+
+  const searchButtonRef = useRef(null);
   const searchRef = useRef(null);
+
+  const MenuButonRef = useRef(null);
   const MegaMenuRef = useRef(null);
-  const MegaMenuRef2 = useRef(null);
+
   const [applianceTypes, setApplianceTypes] = useState([]);
 
-  useClickOutside(searchRef, () => setSearchMenu(false));
-  useClickOutside(MegaMenuRef, () => setMegMenu(false));
-  useClickOutside(MegaMenuRef2, () => setMegMenu(false));
+  useClickOutside([searchButtonRef, searchRef], () => setSearchMenu(false));
+  useClickOutside([MenuButonRef, MegaMenuRef], () => setMegMenu(false));
 
   const isUser = '';
   const isAdmin = '';
@@ -154,7 +157,7 @@ const Navbar = ({ sCart, setsCart }) => {
             )}
 
             {/* {isAuth ? <Link href="/my-account/profile" ><div className='flex items-center justify-center bg-b2 h-10 px-4 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link> : <Link href="/login" ><div className='flex items-center px-2 bg-b2 h-10 px-4 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link>} */}
-            <button type="button" onClick={() => setMegMenu(!megMenu)} className="flex h-10 w-max cursor-pointer items-center rounded-md bg-b2 px-4 text-white">
+            <button ref={MenuButonRef} type="button" onClick={() => setMegMenu(!megMenu)} className="flex h-10 w-max cursor-pointer items-center rounded-md bg-b2 px-4 text-white">
               <IoMenu />
               <span className="ml-2 text-xs font-medium">Menu</span>
             </button>
@@ -164,7 +167,7 @@ const Navbar = ({ sCart, setsCart }) => {
         {/* Navbar End */}
         {/* Sub Navbar Start */}
         {/* Mega Menu Start */}
-        <div className={`absolute ${megMenu ? 'pb-20 pt-5' : 'max-h-0'} top-20 z-[60] w-full overflow-hidden bg-b1 duration-300`}>
+        <div ref={MegaMenuRef} className={`absolute ${megMenu ? 'pb-20 pt-5' : 'max-h-0'} top-20 z-[60] w-full overflow-hidden bg-b1 duration-300`}>
           <div className="mx-auto grid grid-cols-12 justify-center px-16 xl:px-20 2xl:px-120px 3xl:max-w-1680px">
             <div className="col-start-1 col-end-2 flex flex-col items-center">
               <h4 className="font-semibold text-white xl:whitespace-nowrap">How It Works</h4>
@@ -226,32 +229,40 @@ const Navbar = ({ sCart, setsCart }) => {
                 icon={<RiArrowDropDownLine className="text-2xl" />}
                 title="Deals"
                 links={[
-                  { name: 'Recent Arrival', url: '/products/?sort=-1' },
-                  { name: '5 Star Products', url: '/products/?rating=5' },
-                  { name: '4 Star Products', url: '/products/?rating=4' },
-                  { name: '3 Star Products', url: '/products/?rating=3' },
+                  { name: 'Refrigerators', url: '/' },
+                  { name: 'Washer & Dryer Sets', url: '/' },
+                  { name: 'Dishwashers', url: '/' },
+                  { name: 'Washing Machines', url: '/' },
+                  { name: 'Dryers', url: '/' },
+                  { name: 'Others', url: '/' },
                 ]}
               />
               <div className="nav____item">
                 <span>Shop&nbsp;Now</span>
               </div>
-              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={applianceTypes} bold={600} />
+              <NavDropDown
+                icon={<RiArrowDropDownLine className="text-2xl" />}
+                title="Products"
+                links={[
+                  { name: 'Refrigerators', url: '/' },
+                  { name: 'Washer & Dryer Sets', url: '/' },
+                  { name: 'Dishwashers', url: '/' },
+                  { name: 'Washing Machines', url: '/' },
+                  { name: 'Dryers', url: '/' },
+                  { name: 'Others', url: '/' },
+                ]}
+                bold={600}
+              />
               <NavDropDown
                 icon={<RiArrowDropDownLine className="text-2xl" />}
                 title="Popular Brands"
                 links={[
-                  { name: 'General Electronics', url: '/products/?brand=general-electronics' },
-                  { name: 'Amana', url: '/products/?brand=amana' },
-                  { name: 'Maytag', url: '/products/?brand=maytag' },
-                  { name: 'Frigdaire', url: '/products/?brand=frigdaire' },
-                  { name: 'Haier', url: '/products/?brand=haier' },
-                  { name: 'Hisense', url: '/products/?brand=hisense' },
-                  { name: 'Kenmore', url: '/products/?brand=Kenmore' },
-                  { name: 'LG', url: '/products/?brand=lg' },
-                  { name: 'KitchenAid', url: '/products/?brand=kitchen-aid' },
-                  { name: 'Samsung', url: '/products/?brand=samsung' },
-                  { name: 'Whirlpool', url: '/products/?brand=whirlpool' },
-                  { name: 'Midea', url: '/products/?brand=midea' },
+                  { name: 'Refrigerators', url: '/' },
+                  { name: 'Washer & Dryer Sets', url: '/' },
+                  { name: 'Dishwashers', url: '/' },
+                  { name: 'Washing Machines', url: '/' },
+                  { name: 'Dryers', url: '/' },
+                  { name: 'Others', url: '/' },
                 ]}
                 bold={600}
               />

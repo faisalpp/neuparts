@@ -24,7 +24,7 @@ const Footer = () => {
 
   return (
     <div className="mx-auto flex w-full justify-center bg-b1 px-4 sm:px-10 lg:px-16 xl:px-20 2xl:px-120px 3xl:max-w-1680px">
-      <div className="grid gap-5 bg-b1 py-20 sm:grid-cols-12 sm:gap-10 lg:gap-2">
+      <div className="grid gap-5 bg-b1 py-12 sm:grid-cols-12 sm:gap-10 md:py-20 lg:gap-2">
         {/* Logo Section Start */}
         <div className="order-4 flex flex-col space-y-10 sm:order-none sm:col-span-6 lg:col-span-3">
           {/* Nav Logos */}
@@ -59,7 +59,7 @@ const Footer = () => {
         {/* Quick Links Section Start */}
         <div className="order-2 sm:order-none sm:col-span-6 lg:col-span-3">
           <h4 className="w-max font-reg text-lg font-bold text-white">Quick Links</h4>
-          <div className="mt-10 flex flex-col gap-y-5 text-base font-normal text-white/60 hover:[&>a]:cursor-pointer hover:[&>a]:underline">
+          <div className="mt-5 flex flex-col gap-y-5 text-base font-normal text-white/60 sm:mt-10 hover:[&>a]:cursor-pointer hover:[&>a]:underline [&>a]:maxsm:text-sm">
             <Link href="">Shop Now</Link>
             <Link href="">Shop On Sale</Link>
             <Link href="">Live Inventory</Link>
@@ -75,7 +75,7 @@ const Footer = () => {
         {/* Quick Links Section End */}
 
         {/* Quick Links Section 2 Start */}
-        <div className="order-3 flex flex-col gap-y-5 text-base font-normal text-white/60 sm:order-none sm:col-span-6 sm:pt-[65px] lg:col-span-3 lg:mt-0 hover:[&>a]:cursor-pointer hover:[&>a]:underline">
+        <div className="order-3 flex flex-col gap-y-5 text-base font-normal text-white/60 sm:order-none sm:col-span-6 sm:pt-[65px] lg:col-span-3 lg:mt-0 hover:[&>a]:cursor-pointer hover:[&>a]:underline [&>a]:maxsm:text-sm">
           <Link href="">Our Brands</Link>
           <Link href="">Delivery</Link>
           <Link href="/measuring-guide">Appliance Measuring Guide</Link>
@@ -117,7 +117,7 @@ const Footer = () => {
             </div>
           </div>
           {/* Contact Us */}
-          <div className="mt-10 flex flex-col gap-y-3 sm:items-center lg:mt-5 lg:items-start">
+          <div className="mt-5 flex flex-col gap-y-3 sm:mt-10 sm:items-center lg:mt-5 lg:items-start">
             <h4 className="text-lg font-bold">Contact Us</h4>
             <div className="flex flex-col gap-y-5">
               <div className="flex items-center space-x-2">

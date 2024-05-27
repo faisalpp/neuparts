@@ -17,8 +17,6 @@ const OurStory = () => {
 
   return (
     <>
-      <ProductSearchBar />
-
       <div className="maincontainer pt-10 lg:pt-16 xl:pt-20">
         {/* Bread Crumbs Start */}
         <div className="flex items-center">

@@ -1,10 +1,10 @@
 'use client'
 import { useEffect } from 'react';
 
-const useClickOutside = (ref, handler) => {
+const useClickOutside = (refs, handler) => {
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (ref.current && !ref.current.contains(event.target)) {
+            if (!refs.some(ref => ref.current && ref.current.contains(event.target))) {
                 handler();
             }
         };
@@ -13,7 +13,7 @@ const useClickOutside = (ref, handler) => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [ref, handler]);
+    }, [refs, handler]);
 };
 
 export default useClickOutside;

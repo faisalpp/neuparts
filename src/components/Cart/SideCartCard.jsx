@@ -1,28 +1,19 @@
 import React, { useState } from 'react';
 import ToolTip from '../ToolTip';
 import FourStar from '@/components/svgs/FourStar';
-import { AiFillStar } from 'react-icons/ai';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import Image from 'next/image';
 
 const SideCartCard = (props) => {
-  const StarIconPrinter = ({ numberOfTimes }) => {
-    const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
-      <AiFillStar key={index} className="text-sm text-b7" /> // Render the star icon component for each iteration
-    ));
-
-    return <div className="mt-2 flex items-center">{starIcons}</div>; // Render the array of star icons
-  };
-
   const [price, setPrice] = useState(props.item.isSale ? props.item.salePrice : props.item.regPrice);
 
   return (
-    <div className="mt-3 flex w-full justify-start gap-3 border-b border-[#F2F2F2] py-5">
-      <Image width={400} height={400} quality={100} src={props.item.image} className="h-auto w-28 object-contain" alt={props.item.title} />
+    <div className="relative mt-3 flex w-full justify-start gap-3 border-b border-b1/10 py-5 maxlg:flex-col">
+      <Image width={400} height={400} quality={100} src={props.item.image} className="h-auto w-28 object-contain maxlg:mx-auto" alt={props.item.title} />
       <div className="flex w-full flex-col justify-center gap-2">
         <div className="flex w-full justify-between gap-3">
           <h3 className="line-clamp-2 text-sm font-semibold">{props.item.title}</h3>
-          <button type="button" onClick={(e) => props.RemoveFromCart(e, props.indx, props.item.pid, price)} className="grid h-6 w-6 place-items-center rounded-full bg-b3/10">
+          <button type="button" onClick={(e) => props.RemoveFromCart(e, props.indx, props.item.pid, price)} className="grid h-6 w-6 place-items-center rounded-full bg-b3/10 maxlg:absolute maxlg:right-0 maxlg:top-0">
             {props.delState === props.indx ? <RiDeleteBin6Line className="animate-bounce text-sm text-red-500" /> : <RiDeleteBin6Line className="text-sm text-b3" />}
           </button>
         </div>

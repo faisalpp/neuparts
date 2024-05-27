@@ -26,6 +26,7 @@ import CompareModel from './CompareModel';
 import BuyingOtherOptions from './BuyingOtherOptions';
 import WarantySection from './WarantySection';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
 
 const Product = ({ slug }) => {
   // Get slug form url
@@ -35,12 +36,15 @@ const Product = ({ slug }) => {
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [date, setDate] = useState({});
+
   const [deliveryPoints, setDeliveryPoints] = useState([
     { title: 'NeuShield <br /> 30-Day Warranty', image: '/svgs/shield-security.webp' },
     { title: 'Same Day Shipping on orders received before 1pm CST', image: '/svgs/local_shipping2.webp' },
     { title: 'Hassle Free 30 Day Returns', image: '/svgs/calendar_clock.webp' },
     { title: 'Fast 2-Day Shipping Available', image: '/svgs/package_2.webp' },
   ]);
+
+  const router = useRouter();
 
   // const [product, setProduct] = useState([]);
   const [product, setProduct] = useState({
@@ -219,6 +223,7 @@ const Product = ({ slug }) => {
   ]);
 
   const addToCart = async (e) => {
+    router.push('/mycart');
     e.preventDefault();
   };
 
@@ -381,7 +386,7 @@ const Product = ({ slug }) => {
                       <span>Favorite</span>
                     </button>
                   ) : (
-                    <button onClick={(e) => handleFavorites(e)} className="flex items-center justify-end text-b3 hover:underline">
+                    <button type="button" onClick={(e) => handleFavorites(e)} className="flex items-center justify-end text-b3 hover:underline">
                       <AiOutlineHeart className={`${favLoad ? 'animate-bounce' : null}`} />
                       <span>Add to favorites</span>
                     </button>

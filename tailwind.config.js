@@ -91,6 +91,7 @@ module.exports = withMT({
         "dark-red": "#FB0B0B"
       },
       fontSize: {
+        '10px': '10px',
         '28px': '28px',
         '32px': '32px',
         '40px': '40px'
