@@ -35,10 +35,10 @@ const LoopSection = () => {
   return (
     // <div className='flex flex-col mt-12 3xl:max-w-1680px px-120px mx-auto' >
     <div className="maincontainer mt-10 flex flex-col lg:mt-12">
-      <h4 className="text-center text-28px font-bold lg:text-32px">Helpful Appliance Parts Videos</h4>
+      <h4 className="text-center text-2xl font-bold md:text-28px lg:text-32px">Helpful Appliance Parts Videos</h4>
 
       <div className="py-10 lg:mb-0 xl:py-60px">
-        <div className="px-4 sm:px-5 md:px-10 lg:px-14 xl:px-20 2xl:px-120px">
+        <div className="px-0 sm:px-5 md:px-10 lg:px-14 xl:px-20 2xl:px-120px">
           {loopVideo.length === 0 ? <IframeSkelton style="col-start-1 col-end-6 object-cover w-full rounded-2xl 2xl:w-full xl:h-[651px] xl:w-full lg:w-full h-72 lg:h-[480px] md:w-full md:h-[400px]" /> : null}
           {loopVideo.length > 0 && type !== 'iframe' ? <video controls className="col-start-1 col-end-6 h-72 w-full rounded-2xl object-cover md:h-[400px] md:w-full lg:h-[480px] lg:w-full xl:h-[651px] xl:w-full 2xl:w-full" src={video} /> : null}
           {loopVideo.length > 0 && type === 'iframe' ? <Iframe2 isIframe={isIframe} setIsIframe={setIsIframe} thumbnail={video.thumb} genState={genFrame} setGenState={setGenFrame} divId="main-loop-div" frameId="loop-main-frame" icon="text-8xl" style="col-start-1 col-end-6 object-cover w-full rounded-2xl 2xl:w-full xl:h-[565px] xl:w-full lg:w-full h-72 lg:h-[440px] md:w-full md:h-[375px]" src={video.url} title={video.url} /> : null}

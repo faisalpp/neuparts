@@ -20,7 +20,7 @@ const ModelCategories = () => {
     { title: 'Water Inlet Valves', image: '/water-intel.webp' },
   ]);
   return (
-    <div className="pb-20">
+    <div className="pb-10 md:pb-20">
       <h2 className="mb-10 text-2xl font-semibold text-b1">
         Model <span className="text-dark-red">2345367</span> Appliance Part Categories
       </h2>
@@ -32,7 +32,7 @@ const ModelCategories = () => {
           </div>
         ))}
       </div>
-      <Link href="/applianceTypes" className="button-hover mt-14 flex w-fit items-center rounded-lg border-[1px] px-4 py-3 font-semibold text-white">
+      <Link href="/applianceTypes" className="button-hover mt-14 flex w-fit items-center justify-center rounded-lg border-[1px] px-4 py-3 font-semibold text-white maxmd:w-full">
         <span className="lg:text-sm xl:text-[16px]">View More Part Categories</span>
         <BsArrowRightShort className="text-2xl" />
       </Link>

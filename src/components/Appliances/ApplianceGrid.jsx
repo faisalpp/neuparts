@@ -21,9 +21,9 @@ const ApplianceGrid = ({ isGrid, product }) => {
         <ProductCard product={product} />
       ) : (
         <Link className="flex w-full cursor-pointer items-center space-x-2 rounded-2xl border-[1px] border-gray-200 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10" href={`/product/${product.slug}`}>
-          <div className="relative w-44 coxs:w-52">
-            <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-60 w-60 object-contain" />
-          </div>
+          {/* <div className="relative w-44 coxs:w-52"> */}
+          <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
+          {/* </div> */}
 
           <div className="flex w-[60%] flex-col gap-3 px-1 lg:px-5 3xl:w-[55%]">
             <button type="button" className="flex items-center gap-2 text-b3">
@@ -31,23 +31,23 @@ const ApplianceGrid = ({ isGrid, product }) => {
             </button>
             <h3 className="line-clamp-2 text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
 
-            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
-              <span className="w-[87.1px] text-sm font-semibold leading-4 text-b1">
+            <div className="flex items-center gap-1 coxs:gap-2 maxxs:flex-wrap">
+              <span className="w-[74px] text-xs font-semibold leading-4 text-b1 sm:w-[87.1px] sm:text-sm">
                 Part <br /> Number
               </span>
               <Tag />
               <div className="inline-flex rounded-full border border-black px-3 py-1 text-xs font-medium text-b1">WTWX2342</div>
             </div>
-            <div className="flex gap-1 sm:items-center coxs:gap-2 maxcosm:flex-col">
-              <span className="text-sm font-semibold text-b1">Price Range</span>
+            <div className="flex items-center gap-1 coxs:gap-2 maxxs:flex-wrap">
+              <span className="text-xs font-semibold text-b1 sm:text-sm">Price Range</span>
               <Tag />
-              <div className="inline-flex rounded-full bg-b3 px-3 py-1 text-xs font-medium text-white">
+              <div className="inline-flex rounded-full bg-b3 px-1 py-1 text-xs font-medium text-white sm:px-3">
                 ${product.salePrice} - ${product.regPrice}
               </div>
             </div>
-            <button type="button" className="flex items-center font-semibold text-b3 underline">
+            <Link href="/" className="flex items-center font-semibold text-b3 underline maxsm:text-sm">
               15 Buying Options →
-            </button>
+            </Link>
           </div>
         </Link>
       )}

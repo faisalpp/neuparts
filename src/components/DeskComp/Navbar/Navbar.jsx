@@ -244,12 +244,12 @@ const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
                 icon={<RiArrowDropDownLine className="text-2xl" />}
                 title="Products"
                 links={[
-                  { name: 'Refrigerators', url: '/' },
-                  { name: 'Washer & Dryer Sets', url: '/' },
-                  { name: 'Dishwashers', url: '/' },
-                  { name: 'Washing Machines', url: '/' },
-                  { name: 'Dryers', url: '/' },
-                  { name: 'Others', url: '/' },
+                  { name: 'Refrigerators', url: '/product/test' },
+                  { name: 'Washer & Dryer Sets', url: '/product/test' },
+                  { name: 'Dishwashers', url: '/product/test' },
+                  { name: 'Washing Machines', url: '/product/test' },
+                  { name: 'Dryers', url: '/product/test' },
+                  { name: 'Others', url: '/product/test' },
                 ]}
                 bold={600}
               />

@@ -21,7 +21,8 @@ const MoreParts = () => {
       {
         breakpoint: 570,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1.05,
+          dots: true,
         },
       },
       {
@@ -39,7 +40,7 @@ const MoreParts = () => {
     ],
   };
   const PrevButton = ({ onClick }) => (
-    <button onClick={onClick} className="prev-button pointer-events-none absolute -left-3 top-0 z-40 hidden h-full sm:block">
+    <button onClick={onClick} className="prev-button pointer-events-none absolute -left-3 top-0 z-40 block h-full">
       <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-cyan-500">
         <BsArrowLeftShort className="text-xl" />
       </div>
@@ -47,7 +48,7 @@ const MoreParts = () => {
   );
 
   const NextButton = ({ onClick }) => (
-    <button onClick={onClick} className="next-button pointer-events-none absolute -right-3 top-0 z-40 hidden h-full sm:block">
+    <button onClick={onClick} className="next-button pointer-events-none absolute -right-3 top-0 z-40 block h-full">
       <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-cyan-500">
         <BsArrowRightShort className="text-xl" />
       </div>
@@ -91,7 +92,7 @@ const MoreParts = () => {
   return (
     <div className="bg-b3/5" id="testimonials-view">
       <div className="maincontainer flex flex-col justify-center py-10 lg:py-16 xl:py-20 2xl:py-120px">
-        <h2 className="mb-4 text-center text-2xl font-bold lg:text-3xl xl:text-4xl">More Parts for Your Model</h2>
+        <h2 className="text-center text-2xl font-bold md:mb-4 lg:text-3xl xl:text-4xl">More Parts for Your Model</h2>
         <div className="mt-10">
           {pupolarParts.length > 0 ? (
             <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className="relative maxmd:mb-10">
@@ -105,9 +106,9 @@ const MoreParts = () => {
             </div>
           )}
         </div>
-        <div className="mt-16 flex justify-center">
-          <Link href="/applianceTypes" className="flex w-fit items-center rounded-md border-[1px] border-b3 px-4 py-3 font-semibold text-b3">
-            <span className="lg:text-sm xl:text-[16px]">View More</span>
+        <div className="mt-10 flex justify-center md:mt-16">
+          <Link href="/applianceTypes" className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
+            <span className="text-xs md:text-sm xl:text-base">View More</span>
             <BsArrowRightShort className="text-2xl" />
           </Link>
         </div>

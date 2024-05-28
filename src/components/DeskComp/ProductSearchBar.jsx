@@ -12,7 +12,6 @@ const ProductSearchBar = () => {
   const [partNo, setPartNo] = useState('');
   const [step, setStep] = useState(0);
   const handleSearchTab = () => {
-    console.log('yes');
     if (partNo != '' && modelNo === '') {
       setStep(1);
     } else if (partNo != '' && modelNo != '') {
@@ -20,7 +19,7 @@ const ProductSearchBar = () => {
     }
   };
   return (
-    <div className="sticky top-[136px] z-50 hidden bg-[#14313D] lg:block">
+    <div id="product-search-bar" className="sticky top-[136px] z-50 hidden bg-[#14313D] lg:block">
       <div className="maincontainer flex w-full max-w-7xl items-center justify-center gap-4 py-5 text-white">
         {step == 0 && (
           <>

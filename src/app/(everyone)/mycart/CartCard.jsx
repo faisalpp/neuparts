@@ -10,12 +10,12 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 const CartCard = (props) => {
   const [quantity, setQuantity] = useState(1);
   return (
-    <div className="mt-3 flex w-full justify-start gap-3 p-6 shadow-[0px_4px_20px_rgba(9,67,89,0.08)] maxsm:flex-col">
+    <div className="relative mt-3 flex w-full justify-start gap-3 p-5 shadow-[0px_4px_20px_rgba(9,67,89,0.08)] md:p-6 maxsm:flex-col">
       <Image width={400} height={400} quality={100} src={props.item.image} className="mx-auto h-auto w-40 object-contain p-4" alt={props.item.title} />
       <div className="flex w-full flex-col justify-center gap-4">
         <div className="flex w-full justify-between gap-3">
-          <h3 className="line-clamp-2 text-xl font-semibold">{props.item.title}</h3>
-          <button type="button" onClick={(e) => props.RemoveFromCart(e, props.indx, props.item.pid, price)} className="grid h-10 min-w-10 place-items-center rounded-full bg-b3/10">
+          <h3 className="line-clamp-2 text-sm font-semibold md:text-base lg:text-xl">{props.item.title}</h3>
+          <button type="button" onClick={(e) => props.RemoveFromCart(e, props.indx, props.item.pid, price)} className="grid h-10 min-w-10 place-items-center rounded-full bg-b3/10 maxlg:absolute maxlg:right-2 maxlg:top-2">
             {/* <RiDeleteBin6Line className="animate-bounce text-base text-red-500" />  */}
             <RiDeleteBin6Line className="text-base text-b3" />
             {/* {props.delState === props.indx ? } */}
@@ -23,15 +23,15 @@ const CartCard = (props) => {
         </div>
 
         <div className="flex w-full flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 whitespace-nowrap">
+          <div className="flex items-center gap-2 whitespace-nowrap maxmd:w-full maxmd:justify-between">
             <span className="flex items-center rounded-full bg-b13 px-3 py-2 text-xs font-semibold text-white">
               <IoBagCheckOutline className="mr-1 text-sm" />
               In Stock
             </span>
             <span className="text-xs font-medium text-b1/65">Only 2 left</span>
           </div>
-          <div className="flex items-center gap-2">
-            <label htmlFor="" className="text-sm">
+          <div className="nowrap flex items-center gap-2 maxmd:w-full maxmd:justify-between">
+            <label htmlFor="" className="text-xs font-semibold text-b25 md:text-sm">
               Quantity
             </label>
             <div className="relative w-24">
@@ -47,21 +47,21 @@ const CartCard = (props) => {
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex gap-5 whitespace-nowrap sm:items-center maxsm:flex-col">
+          <div className="flex gap-5 whitespace-nowrap sm:items-center maxmd:order-2 maxmd:w-full maxmd:justify-between">
             <div className="flex items-center gap-5">
-              <h4 className="text-xl font-semibold text-b3">${props.item.isSale ? props.item.salePrice : props.item.regPrice}</h4>
-              {props.item.isSale ? <strike className="text-lg">${props.item.regPrice}</strike> : null}
+              <h4 className="font-semibold text-b3 md:text-xl">${props.item.isSale ? props.item.salePrice : props.item.regPrice}</h4>
+              {props.item.isSale ? <strike className="text-sm md:text-lg">${props.item.regPrice}</strike> : null}
             </div>
-            {props.item.isSale ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-sm font-semibold text-black">-27%</span> : null}
+            {props.item.isSale ? <span className="flex w-fit rounded-2xl bg-b4 px-2 py-1 text-10px font-semibold text-black sm:text-xs md:px-3 md:py-2 md:text-sm">-27%</span> : null}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 maxmd:w-full maxmd:justify-between">
             <div className="flex items-center gap-1">
               <span className="text-sm font-semibold text-b25">Condition</span>
-            </div>
-            <div className="flex items-center gap-2">
               <span>
                 <ToolTip dimension="w-4 h-4" color="text-b25" />
               </span>
+            </div>
+            <div className="flex items-center gap-2">
               {props.item.condition == 'new' && (
                 <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
                   <FourStar />

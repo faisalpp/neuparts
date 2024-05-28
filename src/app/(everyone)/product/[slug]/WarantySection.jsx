@@ -10,7 +10,7 @@ const WarantySection = () => {
   return (
     <div id="compare" className="bg-b3/10">
       <div className="maincontainer py-10 lg:py-16 xl:py-20 2xl:py-120px">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
           {products.map((item, index) => (
             <WarantyCard key={index} icon={item.icon} title={item.title} description={item.description} />
           ))}

@@ -144,7 +144,7 @@ const AllProducts = () => {
           <FaBars className={`cursor-pointer ${!isGrid && 'text-b3'}`} onClick={() => setIsGrid(false)} />
         </div>
       </div>
-      <button className="maincontainer mb-5 flex items-center justify-center gap-2 rounded-md border border-b3 px-4 py-3 text-xs font-semibold text-b3 lg:hidden" onClick={() => setIsFilter(true)}>
+      <button type="button" className="maincontainer mb-5 flex items-center justify-center gap-2 rounded-md border border-b3 px-4 py-3 text-xs font-semibold text-b3 lg:hidden" onClick={() => setIsFilter(true)}>
         <FilterSvg />
         Filters
       </button>
@@ -165,7 +165,7 @@ const AllProducts = () => {
               {products.map((product, index) => (
                 <ProductCard3 key={index} product={product} isGrid={isGrid} />
               ))}
-              <div className={isGrid ? 'md:col-span-2 xl:col-span-3' : ''}>
+              <div className={isGrid ? 'col-span-2 xl:col-span-3' : ''}>
                 <Pagination page={page} setPage={setPage} totalPages={totalPages} />
               </div>
             </>

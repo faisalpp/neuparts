@@ -20,7 +20,9 @@ const ProductCard2 = ({ sliderstyle, stars, product }) => {
         <div className="flex flex-col gap-y-3 p-3 lg:p-5 xl:p-6">
           <p className="text-line-camp font-reg text-sm font-semibold xl:text-base">{product?.title}</p>
           <div className="flex">
-            <h4 className="font-semibold text-b3">${product?.isSale ? product?.salePrice : product?.regPrice}</h4>
+            <Link href={`/product/${product?.slug}`}>
+              <h4 className="font-semibold text-b3">${product?.isSale ? product?.salePrice : product?.regPrice}</h4>
+            </Link>
             {product?.isSale ? (
               <div className="flex w-full items-center justify-end space-x-2">
                 <strike className="text-[rgba(17,16,16,0.64)]">${product?.regPrice}</strike>

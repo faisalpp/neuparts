@@ -318,7 +318,7 @@ const Product = ({ slug }) => {
           {/* End */}
           {/* Bread Crumbs Start */}
           <div className="maincontainer flex items-center py-10">
-            <div className="flex items-center">
+            <div className="flex flex-wrap items-center">
               <h5 className="text-xs text-b3">Home</h5>
               <RiArrowDropRightLine className="text-xl text-gray-500" />
               <h5 className="text-xs text-b3">Part Categories</h5>
@@ -331,14 +331,23 @@ const Product = ({ slug }) => {
             </div>
           </div>
           {/* Bread Crumbs End */}
-          <div id="product-information" className="maincontainer mb-10 grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:items-start">
+          <div id="product-information" className="maincontainer mb-10 grid grid-cols-1 items-center gap-6 sm:gap-10 lg:grid-cols-12 lg:items-start">
             <div className="lg:sticky lg:top-44 lg:col-span-5">
-              <div className="flex gap-2 md:gap-5">
-                <div className="flex h-full min-w-[70px] flex-col space-y-2 2xl:min-w-100px">
+              {isFav ? (
+                <button onClick={(e) => removeFavorite(e)} className="my-2 flex w-full items-center justify-end text-b3 hover:underline md:hidden">
+                  <AiFillHeart className={`h-6 w-6 ${favLoad ? 'animate-bounce' : null}`} />
+                </button>
+              ) : (
+                <button type="button" onClick={(e) => handleFavorites(e)} className="my-2 flex w-full items-center justify-end text-b3 hover:underline lg:hidden">
+                  <AiOutlineHeart className={`h-6 w-6 ${favLoad ? 'animate-bounce' : null}`} />
+                </button>
+              )}
+              <div className="flex gap-2 md:gap-5 maxmd:flex-col">
+                <div className="flex h-full min-w-[70px] flex-col gap-2 2xl:min-w-100px maxmd:order-2 maxmd:flex-row">
                   {product.media
                     ? product.media.slice(0, 4).map((media, index) => (
                         <>
-                          <div key={index} className="relative grid h-[70px] w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px" onClick={() => setMediaViewer({ file: media.file, data: media.data, thumbnail: media.preview ? media.preview : '' })}>
+                          <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setMediaViewer({ file: media.file, data: media.data, thumbnail: media.preview ? media.preview : '' })}>
                             <Image width={200} height={200} quality={100} src={media.data} className="w-10 2xl:w-20" alt="product" />
                           </div>
                         </>
@@ -349,17 +358,17 @@ const Product = ({ slug }) => {
                       <div onClick={() => setImgModal(true)} className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-b3/70 font-semibold text-white">
                         +4
                       </div>
-                      <Image width={200} height={200} quality={100} src={moreImg ? moreImg.data : null} className="h-16 w-10 2xl:w-20" alt="product" />
+                      <Image width={200} height={200} quality={100} src={moreImg ? moreImg.data : null} className="h-full w-full object-contain" alt="product" />
                     </div>
                   ) : null}
                 </div>
-                <div className="relative flex w-full items-center justify-center rounded-lg border-[1px] border-gray-300 px-2 py-10 lg:h-96 2xl:h-auto 2xl:py-14">
+                <div className="relative flex w-full items-center justify-center rounded-lg border-gray-300 px-2 py-10 lg:h-96 lg:border 2xl:h-auto 2xl:py-14 maxmd:order-1">
                   {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={mediaViewer.data} alt="" className="h-auto w-48" /> : null}
                   {/* {mediaViewer.file === 'video' && mediaViewer.type === 'url' ? <Iframe style="w-full h-full" src={mediaViewer.data} title="Modal Video" icon="text-5xl" frameId={`video-frame-modal-${(Math.random() * 100) / 5}`} divId={`video-frame-modal-wrapper-${(Math.random() * 100) / 5}`} thumbnail={mediaViewer.thumbnail} /> : null}
                   {mediaViewer.file === 'video' && mediaViewer.type === 'upload' ? <video className="h-2/3 w-11/12 rounded-2xl" controls src={mediaViewer.data} /> : null} */}
                 </div>
               </div>
-              <div className="mt-10 flex flex-col items-center justify-center gap-y-3">
+              <div className="mt-10 hidden flex-col items-center justify-center gap-y-3 lg:flex">
                 {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
                 {product.specification ? <FaqAccordion parser="true" title="Specifications" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.specification} chevrown /> : null}
                 {product.deliveryInfo ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.deliveryInfo} chevrown /> : null}
@@ -367,26 +376,26 @@ const Product = ({ slug }) => {
             </div>
 
             <div className="mt-4 flex flex-col space-y-5 px-1 lg:col-span-7 lg:mt-0 lg:px-0">
-              <h2 className="line-clamp-2 text-2xl font-bold leading-8 lg:w-full">{product.title}</h2>
+              <h2 className="line-clamp-3 text-xl font-bold leading-8 md:line-clamp-2 md:text-2xl lg:w-full">{product.title}</h2>
               <div className="flex w-full items-center justify-between">
                 <Link href={`/products/buying-options/?modelNo=${product.modelNo}`} className="cursor-pointer text-xs font-bold text-b3 underline lg:w-80 lg:text-sm">
-                  View More Buying Options ↓
+                  View 15 More Buying Options ↓
                 </Link>
               </div>
-              <div className="flex gap-5 whitespace-nowrap sm:items-center maxsm:flex-col">
+              <div className="flex gap-5 whitespace-nowrap sm:items-center">
                 <div className="flex items-center gap-5">
-                  <h4 className="text-xl font-bold text-b3 lg:text-3xl ">${product.isSale ? product.salePrice : product.regPrice}</h4>
+                  <h4 className="text-2xl font-bold text-b3 lg:text-3xl ">${product.isSale ? product.salePrice : product.regPrice}</h4>
                   {product.isSale ? <strike className="text-lg">${product.regPrice}</strike> : null}
                 </div>
                 <div className="flex items-center gap-5 sm:w-full sm:justify-between lg:flex-wrap">
-                  {product.isSale ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-[10px] font-semibold text-black lg:text-xs">${product.regPrice - product.salePrice} Savings</span> : null}
+                  {product.isSale ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-xs font-semibold text-black">${product.regPrice - product.salePrice} Savings</span> : null}
                   {isFav ? (
-                    <button onClick={(e) => removeFavorite(e)} className="flex items-center justify-end text-b3 hover:underline">
+                    <button onClick={(e) => removeFavorite(e)} className="hidden items-center justify-end text-b3 hover:underline md:flex">
                       <AiFillHeart className={`${favLoad ? 'animate-bounce' : null}`} />
                       <span>Favorite</span>
                     </button>
                   ) : (
-                    <button type="button" onClick={(e) => handleFavorites(e)} className="flex items-center justify-end text-b3 hover:underline">
+                    <button type="button" onClick={(e) => handleFavorites(e)} className="hidden items-center justify-end text-b3 hover:underline md:flex">
                       <AiOutlineHeart className={`${favLoad ? 'animate-bounce' : null}`} />
                       <span>Add to favorites</span>
                     </button>
@@ -412,7 +421,7 @@ const Product = ({ slug }) => {
                   New
                 </div>
               </div>
-              <div className="mt-2 flex items-center space-x-5 rounded-lg border border-b3 bg-b3/10 p-4 lg:mt-4 lg:space-x-5">
+              <div className="mt-2 flex items-center space-x-5 rounded-lg border border-b3 bg-b3/10 p-2 md:p-4 lg:mt-4 lg:space-x-5">
                 <div className="flex items-center gap-1">
                   <h4 className="w-max pr-3 text-base font-semibold text-b16/50">Type</h4>
                   <AiOutlineTag className="ml-2 h-5 w-5 text-b3" />
@@ -420,19 +429,20 @@ const Product = ({ slug }) => {
                 <span className="text-base font-semibold text-b1">Aftermarket Replacement Part</span>
               </div>
               {product.isSale ? (
-                <div className="mt-2 hidden items-center gap-4 lg:flex">
+                <div className="mt-2 flex items-center gap-4">
                   <div className="flex text-sm font-semibold text-b16/50">
                     <h4>Discount</h4>
+                    <span>%</span>
                   </div>
-                  <div className="w-52 rounded-lg bg-gray-200">
-                    <span className="flex h-3 w-40 rounded-lg bg-gradient-to-r from-b4 to-b7"></span>
+                  <div className="w-full rounded-lg bg-gray-200 md:w-52 maxmd:max-w-52">
+                    <span className="flex h-3 w-2/4 rounded-lg bg-gradient-to-r from-b4 to-b7"></span>
                   </div>
-                  <div className="flex items-center justify-center rounded-full bg-b7 px-5 py-2 text-white">
+                  <div className="flex items-center justify-center whitespace-nowrap rounded-full bg-b7 px-3 py-1.5 text-white md:px-5 md:py-2 maxmd:text-sm">
                     <GasSvg /> 30% Off
                   </div>
                 </div>
               ) : null}
-              <div className="rounded-lg p-4 shadow-[0px_4px_24px_rgba(0,0,0,0.08)]">
+              <div className="rounded-lg p-3 shadow-[0px_4px_24px_rgba(0,0,0,0.08)] md:p-4">
                 <div className="mb-4 flex flex-wrap items-center justify-between">
                   <div className="flex items-center gap-2">
                     <label htmlFor="" className="text-xs">
@@ -487,15 +497,22 @@ const Product = ({ slug }) => {
 
               {/* Other Product Section */}
               <BuyingOtherOptions slug={slug} otherProducts={otherProducts} modelNo={product.modelNo} />
+
+              <div className="mt-10 hidden flex-col items-center justify-center gap-y-3 maxlg:flex">
+                {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
+                {product.specification ? <FaqAccordion parser="true" title="Specifications" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.specification} chevrown /> : null}
+                {product.deliveryInfo ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.deliveryInfo} chevrown /> : null}
+              </div>
             </div>
           </div>
 
           {/* 360 Degree Product Section */}
           <Rotate360Product />
 
-          <CompatibleAppliance />
+          {/* More Parts */}
+          <MoreParts />
 
-          {/* <MoreParts /> */}
+          <CompatibleAppliance />
 
           {/* Review */}
           <ConditionReview />

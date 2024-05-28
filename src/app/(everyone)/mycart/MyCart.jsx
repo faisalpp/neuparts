@@ -37,7 +37,7 @@ const MyCart = () => {
           {products?.length > 0 ? (
             <div className="maincontainer pb-10 lg:pb-16 xl:pb-20">
               <div className="grid grid-cols-1 gap-10 2xl:grid-cols-[1fr_440px] coxxl:grid-cols-[1fr_360px]">
-                <div className="order-2 space-y-14 rounded-2xl border border-b1/10 p-8 coxxl:order-none">
+                <div className="order-2 space-y-14 rounded-2xl border border-b1/10 p-5 md:p-8 coxxl:order-none">
                   {/* Cart Card */}
 
                   {/* First */}
@@ -49,15 +49,15 @@ const MyCart = () => {
                         </div>
                         <h3 className="text-sm font-semibold text-b1">GE 1.7 cu. ft. Over the Range Microwave with Convenience Cooking Controls</h3>
                       </div>
-                      <div className="grid w-full grid-cols-1 gap-12">{products?.map((item, pindex) => Array.from({ length: item.count }).map((_, index) => <CartCard indx={`${pindex}-${index}-delivery`} key={`${pindex}-${index}-delivery`} cartId={cartId} item={item} type="delivery" />))}</div>
+                      <div className="grid w-full grid-cols-1 gap-10 lg:gap-12">{products?.map((item, pindex) => Array.from({ length: item.count }).map((_, index) => <CartCard indx={`${pindex}-${index}-delivery`} key={`${pindex}-${index}-delivery`} cartId={cartId} item={item} type="delivery" />))}</div>
                     </div>
                   ))}
 
                   {/* End Cart */}
-                  <hr className="my-6 border-[hsla(0,0%,0%,0)]" />
-                  <div className="flex w-full items-center justify-between">
+                  <hr className="border-[hsla(0,0%,0%,0)] md:my-6 maxmd:!my-4" />
+                  <div className="flex w-full flex-wrap items-center justify-between gap-2 maxmd:!mt-0">
                     <span className="text-base font-semibold text-black sm:text-xl">Subtotal (4 Items):</span>
-                    <div className="text-2xl font-semibold sm:text-32px">$$2,279.00</div>
+                    <div className="text-2xl font-semibold sm:text-32px">$2,279.00</div>
                   </div>
                 </div>
                 <div>

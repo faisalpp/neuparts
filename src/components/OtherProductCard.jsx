@@ -23,8 +23,9 @@ const OtherProductCard = ({ slug, product }) => {
                 </span>
               ) : (
                 <span className={`flex w-fit items-center rounded-xl bg-b34 px-3 py-1 text-[8px] text-white`}>
-                  <IoBagCheckOutline className="mr-1 text-[10px]" />
-                  Out&nbsp;of&nbsp;Stock
+                  <IoBagCheckOutline className="mr-1 text-[10px] maxmd:hidden" />
+                  <span className="maxmd:hidden">Out&nbsp;of&nbsp;Stock</span>
+                  <span className="md:hidden">Sold&nbsp;Out</span>
                 </span>
               )}
             </div>
@@ -57,10 +58,10 @@ const OtherProductCard = ({ slug, product }) => {
             <div className="flex items-center">
               <h6 className="text-xs font-semibold text-gray-500">Discount&nbsp;%</h6>
               <div className="flex w-full -translate-y-3 justify-end">
-                <span className={`rounded-2xl bg-b4 px-1 py-1 text-[9px] font-semibold lg:px-3 lg:text-[8px]`}>-20%</span>
+                <span className={`rounded-2xl bg-b4 px-2 py-0.5 text-[9px] font-semibold md:py-1 lg:px-3 lg:text-[8px]`}>-20%</span>
               </div>
             </div>
-            <div className="w-full rounded-lg bg-gray-100">
+            <div className="w-full rounded-lg bg-gray-100 maxmd:!mt-1">
               <span className={`flex h-2 w-10 rounded-lg bg-gradient-to-r from-b4 to-b7`}></span>
             </div>
           </div>

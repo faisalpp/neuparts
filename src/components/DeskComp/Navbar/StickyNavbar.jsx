@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
 import { FiPhone } from 'react-icons/fi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
@@ -21,6 +22,26 @@ const StickyNavbar = ({ state, product, addCart }) => {
       });
     }
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const element = document.getElementById('product-search-bar');
+
+      if (window.scrollY > 220) {
+        element.classList.add('opacity-0');
+        element.classList.add('pointer-events-none');
+      } else {
+        element.classList.remove('opacity-0');
+        element.classList.remove('pointer-events-none');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const frstImg = product.media ? product.media.find((item) => item.file === 'image') : null;
 
