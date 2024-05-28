@@ -76,14 +76,14 @@ const SideCart = ({ sCart, cartMenuRef, setsCart }) => {
 
   return (
     <div className={` ${sCart ? 'right-0 top-0' : '-right-[200%]'} fixed z-[999] h-screen  w-full bg-black/60 duration-500 maxcosm:pl-12`}>
-      <div ref={cartMenuRef} className={` ${sCart ? '' : 'hidden'} relative float-right mx-auto h-full w-full bg-white lg:max-w-[480px] xs:max-w-[310px]`}>
+      <div ref={cartMenuRef} className={` ${sCart ? '' : 'hidden'} relative float-right mx-auto h-full w-full bg-white lg:!max-w-[480px] xs:max-w-[310px]`}>
         {isOpen && <SelectTimeSlot frames={frames} timeSlot={timeSlot} setTimeSlot={setTimeSlot} selectDate={selectedDate} setSelectDate={setSelectedDate} dates={dates} />}
 
         <button
           onClick={() => {
             setsCart(!sCart);
           }}
-          className="xy-center absolute -left-[2.7rem] top-0 z-40 bg-b3 duration-200 lg:right-6 lg:top-5 lg:bg-white xs:-left-12 maxlg:h-10 maxlg:w-10 maxlg:rounded-full maxlg:text-white maxlg:hover:bg-b3  maxlg:hover:text-white"
+          className="xy-center absolute -left-[2.7rem] top-0 z-40 bg-b3 duration-200 lg:!left-auto lg:right-6 lg:top-5 lg:bg-white xs:-left-12 maxlg:h-10 maxlg:w-10 maxlg:rounded-full maxlg:text-white maxlg:hover:bg-b3  maxlg:hover:text-white"
         >
           <AiOutlineClose className="text-xl" />
         </button>
