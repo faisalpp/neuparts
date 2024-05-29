@@ -363,7 +363,14 @@ const Product = ({ slug }) => {
                   ) : null}
                 </div>
                 <div className="relative flex w-full items-center justify-center rounded-lg border-gray-300 px-2 py-10 lg:h-96 lg:border 2xl:h-auto 2xl:py-14 maxmd:order-1">
-                  {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={mediaViewer.data} alt="" className="h-auto w-48" /> : null}
+                  {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={mediaViewer.data} alt={product.title} className="h-auto w-48" /> : null}
+
+                  {/* Compatible Badge */}
+                  <Image width={400} height={400} quality={100} src="/compatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" />
+                  
+                  {/* NonCompatible Badge */}
+                  {/* <Image width={400} height={400} quality={100} src="/noncompatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" /> */}
+
                   {/* {mediaViewer.file === 'video' && mediaViewer.type === 'url' ? <Iframe style="w-full h-full" src={mediaViewer.data} title="Modal Video" icon="text-5xl" frameId={`video-frame-modal-${(Math.random() * 100) / 5}`} divId={`video-frame-modal-wrapper-${(Math.random() * 100) / 5}`} thumbnail={mediaViewer.thumbnail} /> : null}
                   {mediaViewer.file === 'video' && mediaViewer.type === 'upload' ? <video className="h-2/3 w-11/12 rounded-2xl" controls src={mediaViewer.data} /> : null} */}
                 </div>

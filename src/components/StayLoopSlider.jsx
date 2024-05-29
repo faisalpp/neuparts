@@ -1,7 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
-import { AiFillPlayCircle } from 'react-icons/ai';
 import { FaCirclePlay } from 'react-icons/fa6';
 import { BsFillStopCircleFill } from 'react-icons/bs';
 import Hammer from 'hammerjs';
@@ -11,6 +10,13 @@ const StayLoopSlider = ({ isIframe, setIsIframe, parentId, child, page, setPage,
   useEffect(() => {
     let box = document.getElementById('id3');
     setBox(box);
+
+    const swipeableEl = document.getElementById('id3');
+    if (swipeableEl) {
+      const hammer = Hammer(swipeableEl);
+      hammer.on('swipeleft', () => btnprev());
+      hammer.on('swiperight', () => btnnext());
+    }
   }, []);
 
   const [Box, setBox] = useState();
@@ -27,13 +33,6 @@ const StayLoopSlider = ({ isIframe, setIsIframe, parentId, child, page, setPage,
     let width = Box.clientWidth;
     Box.scrollLeft = Box.scrollLeft + width;
   };
-
-  const swipeableEl = document.getElementById('id3');
-  if (swipeableEl) {
-    const hammer = Hammer(swipeableEl);
-    hammer.on('swipeleft', () => btnprev());
-    hammer.on('swiperight', () => btnnext());
-  }
 
   const HandleParentChange = (e, data) => {
     e.preventDefault();
