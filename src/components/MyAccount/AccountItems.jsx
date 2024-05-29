@@ -1,9 +1,10 @@
 import React from 'react';
 import { FiChevronRight, FiLogOut } from 'react-icons/fi';
-import { Link, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const AccountItems = ({ onClose, isItems }) => {
-  const location = useLocation();
+  const router = useRouter();
 
   const myaccountItems = [
     {
@@ -57,9 +58,9 @@ const AccountItems = ({ onClose, isItems }) => {
           </div>
           <div className="flex flex-col gap-1 maxlg:!px-3 maxlg:py-3">
             {myaccountItems.map((item) => (
-              <Link href={item.link} key={item.id} className={`flex w-full items-center justify-between rounded-lg border px-6 py-4 text-left font-semibold duration-300 ${location.pathname === item.link ? 'active border-b3 bg-b3 text-white' : 'border-b14 text-[rgba(17,16,16,0.64)]'}`}>
+              <Link href={item.link} key={item.id} className={`flex w-full items-center justify-between rounded-lg border px-6 py-4 text-left font-semibold duration-300 ${router.pathname === item.link ? 'active border-b3 bg-b3 text-white' : 'border-b14 text-[rgba(17,16,16,0.64)]'}`}>
                 <span>{item.title}</span>
-                {location.pathname === item.link ? <FiChevronRight /> : null}
+                {router.pathname === item.link ? <FiChevronRight /> : null}
               </Link>
             ))}
           </div>
