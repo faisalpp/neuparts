@@ -10,7 +10,7 @@ import { ChangePasswordData } from '@/components/MyAccount/ChangePassword';
 import { EmailPreferencesData } from '@/components/MyAccount/EmailPreferences';
 
 const MobileMyAccount = () => {
-  const [isMobile, setIsDesktop] = useState(window.innerWidth <= 992);
+  const [isMobile, setIsDesktop] = useState(false);
   const [activeTab, setActiveTab] = useState('');
 
   const myaccounts = [
@@ -28,18 +28,24 @@ const MobileMyAccount = () => {
 
   // Mobile Version Only
   useEffect(() => {
-    const handleResize = () => {
+    if (typeof window !== 'undefined') {
       setIsDesktop(window.innerWidth <= 992);
-    };
 
-    window.addEventListener('resize', handleResize);
+      const handleResize = () => {
+        setIsDesktop(window.innerWidth <= 992);
+      };
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
   const redirectPage = () => {
-    location.href = '/';
+    if (typeof window !== 'undefined') {
+      window.location.href = '/';
+    }
   };
   return (
     <>
