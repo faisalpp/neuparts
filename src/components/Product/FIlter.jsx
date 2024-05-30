@@ -25,8 +25,8 @@ const Filter = ({ filterheader, onsale, loading, onClose, isFilter, categoriesFi
         <div className={`z-40 items-end duration-200 lg:sticky lg:top-28 lg:h-full lg:max-w-[240px] maxlg:fixed maxlg:left-0 maxlg:right-0 maxlg:bg-black/20 maxlg:bg-white ${modalClass}`} onClick={onClose}>
           <div className="w-full flex-col lg:flex maxlg:h-full maxlg:overflow-y-auto" onClick={handleFilterClick}>
             <div className="top-0 z-40 flex items-center justify-between border-b border-b1/10 lg:pb-4 maxlg:sticky maxlg:mx-[5%] maxlg:bg-white maxlg:py-4">
-              <button type="button" onClick={onClose} className="flex items-center gap-2 text-base font-bold">
-                <ArrowLeftIcon className="w- h-4 stroke-[2.5px]" /> Filters
+              <button type="button" onClick={onClose} className="flex items-center gap-2 text-base font-semibold maxlg:font-bold">
+                <ArrowLeftIcon className="w- h-4 stroke-[2.5px] lg:hidden" /> Filters
               </button>
               <span
                 onClick={() => {

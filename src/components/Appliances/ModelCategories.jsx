@@ -32,7 +32,7 @@ const ModelCategories = () => {
           </div>
         ))}
       </div>
-      <Link href="/applianceTypes" className="button-hover mt-14 flex w-fit items-center justify-center rounded-lg border-[1px] px-4 py-3 font-semibold text-white maxmd:w-full">
+      <Link href="/all-buying-options" className="button-hover mt-14 flex w-fit items-center justify-center rounded-lg border-[1px] px-4 py-3 font-semibold text-white maxmd:w-full">
         <span className="lg:text-sm xl:text-[16px]">View More Part Categories</span>
         <BsArrowRightShort className="text-2xl" />
       </Link>

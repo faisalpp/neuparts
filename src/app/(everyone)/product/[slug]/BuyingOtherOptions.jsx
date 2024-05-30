@@ -55,7 +55,7 @@ const BuyingOtherOptions = ({ slug, otherProducts, modelNo }) => {
     ],
   };
   const PrevButton = ({ onClick }) => (
-    <button onClick={onClick} className="prev-button pointer-events-none absolute -left-3 top-0 z-40 block h-full">
+    <button onClick={onClick} className="prev-button pointer-events-none absolute -left-3 top-0 z-30 block h-full">
       <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-b3">
         <BsArrowLeftShort className="text-xl" />
       </div>
@@ -63,7 +63,7 @@ const BuyingOtherOptions = ({ slug, otherProducts, modelNo }) => {
   );
 
   const NextButton = ({ onClick }) => (
-    <button onClick={onClick} className="next-button pointer-events-none absolute -right-3 top-0 z-40 block h-full">
+    <button onClick={onClick} className="next-button pointer-events-none absolute -right-3 top-0 z-30 block h-full">
       <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-b3">
         <BsArrowRightShort className="text-xl" />
       </div>
@@ -73,7 +73,7 @@ const BuyingOtherOptions = ({ slug, otherProducts, modelNo }) => {
     <div className=" rounded-lg py-5">
       <div className="mb-3 flex items-center justify-between">
         <h6 className="font-bold">Product Buying Options</h6>
-        <Link href={`/products/buying-options/?modelNo=${modelNo}`} className="flex items-center text-sm font-bold text-b3 hover:underline">
+        <Link href={`/all-buying-options`} className="flex items-center text-sm font-bold text-b3 hover:underline">
           View All <BsArrowRightShort />
         </Link>
       </div>

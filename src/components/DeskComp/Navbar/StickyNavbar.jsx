@@ -25,14 +25,16 @@ const StickyNavbar = ({ state, product, addCart }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const element = document.getElementById('product-search-bar');
+      if (window.innerWidth >= 992) {
+        const element = document.getElementById('product-search-bar');
 
-      if (window.scrollY > 100) {
-        element.classList.add('opacity-0');
-        element.classList.add('pointer-events-none');
-      } else {
-        element.classList.remove('opacity-0');
-        element.classList.remove('pointer-events-none');
+        if (window.scrollY > 100) {
+          element.classList.add('opacity-0');
+          element.classList.add('pointer-events-none');
+        } else {
+          element.classList.remove('opacity-0');
+          element.classList.remove('pointer-events-none');
+        }
       }
     };
 

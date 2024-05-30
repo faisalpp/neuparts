@@ -41,14 +41,19 @@ const ProductCard3 = ({ isGrid, product }) => {
           </div>
         </Link>
       ) : (
-        <Link className="flex w-full cursor-pointer items-center space-x-2 rounded-2xl border border-b16/10 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10" href={`/product/${product.slug}`}>
-          <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
+        <div className="flex w-full items-center space-x-2 rounded-2xl border border-b16/10 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10">
+          <Link href={`/product/${product.slug}`}>
+            <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
+          </Link>
 
           <div className="flex w-full flex-col gap-2 px-1 sm:gap-3 md:w-[60%] lg:px-5 3xl:w-[55%]">
             <button type="button" className="flex items-center gap-2 text-b3 maxsm:text-xs">
               <FaRegHeart /> Add to favorites
             </button>
-            <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
+
+            <Link href={`/product/${product.slug}`}>
+              <h3 className="text-sm font-semibold lg:text-lg 3xl:text-xl">{product.title}</h3>
+            </Link>
 
             <div className="flex flex-wrap items-center gap-1 coxs:gap-2">
               <span className="flex gap-1 text-10px text-b1 sm:text-sm coxs:gap-2 maxmd:font-semibold">
@@ -72,7 +77,7 @@ const ProductCard3 = ({ isGrid, product }) => {
               15 Buying Options →
             </Link>
           </div>
-        </Link>
+        </div>
       )}
     </>
   );

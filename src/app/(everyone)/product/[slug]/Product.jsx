@@ -309,7 +309,9 @@ const Product = ({ slug }) => {
       ) : (
         <>
           {/* StickyNavabr */}
-          <StickyNavbar addCart={addToCart} product={product} state={showNavbar} />
+          <div className="hidden lg:block">
+            <StickyNavbar addCart={addToCart} product={product} state={showNavbar} />
+          </div>
 
           <MoreImagesModal medias={product.media} state={imgModal} setState={setImgModal} />
 
@@ -367,7 +369,7 @@ const Product = ({ slug }) => {
 
                   {/* Compatible Badge */}
                   <Image width={400} height={400} quality={100} src="/compatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" />
-                  
+
                   {/* NonCompatible Badge */}
                   {/* <Image width={400} height={400} quality={100} src="/noncompatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" /> */}
 
@@ -385,7 +387,7 @@ const Product = ({ slug }) => {
             <div className="mt-4 flex flex-col space-y-5 px-1 lg:col-span-7 lg:mt-0 lg:px-0">
               <h2 className="line-clamp-3 text-xl font-bold leading-8 md:line-clamp-2 md:text-2xl lg:w-full">{product.title}</h2>
               <div className="flex w-full items-center justify-between">
-                <Link href={`/products/buying-options/?modelNo=${product.modelNo}`} className="cursor-pointer text-xs font-bold text-b3 underline lg:w-80 lg:text-sm">
+                <Link href={`/all-buying-options`} className="cursor-pointer text-xs font-bold text-b3 underline lg:w-80 lg:text-sm">
                   View 15 More Buying Options ↓
                 </Link>
               </div>
@@ -427,6 +429,11 @@ const Product = ({ slug }) => {
                   <FourStar />
                   New
                 </div>
+                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div> */}
+                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-3 py-1 text-xs font-semibold text-white">New / Open Box</div> */}
+                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade B</div> */}
+                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade C</div> */}
+                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div> */}
               </div>
               <div className="mt-2 flex items-center space-x-5 rounded-lg border border-b3 bg-b3/10 p-2 md:p-4 lg:mt-4 lg:space-x-5">
                 <div className="flex items-center gap-1">

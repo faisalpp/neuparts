@@ -1,30 +1,33 @@
 'use client';
-import { useState } from 'react';
-import { AiOutlineShoppingCart, AiOutlineLogin, AiOutlineLogout, AiFillHome, AiFillGift, AiOutlineSearch } from 'react-icons/ai';
+import { useRef, useState } from 'react';
+import { AiOutlineShoppingCart, AiOutlineSearch } from 'react-icons/ai';
 import { IoMenu, IoCloseOutline } from 'react-icons/io5';
-import { CgSmartHomeWashMachine } from 'react-icons/cg';
-import { FaBandcamp } from 'react-icons/fa';
-import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { GiReceiveMoney } from 'react-icons/gi';
-import { BsFillChatSquareHeartFill } from 'react-icons/bs';
-import { BiUserCircle } from 'react-icons/bi';
+import { BiSearch, BiUserCircle } from 'react-icons/bi';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
+import useClickOutside from '@/hooks/useClickOutside';
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import NavSearchMenu from '../NavSearchMenu';
 
 const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
   const [mobMenu, setMobMenu] = useState(false);
-  const [dealMenu, setDealMenu] = useState(false);
-  const [productMenu, setProductMenu] = useState(false);
-  const [brandMenu, setBrandMenu] = useState(false);
+
+  const [searchMenu, setSearchMenu] = useState(false);
+
   const cartCount = '';
   const isUser = '';
   const isAdmin = '';
 
+  const searchButtonRef = useRef(null);
+  const searchRef = useRef(null);
+
+  useClickOutside([searchButtonRef, searchRef], () => setSearchMenu(false));
+
   return (
     <>
-      <div className="sticky top-0 z-50 flex justify-between bg-b1 px-4 py-4 text-white md:px-10 lg:hidden">
+      <div className="sticky top-0 z-50 flex justify-between bg-b1 px-3 py-4 text-white md:px-10 lg:hidden">
         <div className="flex items-center gap-4">
           {mobMenu ? (
             <div onClick={() => setMobMenu(false)} className="flex h-6 w-6 cursor-pointer items-center text-white">
@@ -36,11 +39,16 @@ const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
             </div>
           )}
           <Link href="/" className="w-28">
-            <Image width={300} height={300} quality={100} src="/neu.webp" className="h-auto w-28" alt="neuappliance" />
+            <Image width={300} height={36} quality={100} src="/neu.webp" className="h-9 w-28" alt="neuappliance" />
           </Link>
         </div>
         <div className="flex items-center justify-end gap-5 coxs:gap-8">
-          <AiOutlineSearch className="h-6 w-6" />
+          <div ref={searchRef}>
+            <AiOutlineSearch onClick={() => setSearchMenu(!searchMenu)} className="h-6 w-6 cursor-pointer" />
+            {/* Search Dropdown */}
+            <NavSearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
+          </div>
+
           <div onClick={() => setsCart(!sCart)} className="relative h-6 w-6 items-center rounded-full text-white">
             <AiOutlineShoppingCart className="h-6 w-6" />
             <span className="absolute -top-2 ml-3 rounded-full bg-b3 px-[6px] py-[2px] text-center text-[10px]">{cartCount ? cartCount : 0}</span>

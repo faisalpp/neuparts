@@ -181,7 +181,7 @@ const AllProducts = () => {
                 {products.map((product, index) => (
                   <ApplianceGrid key={index} product={product} isGrid={isGrid} />
                 ))}
-                <div className={isGrid ? 'md:col-span-2 xl:col-span-3' : ''}>
+                <div className={isGrid ? 'col-span-2 xl:col-span-3' : ''}>
                   <Pagination page={page} setPage={setPage} totalPages={totalPages} />
                 </div>
               </>

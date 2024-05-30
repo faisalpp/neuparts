@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import useClickOutside from '@/hooks/useClickOutside';
 import NavDropDown from '../Navbar/NavDropDown';
+import NavSearchMenu from '@/components/NavSearchMenu';
 import { FiPhone } from 'react-icons/fi';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
 
@@ -60,19 +61,7 @@ const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
                 <ChevronDownIcon className="w-full max-w-3" />
               </button>
               {/* Search Dropdown */}
-              <div className={`${searchMenu ? 'border border-b3 pb-5 pt-3' : 'pointer-events-none max-h-0'} absolute top-0 w-72 overflow-hidden rounded-lg bg-b2  px-4 duration-300`}>
-                <div className="mb-2.5 inline-flex cursor-pointer items-center gap-1 text-b3" onClick={() => setSearchMenu(!searchMenu)}>
-                  <BiSearch className="w-full max-w-3.5" />
-                  <span className="text-xs font-medium">Search</span>
-                  <ChevronDownIcon className="w-full max-w-3" />
-                </div>
-                <input type="text" className="w-full rounded-lg border border-b3 bg-white p-3 text-xs font-medium text-black outline-none placeholder:font-semibold placeholder:text-[#979797]" placeholder="Model Number" />
-                <input type="text" className="mt-2 w-full rounded-lg border border-b3 bg-white p-3 text-xs font-medium text-black outline-none placeholder:font-semibold placeholder:text-[#979797]" placeholder="Part Number" />
-                <button type="button" className="button-hover mt-2 flex h-10 w-full cursor-pointer items-center justify-center rounded-md px-4 text-white">
-                  <BiSearch />
-                  <span className="ml-1 text-xs font-medium">Search</span>
-                </button>
-              </div>
+              <NavSearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
             </div>
             <div
               onClick={() => {
