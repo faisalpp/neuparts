@@ -4,6 +4,7 @@ import {connect} from '@/DB/index'
 import {ZipTransform} from '@/services/boundriesIO'
 import ZipCode from '@/models/zipCode'
 
+
 connect()
 
 export async function GET(req,res){

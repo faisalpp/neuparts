@@ -1,24 +1,27 @@
 import mongoose from 'mongoose';
 
+let cached = global.mongoose;
 
-export async function connect(){
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
 
-   try{
+export async function connect() {
+  if (cached.conn) {
+    return cached.conn;
+  }
 
-    mongoose.connect(process.env.NEXT_MONGODB_CONNECTION_STRING)
-    const connection = mongoose.connection;
+  if (!cached.promise) {
+    const options = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    };
 
-    connection.on('connected',()=>{
-        console.log('MongoDB connected');
-    })
+    cached.promise = mongoose.connect(process.env.NEXT_MONGODB_CONNECTION_STRING, options).then((mongoose) => {
+      return mongoose;
+    });
+  }
 
-    connection.on('error',(error)=>{
-        console.log(`MongoDB Failed: ${error}`);
-        process.exit()
-    })
-
-   }catch(error){
-     console.log(`DataBase Error : ${error}`)
-   }
-
+  cached.conn = await cached.promise;
+  return cached.conn;
 }

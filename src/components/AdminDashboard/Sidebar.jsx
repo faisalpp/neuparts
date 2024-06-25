@@ -3,10 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { RiTeamFill } from "react-icons/ri";
+import { MdDashboard } from "react-icons/md";
 
 const Sidebar = () => {
   return (
-    <aside className="hidden h-screen w-56 flex-col overflow-y-auto border-r bg-b1 px-5 py-8 dark:border-gray-700 dark:bg-gray-900 lg:flex rtl:border-l rtl:border-r-0">
+    <aside className="hidden h-screen w-2/12 flex-col overflow-y-auto border-r bg-b1 px-5 py-8 dark:border-gray-700 dark:bg-gray-900 lg:flex rtl:border-l rtl:border-r-0">
       <Link href="/">
         <Image width={70} height={70} quality={100} className="col-start-1 col-end-3 h-auto w-full" src="/neu.webp" alt="logo" />
       </Link>
@@ -16,24 +18,18 @@ const Sidebar = () => {
           <div className="space-y-3 ">
             <label className="px-3 text-sm font-bold uppercase text-gray-500 dark:text-gray-400">analytics</label>
 
-            <a className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5 w-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
-              </svg>
-
+            <Link className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin">
+              <MdDashboard />
               <span className="mx-2 text-sm font-semibold">Dashboard</span>
-            </a>
+            </Link>
 
-            <a className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5 w-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
-              </svg>
-
-              <span className="mx-2 text-sm font-semibold">Preformance</span>
-            </a>
+            <Link className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/team">
+              <RiTeamFill/>
+              <span className="mx-2 text-sm font-semibold">Team</span>
+            </Link>
           </div>
 
-          <div className="space-y-3 ">
+          {/* <div className="space-y-3 ">
             <label className="px-3 text-sm font-bold uppercase text-gray-500 dark:text-gray-400">content</label>
 
             <a className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
@@ -59,9 +55,9 @@ const Sidebar = () => {
 
               <span className="mx-2 text-sm font-semibold">Checklists</span>
             </a>
-          </div>
+          </div> */}
 
-          <div className="space-y-3 ">
+          {/* <div className="space-y-3 ">
             <label className="px-3 text-sm font-bold uppercase text-gray-500 dark:text-gray-400">Customization</label>
 
             <a className="flex transform items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
@@ -80,7 +76,7 @@ const Sidebar = () => {
 
               <span className="mx-2 text-sm font-semibold">Setting</span>
             </a>
-          </div>
+          </div> */}
         </nav>
       </div>
     </aside>
