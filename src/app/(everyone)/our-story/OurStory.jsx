@@ -1,5 +1,5 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+
+import React from 'react';
 import ApplianceDetail from '@/components/Appliances/ApplianceDetail';
 import OurVision from '@/components/OurStory/OurVision';
 import { RiArrowDropRightLine } from 'react-icons/ri';
@@ -13,7 +13,7 @@ import Iframe from '@/components/Reusable/Ifram';
 import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
 
 const OurStory = () => {
-  const [video, setVideo] = useState({ url: 'https://www.youtube.com/embed/WQWVW4DUmZ0', type: 'iframe', thumbnail: '/g8.webp' });
+  // const [video, setVideo] = useState({ url: 'https://www.youtube.com/embed/WQWVW4DUmZ0', type: 'iframe', thumbnail: '/g8.webp' });
 
   return (
     <>
@@ -36,10 +36,10 @@ const OurStory = () => {
 
       <OurStorySection />
       {/* Video Section */}
-      <div className="mx-auto w-full 3xl:max-w-1680px">
+      {/* <div className="mx-auto w-full 3xl:max-w-1680px">
         {video && video.type === 'iframe' ? <Iframe icon="text-8xl" thumbnail={video.thumbnail} thumbRounded="false" divId={`our-story-section-${video.type}`} frameId="our-story-section" style="w-full h-[250px] md:h-[700px] 2xl:h-[920px]" src={video.url} title="Introducing our Next Generation of High End Kitchen Appliances | Miele" /> : null}
         {video && video.type !== 'iframe' ? <video controls autoPlay className="h-[250px] w-full object-cover md:h-[700px] 2xl:h-[920px]" src={video.url} /> : null}
-      </div>
+      </div> */}
 
       {/* Team */}
       <MeetTeam />

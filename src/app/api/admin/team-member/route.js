@@ -14,11 +14,11 @@ export async function GET(request){
     let query = {};
        
     const MemberCountPromise = TeamMember.estimatedDocumentCount(query);
-    const GetMembersPromise = TeamMember.find(query).limit(limit).skip(skip);
+    const GetMembersPromise = TeamMember.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
 
     const [count,teamMembers] = await Promise.all([MemberCountPromise,GetMembersPromise])
 
-    const pageCount = count / limit;
+    const pageCount = Math.ceil(count / limit);
     
     return  NextResponse.json({members:teamMembers,pagination:{pageCount,count},success: true})
   }catch(error){
@@ -37,7 +37,7 @@ export async function POST(request){
      })
 
      if(isCreated){
-      return  NextResponse.json({message: "Team Member Created Successfully!",success: true})
+      return  NextResponse.json({message: "Team Member Created!",success: true})
      }
      return  NextResponse.json({message: "Something Went Wrong!",success: false})
     } catch (error) {
@@ -45,15 +45,38 @@ export async function POST(request){
     }
 }
 
+export async function PUT(request){
+  try {
+   const {id,name,role,bio,avatar} = await request.json()
+  //  return  NextResponse.json({message: data,success: true}) 
+   await connect();
+   
+   const isCreated = await TeamMember.findByIdAndUpdate(id,{
+      name,role,bio,avatar
+   })
+
+   if(isCreated){
+    return  NextResponse.json({message: "Team Member Updated!",success: true})
+   }
+   return  NextResponse.json({message: "Something Went Wrong!",success: false})
+  } catch (error) {
+      return NextResponse.json({error: error.message,success:false}, {status: 500})
+  }
+}
+
 export async function DELETE(request){
     try {
      const {id} = await request.json()
+     
+     if(id === ''){
+      return  NextResponse.json({message: "Member ID required!",success: false})
+     }
     
      await connect();
 
      await TeamMember.findByIdAndDelete(id);
      
-     return  NextResponse.json({message: "Team Member Deleted Successfully!",success: true})
+     return  NextResponse.json({message: "Team Member Deleted!",success: true})
 
     } catch (error) {
       return  NextResponse.json({message: "Something Went Wrong!",success: false})

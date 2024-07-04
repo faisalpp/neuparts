@@ -10,11 +10,11 @@ const Table = ({children,header}) => {
     <thead class="bg-gray-50">
      {header?.length > 0 ? 
       <tr>{
-      header.map((title)=>
-        <th scope="col" class="px-6 py-4 font-medium text-gray-900">{title}</th>
+      header.map((title,index)=>
+        <th key={index} scope="col" class="px-6 py-4 font-medium text-gray-900">{title}</th>
       )}</tr> : null }
     </thead>
-    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+    <tbody class="divide-y divide-gray-200 border-t border-gray-100">
       {children}
     </tbody>
   </table>
