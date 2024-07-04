@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.ck-content{
+    height: 250px;
+}

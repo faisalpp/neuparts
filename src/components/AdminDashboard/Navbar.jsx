@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
 
   return (
-    <nav className="h-fit w-full border-b border-b1 bg-white shadow dark:bg-gray-800">
+    <nav className="h-10 w-full border-b border-b1 bg-white shadow dark:bg-gray-800">
       <div className="container mx-auto px-6 py-4">
         <div className="lg:flex lg:items-center">
           <div className="flex items-center justify-between">
@@ -44,16 +44,6 @@ const Navbar = () => {
               <a href="#" className="mt-2 transform transition-colors duration-300 hover:text-gray-900 dark:hover:text-gray-200 lg:mx-4 lg:mt-0">
                 blog
               </a>
-            </div>
-
-            <div className="mt-6 flex justify-end lg:-mx-2 lg:mt-0 lg:flex w-full">
-             <div class="flex items-center gap-x-2">
-              <img class="object-cover w-12 h-12 rounded-lg" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=4&w=880&h=880&q=100" alt=""/>
-              <div>
-               <h1 class="text-xl font-semibold text-gray-700 capitalize dark:text-white">John Doe</h1>
-               <p class="text-sm text-gray-500 dark:text-gray-400">john@demo.com</p>
-              </div>
-             </div>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ const layout = ({children}) => {
         animation= "bounce"
         /> 
     {/* Wrapper Start */}
-    <div className="flex w-full" >
+    <div className="flex w-full h-screen overflow-y-scroll" >
     
      {/* Sidebar Start */}
      <Sidebar/>
