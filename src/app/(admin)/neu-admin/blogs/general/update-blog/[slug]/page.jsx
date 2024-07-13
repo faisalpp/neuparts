@@ -18,7 +18,7 @@ const Page = ({params}) => {
 
  const GetBlogs = () => {
   if(params.slug){
-    fetch(`/api/front/blog/general/?slug=${params.slug}`,{method:'GET', headers: { 'Content-Type': 'application/json' }})
+    fetch(`/api/front/blog/general/single/?slug=${params.slug}`,{method:'GET', headers: { 'Content-Type': 'application/json' }})
     .then((res)=> res.json())
     .then((data)=>{
       console.log(data)
@@ -65,6 +65,16 @@ useEffect(()=>{
  const UpdateBlog = async (e) => {
   e.preventDefault()
 
+  try {
+    await ValBlog.validate(formData, {abortEarly: false});
+  } catch (error) {
+    console.log(error)
+    error?.inner?.forEach((err) => {
+      toast.error(err.message);
+    });
+    return
+  }
+  
   const crtToastId = toast.promise(
     new Promise((resolve) => {
       // Placeholder promise that resolves when request completes
@@ -79,9 +89,6 @@ useEffect(()=>{
     }
   );
   toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
-  
-  try {
-    await ValBlog.validate(formData, {abortEarly: false});
 
   fetch('/api/admin/blog/general', {method: 'PUT',
     headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -98,14 +105,6 @@ useEffect(()=>{
     .catch((error) => {
       toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
     });
-  
-  
-  } catch (error) {
-    console.log(error)
-    error?.inner?.forEach((err) => {
-      toast.error(err.message);
-    });
-  }
 }; 
 
     

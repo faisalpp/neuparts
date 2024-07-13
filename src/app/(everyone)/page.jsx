@@ -19,7 +19,7 @@ export default function Home() {
       <ChooseUs />
       <GallerySection />
       <MapSection />
-      <SatisfiedSection apiSectionName="home-page-footer-review" title="Join Thousands of our Satisfied Customers." />
+      <SatisfiedSection page="home-page" title="Join Thousands of our Satisfied Customers." />
       <NewsLetterSection backimage="/hero-bg.webp" />
     </>
   );

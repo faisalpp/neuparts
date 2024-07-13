@@ -54,7 +54,7 @@ const ReviewEXSlider = ({ clientreviews, icon, dots }) => {
         <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className="relative maxmd:mb-10">
           {clientreviews.map((clientreview, index) => (
             <div key={index}>
-              <ReviewExCard description={clientreview.content} author={clientreview.author} review={clientreview.rating} />
+              <ReviewExCard description={clientreview.review} author={clientreview.name} review={clientreview.rating} />
             </div>
           ))}
         </Slider>

@@ -4,21 +4,66 @@ import { BsArrowRightShort } from 'react-icons/bs';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {toast} from 'react-toastify'
+import { useRouter } from 'next/navigation';
+import * as Yup from 'yup';
 
 const Form = () => {
+
+  const router = useRouter()
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const loginVal = Yup.object({
+    email: Yup.string().email().required('Email is required!'),
+    password: Yup.string().required('Password is required!')
+  });
+
+
   const Login = async (e) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+
+ 
+    try {
+     await loginVal.validate({email,password}, {abortEarly: false});   
+   } catch (error) {
+     console.log(error)
+     error?.inner?.forEach((err) => {
+       toast.error(err.message);
+     });
+     return
+   }
+ 
+   const crtToastId = toast.loading("Signing in...")
+   
+ 
+   fetch('/api/user/auth/login', {method: 'POST',
+     headers: { 'Content-Type': 'application/json' },body: JSON.stringify({email,password}),
+   }).then((res) => res.json())
+    .then((resp) => {
+     if(resp.success){
+       toast.update(crtToastId,{render:'Signin Successfull!',type:'success',autoClose:1000,isLoading: false})
+       router.push('/my-account/profile');
+      }else{
+       toast.update(crtToastId,{render:'Invalid Credentials',type:'error',autoClose:1000,isLoading: false})
+      }
+     })
+     .catch((error) => {
+       toast.update(crtToastId,{render:'Something went wrong!',type:'error',autoClose:1000,isLoading: false})
+     });
+ 
+   }
+
+
+
   return (
     <>
       <div className="flex w-full flex-col items-center space-y-8 px-5 py-32 pt-20">
         <Link href="/">
           <Image width={400} height={400} quality={100} className="h-auto w-32" src="/neu-blue.webp" alt="login_logo" />
         </Link>
-        <form onSubmit={Login} className="flex flex-col space-y-8 rounded-2xl border border-b1/10 bg-white px-10 py-10 md:w-7/12 lg:w-[512px] xl:w-[512px]">
+        <form onSubmit={(e)=>Login(e)} className="flex flex-col space-y-8 rounded-2xl border border-b1/10 bg-white px-10 py-10 md:w-7/12 lg:w-[512px] xl:w-[512px]">
           <h4 className="text-xl font-bold">Login</h4>
           <div className="flex flex-col space-y-2">
             <h5 className="text-xs font-semibold">Email Address</h5>

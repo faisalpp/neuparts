@@ -44,6 +44,16 @@ const Page = () => {
   const CreateFaqCat = async (e) => {
       e.preventDefault()
 
+      try {
+        await ValFaq.validate(formData, {abortEarly: false});
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
+
       const crtToastId = toast.promise(
         new Promise((resolve) => {
           // Placeholder promise that resolves when request completes
@@ -58,9 +68,6 @@ const Page = () => {
         }
       );
       toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
-      
-      try {
-        await ValFaq.validate(formData, {abortEarly: false});
     
       fetch('/api/admin/faqs/general/category', {method: 'POST',
         headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -79,12 +86,6 @@ const Page = () => {
         .catch((error) => {
           toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
         });
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
 
   const handleUpdatePopup = (data) => {
@@ -103,7 +104,14 @@ const Page = () => {
       
       try {
         await UpValFaqCat.validate(formData, {abortEarly: false});
-    
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
+      
            // Show pending toast
   const updToastId = toast.promise(
     new Promise((resolve) => {
@@ -133,13 +141,20 @@ const Page = () => {
           toast.update(updToastId,{render:resp.message,type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
          }
         })
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
+
+   //handel empty page request
+   const ManagePageCount = (id) => {
+    // Filter out the deleted item from the data
+    const newData = faqCat.filter(item => item.id !== id);
+    // Calculate the total number of pages after deletion
+    const newPageCount = Math.ceil(newData.length / limit);
+    // If the current page is greater than the new page count, decrement the page
+    if (page > newPageCount && page > 1) {
+      setPage(page - 1);
+    }
+    setPageCount(newPageCount);
+  }
 
 
   const DeleteCat = async (id) => {
@@ -170,6 +185,7 @@ const Page = () => {
     }).then((res) => res.json())
     .then((resp) => {
       if(resp.success){
+        ManagePageCount(id)
        setReRender(true)
        toast.update(delToastId,{type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
       }else{
@@ -270,7 +286,7 @@ const Page = () => {
      <div className='flex flex-col items-center mt-10 h-full w-full' >
       <Table header={['Title','Actions']} >
       {/* hello pengea/dnd */}
-      {rowLoader ? <RowLoader/> : faqCat?.length > 0 ?
+      {rowLoader ? <RowLoader count={2}  /> : faqCat?.length > 0 ?
        faqCat.map((faq,i)=>
         <Row Key={i} >
          <Text text={faq.title} />

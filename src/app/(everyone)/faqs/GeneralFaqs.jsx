@@ -40,7 +40,7 @@ const GeneralFaqs = () => {
 
       {/* Reviews Section */}
       <div className="mb-3 xl:mb-10"></div>
-      <SatisfiedSection apiSectionName="faq-page-review" title="Join Thousands of Satisfied Customers." dots={true} />
+      <SatisfiedSection page="faqs" title="Join Thousands of Satisfied Customers." dots={true} />
       {/* End  */}
       <NewsLetterSection backimage="/Newsletter.webp" />
       {/* End Tabs*/}

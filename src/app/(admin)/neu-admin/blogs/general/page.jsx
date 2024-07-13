@@ -22,7 +22,19 @@ const Page = () => {
   const [page,setPage] = useState(1)
   const [pageCount,setPageCount] = useState(0)
   const [limit,setLimit] = useState(2)
-
+  
+   //handel empty page request
+   const ManagePageCount = (id) => {
+    // Filter out the deleted item from the data
+    const newData = blogs.filter(item => item.id !== id);
+    // Calculate the total number of pages after deletion
+    const newPageCount = Math.ceil(newData.length / limit);
+    // If the current page is greater than the new page count, decrement the page
+    if (page > newPageCount && page > 1) {
+      setPage(page - 1);
+    }
+    setPageCount(newPageCount);
+  }
 
   const DeleteBlog = async (id) => {
     if(!id){
@@ -52,6 +64,7 @@ const Page = () => {
     }).then((res) => res.json())
     .then((resp) => {
       if(resp.success){
+        ManagePageCount(id)
        setReRender(true)
        toast.update(delToastId,{render:resp.message,type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
       }else{
@@ -118,7 +131,7 @@ const Page = () => {
      <div className='flex flex-col items-center mt-10 h-full w-full' >
       <Table header={['Thumbnail','Title','Slug','Actions']} >
       {/* hello pengea/dnd */}
-      {rowLoader ? <RowLoader/> : blogs?.length > 0 ?
+      {rowLoader ? <RowLoader count={4}  /> : blogs?.length > 0 ?
        blogs.map((blog,i)=>
         <Row Key={i} >
          <TdImage src={blog.thumbnail} css="w-20 h-14 object-fit rounded" />

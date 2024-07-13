@@ -1,38 +1,35 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import NewsLetterSection from '@/components/NewsLetterSection';
-import { FaTwitter } from 'react-icons/fa';
-import { RiLinkedinFill } from 'react-icons/ri';
-import { AiOutlineInstagram } from 'react-icons/ai';
-import moment from 'moment';
-import parse from 'html-react-parser';
-import Loader2 from '@/components/Loader/Loader2';
-import Link from 'next/link';
+import React from 'react'
+import NewsLetterSection from '@/components/NewsLetterSection'
+import { FaTwitter } from 'react-icons/fa'
+import { RiLinkedinFill } from 'react-icons/ri'
+import { AiOutlineInstagram } from 'react-icons/ai'
+import moment from 'moment'
+import parse from 'html-react-parser'
+import Link from 'next/link'
+import { connect } from '@/DB';
+import Post from '@/models/posts';
+import { notFound } from 'next/navigation'
 
-const BlogArticle = ({ slug }) => {
-  const [blog, setBlog] = useState({
-    title: 'Blog Title',
-    content: '',
-    createdAt: '',
-  });
+const GetBlog = async (slug) => {
+  await connect();
 
-  const [loading, setLoading] = useState(false);
+  const Blog = await Post.findOne({postType:'blog',slug:slug});
+  if(Blog){
+    return Blog;
+  }else{
+    notFound()
+  }
+}
 
-  const GetBlog = async () => {};
+const BlogArticle = async ({ slug }) => {
 
-  useEffect(() => {
-    GetBlog();
-  }, []);
+  const blog = await GetBlog(slug)
 
   const FormatDate = (date) => {
-    return moment(date).format('MMMM D, YYYY');
-  };
+    return moment(date).format('MMMM D, YYYY')
+  }
 
   return (
-    <>
-      {loading ? (
-        <Loader2 />
-      ) : (
         <>
           <div className="mx-auto w-full px-4 py-10 sm:px-10 lg:px-16 lg:py-16 xl:px-20 xl:py-20 2xl:px-120px">
             <div className="mx-auto grid max-w-[960px] grid-cols-1 gap-10 md:gap-14">
@@ -58,10 +55,8 @@ const BlogArticle = ({ slug }) => {
           </div>
 
           <NewsLetterSection backimage="/Newsletter.webp" />
-        </>
-      )}
     </>
-  );
-};
+  )
+}
 
-export default BlogArticle;
+export default BlogArticle

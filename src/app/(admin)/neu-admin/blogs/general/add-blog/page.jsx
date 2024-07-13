@@ -33,6 +33,13 @@ useEffect(()=>{
 
  const CreateBlog = async (e) => {
   e.preventDefault()
+  try {
+    await ValBlog.validate(formData, {abortEarly: false});
+  } catch (error) {
+    console.log(error)
+    error?.inner?.forEach((err) => {
+    toast.error(err.message);
+  });return;}
 
   const crtToastId = toast.promise(
     new Promise((resolve) => {
@@ -47,11 +54,8 @@ useEffect(()=>{
       closeOnEscape: false
     }
   );
-  toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
   
-  try {
-    await ValBlog.validate(formData, {abortEarly: false});
-
+  toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
   fetch('/api/admin/blog/general', {method: 'POST',
     headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
   }).then((res) => res.json())
@@ -66,14 +70,6 @@ useEffect(()=>{
     .catch((error) => {
       toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
     });
-  
-  
-  } catch (error) {
-    console.log(error)
-    error?.inner?.forEach((err) => {
-      toast.error(err.message);
-    });
-  }
 }; 
 
     

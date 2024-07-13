@@ -73,7 +73,7 @@ const Financing = () => {
 
       {/* Client Reviews */}
       <div className="mb-3 xl:mb-10"></div>
-      <SatisfiedSection apiSectionName="financing-page-review" title="Join Thousands of Satisfied Customers." />
+      <SatisfiedSection page="financing" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

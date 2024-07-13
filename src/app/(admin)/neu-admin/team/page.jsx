@@ -61,23 +61,29 @@ const Page = () => {
   const CreateTeamMember = async (e) => {
       e.preventDefault()
 
+      try {
+        await ValMember.validate(formData, {abortEarly: false});
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });return;
+      }
+
       const crtToastId = toast.promise(
         new Promise((resolve) => {
           // Placeholder promise that resolves when request completes
           setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
         }),
         {
-          pending: 'Create Review...', // Show pending message
-          success: 'Review created successfully!', // Show success message
-          error: 'Failed to create review', // Show error message
+          pending: 'Creating Team Member...', // Show pending message
+          success: 'Member created successfully!', // Show success message
+          error: 'Failed to create member', // Show error message
           closeOnClick: false,
           closeOnEscape: false
         }
       );
       toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
-      
-      try {
-        await ValMember.validate(formData, {abortEarly: false});
     
       fetch('/api/admin/team-member', {method: 'POST',
         headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -95,14 +101,6 @@ const Page = () => {
         .catch((error) => {
           toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
         });
-      
-      
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
 
   const upValMember = Yup.object({
@@ -124,8 +122,15 @@ const Page = () => {
       
       try {
         await upValMember.validate(formData, {abortEarly: false});
-    
-           // Show pending toast
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
+
+    // Show pending toast
   const updToastId = toast.promise(
     new Promise((resolve) => {
       // Placeholder promise that resolves when request completes
@@ -154,13 +159,20 @@ const Page = () => {
           toast.update(updToastId,{render:resp.message,type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
          }
         })
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
+
+  //handel empty page request
+  const ManagePageCount = (id) => {
+    // Filter out the deleted item from the data
+    const newData = teamMembers.filter(item => item.id !== id);
+    // Calculate the total number of pages after deletion
+    const newPageCount = Math.ceil(newData.length / limit);
+    // If the current page is greater than the new page count, decrement the page
+    if (page > newPageCount && page > 1) {
+      setPage(page - 1);
+    }
+    setPageCount(newPageCount);
+  }
 
 
   const DeleteTeamMember = async (id) => {
@@ -191,6 +203,7 @@ const Page = () => {
     }).then((res) => res.json())
     .then((resp) => {
       if(resp.success){
+       ManagePageCount(id)
        setReRender(true)
        toast.update(delToastId,{render:resp.message,type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
       }else{
@@ -330,11 +343,11 @@ const Page = () => {
 
 
     <div className='flex flex-col mx-10' style={{height:'calc(100vh - 100px)'}} > 
-     <ActionBtns trigger={setCreatePopup} text="Add Member" />
+     <ActionBtns buttons={[{type:'trigger',trigger:setCreatePopup,text:'Add Member'}]} />
      <div className='flex flex-col items-center mt-10 h-full w-full' >
       <Table header={['Avatar','Name','Bio','Role','Actions']} >
       {/* hello pengea/dnd */}
-      {rowLoader ? <RowLoader/> : teamMembers?.length > 0 ?
+      {rowLoader ? <RowLoader count={5} /> : teamMembers?.length > 0 ?
        teamMembers.map((member,i)=>
         <Row Key={i} >
          <TdImage src={member.avatar} css="w-20 h-14 object-fit rounded-full" />

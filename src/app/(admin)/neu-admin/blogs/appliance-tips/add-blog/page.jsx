@@ -11,6 +11,7 @@ const Page = () => {
  
 const [mediaPopup,setMediaPopup] = useState(false);
 const [formData,setFormData] = useState({title:'',content:'',thumbnail:''})
+const [categories,setCategories] = useState([])
 const [files,setFiles] = useState([])
 const router = useRouter()
 
@@ -25,22 +26,56 @@ useEffect(()=>{
   setFormData({...formData,[name]:value})
  }
 
+ const GetCategories = async () => {
+  fetch('/api/admin/post-categories?postType=appliance-tips', {method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  }).then((res) => res.json())
+   .then((resp) => {
+     console.log(resp)
+     if(resp.success && resp.cats.length > 0){
+      setCategories(resp.cats)
+      setFormData({...formData,category:resp.cats[0]})
+     }else{
+      setCategories([])
+     }
+    })
+    .catch((error) => {
+      toast.error('Something went wrong!')
+    });
+ }
+
+ useEffect(()=>{
+  GetCategories()
+ },[])
+
+
  const ValBlog = Yup.object({
   title: Yup.string().required('Title is required!'),
   content: Yup.string().required('Content is required!'),
   thumbnail: Yup.string().required('Thumbnail is required!'),
+  category: Yup.object().required('Category is required!'),
  })
 
  const CreateBlog = async (e) => {
   e.preventDefault()
 
+  try {
+    await ValBlog.validate(formData, {abortEarly: false});
+  } catch (error) {
+    console.log(error)
+    error?.inner?.forEach((err) => {
+      toast.error(err.message);
+    });
+    return
+  }
+  
   const crtToastId = toast.promise(
     new Promise((resolve) => {
       // Placeholder promise that resolves when request completes
       setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
     }),
     {
-      pending: 'Create Blog...', // Show pending message
+      pending: 'Creating Blog...', // Show pending message
       success: 'Blog created successfully!', // Show success message
       error: 'Failed to create blog', // Show error message
       closeOnClick: false,
@@ -48,9 +83,6 @@ useEffect(()=>{
     }
   );
   toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
-  
-  try {
-    await ValBlog.validate(formData, {abortEarly: false});
 
   fetch('/api/admin/blog/appliance-tips', {method: 'POST',
     headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -66,14 +98,6 @@ useEffect(()=>{
     .catch((error) => {
       toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
     });
-  
-  
-  } catch (error) {
-    console.log(error)
-    error?.inner?.forEach((err) => {
-      toast.error(err.message);
-    });
-  }
 }; 
 
     
@@ -131,6 +155,15 @@ useEffect(()=>{
           editor.ui.view.editable.element.style.minHeight = "250px";
         }}
       />
+
+       <div>
+        <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Category</label>
+        <select name="category" onChange={HandleChange} className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" >
+         {categories.length > 0 ? 
+          categories.map((cat)=>
+         <option value={cat._id} >{cat.title}</option>):<option>No Categories Found!</option>}
+        </select>
+       </div>
 
        <div>
         <label for="role" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Thumbnail</label>

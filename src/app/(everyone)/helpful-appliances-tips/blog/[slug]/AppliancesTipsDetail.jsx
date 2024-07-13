@@ -13,7 +13,7 @@ const AppliancesTipsDetail = ({ slug }) => {
       <ShopAustinSection />
 
       <div className="mb-3 xl:mb-10"></div>
-      <SatisfiedSection title="Join Thousands of Satisfied Customers." />
+      <SatisfiedSection page="help-appliance-tips" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

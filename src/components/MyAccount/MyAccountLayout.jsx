@@ -5,6 +5,7 @@ import { BsChevronDown } from 'react-icons/bs';
 import AccountItems from '@/components/MyAccount/AccountItems';
 import { FiLogOut } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
+import {toast} from 'react-toastify'
 
 const MyAccountLayout = ({ children }) => {
   const [isItems, setIsItems] = useState(false);
@@ -18,14 +19,25 @@ const MyAccountLayout = ({ children }) => {
   const handleUserLogout = async (e) => {
     e.preventDefault();
 
-    // const res = await Signout();
-    // if (res.status === 200) {
-    //   Toast(res.data.msg, 'success', 1000);
-    //   router.push('/login');
-    // } else {
-    //   Toast(res.data.message, 'error', 1000);
-    // }
+    const crtToastId = toast.loading("Signing you out...")
+   
+ 
+    fetch('/api/user/auth/logout', {method: 'GET',headers: { 'Content-Type': 'application/json' }})
+    .then((res) => res.json())
+     .then((resp) => {
+      if(resp.success){
+        toast.update(crtToastId,{render:'Logout Successfull!',type:'success',autoClose:1000,isLoading: false})
+        router.push('/');
+       }
+      })
+      .catch((error) => {
+        toast.update(crtToastId,{render:'Something went wrong!',type:'error',autoClose:1000,isLoading: false})
+      });
+
+
   };
+
+
   return (
     <>
       <div className="mx-auto flex w-full items-center px-4 pt-10 md:px-10 lg:px-16 xl:px-20 2xl:px-120px 3xl:max-w-1680px">
@@ -40,7 +52,7 @@ const MyAccountLayout = ({ children }) => {
         <h1 className="text-2xl font-bold md:text-3xl xl:text-4xl 2xl:text-[40px]">My Account</h1>
 
         {/* 992px Up Screen Logout */}
-        <button type="button" onClick={handleUserLogout} className="hidden items-center gap-4 rounded-lg border border-[rgba(0,0,0,0.15)] px-6 py-4 font-bold text-[#B20B0B] lg:flex">
+        <button type="button" onClick={handleUserLogout} className="hidden items-center gap-4 rounded-lg border border-[rgba(0,0,0,0.15)] px-6 py-4 font-bold text-[#B20B0B] lg:flex cursor-pointer">
           <span>Logout</span>
           <FiLogOut stroke-width="3" />
         </button>

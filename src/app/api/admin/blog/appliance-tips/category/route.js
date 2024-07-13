@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import {connect} from '@/DB/index';
 import PostCategories from '@/models/postCategories'
 import * as Yup from "yup";
-
+import {generateSlug} from '@/utils/index'
 
 export async function GET(request){
     try{
@@ -44,9 +44,21 @@ export async function GET(request){
      
      await ValCat.validate({title,thumbnail}, {abortEarly: false});
 
+     let slug = generateSlug(title);
      const postType = 'appliance-tips'
+     const regex = new RegExp(`^${slug}-\\d+$`);
+
+     const catsCount = await PostCategories.countDocuments({postType:postType,slug:regex});
+     slug = catsCount > 0 ? `${slug}-${parseInt(catsCount) + 1}` : slug;
+
+     const exactMatch = await PostCategories.countDocuments({postType:postType,slug:slug});
+     if(exactMatch){
+      slug = slug + `-1`;
+     }
+
+
      const isCreated = await PostCategories.create({
-        title,postType:postType,thumbnail
+        title,postType:postType,thumbnail,slug
      })
    
      if(isCreated){

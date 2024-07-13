@@ -8,10 +8,8 @@ import RowLoader from '@/components/AdminDashboard/Table/Loader';
 import Text from '@/components/AdminDashboard/Table/TD/Text';
 import NoData from '@/components/AdminDashboard/Table/NoData';
 import Tablet from '@/components/AdminDashboard/Table/TD/Tablet';
-import TdImage from '@/components/AdminDashboard/Table/TD/TdImage';
 import Actions from '@/components/AdminDashboard/Table/TD/Actions';
 import ActionBtns from '@/components/AdminDashboard/ActionBtns'
-import FileInput from '@/components/AdminDashboard/Inputs/File'
 import TableNav from '@/components/AdminDashboard/TableNav'
 import Popup from '@/components/AdminDashboard/Popup'
 import * as Yup from "yup";
@@ -23,7 +21,6 @@ const Page = () => {
   
   const [createPopup,setCreatePopup] = useState(false);
   const [updatePopup,setUpdatePopup] = useState(false);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const updateFormRef = useRef(null);
 
   const [faqs,setFaqs] = useState([]);
@@ -51,6 +48,16 @@ const Page = () => {
   const CreateFaq = async (e) => {
       e.preventDefault()
 
+      try {
+        await ValFaq.validate(formData, {abortEarly: false});
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
+
       const crtToastId = toast.promise(
         new Promise((resolve) => {
           // Placeholder promise that resolves when request completes
@@ -66,8 +73,6 @@ const Page = () => {
       );
       toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
       
-      try {
-        await ValFaq.validate(formData, {abortEarly: false});
     
       fetch('/api/admin/faqs/general', {method: 'POST',
         headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -86,25 +91,18 @@ const Page = () => {
         .catch((error) => {
           toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
         });
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
 
   const handleUpdatePopup = (data) => {
     const {_id,title,content,joinedCategory} = data;
     setFormData({id:_id,title:title,content:content,category:{title:joinedCategory.title,id:joinedCategory._id}})
     setUpdatePopup(true)
-    setIsInitialLoad(true)
   }
 
   const UpValReview = Yup.object({
     title: Yup.string().required('Title is required!'),
     content: Yup.string().required('Content is required!'),
-    category: Yup.string().required('Category is required!'),
+    category: Yup.object().required('Category is required!'),
   })
 
   const UpdateFaq = async (e) => {
@@ -112,7 +110,13 @@ const Page = () => {
       
       try {
         await UpValReview.validate(formData, {abortEarly: false});
-    
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
            // Show pending toast
   const updToastId = toast.promise(
     new Promise((resolve) => {
@@ -142,13 +146,20 @@ const Page = () => {
           toast.update(updToastId,{render:resp.message,type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
          }
         })
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
+
+   //handel empty page request
+   const ManagePageCount = (id) => {
+    // Filter out the deleted item from the data
+    const newData = faqs.filter(item => item.id !== id);
+    // Calculate the total number of pages after deletion
+    const newPageCount = Math.ceil(newData.length / limit);
+    // If the current page is greater than the new page count, decrement the page
+    if (page > newPageCount && page > 1) {
+      setPage(page - 1);
+    }
+    setPageCount(newPageCount);
+  }
 
 
   const DeleteFaq = async (id) => {
@@ -180,6 +191,7 @@ const Page = () => {
     .then((resp) => {
       console.log(resp)
       if(resp.success){
+        ManagePageCount(id)
        setReRender(true)
        toast.update(delToastId,{type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
       }else{
@@ -319,7 +331,7 @@ const Page = () => {
      <div className='flex flex-col items-center mt-10 h-full w-full' >
       <Table header={['Title','Content','Category','Actions']} >
       {/* hello pengea/dnd */}
-      {rowLoader ? <RowLoader/> : faqs?.length > 0 ?
+      {rowLoader ? <RowLoader count={4}  /> : faqs?.length > 0 ?
        faqs.map((faq,i)=>
         <Row Key={i} >
          <Text text={faq.title} />

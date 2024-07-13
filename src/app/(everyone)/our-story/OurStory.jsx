@@ -9,8 +9,8 @@ import SatisfiedSection from '@/components/SatisfiedSection';
 import MeetTeam from '@/components/OurStory/MeetTeam';
 import MassiveAppliance from '@/components/OurStory/MassiveAppliance';
 import NewsLetterSection from '@/components/NewsLetterSection';
-import Iframe from '@/components/Reusable/Ifram';
-import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
+// import Iframe from '@/components/Reusable/Ifram';
+// import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
 
 const OurStory = () => {
   // const [video, setVideo] = useState({ url: 'https://www.youtube.com/embed/WQWVW4DUmZ0', type: 'iframe', thumbnail: '/g8.webp' });
@@ -48,7 +48,7 @@ const OurStory = () => {
 
       {/* Client Reviews */}
       <div className="mb-3 xl:mb-10"></div>
-      <SatisfiedSection apiSectionName="our-story-page-review" title="Join Thousands of Satisfied Customers." />
+      <SatisfiedSection page="our-story" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

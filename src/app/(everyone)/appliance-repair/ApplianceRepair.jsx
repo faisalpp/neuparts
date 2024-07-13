@@ -40,7 +40,7 @@ const ApplianceRepair = () => {
 
       {/* Client Reviews */}
       <div className="mb-3 xl:mb-10"></div>
-      <SatisfiedSection apiSectionName="appliance-repair-page-review" title="Join Thousands of Satisfied Customers." />
+      <SatisfiedSection page="appliance-repair" title="Join Thousands of Satisfied Customers." />
 
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>

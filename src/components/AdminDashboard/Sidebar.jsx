@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -9,6 +8,7 @@ import { FaQuoteRight } from "react-icons/fa";
 import { GiAutoRepair } from "react-icons/gi";
 import { FaBlogger } from "react-icons/fa";
 import { MdTipsAndUpdates } from "react-icons/md";
+import Logout from '@/components/AdminDashboard/Logout'
 
 
 const Sidebar = () => {
@@ -180,6 +180,10 @@ const toggleCollapse = (section) => {
         </div>
         </div>
       </div>
+
+      <hr/>
+
+      <Logout/>
 
         </nav>
       </div>

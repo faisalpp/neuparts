@@ -43,9 +43,20 @@ export async function GET(request){
      
      await ValCat.validate({title}, {abortEarly: false});
 
+     let slug = generateSlug(title);
      const postType = 'general-faqs'
+     const regex = new RegExp(`^${slug}-\\d+$`);
+
+     const catsCount = await PostCategories.countDocuments({postType:postType,slug:regex});
+     slug = catsCount > 0 ? `${slug}-${parseInt(catsCount) + 1}` : slug;
+
+     const exactMatch = await PostCategories.countDocuments({postType:postType,slug:slug});
+     if(exactMatch){
+      slug = slug + `-1`;
+     }
+
      const isCreated = await PostCategories.create({
-        title,postType:postType
+        title,postType:postType,slug
      })
    
      if(isCreated){

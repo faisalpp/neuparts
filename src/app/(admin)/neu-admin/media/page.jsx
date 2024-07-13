@@ -313,12 +313,12 @@ const Page = () => {
        <div className='flex flex-wrap gap-3 mx-5 my-2 overflow-y-scroll' style={{minHeight: 'calc(100vh - 200px)',maxHeight: 'calc(100vh - 200px)'}} >
         {media.map((med,i)=>
          (imageFormats.includes(med.type) ? 
-        <div key={i} onClick={()=>HandleMediaPopup(med)} className="relative w-32 h-28 shadow-md cursor-pointer group hover:shadow-lg transition-shadow duration-300">
+        <div key={i}  className="relative w-32 h-28 shadow-md cursor-pointer group hover:shadow-lg transition-shadow duration-300">
          <span onClick={()=>DeleteMedia(med._id)} className="absolute opacity-0 group-hover:opacity-100 right-2 top-2 bg-white rounded cursor-pointer transition-opacity duration-300">
             <MdDelete className="text-red-500" />
          </span>
          {delId === med._id ? <Image height={100} width={200} className="absolute rounded-md h-full w-full opacity-80" src="/del-loader.gif" />:null}
-          <Image height={100} width={100} alt={med.alt} className="rounded-md h-full w-full" src={med.url} />
+          <Image onClick={()=>HandleMediaPopup(med)} height={100} width={100} alt={med.alt} className="rounded-md h-full w-full" src={med.url} />
         </div>
         : videoFormats.includes(med.type) ? 
         <div key={i} onClick={()=>HandleMediaPopup(med)} className="relative border border-gray-300 flex flex-col items-center justify-center w-32 h-28 shadow-md cursor-pointer group hover:shadow-lg transition-shadow duration-300">
@@ -326,8 +326,10 @@ const Page = () => {
             <MdDelete className="text-red-500" />
          </span>
          {delId === med._id ? <Image height={100} width={200} className="absolute rounded-md h-full w-full opacity-80" src="/del-loader.gif" />:null}
-         <RiFolderVideoFill className='text-5xl' />
-         <span>{limitString(med.name,6)+med.type}</span>
+         <div className='flex flex-col items-center' onClick={()=>HandleMediaPopup(med)} >  
+          <RiFolderVideoFill className='text-5xl' />
+          <span>{limitString(med.name,6)+med.type}</span>
+         </div>
         </div>
         :med.type === 'embed' ? 
         <div key={i} onClick={()=>HandleMediaPopup(med)} className="relative border border-gray-300 flex flex-col items-center justify-center w-32 h-28 shadow-md cursor-pointer group hover:shadow-lg transition-shadow duration-300">
@@ -335,8 +337,10 @@ const Page = () => {
            <MdDelete className="text-red-500" />
         </span>
         {delId === med._id ? <Image height={100} width={200} className="absolute rounded-md h-full w-full opacity-80" src="/del-loader.gif" />:null}
-        <RiFolderVideoFill className='text-5xl' />
-        <span>{limitString(med.name,6)+med.type}</span>
+        <div className='flex flex-col items-center' onClick={()=>HandleMediaPopup(med)} >  
+         <RiFolderVideoFill className='text-5xl' />
+         <span>{limitString(med.name,6)+med.type}</span>
+        </div>
        </div>
         : null )
         

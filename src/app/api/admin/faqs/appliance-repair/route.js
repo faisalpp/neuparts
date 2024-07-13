@@ -65,6 +65,7 @@ export async function PUT(request){
     })
    
     const {id,title,content} = await request.json()
+
     await ValFaq.validate({title,content}, {abortEarly: false});
 
    await connect();

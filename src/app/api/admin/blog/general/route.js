@@ -4,7 +4,7 @@ import {connect} from '@/DB/index';
 import Post from '@/models/posts'
 import * as Yup from "yup";
 import {generateSlug} from '@/utils/index'
-
+// 
 export async function GET(request){
     try{
       await connect();
@@ -46,14 +46,20 @@ export async function POST(request){
      await ValBlog.validate({title,content,thumbnail}, {abortEarly: false});
 
      let slug = generateSlug(title);
+     const postType = 'blog'
      const regex = new RegExp(`^${slug}-\\d+$`);
 
-     const postType = 'blog'
      const blogCount = await Post.countDocuments({postType:postType,slug:regex});
      if(blogCount > 0){
       let inc = parseInt(blogCount)+1;
       slug = slug + `-${inc}`
      }
+
+     const exactMatch = await Post.countDocuments({postType:postType,slug:slug});
+     if(exactMatch){
+      slug = slug + `-1`;
+     }
+
 
      const isCreated = await Post.create({
         postType,title,slug,content,thumbnail

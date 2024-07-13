@@ -8,10 +8,8 @@ import RowLoader from '@/components/AdminDashboard/Table/Loader';
 import Text from '@/components/AdminDashboard/Table/TD/Text';
 import NoData from '@/components/AdminDashboard/Table/NoData';
 import Tablet from '@/components/AdminDashboard/Table/TD/Tablet';
-import TdImage from '@/components/AdminDashboard/Table/TD/TdImage';
 import Actions from '@/components/AdminDashboard/Table/TD/Actions';
 import ActionBtns from '@/components/AdminDashboard/ActionBtns'
-import FileInput from '@/components/AdminDashboard/Inputs/File'
 import TableNav from '@/components/AdminDashboard/TableNav'
 import Popup from '@/components/AdminDashboard/Popup'
 import * as Yup from "yup";
@@ -52,6 +50,16 @@ const Page = () => {
   const CreateReview = async (e) => {
       e.preventDefault()
 
+      try {
+        await ValReview.validate(formData, {abortEarly: false});   
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
+
       const crtToastId = toast.promise(
         new Promise((resolve) => {
           // Placeholder promise that resolves when request completes
@@ -67,8 +75,6 @@ const Page = () => {
       );
       toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
       
-      try {
-        await ValReview.validate(formData, {abortEarly: false});
     
       fetch('/api/admin/review', {method: 'POST',
         headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -87,14 +93,6 @@ const Page = () => {
           toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
           console.error('Error creating review:', error);
         });
-      
-      
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
 
   const handleUpdatePopup = (data) => {
@@ -135,7 +133,13 @@ const Page = () => {
       
       try {
         await UpValReview.validate(formData, {abortEarly: false});
-    
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
            // Show pending toast
   const updToastId = toast.promise(
     new Promise((resolve) => {
@@ -165,13 +169,20 @@ const Page = () => {
           toast.update(updToastId,{render:resp.message,type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
          }
         })
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
+
+   //handel empty page request
+   const ManagePageCount = (id) => {
+    // Filter out the deleted item from the data
+    const newData = reviews.filter(item => item.id !== id);
+    // Calculate the total number of pages after deletion
+    const newPageCount = Math.ceil(newData.length / limit);
+    // If the current page is greater than the new page count, decrement the page
+    if (page > newPageCount && page > 1) {
+      setPage(page - 1);
+    }
+    setPageCount(newPageCount);
+  }
 
 
   const DeleteTeamMember = async (id) => {
@@ -202,6 +213,7 @@ const Page = () => {
     }).then((res) => res.json())
     .then((resp) => {
       if(resp.success){
+       ManagePageCount(id)
        setReRender(true)
        toast.update(delToastId,{render:resp.message,type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
       }else{
@@ -301,6 +313,7 @@ const Page = () => {
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="home-page" /><span className='text-sm' >Home Page</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-story" /><span className='text-sm' >Our Story</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-companies" /><span className='text-sm' >Our Companies</span></div>
+         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-showroom" /><span className='text-sm' >Our Showroom</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="financing" /><span className='text-sm' >Financing</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="appliance-repair" /><span className='text-sm' >Appliance Repair</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="faqs" /><span className='text-sm' >Faq's</span></div>
@@ -338,6 +351,7 @@ const Page = () => {
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="home-page" /><span className='text-sm' >Home Page</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-story" /><span className='text-sm' >Our Story</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-companies" /><span className='text-sm' >Our Companies</span></div>
+         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-showroom" /><span className='text-sm' >Our Showroom</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="financing" /><span className='text-sm' >Financing</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="appliance-repair" /><span className='text-sm' >Appliance Repair</span></div>
          <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="faqs" /><span className='text-sm' >Faq's</span></div>
@@ -357,7 +371,7 @@ const Page = () => {
      <div className='flex flex-col items-center mt-10 h-full w-full' >
       <Table header={['Name','Review','Rating','Pages','Actions']} >
       {/* hello pengea/dnd */}
-      {rowLoader ? <RowLoader/> : reviews?.length > 0 ?
+      {rowLoader ? <RowLoader count={5}  /> : reviews?.length > 0 ?
        reviews.map((review,i)=>
         <Row Key={i} >
          <Text text={review.name} />

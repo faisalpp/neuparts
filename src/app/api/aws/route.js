@@ -54,7 +54,7 @@ export async function POST(request) {
 
 export async function DELETE(request){
     try{
-     
+      await connect();
     const {_id} = await request.json()
     if(!_id){
      return  NextResponse.json({message:'Media id is required!',success: false},{status:400})  

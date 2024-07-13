@@ -1,35 +1,28 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReviewExSlider from '@/components/ReviewExSlider';
 
-const SatisfiedSection = ({ apiSectionName, title, dots, SectionStyle }) => {
-  const [reviews, setReviews] = useState([
-    {
-      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
-      author: 'John Doe',
-      rating: 4,
-    },
-    {
-      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
-      author: 'John Doe',
-      rating: 4,
-    },
-    {
-      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
-      author: 'John Doe',
-      rating: 4,
-    },
-    {
-      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
-      author: 'John Doe',
-      rating: 4,
-    },
-    {
-      content: 'Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet. Facilisis sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.',
-      author: 'John Doe',
-      rating: 4,
-    },
-  ]);
+const SatisfiedSection = ({ page, title, dots, SectionStyle }) => {
+  const [reviews, setReviews] = useState([]);
+
+  const GetReviews = async () => {
+   fetch(`/api/front/reviews?page=${page}`,{method:'GET',headers:{
+    'Content-Type':'application/json'
+   }})
+   .then(res=> res.json())
+   .then(data=>{
+    setReviews(data.reviews)
+   })
+   .catch(error=>{
+     console.log(error)
+   })
+  }
+
+  useEffect(()=>{
+   GetReviews();
+  },[])
+  
+
 
   return (
     <>

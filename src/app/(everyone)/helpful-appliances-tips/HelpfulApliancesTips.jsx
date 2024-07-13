@@ -1,5 +1,5 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+'use client'
+import React,{useState,useEffect} from 'react';
 import ApplianceDetail from '@/components/Appliances/ApplianceDetail';
 import GetScoop from '@/components/AppliancesTips/GetScoop';
 import ShopAustinSection from '@/components/Appliances/ShopAustinSection';
@@ -8,39 +8,40 @@ import SatisfiedSection from '@/components/SatisfiedSection';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 
 const HelpfulApliancesTips = () => {
-  const [tips, setTips] = useState([
-    {
-      slug: 'test-blog',
-      thumbnail: '/p1.webp',
-      title: 'Helpful Tips',
-      count: 3,
-    },
-    {
-      slug: 'test-blog',
-      thumbnail: '/p1.webp',
-      title: 'Helpful Tips',
-      count: 3,
-    },
-    {
-      slug: 'test-blog',
-      thumbnail: '/p1.webp',
-      title: 'Helpful Tips',
-      count: 3,
-    },
-    {
-      slug: 'test-blog',
-      thumbnail: '/p1.webp',
-      title: 'Helpful Tips',
-      count: 3,
-    },
-  ]);
-  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1)
+  const [tips, setTips] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [moreLoading,setMoreLoading] = useState(false)
+  const [pageCount,setPageCount] = useState(null)
+  const [limit,setLimit] = useState(9)
 
-  const GetFourTips = async () => {};
+  const FetchBlogs = async () => {
 
-  useEffect(() => {
-    GetFourTips();
-  }, []);
+    if(!moreLoading){
+      setLoading(true)
+    }
+  
+    fetch(`/api/front/helpful-appliance-tips/categories/?page=${page}&limit=${limit}`)  
+     .then((res) => res.json())
+     .then((data) => {
+      console.log(data)
+      if(data.cats.length > 0){
+        setPageCount(data.pagination.pageCount)
+        setTips((blogs)=>[...blogs,...data.cats])
+      }else{
+        setTips([])
+      }
+      if(moreLoading){
+        setMoreLoading(false)
+      }
+      setLoading(false)
+     })
+   }
+  
+   // get team members data
+   useEffect(() => {
+    FetchBlogs()
+   }, [page])
 
   return (
     <>
@@ -55,15 +56,15 @@ const HelpfulApliancesTips = () => {
         <ApplianceDetail title="Helpful Appliance Tips" description="Get the inside scoop! We are a local small business working our butts off to improve the way people can buy appliances. We have lots of experience in the appliance world and we would love to share some tips with you we have accumulated over the years:" />
       </div>
 
-      <GetScoop loading={loading} ScoopCards={tips} />
+      <GetScoop ScoopCards={tips} />
 
       {/* Shop Austin Section */}
       <ShopAustinSection />
 
       {/* Client Reviews */}
       <div className="mb-3 xl:mb-10"></div>
-      <SatisfiedSection apiSectionName="helpfull-appliance-tips-page-review" title="Join Thousands of Satisfied Customers." />
-
+      <SatisfiedSection page="help-appliance-tips" title="Join Thousands of Satisfied Customers." />
+      
       <NewsLetterSection backimage="/Newsletter.webp" />
     </>
   );

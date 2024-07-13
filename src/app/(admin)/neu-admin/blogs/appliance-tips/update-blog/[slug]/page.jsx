@@ -11,7 +11,8 @@ import Link from 'next/link';
 
 const Page = ({params}) => {
  const [mediaPopup,setMediaPopup] = useState(false);
- const [formData,setFormData] = useState({title:'',content:'',thumbnail:''})
+ const [formData,setFormData] = useState({title:'',content:'',thumbnail:'',category:''})
+ const [categories,setCategories] = useState([])
  const [loading,setLoading] = useState(true)
  const [files,setFiles] = useState([])
  const router = useRouter()
@@ -23,8 +24,8 @@ const Page = ({params}) => {
     .then((data)=>{
       console.log(data)
      if(data.success){
-      const {_id,title,slug,content,thumbnail} = data.blog;
-      setFormData({id:_id,title:title,slug:slug,content:content,thumbnail:thumbnail})
+      const {_id,title,slug,content,thumbnail,joinedCategory} = data.blog[0];
+      setFormData({id:_id,title:title,slug:slug,content:content,thumbnail:thumbnail,category:joinedCategory})
       setLoading(false)
     }else{
       return <notFound/>
@@ -33,13 +34,34 @@ const Page = ({params}) => {
     .catch((error)=>{
       console.log(error)
      toast.error('Something went wrong!')
-     router.push('/neu-admin/blogs/appliance-tips')
+    //  router.push('/neu-admin/blogs/appliance-tips')
     })
   }
  }
 
  useEffect(()=>{
   GetBlogs()
+ },[])
+
+ const GetCategories = async () => {
+  fetch('/api/admin/post-categories?postType=appliance-tips', {method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  }).then((res) => res.json())
+   .then((resp) => {
+     console.log(resp)
+     if(resp.success && resp.cats.length > 0){
+      setCategories(resp.cats)
+     }else{
+      setCategories([])
+     }
+    })
+    .catch((error) => {
+      toast.error('Something went wrong!')
+    });
+ }
+
+ useEffect(()=>{
+  GetCategories()
  },[])
 
 
@@ -65,6 +87,16 @@ useEffect(()=>{
  const UpdateBlog = async (e) => {
   e.preventDefault()
 
+  try {
+    await ValBlog.validate(formData, {abortEarly: false});
+  } catch (error) {
+    console.log(error)
+    error?.inner?.forEach((err) => {
+      toast.error(err.message);
+    });
+    return
+  }
+  
   const crtToastId = toast.promise(
     new Promise((resolve) => {
       // Placeholder promise that resolves when request completes
@@ -79,9 +111,6 @@ useEffect(()=>{
     }
   );
   toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
-  
-  try {
-    await ValBlog.validate(formData, {abortEarly: false});
 
   fetch('/api/admin/blog/appliance-tips', {method: 'PUT',
     headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -98,14 +127,6 @@ useEffect(()=>{
     .catch((error) => {
       toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
     });
-  
-  
-  } catch (error) {
-    console.log(error)
-    error?.inner?.forEach((err) => {
-      toast.error(err.message);
-    });
-  }
 }; 
 
     
@@ -174,6 +195,18 @@ useEffect(()=>{
           editor.ui.view.editable.element.style.minHeight = "250px";
         }}
       />
+
+       <div>
+        <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Category</label>
+        <select name="category" onChange={HandleChange} className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" >
+          <option value={formData.category?._id}>{formData.category.title}</option>
+          {categories.filter(cat => cat.title !== formData.category.title).map(cat => (
+            <option key={cat._id} value={cat._id}>
+             {cat.title}
+            </option>
+          ))}
+        </select>
+       </div>
 
        <div>
         <label for="role" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Thumbnail</label>

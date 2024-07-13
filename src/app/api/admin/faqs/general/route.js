@@ -45,9 +45,9 @@ export async function GET(request){
       const pageCount = Math.ceil(count / limit);
 
       //get faq categories
-      const faqCats = await PostCategories.find({postType:'general-faqs'})
+      const cats = await PostCategories.find({postType:'general-faqs'})
       
-      return  NextResponse.json({faqs:faqs,cats:faqCats,pagination:{pageCount,count},success: true})
+      return  NextResponse.json({faqs:faqs,cats:cats,pagination:{pageCount,count},success: true})
     }catch(error){
       return NextResponse.json({error: error.message}, {status: 500})
     }
@@ -88,7 +88,7 @@ export async function PUT(request){
     const ValFaq = Yup.object({
       title: Yup.string().required('Title is required!'),
       content: Yup.string().required('Content is required!'),
-      category: Yup.string().required('Category is required!'),
+      category: Yup.object().required('Category is required!'),
     })
    
     const {id,title,content,category} = await request.json()
@@ -97,7 +97,7 @@ export async function PUT(request){
    await connect();
    
    const isCreated = await Post.findByIdAndUpdate(id,{
-     title,content,category
+     title,content,category:category._id
    })
 
    if(isCreated){

@@ -47,6 +47,16 @@ const Page = () => {
   const CreateFaq = async (e) => {
       e.preventDefault()
 
+      try {
+        await ValFaq.validate(formData, {abortEarly: false});
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
+
       const crtToastId = toast.promise(
         new Promise((resolve) => {
           // Placeholder promise that resolves when request completes
@@ -61,9 +71,6 @@ const Page = () => {
         }
       );
       toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
-      
-      try {
-        await ValFaq.validate(formData, {abortEarly: false});
     
       fetch('/api/admin/faqs/appliance-repair', {method: 'POST',
         headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -82,12 +89,6 @@ const Page = () => {
         .catch((error) => {
           toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
         });
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
 
   const handleUpdatePopup = (data) => {
@@ -97,6 +98,7 @@ const Page = () => {
   }
 
   const UpValReview = Yup.object({
+    id: Yup.string().required('Id is required!'),
     title: Yup.string().required('Title is required!'),
     content: Yup.string().required('Content is required!'),
   })
@@ -106,7 +108,14 @@ const Page = () => {
       
       try {
         await UpValReview.validate(formData, {abortEarly: false});
-    
+      } catch (error) {
+        console.log(error)
+        error?.inner?.forEach((err) => {
+          toast.error(err.message);
+        });
+        return
+      }
+      
            // Show pending toast
   const updToastId = toast.promise(
     new Promise((resolve) => {
@@ -122,7 +131,7 @@ const Page = () => {
     }
   );
   toast.update(updToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
-   
+ 
       fetch('/api/admin/faqs/appliance-repair', {method: 'PUT',
         headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
       }).then((res) => res.json())
@@ -136,14 +145,20 @@ const Page = () => {
           toast.update(updToastId,{render:resp.message,type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
          }
         })
-      } catch (error) {
-        console.log(error)
-        error?.inner?.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
   };
 
+   //handel empty page request
+   const ManagePageCount = (id) => {
+    // Filter out the deleted item from the data
+    const newData = faqs.filter(item => item.id !== id);
+    // Calculate the total number of pages after deletion
+    const newPageCount = Math.ceil(newData.length / limit);
+    // If the current page is greater than the new page count, decrement the page
+    if (page > newPageCount && page > 1) {
+      setPage(page - 1);
+    }
+    setPageCount(newPageCount);
+  }
 
   const DeleteFaq = async (id) => {
     if(!id){
@@ -174,6 +189,7 @@ const Page = () => {
     .then((resp) => {
       console.log(resp)
       if(resp.success){
+        ManagePageCount(id)
        setReRender(true)
        toast.update(delToastId,{type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
       }else{
@@ -273,7 +289,7 @@ const Page = () => {
        </div>
        <div>
         <label for="review" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Review</label>
-        <textarea name="review" value={formData.content} onChange={HandleChange}  className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" >
+        <textarea name="content" value={formData.content} onChange={HandleChange}  className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" >
         </textarea>
        </div>
        <button class="self-center w-fit text-md mt-3 px-6 py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Submit</button>
@@ -288,7 +304,7 @@ const Page = () => {
      <div className='flex flex-col items-center mt-10 h-full w-full' >
       <Table header={['Title','Content','Actions']} >
       {/* hello pengea/dnd */}
-      {rowLoader ? <RowLoader/> : faqs?.length > 0 ?
+      {rowLoader ? <RowLoader count={3}  /> : faqs?.length > 0 ?
        faqs.map((faq,i)=>
         <Row Key={i} >
          <Text text={faq.title} />
