@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useEffect,useRef,useState } from 'react'
-import {toast} from 'react-toastify'
-import Table from '@/components/AdminDashboard/Table'
-import Row from '@/components/AdminDashboard/Table/Row';
-import RowLoader from '@/components/AdminDashboard/Table/Loader';
-import Text from '@/components/AdminDashboard/Table/TD/Text';
-import NoData from '@/components/AdminDashboard/Table/NoData';
-import Tablet from '@/components/AdminDashboard/Table/TD/Tablet';
-import Actions from '@/components/AdminDashboard/Table/TD/Actions';
-import ActionBtns from '@/components/AdminDashboard/ActionBtns'
-import TableNav from '@/components/AdminDashboard/TableNav'
-import Popup from '@/components/AdminDashboard/Popup'
+import React, { useEffect,useRef,useState } from "react"
+import {toast} from "react-toastify"
+import Table from "@/components/AdminDashboard/Table"
+import Row from "@/components/AdminDashboard/Table/Row";
+import RowLoader from "@/components/AdminDashboard/Table/Loader";
+import Text from "@/components/AdminDashboard/Table/TD/Text";
+import NoData from "@/components/AdminDashboard/Table/NoData";
+import Tablet from "@/components/AdminDashboard/Table/TD/Tablet";
+import Actions from "@/components/AdminDashboard/Table/TD/Actions";
+import ActionBtns from "@/components/AdminDashboard/ActionBtns"
+import TableNav from "@/components/AdminDashboard/TableNav"
+import Popup from "@/components/AdminDashboard/Popup"
 import * as Yup from "yup";
-import {limitString} from '@/utils/index'
+import {limitString} from "@/utils/index"
 
 
 
@@ -31,7 +31,7 @@ const Page = () => {
   const [pageCount,setPageCount] = useState(0)
   const [limit,setLimit] = useState(2)
   
-  const [formData,setFormData] = useState({id:'',name:'',review:'',rating:'1',pages:[]})
+  const [formData,setFormData] = useState({id:"",name:"",review:"",rating:"1",pages:[]})
 
   const HandleChange = (e) => {
     const {value,name} = e.target;
@@ -39,11 +39,11 @@ const Page = () => {
   }
 
   const ValReview = Yup.object({
-    name: Yup.string().required('Name is required!'),
-    review: Yup.string().required('Review is required!'),
-    rating: Yup.string().required('Rating is required!'),
-    pages: Yup.array().of(Yup.string().required('Page is required!'))
-    .min(1, 'At least one page is required!')
+    name: Yup.string().required("Name is required!"),
+    review: Yup.string().required("Review is required!"),
+    rating: Yup.string().required("Rating is required!"),
+    pages: Yup.array().of(Yup.string().required("Page is required!"))
+    .min(1, "At least one page is required!")
   })
 
 
@@ -66,9 +66,9 @@ const Page = () => {
           setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
         }),
         {
-          pending: 'Create Review...', // Show pending message
-          success: 'Review created successfully!', // Show success message
-          error: 'Failed to create review', // Show error message
+          pending: "Create Review...", // Show pending message
+          success: "Review created successfully!", // Show success message
+          error: "Failed to create review", // Show error message
           closeOnClick: false,
           closeOnEscape: false
         }
@@ -76,12 +76,12 @@ const Page = () => {
       toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
       
     
-      fetch('/api/admin/review', {method: 'POST',
-        headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
+      fetch("/api/admin/review", {method: "POST",
+        headers: { "Content-Type": "application/json" },body: JSON.stringify(formData),
       }).then((res) => res.json())
        .then((resp) => {
          if(resp.success){
-          setFormData({id:'',name:'',review:'',rating:'',pages:[]});
+          setFormData({id:"",name:"",review:"",rating:"",pages:[]});
           toast.update(crtToastId,{type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
           setReRender(true)
           setCreatePopup(false)
@@ -91,7 +91,7 @@ const Page = () => {
         })
         .catch((error) => {
           toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
-          console.error('Error creating review:', error);
+          console.error("Error creating review:", error);
         });
   };
 
@@ -105,14 +105,14 @@ const Page = () => {
   useEffect(() => {
     if (updatePopup && isInitialLoad) {
       formData.pages.forEach((page) => {
-        const checkbox = updateFormRef.current.querySelector(`input[name="${page}"]`);
+        const checkbox = updateFormRef.current.querySelector(`input[name='${page}']`);
         if (checkbox) {
           checkbox.checked = true;
         }
       });
       setIsInitialLoad(false);
     }else if (!updatePopup) {
-      const checkboxes = updateFormRef.current.querySelectorAll('input[type="checkbox"]');
+      const checkboxes = updateFormRef.current.querySelectorAll("input[type='checkbox']");
       checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
       });
@@ -120,12 +120,12 @@ const Page = () => {
   }, [updatePopup, formData, isInitialLoad]);
 
   const UpValReview = Yup.object({
-    id: Yup.string().required('id is required!'),
-    name: Yup.string().required('Name is required!'),
-    review: Yup.string().required('Review is required!'),
-    rating: Yup.string().required('Rating is required!'),
-    pages: Yup.array().of(Yup.string().required('Page is required!'))
-    .min(1, 'At least one page is required!')
+    id: Yup.string().required("id is required!"),
+    name: Yup.string().required("Name is required!"),
+    review: Yup.string().required("Review is required!"),
+    rating: Yup.string().required("Rating is required!"),
+    pages: Yup.array().of(Yup.string().required("Page is required!"))
+    .min(1, "At least one page is required!")
   })
 
   const UpdateTeamMember = async (e) => {
@@ -134,7 +134,6 @@ const Page = () => {
       try {
         await UpValReview.validate(formData, {abortEarly: false});
       } catch (error) {
-        console.log(error)
         error?.inner?.forEach((err) => {
           toast.error(err.message);
         });
@@ -147,22 +146,22 @@ const Page = () => {
       setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
     }),
     {
-      pending: 'Updating review...', // Show pending message
-      success: 'Review update successfully!', // Show success message
-      error: 'Failed to update review', // Show error message
+      pending: "Updating review...", // Show pending message
+      success: "Review update successfully!", // Show success message
+      error: "Failed to update review", // Show error message
       closeOnClick: false,
       closeOnEscape: false
     }
   );
   toast.update(updToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
    
-      fetch('/api/admin/review', {method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
+      fetch("/api/admin/review", {method: "PUT",
+        headers: { "Content-Type": "application/json" },body: JSON.stringify(formData),
       }).then((res) => res.json())
        .then((resp) => {
          if(resp.success){
            setReRender(true)
-           setFormData({id:'',name:'',review:'',rating:'',pages:[]});
+           setFormData({id:"",name:"",review:"",rating:"",pages:[]});
            setUpdatePopup(false)
            toast.update(updToastId,{render:resp.message,type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
          }else{
@@ -187,7 +186,7 @@ const Page = () => {
 
   const DeleteTeamMember = async (id) => {
     if(!id){
-      toast.error('Review id required!')
+      toast.error("Review id required!")
       return
     }
 
@@ -198,9 +197,9 @@ const Page = () => {
       setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
     }),
     {
-      pending: 'Deleting review...', // Show pending message
-      success: 'Review deleted successfully!', // Show success message
-      error: 'Failed to delete review', // Show error message
+      pending: "Deleting review...", // Show pending message
+      success: "Review deleted successfully!", // Show success message
+      error: "Failed to delete review", // Show error message
       closeOnClick: false,
       closeOnEscape: false
     }
@@ -208,8 +207,8 @@ const Page = () => {
 
   toast.update(delToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
 
-    fetch('/api/admin/review', {method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },body: JSON.stringify({id:id}),
+    fetch("/api/admin/review", {method: "DELETE",
+      headers: { "Content-Type": "application/json" },body: JSON.stringify({id:id}),
     }).then((res) => res.json())
     .then((resp) => {
       if(resp.success){
@@ -222,7 +221,7 @@ const Page = () => {
      })
      .catch((error) => {
       toast.update(delToastId,{type:toast.TYPE?.ERROR,autoClose:3000,isLoading: false})
-       console.error('Error deleting review:', error);
+       console.error("Error deleting review:", error);
     });
   }
 
@@ -236,9 +235,9 @@ const Page = () => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Getting reviews...', // Show pending message
-        success: 'Reviews retrived successfully!', // Show success message
-        error: 'Failed to get reviews', // Show error message
+        pending: "Getting reviews...", // Show pending message
+        success: "Reviews retrived successfully!",
+        error: "Failed to get reviews", // Show error message
         closeOnClick: false,
         closeOnEscape: false
       }
@@ -290,10 +289,10 @@ const Page = () => {
   return (
     <>
     <Popup state={createPopup} setState={setCreatePopup}  >
-     <form onSubmit={CreateReview} className='flex flex-col mx-10 py-5 w-full' >
-     <h1 className='text-center text-xl font-semibold' >Create Review </h1>
+     <form onSubmit={CreateReview} className="flex flex-col mx-10 py-5 w-full" >
+     <h1 className="text-center text-xl font-semibold" >Create Review </h1>
       
-      <div className='flex flex-col gap-3 py-10' >
+      <div className="flex flex-col gap-3 py-10" >
        <div>
         <label for="username" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Name</label>
         <input name="name" value={formData.name} onChange={HandleChange} type="text" placeholder="John Doe" className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
@@ -307,18 +306,18 @@ const Page = () => {
         <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Rating</label>
         <input name="rating" value={formData.rating} onChange={HandleChange} type="number" min="1" max="4" placeholder="1,2,3,4" className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
        </div>
-       <div className='flex flex-col' >
+       <div className="flex flex-col" >
         <label for="pages" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Pages</label>
-        <div className='flex flex-wrap gap-2 mt-2' >
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="home-page" /><span className='text-sm' >Home Page</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-story" /><span className='text-sm' >Our Story</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-companies" /><span className='text-sm' >Our Companies</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-showroom" /><span className='text-sm' >Our Showroom</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="financing" /><span className='text-sm' >Financing</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="appliance-repair" /><span className='text-sm' >Appliance Repair</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="faqs" /><span className='text-sm' >Faq's</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="help-appliance-tips" /><span className='text-sm' >Helpful Appliance Tips</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="all" /><span className='text-sm' >All</span></div>
+        <div className="flex flex-wrap gap-2 mt-2" >
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="home-page" /><span className="text-sm" >Home Page</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-story" /><span className="text-sm" >Our Story</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-companies" /><span className="text-sm" >Our Companies</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-showroom" /><span className="text-sm" >Our Showroom</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="financing" /><span className="text-sm" >Financing</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="appliance-repair" /><span className="text-sm" >Appliance Repair</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="faqs" /><span className="text-sm" >Faq&quot;s</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="help-appliance-tips" /><span className="text-sm" >Helpful Appliance Tips</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="all" /><span className="text-sm" >All</span></div>
         </div> 
        </div>
        <button class="self-center w-fit text-md mt-3 px-6 py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Submit</button>
@@ -328,10 +327,10 @@ const Page = () => {
     </Popup>
 
     <Popup state={updatePopup} setState={setUpdatePopup}  >
-     <form ref={updateFormRef} onSubmit={UpdateTeamMember} className='flex flex-col mx-10 w-full' >
-     <h1 className='text-center text-xl font-semibold' >Update Review </h1>
+     <form ref={updateFormRef} onSubmit={UpdateTeamMember} className="flex flex-col mx-10 w-full" >
+     <h1 className="text-center text-xl font-semibold" >Update Review </h1>
       
-     <div className='flex flex-col gap-3 py-10' >
+     <div className="flex flex-col gap-3 py-10" >
        <div>
         <label for="username" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Name</label>
         <input name="name" value={formData.name} onChange={HandleChange} type="text" placeholder="John Doe" className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
@@ -345,18 +344,18 @@ const Page = () => {
         <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Rating</label>
         <input name="rating" value={formData.rating} onChange={HandleChange} type="number" min="1" max="4" placeholder="1,2,3,4" className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
        </div>
-       <div className='flex flex-col' >
+       <div className="flex flex-col" >
         <label for="pages" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Pages</label>
-        <div className='flex flex-wrap gap-2 mt-2' >
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="home-page" /><span className='text-sm' >Home Page</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-story" /><span className='text-sm' >Our Story</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-companies" /><span className='text-sm' >Our Companies</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-showroom" /><span className='text-sm' >Our Showroom</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="financing" /><span className='text-sm' >Financing</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="appliance-repair" /><span className='text-sm' >Appliance Repair</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="faqs" /><span className='text-sm' >Faq's</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="help-appliance-tips" /><span className='text-sm' >Helpful Appliance Tips</span></div>
-         <div className='flex gap-2' ><input onChange={(e)=>handlePages(e)} type="checkbox" name="all" /><span className='text-sm' >All</span></div>
+        <div className="flex flex-wrap gap-2 mt-2" >
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="home-page" /><span className="text-sm" >Home Page</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-story" /><span className="text-sm" >Our Story</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-companies" /><span className="text-sm" >Our Companies</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="our-showroom" /><span className="text-sm" >Our Showroom</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="financing" /><span className="text-sm" >Financing</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="appliance-repair" /><span className="text-sm" >Appliance Repair</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="faqs" /><span className="text-sm" >Faq&quot;s</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="help-appliance-tips" /><span className="text-sm" >Helpful Appliance Tips</span></div>
+         <div className="flex gap-2" ><input onChange={(e)=>handlePages(e)} type="checkbox" name="all" /><span className="text-sm" >All</span></div>
         </div> 
        </div>
        <button class="self-center w-fit text-md mt-3 px-6 py-3 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Submit</button>
@@ -366,10 +365,10 @@ const Page = () => {
     </Popup>
 
 
-    <div className='flex flex-col mx-10' style={{height:'calc(100vh - 100px)'}} > 
-     <ActionBtns buttons={[{type:'trigger',trigger:setCreatePopup,text:'Add Review'}]} />
-     <div className='flex flex-col items-center mt-10 h-full w-full' >
-      <Table header={['Name','Review','Rating','Pages','Actions']} >
+    <div className="flex flex-col mx-10" style={{height:'calc(100vh - 100px)'}} > 
+     <ActionBtns buttons={[{type:"trigger",trigger:setCreatePopup,text:"Add Review"}]} />
+     <div className="flex flex-col items-center mt-10 h-full w-full" >
+      <Table header={["Name","Review","Rating","Pages","Actions"]} >
       {/* hello pengea/dnd */}
       {rowLoader ? <RowLoader count={5}  /> : reviews?.length > 0 ?
        reviews.map((review,i)=>

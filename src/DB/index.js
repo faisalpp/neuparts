@@ -13,7 +13,6 @@ export async function connect() {
 
   if (!cached.promise) {
     const options = {
-      useNewUrlParser: true,
       useUnifiedTopology: true,
     };
 
