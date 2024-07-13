@@ -1,7 +1,5 @@
 "use client"
-import React,{useEffect, useState} from 'react'
-import Editor from 'ckeditor5-custom-build/build/ckeditor'
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import React,{useEffect, useRef, useState} from 'react'
 import MediaPopup from '@/components/AdminDashboard/MediaPopup'
 import * as Yup from "yup";
 import {toast} from 'react-toastify'
@@ -10,6 +8,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Page = ({params}) => {
+
+  const editorRef = useRef()
+  const [ editorLoaded, setEditorLoaded ] = useState( false )
+  const { CKEditor, Editor} = editorRef.current || {}
+
+  useEffect( () => {
+    editorRef.current = {
+      CKEditor: require( '@ckeditor/ckeditor5-react' ).CKEditor, //Added .CKEditor
+      Editor: require( 'ckeditor5-custom-build/build/ckeditor' ),
+    }
+    setEditorLoaded( true )
+}, [] );
+
+
  const [mediaPopup,setMediaPopup] = useState(false);
  const [formData,setFormData] = useState({title:'',content:'',thumbnail:''})
  const [loading,setLoading] = useState(true)
@@ -131,7 +143,7 @@ useEffect(()=>{
        <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Title</label>
        <input name="title" value={formData.title} onChange={HandleChange}  type="text" className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
       </div>
-
+      {editorLoaded ? 
       <CKEditor
         editor={Editor}
         data={formData.content || ''}
@@ -173,7 +185,7 @@ useEffect(()=>{
           editor.ui.view.editable.element.style.minHeight = "250px";
         }}
       />
-
+       :null}
        <div>
         <label for="role" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Thumbnail</label>
         <div className='flex border border-gray-500 py-2 px-3 rounded-md' >

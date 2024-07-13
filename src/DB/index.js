@@ -12,11 +12,8 @@ export async function connect() {
   }
 
   if (!cached.promise) {
-    const options = {
-      useUnifiedTopology: true,
-    };
 
-    cached.promise = mongoose.connect(process.env.NEXT_MONGODB_CONNECTION_STRING, options).then((mongoose) => {
+    cached.promise = mongoose.connect(process.env.NEXT_MONGODB_CONNECTION_STRING).then((mongoose) => {
       return mongoose;
     });
   }
