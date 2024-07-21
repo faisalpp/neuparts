@@ -1,10 +1,10 @@
 import React from 'react'
 import { RiArrowDropRightLine } from 'react-icons/ri'
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 
 const BreadCrumb = () => {
 
-    const location = useLocation();
+    const location = usePathname();
 
     return (
         <div className='flex items-center my-4' >

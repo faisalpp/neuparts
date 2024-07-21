@@ -7,7 +7,7 @@ const postsSchema = new mongoose.Schema({
     slug:{type: String,required:false},
     content:{type: String,required:true},
     thumbnail:{type: String,required:false},
-    meta: {type: String, required:false},
+    meta: {type: Object, required:false},
 },{timestamps: true});
 
 const Post = mongoose.models.Posts || mongoose.model('Posts',postsSchema,'posts');

@@ -2,19 +2,13 @@ import { NextResponse } from "next/server";
 import {connect} from '@/DB/index';
 import PostCategories from '@/models/postCategories'
 
-export async function GET(request){
+export async function GET(){
     try{
       await connect();
-      const searchParams = request.nextUrl.searchParams
-      const limit = searchParams.get('limit') || 3
-  
-      const page = searchParams.get('page') || 1;
-      const skip = (page - 1 ) * parseInt(limit);
       
-      let query = {postType:'appliance-tips'};
+      let query = {postType:'help-support'};
          
-      const PostCountPromise = PostCategories.countDocuments(query);
-      const GetPostsPromise = PostCategories.aggregate([
+      const cats = await PostCategories.aggregate([
       { $match: query },
       {
         $addFields: {
@@ -44,17 +38,11 @@ export async function GET(request){
           thumbnail:1
         }
       },
-      { $sort: { _id: 1 } }, // Sort by _id or any other field
-      { $skip: skip },
-      { $limit: parseInt(limit) }
+      { $sort: { _id: 1 } }
     ]);
 
-      
-      const [count,cats] = await Promise.all([PostCountPromise,GetPostsPromise])
   
-      const pageCount = Math.ceil(count / limit);
-      
-      return  NextResponse.json({cats:cats,pagination:{pageCount,count},success: true})
+      return  NextResponse.json({cats:cats,success: true})
     }catch(error){
       return NextResponse.json({error: error.message}, {status: 500})
     }

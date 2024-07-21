@@ -29,7 +29,7 @@ export async function GET(request){
       ];
          
       const blog = await Post.aggregate(aggregationPipeline);
-      console.log(blog)
+  
       if(blog){
           return  NextResponse.json({blog:blog,success: true})
       }else{

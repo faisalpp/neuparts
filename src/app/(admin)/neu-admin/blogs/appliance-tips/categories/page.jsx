@@ -86,15 +86,15 @@ const Page = () => {
         console.log(resp)
          if(resp.success){
           ResetFormData()
-          toast.update(crtToastId,{type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
+          toast.update(crtToastId,{type:'success',autoClose:1000,isLoading: false})
           setReRender(true)
           setCreatePopup(false)
          }else{
-          toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
+          toast.update(crtToastId,{type:'error',autoClose:1000,isLoading: false})
          }
         })
         .catch((error) => {
-          toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
+          toast.update(crtToastId,{type:'error',autoClose:1000,isLoading: false})
         });
   };
 
@@ -137,7 +137,7 @@ const Page = () => {
       closeOnEscape: false
     }
   );
-  toast.update(updToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
+  toast.update(updToastId,{type:'info',autoClose:1000,isLoading: true})
    
       fetch('/api/admin/blog/appliance-tips/category', {method: 'PUT',
         headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -147,11 +147,13 @@ const Page = () => {
            setReRender(true)
            ResetFormData()
            setUpdatePopup(false)
-           toast.update(updToastId,{render:resp.message,type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
+           toast.update(updToastId,{render:resp.message,type:'success',autoClose:1000,isLoading: false})
          }else{
-          toast.update(updToastId,{render:resp.message,type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
-         }
-        })
+          toast.update(updToastId,{render:resp.message,type:'error',autoClose:1000,isLoading: false})
+        }
+        }).catch((error=>{
+          toast.update(updToastId,{render:resp.message,type:'error',autoClose:1000,isLoading: false})
+        }))
   };
 
    //handel empty page request
@@ -180,7 +182,7 @@ const Page = () => {
       setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
     }),
     {
-      pending: 'Deleting blog category...', // Show pending message
+      info: 'Deleting blog category...', // Show pending message
       success: 'Blog category deleted successfully!', // Show success message
       error: 'Failed to delete blog category', // Show error message
       closeOnClick: false,
@@ -188,7 +190,7 @@ const Page = () => {
     }
   );
 
-  toast.update(delToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
+  toast.update(delToastId,{type:'info',autoClose:1000,isLoading: true})
 
     fetch('/api/admin/blog/appliance-tips/category', {method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },body: JSON.stringify({id:id}),
@@ -197,13 +199,13 @@ const Page = () => {
       if(resp.success){
         ManagePageCount(id)
        setReRender(true)
-       toast.update(delToastId,{type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
+       toast.update(delToastId,{type:'success',autoClose:1000,isLoading: false})
       }else{
-       toast.update(delToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
+       toast.update(delToastId,{type:'error',autoClose:1000,isLoading: false})
       }
      })
      .catch((error) => {
-      toast.update(delToastId,{type:toast.TYPE?.ERROR,autoClose:3000,isLoading: false})
+      toast.update(delToastId,{type:'error',autoClose:3000,isLoading: false})
     });
   }
 
@@ -217,7 +219,7 @@ const Page = () => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Getting blog categories...', // Show pending message
+        info: 'Getting blog categories...', // Show pending message
         success: 'Blog categories retrived successfully!', // Show success message
         error: 'Failed to get blog categories', // Show error message
         closeOnClick: false,
@@ -225,23 +227,23 @@ const Page = () => {
       }
     );
 
-    toast.update(getToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
+    toast.update(getToastId,{type:'info',autoClose:1000,isLoading: true})
  try{
   fetch(`/api/admin/blog/appliance-tips/category/?page=${page}&limit=${limit}`)  
    .then((res) => res.json())
    .then((data) => {
     if(data.cats?.length > 0){
-      toast.update(getToastId,{type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false}) 
+      toast.update(getToastId,{type:'success',autoClose:1000,isLoading: false}) 
       setPageCount(data.pagination.pageCount)
       setCats(data.cats)
     }else{
-      toast.update(getToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
+      toast.update(getToastId,{type:'error',autoClose:1000,isLoading: false})
        setCats([])
     }
     setRowLoader(false)
    })
   }catch(error){
-    toast.update(getToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
+    toast.update(getToastId,{type:'error',autoClose:1000,isLoading: false})
   }
  }
 
@@ -328,13 +330,14 @@ const Page = () => {
     <div className='flex flex-col mx-10' style={{height:'calc(100vh - 100px)'}} > 
      <ActionBtns buttons={[{type:'trigger',trigger:setCreatePopup,text:'Add Blog Category'}]} />
      <div className='flex flex-col items-center mt-10 h-full w-full' >
-      <Table header={['Thumbnail','Title','Actions']} >
+      <Table header={['Thumbnail','Title','slug','Actions']} >
       {/* hello pengea/dnd */}
       {rowLoader ? <RowLoader/> : cats?.length > 0 ?
        cats.map((cat,i)=>
         <Row Key={i} >
          <TdImage src={cat.thumbnail} css="w-20 h-14 object-fit rounded" />
          <Text text={cat.title} />
+         <Text text={cat.slug} />
          <Actions id={cat._id} handleDelete={DeleteCat} data={cat} handleEdit={handleUpdatePopup} />
         </Row>
         )

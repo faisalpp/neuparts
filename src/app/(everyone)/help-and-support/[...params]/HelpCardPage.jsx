@@ -1,25 +1,40 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import parse from 'html-react-parser';
-import Loader2 from '@/components/Loader/Loader2';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import Link from 'next/link';
+import { connect } from '@/DB';
+import PostCategories from '@/models/postCategories';
+import Posts from '@/models/posts';
+import { notFound } from 'next/navigation'
 
-const HelpCardPage = () => {
-  const [blog, setBlog] = useState({ title: 'Lorem Ipsum Dolor', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero ultrices dis a arcu. Eu rhoncus, non suspendisse nec consequat enim. Proin natoque malesuada donec convallis lectus euismod nec, in. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero ultrices dis a arcu. Eu rhoncus, non suspendisse nec consequat enim. Proin natoque malesuada donec convallis lectus euismod nec, in.', category: 'help-category' });
-  const [loading, setLoading] = useState(false);
+const GetBlog = async (category,slug) => {
+  await connect()
+
+  const cat = await PostCategories.findOne({postType:'help-support',slug:category});
+  if(cat){
+   const blog = await Posts.findOne({postType:'blog-help-support',slug:slug,category:cat._id});
+   return {blog,category:cat};
+  }else{
+    notFound()
+  }
+
+}
+
+
+const HelpCardPage = async ({params}) => {
+  const category = params[0];
+  const slug = params[1]
+  const data = await GetBlog(category,slug)
 
   function wrapper(inputString) {
     if (inputString) {
       return inputString[0].toUpperCase() + inputString.slice(1);
     }
   }
+
+
   return (
-    <>
-      {loading ? (
-        <Loader2 />
-      ) : (
         <>
           <div className="mx-auto w-full px-4 py-10 sm:px-10 lg:px-16 2xl:px-120px 3xl:max-w-1680px">
             <Link href="/helpful-appliances-tips" className="mb-10 flex items-center gap-2 text-sm font-semibold text-b3 lg:hidden">
@@ -32,18 +47,16 @@ const HelpCardPage = () => {
               <RiArrowDropRightLine className="text-base text-gray-500" />
               <h5 className="text-[10px] text-b3 sm:text-xs">Help & Support Center</h5>
               <RiArrowDropRightLine className="text-base text-gray-500" />
-              <h5 className="text-[10px] text-b3 sm:text-xs">{blog ? wrapper(blog.category) : null}</h5>
+              <h5 className="text-[10px] text-b3 sm:text-xs">{data?.category ? wrapper(data.category.title) : null}</h5>
               <RiArrowDropRightLine className="text-base text-gray-500" />
-              <h5 className="text-[10px] text-gray-500 sm:text-xs">{blog ? blog.title : null}</h5>
+              <h5 className="text-[10px] text-gray-500 sm:text-xs">{data?.blog ? data.blog.title : null}</h5>
             </div>
             {/* Bread Crumbs End */}
           </div>
           <div className="mx-auto w-full px-4 pb-10 sm:px-56 lg:px-[250px] lg:pb-16 xl:px-[270px] xl:pb-20 2xl:px-[310px]">
-            <h1 className="mb-10 text-3xl font-bold">{blog ? blog.title : null}</h1>
-            {blog ? parse(blog.content) : null}
+            <h1 className="mb-10 text-3xl font-bold">{data?.blog ? data.blog.title : null}</h1>
+            {data?.blog ? parse(data.blog.content) : null}
           </div>
-        </>
-      )}
     </>
   );
 };

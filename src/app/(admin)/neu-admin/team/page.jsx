@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect,useState } from 'react'
+import React, { startTransition, useEffect,useState } from 'react'
 import {toast} from 'react-toastify'
 import Table from '@/components/AdminDashboard/Table'
 import Row from '@/components/AdminDashboard/Table/Row';
@@ -9,6 +9,7 @@ import Text from '@/components/AdminDashboard/Table/TD/Text';
 import NoData from '@/components/AdminDashboard/Table/NoData';
 import Tablet from '@/components/AdminDashboard/Table/TD/Tablet';
 import TdImage from '@/components/AdminDashboard/Table/TD/TdImage';
+import DND from '@/components/AdminDashboard/Table/TD/Dnd';
 import Actions from '@/components/AdminDashboard/Table/TD/Actions';
 import ActionBtns from '@/components/AdminDashboard/ActionBtns'
 import TableNav from '@/components/AdminDashboard/TableNav'
@@ -16,6 +17,8 @@ import Popup from '@/components/AdminDashboard/Popup'
 import MediaPopup from '@/components/AdminDashboard/MediaPopup'
 import * as Yup from "yup";
 import {limitString} from '@/utils/index'
+
+import {DragDropContext,Draggable,Droppable} from '@hello-pangea/dnd'
 
 
 
@@ -275,6 +278,27 @@ const Page = () => {
  },[updatePopup])
 
 
+ const HandleDragEvent = async (result) => {
+  if (!result.destination) return;
+
+  const sourceIndex = result.source.index;
+  const destinationIndex = result.destination.index;
+
+   // Create a copy of the team members array
+   const updatedTeamMembers = Array.from(teamMembers);
+
+    // Optimistically update the state
+    const [removed] = updatedTeamMembers.splice(sourceIndex, 1);
+    updatedTeamMembers.splice(destinationIndex, 0, removed);
+
+    updatedTeamMembers.forEach((member, index) => {
+      member.index = index;
+    });
+
+    setTeamMembers(updatedTeamMembers);
+ }
+
+
   return (
     <>
     <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} isMultiple={false}  />
@@ -342,27 +366,44 @@ const Page = () => {
     </Popup>
 
 
-    <div className='flex flex-col mx-10' style={{height:'calc(100vh - 100px)'}} > 
-     <ActionBtns buttons={[{type:'trigger',trigger:setCreatePopup,text:'Add Member'}]} />
-     <div className='flex flex-col items-center mt-10 h-full w-full' >
-      <Table header={['Avatar','Name','Bio','Role','Actions']} >
-      {/* hello pengea/dnd */}
-      {rowLoader ? <RowLoader count={5} /> : teamMembers?.length > 0 ?
-       teamMembers.map((member,i)=>
-        <Row Key={i} >
-         <TdImage src={member.avatar} css="w-20 h-14 object-fit rounded-full" />
-         <Text text={member.name} />
-         <Text text={limitString(member.bio,200)} />
-         <Tablet text={member.role} />
-         <Actions id={member._id} handleDelete={DeleteTeamMember} data={member}  handleEdit={handleUpdatePopup} />
-        </Row>
-        )
-       :
-       <NoData colspan={4} alert="No Team Members Found!" />
-      }
-      </Table>
-      {pageCount > 1 ? <TableNav page={page} setPage={setPage} pageCount={pageCount} /> : null}
-     </div>
+    <div className='flex flex-col mx-10' style={{ height: 'calc(100vh - 100px)' }}>
+      <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Member' }]} />
+      <DragDropContext onDragEnd={HandleDragEvent} className='flex flex-col items-center mt-10 h-full w-full'>
+        <Droppable droppableId='teams'>
+          {(droppableProvided) => (
+            <div {...droppableProvided.droppableProps} ref={droppableProvided.innerRef} className='w-full'>
+              <Table header={['Avatar', 'Name', 'Bio', 'Role', 'Actions', '']}>
+                {rowLoader ? (
+                  <RowLoader count={5} rows={10} />
+                 ) : teamMembers?.length > 0 ? (
+                  teamMembers.map((member, i) => (
+                    <Draggable key={member._id} draggableId={member._id} index={i}>
+                      {(provided) => (
+                        <Row 
+                          isDragable={true} 
+                          Ref={provided.innerRef} 
+                          draggableProps={provided.draggableProps} 
+                        >
+                          <TdImage src={member.avatar} css="w-20 h-16 object-fit rounded-full" />
+                          <Text text={member.name} />
+                          <Text text={limitString(member.bio, 200)} />
+                          <Tablet text={member.role} />
+                          <Actions id={member._id} handleDelete={DeleteTeamMember} data={member} handleEdit={handleUpdatePopup} />
+                          <DND provider={provided} />
+                        </Row>
+                      )}
+                    </Draggable>
+                  ))
+                ) : (
+                  <NoData colspan={4} alert="No Team Members Found!" />
+                )}
+                {droppableProvided.placeholder}
+              </Table>
+            </div>
+          )}
+        </Droppable>
+        {pageCount > 1 ? <TableNav page={page} setPage={setPage} pageCount={pageCount} /> : null}
+      </DragDropContext>
     </div>
     </>
   )

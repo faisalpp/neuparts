@@ -4,7 +4,6 @@ import PostCategories from '@/models/postCategories'
 import * as Yup from "yup";
 import {generateSlug} from '@/utils/index'
 
-
 export async function GET(request){
     try{
       await connect();
@@ -14,7 +13,7 @@ export async function GET(request){
       const page = searchParams.get('page') || 1;
       const skip = (page - 1 ) * limit;
       
-      let query = {postType:'general-faqs'};
+      let query = {postType:'help-support'};
          
       const PostCountPromise = PostCategories.countDocuments(query);
       const GetPostsPromise = PostCategories.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
@@ -34,7 +33,6 @@ export async function GET(request){
   export async function POST(request){
     await connect();
 
-   
     const ValCat = Yup.object({
         title: Yup.string().required('Title is required!'),
       })
@@ -45,7 +43,7 @@ export async function GET(request){
      await ValCat.validate({title}, {abortEarly: false});
 
      let slug = generateSlug(title);
-     const postType = 'general-faqs'
+     const postType = 'help-support'
      const regex = new RegExp(`^${slug}-\\d+$`);
 
      const catsCount = await PostCategories.countDocuments({postType:postType,slug:regex});
@@ -56,12 +54,13 @@ export async function GET(request){
       slug = slug + `-1`;
      }
 
+
      const isCreated = await PostCategories.create({
         title,postType:postType,slug
      })
    
      if(isCreated){
-      return  NextResponse.json({message: "Faq Category Created!",success: true})
+      return  NextResponse.json({message: "Blog Category Created!",success: true})
      }
      return  NextResponse.json({message: "Something Went Wrong!",success: false})
     } catch (error) {
@@ -84,8 +83,20 @@ export async function PUT(request){
      const {id,title} = await request.json()
      await ValReview.validate({id,title}, {abortEarly: false});
 
+     let slug = generateSlug(title);
+     const postType = 'help-support'
+     const regex = new RegExp(`^${slug}-\\d+$`);
+
+     const catsCount = await PostCategories.countDocuments({postType:postType,slug:regex});
+     slug = catsCount > 0 ? `${slug}-${parseInt(catsCount) + 1}` : slug;
+
+     const exactMatch = await PostCategories.countDocuments({postType:postType,slug:slug});
+     if(exactMatch){
+      slug = slug + `-1`;
+     }
+
      const isUpdated = await PostCategories.findByIdAndUpdate(id,{
-        title
+        title,slug
      })
 
      if(isUpdated){
@@ -110,7 +121,7 @@ export async function DELETE(request){
 
      await PostCategories.findByIdAndDelete(id);
      
-     return  NextResponse.json({message: "Faq Category Deleted!",success: true})
+     return  NextResponse.json({message: "Blog Category Deleted!",success: true})
 
     } catch (error) {
       return  NextResponse.json({message: "Something Went Wrong!",success: false})

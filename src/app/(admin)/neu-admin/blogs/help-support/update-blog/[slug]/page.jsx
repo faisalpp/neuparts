@@ -1,9 +1,8 @@
 "use client"
-import React,{useEffect, useState} from 'react'
-import MediaPopup from '@/components/AdminDashboard/MediaPopup'
+import React,{useEffect, useState,useRef} from 'react'
 import * as Yup from "yup";
 import {toast} from 'react-toastify'
-import { useRouter,notFound } from 'next/navigation'
+import { useRouter} from 'next/navigation'
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -22,22 +21,20 @@ const Page = ({params}) => {
     setEditorLoaded( true )
 }, [] );
 
- const [mediaPopup,setMediaPopup] = useState(false);
- const [formData,setFormData] = useState({title:'',content:'',thumbnail:'',category:''})
+
+ const [formData,setFormData] = useState({title:'',content:'',category:'',meta:{title:'',description:''}})
  const [categories,setCategories] = useState([])
  const [loading,setLoading] = useState(true)
- const [files,setFiles] = useState([])
  const router = useRouter()
 
  const GetBlogs = () => {
   if(params.slug){
-    fetch(`/api/front/blog/appliance-tips/single?slug=${params.slug}`,{method:'GET', headers: { 'Content-Type': 'application/json' }})
+    fetch(`/api/front/blog/help-support/single?slug=${params.slug}`,{method:'GET', headers: { 'Content-Type': 'application/json' }})
     .then((res)=> res.json())
     .then((data)=>{
-      console.log(data)
      if(data.success){
-      const {_id,title,slug,content,thumbnail,joinedCategory} = data.blog[0];
-      setFormData({id:_id,title:title,slug:slug,content:content,thumbnail:thumbnail,category:joinedCategory._id,cat:joinedCategory})
+      const {_id,title,slug,content,joinedCategory,meta} = data.blog[0];
+      setFormData({id:_id,title:title,slug:slug,content:content,category:joinedCategory._id,cat:joinedCategory,meta:{title:meta.title,description:meta.description}})
       setLoading(false)
     }else{
       return <notFound/>
@@ -46,7 +43,6 @@ const Page = ({params}) => {
     .catch((error)=>{
       console.log(error)
      toast.error('Something went wrong!')
-    //  router.push('/neu-admin/blogs/appliance-tips')
     })
   }
  }
@@ -56,7 +52,7 @@ const Page = ({params}) => {
  },[])
 
  const GetCategories = async () => {
-  fetch('/api/admin/post-categories?postType=appliance-tips', {method: 'GET',
+  fetch('/api/admin/post-categories?postType=help-support', {method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   }).then((res) => res.json())
    .then((resp) => {
@@ -77,29 +73,28 @@ const Page = ({params}) => {
  },[])
 
 
-useEffect(()=>{
-  if(files.length > 0){
-    setFormData({...formData,thumbnail:files[0].url})
-   }
- },[files])
-
 
  const HandleChange = (e) => {
   const {value,name} = e.target;
-  setFormData({...formData,[name]:value})
+  if(name === 'description'){
+    setFormData({...formData,meta:{...formData.meta,[name]:value}}) 
+  }else if (name === 'title'){
+    setFormData({...formData,[name]:value,meta:{...formData.meta,[name]:value}})
+  }else{
+    setFormData({...formData,[name]:value})
+  }
  }
 
  const ValBlog = Yup.object({
   id: Yup.string().required('Id is required!'),
   title: Yup.string().required('Title is required!'),
   content: Yup.string().required('Content is required!'),
-  category: Yup.string().required('Category is required!'),
-  thumbnail: Yup.string().required('Thumbnail is required!'),
+  category: Yup.string().required('Content is required!'),
  })
 
  const UpdateBlog = async (e) => {
   e.preventDefault()
-
+  console.log(formData)
   try {
     await ValBlog.validate(formData, {abortEarly: false});
   } catch (error) {
@@ -125,14 +120,14 @@ useEffect(()=>{
   );
   toast.update(crtToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
 
-  fetch('/api/admin/blog/appliance-tips', {method: 'PUT',
+  fetch('/api/admin/blog/help-support', {method: 'PUT',
     headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
   }).then((res) => res.json())
    .then((resp) => {
     console.log(resp)
      if(resp.success){
       toast.update(crtToastId,{type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
-      router.push('/neu-admin/blogs/appliance-tips')
+      router.push('/neu-admin/blogs/help-support')
      }else{
       toast.update(crtToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
      }
@@ -152,7 +147,6 @@ useEffect(()=>{
     </div>
     :
     <div className='flex justify-center' style={{minHeight:'calc(100vh - 25px)'}} >
-      <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} /> 
     <div className='flex flex-col mx-24 gap-y-5' >
      <div className='flex justify-center w-full py-5' >
       <span className='text-3xl font-semibold' >Update Blog</span>
@@ -161,10 +155,13 @@ useEffect(()=>{
       <div className='flex justify-end' >
        <Link href={`/blogs/${formData.slug}`} className='bg-c-orange px-2 rounded text-white' >View Article</Link>
       </div>
-      
       <div>
        <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Title</label>
        <input name="title" value={formData.title} onChange={HandleChange}  type="text" className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+      </div>
+      <div>
+       <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Meta Description</label>
+       <textarea required name="description" onChange={HandleChange} className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" >{formData.meta.description}</textarea>
       </div>
 {editorLoaded ? 
       <CKEditor
@@ -218,14 +215,6 @@ useEffect(()=>{
             </option>
           ))}
         </select>
-       </div>
-
-       <div>
-        <label for="role" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Thumbnail</label>
-        <div className='flex border border-gray-500 py-2 px-3 rounded-md' >
-         <input readOnly name="avatar" value={formData.thumbnail} type="text" placeholder="Select Single File" className="block w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg bg-white px-5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 w-6/12 bg-gray-500" />
-         <button type="button" onClick={()=>setMediaPopup(true)} className='bg-b4 px-4 py-1 rounded-md text-white' >Select</button>
-        </div>
        </div>
 
        <div className='flex justify-center w-full' >

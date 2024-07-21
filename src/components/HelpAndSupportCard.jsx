@@ -1,6 +1,7 @@
 import React from 'react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import Link from 'next/link';
+import { limitString } from '@/utils';
 
 const HelpAndSupportCard = ({ title, slug, category, shortDescription }) => {
   return (
@@ -12,7 +13,11 @@ const HelpAndSupportCard = ({ title, slug, category, shortDescription }) => {
             <AiOutlineArrowRight className="text-lg" />
           </span>
         </div>
+       {shortDescription.length <= 300 ?
         <p className="mt-4 text-sm leading-6">{shortDescription}</p>
+        :
+        <p className="mt-4 text-sm leading-6">{limitString(shortDescription,300)}...</p>
+       }
       </Link>
     </>
   );

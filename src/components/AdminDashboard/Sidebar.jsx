@@ -7,7 +7,7 @@ import { MdPermMedia,MdDashboard,MdRateReview } from "react-icons/md";
 import { FaQuoteRight } from "react-icons/fa";
 import { GiAutoRepair } from "react-icons/gi";
 import { FaBlogger } from "react-icons/fa";
-import { MdTipsAndUpdates } from "react-icons/md";
+import { MdTipsAndUpdates,MdLiveHelp } from "react-icons/md";
 import Logout from '@/components/AdminDashboard/Logout'
 
 
@@ -175,6 +175,14 @@ const toggleCollapse = (section) => {
           >
             <MdTipsAndUpdates />
             <span className="mx-2 text-sm font-semibold">Appliance Tips</span>
+          </Link>
+
+          <Link
+            className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+            href="/neu-admin/blogs/help-support"
+          >
+            <MdLiveHelp />
+            <span className="mx-2 text-sm font-semibold">Help & Support</span>
           </Link>
 
         </div>
