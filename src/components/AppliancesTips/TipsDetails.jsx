@@ -8,7 +8,13 @@ import Link from 'next/link';
 const TipsDetails = ({ slug }) => {
   const [tip, setTip] = useState({});
 
-  const GetTip = async () => {};
+  const GetTip = async () => {
+    fetch(`/api/front/helpful-appliance-tips/${slug}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTip(data);
+      });
+  };
 
   useEffect(() => {
     GetTip();
@@ -25,7 +31,7 @@ const TipsDetails = ({ slug }) => {
           <CdSvg />
         </div>
         <div className="flex w-full flex-col gap-10 md:gap-16 xl:gap-20">
-          <h1 className="text-28px font-bold text-b18 sm:text-4xl lg:text-40px coxs:text-32px coxs:leading-[48px]">Tips for {tip.title}</h1>
+          <h1 className="text-28px font-bold text-b18 sm:text-4xl lg:text-40px coxs:text-32px coxs:leading-[48px]">{tip.title}</h1>
           <div>{tip.content ? parse(tip.content) : null}</div>
         </div>
       </div>
