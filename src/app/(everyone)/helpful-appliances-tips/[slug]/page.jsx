@@ -19,7 +19,12 @@ const Page = ({ params }) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(2);
 
-  const getTipsCat = async () => {
+  const getTipsCat = async (term) => {
+    let search = '';
+    if (term) {
+      search = term;
+    }
+
     const res = await fetch(`/api/front/blog/appliance-tips/by-category/?category=${slug}&page=${page}&limit=${limit}&search=${search}`);
     const data = await res.json();
     if (data.success) {
@@ -37,7 +42,7 @@ const Page = ({ params }) => {
   const handleEnterKey = async (e) => {
     setLoading(true);
     setTimeout(() => {
-      // getTipsCat(null, e.target.value);
+      getTipsCat(e.target.value);
     }, 1000);
   };
 

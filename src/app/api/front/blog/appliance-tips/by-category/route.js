@@ -22,7 +22,7 @@ export async function GET(request) {
     };
 
     if (search) {
-      query.$or = [{ title: new RegExp(search, 'i') }, { content: new RegExp(search, 'i') }];
+      query.$or = [{ title: search }, { content: search }];
     }
 
     const count = await Post.countDocuments(query);
