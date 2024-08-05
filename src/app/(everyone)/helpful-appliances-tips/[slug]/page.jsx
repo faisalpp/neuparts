@@ -10,7 +10,7 @@ import Image from 'next/image';
 const Page = ({ params }) => {
   const { slug } = params;
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [totalCount, setTotalCount] = useState(0);
 
@@ -22,19 +22,23 @@ const Page = ({ params }) => {
   const getTipsCat = async () => {
     const res = await fetch(`/api/front/blog/appliance-tips/by-category/?category=${slug}&page=${page}&limit=${limit}&search=${search}`);
     const data = await res.json();
-    setPage(data.pagination.pageCount);
-    setHelpTabs(data.blogs);
-    console.log(data);
+    if (data.success) {
+      setTotalCount(data.pagination.totalCount);
+      setPage(data.pagination.pageCount);
+      setHelpTabs(data.blogs);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
     getTipsCat();
   }, ['']);
 
-  const handleEnterKey = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
+  const handleEnterKey = async (e) => {
+    setLoading(true);
+    setTimeout(() => {
+      // getTipsCat(null, e.target.value);
+    }, 1000);
   };
 
   return (
@@ -59,7 +63,7 @@ const Page = ({ params }) => {
       <div className="maincontainer flex flex-col pb-10 lg:pb-16 xl:pb-20">
         {loading ? (
           <div className="flex  w-full items-center justify-center">
-            <Image width={200} height={200} quality={100} className="h-auto w-auto" alt="Loader" src="/loader2.gif" />
+            <Image width={200} height={200} quality={100} className="h-auto w-auto" alt="Loader" src="/loader2.gif" unoptimized />
           </div>
         ) : (
           <div className="tab-content w-full">
@@ -76,7 +80,7 @@ const Page = ({ params }) => {
             )}
           </div>
         )}
-        <Pagination2 page={page} setPage={setPage} totalPages={totalCount} />
+        {totalCount > 1 ? <Pagination2 page={page} setPage={setPage} totalPages={totalCount} /> : null}
       </div>
     </>
   );

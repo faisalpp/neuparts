@@ -17,7 +17,7 @@ const HelpAndSupport = () => {
   const [search, setSearch] = useState('')
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
 
 
   const FetchBlogs = async (cat, term) => {

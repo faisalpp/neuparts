@@ -4,10 +4,10 @@ import NewsLetterSection from '@/components/NewsLetterSection';
 import SatisfiedSection from '@/components/SatisfiedSection';
 import TipsDetails from '@/components/AppliancesTips/TipsDetails';
 
-const AppliancesTipsDetail = ({ slug }) => {
+const AppliancesTipsDetail = ({ slug, postslug }) => {
   return (
     <>
-      <TipsDetails slug={slug} />
+      <TipsDetails slug={slug} postslug={postslug} />
 
       {/* Shop Austin Section */}
       <ShopAustinSection />
