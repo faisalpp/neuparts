@@ -142,7 +142,7 @@ const ModelBuyingOptionsSection = ({ slug, threeStar, fourStar, fiveStar, modelN
         </div>
         <div className="py-5 text-center">
           <Link href={`/products/buying-options/?modelNo=${modelNo}`} className="mx-auto mt-5 flex items-center justify-center gap-1 font-semibold text-b7">
-            <FiLink2 stroke-width="3" /> View More Buying Options
+            <FiLink2 strokeWidth="3" /> View More Buying Options
           </Link>
         </div>
       </div>

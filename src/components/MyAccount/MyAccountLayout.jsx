@@ -5,7 +5,7 @@ import { BsChevronDown } from 'react-icons/bs';
 import AccountItems from '@/components/MyAccount/AccountItems';
 import { FiLogOut } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify';
 
 const MyAccountLayout = ({ children }) => {
   const [isItems, setIsItems] = useState(false);
@@ -19,24 +19,20 @@ const MyAccountLayout = ({ children }) => {
   const handleUserLogout = async (e) => {
     e.preventDefault();
 
-    const crtToastId = toast.loading("Signing you out...")
-   
- 
-    fetch('/api/user/auth/logout', {method: 'GET',headers: { 'Content-Type': 'application/json' }})
-    .then((res) => res.json())
-     .then((resp) => {
-      if(resp.success){
-        toast.update(crtToastId,{render:'Logout Successfull!',type:'success',autoClose:1000,isLoading: false})
-        router.push('/');
-       }
+    const crtToastId = toast.loading('Signing you out...');
+
+    fetch('/api/user/auth/logout', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+      .then((res) => res.json())
+      .then((resp) => {
+        if (resp.success) {
+          toast.update(crtToastId, { render: 'Logout Successfull!', type: 'success', autoClose: 1000, isLoading: false });
+          router.push('/');
+        }
       })
       .catch((error) => {
-        toast.update(crtToastId,{render:'Something went wrong!',type:'error',autoClose:1000,isLoading: false})
+        toast.update(crtToastId, { render: 'Something went wrong!', type: 'error', autoClose: 1000, isLoading: false });
       });
-
-
   };
-
 
   return (
     <>
@@ -52,9 +48,9 @@ const MyAccountLayout = ({ children }) => {
         <h1 className="text-2xl font-bold md:text-3xl xl:text-4xl 2xl:text-[40px]">My Account</h1>
 
         {/* 992px Up Screen Logout */}
-        <button type="button" onClick={handleUserLogout} className="hidden items-center gap-4 rounded-lg border border-[rgba(0,0,0,0.15)] px-6 py-4 font-bold text-[#B20B0B] lg:flex cursor-pointer">
+        <button type="button" onClick={handleUserLogout} className="hidden cursor-pointer items-center gap-4 rounded-lg border border-[rgba(0,0,0,0.15)] px-6 py-4 font-bold text-[#B20B0B] lg:flex">
           <span>Logout</span>
-          <FiLogOut stroke-width="3" />
+          <FiLogOut strokeWidth="3" />
         </button>
         {/* End Logout Button */}
 

@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.ck-content{
+.ck-content {
     min-height: 250px;
     max-width: 600px;
+}
+
+.custom-input {
+    @apply mt-2 block w-full rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40;
 }

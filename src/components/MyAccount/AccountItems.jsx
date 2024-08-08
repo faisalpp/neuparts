@@ -50,7 +50,7 @@ const AccountItems = ({ onClose, isItems }) => {
           <div className="top-0 z-50 flex items-center justify-between border-b lg:hidden lg:pb-4 maxlg:sticky maxlg:bg-white maxlg:py-4 maxlg:shadow-md">
             <button type="button" className="flex items-center gap-4 rounded border border-[rgba(0,0,0,0.15)] px-2 py-1 font-semibold text-[#B20B0B] duration-300 hover:bg-black/5 lg:hidden">
               <span>Logout</span>
-              <FiLogOut stroke-width="3" />
+              <FiLogOut strokeWidth="3" />
             </button>
             <button type="button" onClick={onClose} className="rounded px-2 py-1 text-sm font-semibold duration-300 hover:bg-black/5 lg:hidden">
               Close
