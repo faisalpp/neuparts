@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connect } from '@/DB/index';
-import Product from '@/models/product';
-import * as Yup from 'yup';
+import Category from '@/models/productcategory';
 import { generateSlug } from '@/utils/index';
 //
 
@@ -10,26 +9,25 @@ export async function POST(request) {
 
   try {
     const res = await request.json();
-    console.log(res);
 
     let slug = generateSlug(res.title);
     const regex = new RegExp(`^${slug}-\\d+$`);
 
-    const blogCount = await Product.countDocuments({ slug: regex });
+    const blogCount = await Category.countDocuments({ slug: regex });
     if (blogCount > 0) {
       let inc = parseInt(blogCount) + 1;
       slug = slug + `-${inc}`;
     }
 
-    const exactMatch = await Product.countDocuments({ slug: slug });
+    const exactMatch = await Category.countDocuments({ slug: slug });
     if (exactMatch) {
       slug = slug + `-1`;
     }
 
-    const isCreated = await Product.create({ ...res, slug: slug });
+    const isCreated = await Category.create({ ...res, slug: slug });
 
     if (isCreated) {
-      return NextResponse.json({ message: 'Product Created!', success: true });
+      return NextResponse.json({ message: 'Category Created!', success: true });
     }
     return NextResponse.json({ message: 'Something Went Wrong!', success: false });
   } catch (error) {
@@ -50,15 +48,15 @@ export async function GET(request) {
 
     let query = {};
 
-    const ReviewCountPromise = Product.estimatedDocumentCount(query);
-    const GetProductsPromise = Product.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
+    const ReviewCountPromise = Category.estimatedDocumentCount(query);
+    const GetCategoryPromise = Category.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
 
-    const [count, products] = await Promise.all([ReviewCountPromise, GetProductsPromise]);
+    const [count, categories] = await Promise.all([ReviewCountPromise, GetCategoryPromise]);
 
     const pageCount = Math.ceil(count / limit);
 
     // const products = await Product.find({});
-    return NextResponse.json({ products: products, pagination: { pageCount, count }, success: true });
+    return NextResponse.json({ categories: categories, pagination: { pageCount, count }, success: true });
   } catch (error) {
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
@@ -70,12 +68,12 @@ export async function DELETE(request) {
     const res = await request.json();
     const id = res.id;
     if (!id) {
-      return NextResponse.json({ message: 'Product id required!', success: false });
+      return NextResponse.json({ message: 'Category id required!', success: false });
     }
 
-    const isDeleted = await Product.findByIdAndDelete(id);
+    const isDeleted = await Category.findByIdAndDelete(id);
     if (isDeleted) {
-      return NextResponse.json({ message: 'Product Deleted!', success: true });
+      return NextResponse.json({ message: 'Category Deleted!', success: true });
     }
     return NextResponse.json({ message: 'Something Went Wrong!', success: false });
   } catch (error) {
@@ -89,12 +87,12 @@ export async function PUT(request) {
     const res = await request.json();
     const id = res._id;
     if (!id) {
-      return NextResponse.json({ message: 'Product id required!', success: false });
+      return NextResponse.json({ message: 'Category id required!', success: false });
     }
 
-    const isUpdated = await Product.findByIdAndUpdate(id, res);
+    const isUpdated = await Category.findByIdAndUpdate(id, res);
     if (isUpdated) {
-      return NextResponse.json({ message: 'Product Updated!', success: true });
+      return NextResponse.json({ message: 'Category Updated!', success: true });
     }
     return NextResponse.json({ message: 'Something Went Wrong!', success: false });
   } catch (error) {

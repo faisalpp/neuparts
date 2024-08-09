@@ -13,16 +13,16 @@ import ActionBtns from '@/components/AdminDashboard/ActionBtns';
 import TableNav from '@/components/AdminDashboard/TableNav';
 
 const Page = () => {
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [rowLoader, setRowLoader] = useState(true);
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [limit, setLimit] = useState(2);
 
-  const DeleteProduct = async (id) => {
+  const DeleteCategory = async (id) => {
     if (!id) {
-      toast.error('Product id required!');
+      toast.error('Category id required!');
       return;
     }
 
@@ -33,9 +33,9 @@ const Page = () => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Deleting Product...', // Show pending message
-        success: 'Product deleted successfully!', // Show success message
-        error: 'Failed to delete product', // Show error message
+        pending: 'Deleting Category...', // Show pending message
+        success: 'Category deleted successfully!', // Show success message
+        error: 'Failed to delete category', // Show error message
         closeOnClick: false,
         closeOnEscape: false,
       }
@@ -43,7 +43,7 @@ const Page = () => {
 
     toast.update(delToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
 
-    fetch('/api/admin/product', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
+    fetch('/api/admin/product/category', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
@@ -62,14 +62,14 @@ const Page = () => {
   const FetchBlogs = async () => {
     setRowLoader(true);
 
-    fetch(`/api/admin/product?page=${page}&limit=${limit}`)
+    fetch(`/api/admin/product/category?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.products.length > 0) {
+        if (data.categories.length > 0) {
           setPageCount(data.pagination.pageCount);
-          setProducts(data.products);
+          setCategories(data.categories);
         } else {
-          setProducts([]);
+          setCategories([]);
         }
         setRowLoader(false);
       });
@@ -90,20 +90,19 @@ const Page = () => {
   return (
     <>
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'link', text: 'Add Product', link: '/neu-admin/product/create' }]} />
+        <ActionBtns buttons={[{ type: 'link', text: 'Add Category', link: '/neu-admin/product/category/create' }]} />
         <div className="flex h-full w-full flex-col items-center">
-          <Table header={['Thumbnail', 'Product Title', 'Slug', 'Category', 'Actions']}>
+          <Table header={['Product Title', 'Slug', 'Category', 'Actions']}>
             {/* hello pengea/dnd */}
             {rowLoader ? (
               <RowLoader count={5} />
-            ) : products?.length > 0 ? (
-              products.map((product, i) => (
+            ) : categories?.length > 0 ? (
+              categories.map((category, i) => (
                 <Row Key={i}>
-                  <TdImage src={product.images[0]?.url} css="w-20 h-14 object-fit rounded" />
-                  <Text text={product.title} />
-                  <Text text={product.slug} />
-                  <Text text={product.category} />
-                  <Actions id={product._id} handleDelete={DeleteProduct} data={product} isEditLink={true} editLink={`/neu-admin/product/edit/${product._id}`} />
+                  <Text text={category.title} />
+                  <Text text={category.slug} />
+                  <Text text={category.isvisible ? 'Yes' : 'No'} />
+                  <Actions id={category._id} handleDelete={DeleteCategory} data={category} isEditLink={true} editLink={`/neu-admin/product/category/edit/${category._id}`} />
                 </Row>
               ))
             ) : (

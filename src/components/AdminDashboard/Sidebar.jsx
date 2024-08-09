@@ -81,13 +81,13 @@ const Sidebar = () => {
             {/* Conditional rendering based on section's collapse state with transition */}
             <div className={`transition-all duration-300 ${collapsedSections.products ? 'h-auto opacity-100' : 'h-0 overflow-hidden opacity-0'}`}>
               <div className={`space-y-2 pl-3 ${collapsedSections.products ? 'visible' : 'invisible'}`}>
-                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/create">
-                  <MdDashboard />
-                  <span className="mx-2 text-sm font-semibold">Create Product</span>
-                </Link>
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product">
                   <MdDashboard />
                   <span className="mx-2 text-sm font-semibold">Manage Products</span>
+                </Link>
+                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/category">
+                  <MdDashboard />
+                  <span className="mx-2 text-sm font-semibold">Manage Categories</span>
                 </Link>
               </div>
             </div>
