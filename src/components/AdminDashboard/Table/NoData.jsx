@@ -1,13 +1,15 @@
-"use client"
+'use client';
 
-import React from 'react'
+import React from 'react';
 
-const NoData = ({colspan,alert}) => {
+const NoData = ({ colspan, alert }) => {
   return (
-    <tr className='flex justify-center' >
-     <td colSpan={colspan} className='py-5 text-red-500 text-md' >{alert}</td>
+    <tr className="">
+      <td colSpan={colspan} className="text-md py-5 text-center text-red-500">
+        {alert}
+      </td>
     </tr>
-  )
-}
+  );
+};
 
-export default NoData
+export default NoData;

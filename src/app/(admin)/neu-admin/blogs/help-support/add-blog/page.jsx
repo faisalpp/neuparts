@@ -114,13 +114,13 @@ const Page = () => {
         </div>
         <form onSubmit={CreateBlog} className="flex flex-col gap-y-5 pb-5">
           <div>
-            <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+            <label htmlFor="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
               Title
             </label>
             <input name="title" value={formData.title} onChange={HandleChange} type="text" className="mt-2  block w-full rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:border-blue-300" />
           </div>
           <div>
-            <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+            <label htmlFor="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
               Short Description
             </label>
             <textarea required name="description" onChange={HandleChange} className="mt-2  block w-full rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:border-blue-300">
@@ -147,7 +147,7 @@ const Page = () => {
             />
           ) : null}
           <div>
-            <label for="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+            <label htmlFor="rating" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
               Category
             </label>
             <select name="category" onChange={HandleChange} className="mt-2  block w-full rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:border-blue-300">
