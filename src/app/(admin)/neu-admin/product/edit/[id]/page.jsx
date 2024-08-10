@@ -4,7 +4,8 @@ import MediaPopup from '@/components/AdminDashboard/MediaPopup';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
-const Page = () => {
+const Page = ({ params }) => {
+  const { id } = params;
   const [mediaPopup, setMediaPopup] = useState(false);
   const [mediaPopup2, setMediaPopup2] = useState(false);
   const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '', model_no: '', condition: '', type: '', category: '', stock: 0, images: [], threesixty: [], description: '', specification: '', delivery: '' });
@@ -42,7 +43,17 @@ const Page = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const CreateProduct = async (e) => {
+  const GetProduct = async () => {
+    const res = await fetch('/api/admin/product/edit?id=' + id);
+    const data = await res.json();
+    setFormData({ ...data, thumbnail: data.images[0].url, gallery: data.threesixty[0].url });
+  };
+
+  useEffect(() => {
+    GetProduct();
+  }, ['']);
+
+  const UpdateProduct = async (e) => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
@@ -58,21 +69,19 @@ const Page = () => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Create Product...', // Show pending message
-        success: 'Product created successfully!', // Show success message
-        error: 'Failed to create product', // Show error message
+        pending: 'Update Product...', // Show pending message
+        success: 'Product update successfully!', // Show success message
+        error: 'Failed to update product', // Show error message
         closeOnClick: false,
         closeOnEscape: false,
       }
     );
     toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
-    fetch('/api/admin/product', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
+    fetch('/api/admin/product', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
-          router.push('/neu-admin/blogs/general');
         } else {
           toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
         }
@@ -86,8 +95,8 @@ const Page = () => {
     <div className="p-5">
       <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} isMultiple={true} />
       <MediaPopup state={mediaPopup2} setState={setMediaPopup2} setFiles={setFiles2} isMultiple={true} />
-      <h2 className="text-3xl font-semibold">Create Product</h2>
-      <form action={CreateProduct} className="mt-4 grid grid-cols-2 gap-4">
+      <h2 className="text-3xl font-semibold">Update Product</h2>
+      <form action={UpdateProduct} className="mt-4 grid grid-cols-2 gap-4">
         <div>
           <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
             Title
