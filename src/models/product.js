@@ -9,7 +9,10 @@ const ProductSchema = new mongoose.Schema(
     model_no: { type: String, required: true },
     condition: { type: String, required: true },
     type: { type: String, required: true },
-    category: { type: String, required: true },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ProductCategory",
+    },
     stock: { type: Number, required: true },
     images: { type: Array, required: true },
     threesixty: { type: Array, required: true },

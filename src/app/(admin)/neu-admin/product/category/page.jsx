@@ -43,7 +43,7 @@ const Page = () => {
 
     toast.update(delToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
 
-    fetch('/api/admin/product/category', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
+    await fetch('/api/admin/product/category', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
@@ -59,10 +59,10 @@ const Page = () => {
       });
   };
 
-  const FetchBlogs = async () => {
+  const FetchCategory = async () => {
     setRowLoader(true);
 
-    fetch(`/api/admin/product/category?page=${page}&limit=${limit}`)
+    await fetch(`/api/admin/product/category?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.categories.length > 0) {
@@ -77,22 +77,22 @@ const Page = () => {
 
   // get team members data
   useEffect(() => {
-    FetchBlogs();
+    FetchCategory();
   }, [page]);
 
-  useEffect(() => {
-    if (reRender) {
-      FetchBlogs();
-      setReRender(false);
-    }
-  }, [reRender]);
+  // useEffect(() => {
+  //   if (reRender) {
+  //     FetchCategory();
+  //     setReRender(false);
+  //   }
+  // }, [reRender]);
 
   return (
     <>
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
         <ActionBtns buttons={[{ type: 'link', text: 'Add Category', link: '/neu-admin/product/category/create' }]} />
         <div className="flex h-full w-full flex-col items-center">
-          <Table header={['Product Title', 'Slug', 'Category', 'Actions']}>
+          <Table header={['Product Title', 'Slug', 'Menu', 'Actions']}>
             {/* hello pengea/dnd */}
             {rowLoader ? (
               <RowLoader count={5} />

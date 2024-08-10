@@ -5,10 +5,19 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 const Page = () => {
-  const [formData, setFormData] = useState({ title: '', isvisible: 1 });
+  const [mediaPopup, setMediaPopup] = useState(false);
+  const [formData, setFormData] = useState({ title: '', thumbnail: '', isvisible: 1 });
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    if (files.length > 0) {
+      setFormData({ ...formData, thumbnail: files[0].url });
+    }
+  }, [files]);
 
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
+    thumbnail: Yup.string().required('Thumbnail is required!'),
     isvisible: Yup.number().required('Visibility is required!'),
   });
 
@@ -59,6 +68,7 @@ const Page = () => {
 
   return (
     <div className="p-5">
+      <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} />
       <h2 className="text-3xl font-semibold">Create Category</h2>
       <form action={CreateCategory} className="mt-4 space-y-4">
         <div>
@@ -66,6 +76,17 @@ const Page = () => {
             Title
           </label>
           <input name="title" value={formData.title} onChange={HandleChange} type="text" className="custom-input" />
+        </div>
+        <div>
+          <label htmlFor="thumbnail" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+            Thumbnail
+          </label>
+          <div className="flex rounded-md border border-gray-500 px-3 py-2">
+            <input readOnly name="thumbnail" value={formData.thumbnail} type="text" placeholder="Select Single File" className="block w-6/12 w-full rounded-lg bg-gray-500 bg-white px-5 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:placeholder-gray-500" />
+            <button type="button" onClick={() => setMediaPopup(true)} className="rounded-md bg-b4 px-4 py-1 text-white">
+              Select
+            </button>
+          </div>
         </div>
         <div>
           <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">

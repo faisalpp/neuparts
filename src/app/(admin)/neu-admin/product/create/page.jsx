@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 const Page = () => {
   const [mediaPopup, setMediaPopup] = useState(false);
   const [mediaPopup2, setMediaPopup2] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '', model_no: '', condition: '', type: '', category: '', stock: 0, images: [], threesixty: [], description: '', specification: '', delivery: '' });
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState([]);
@@ -41,6 +42,25 @@ const Page = () => {
     const { value, name } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  // Get Category
+  const FetchCategory = async () => {
+    await fetch(`/api/admin/product/category`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.categories.length > 0) {
+          setCategories(data.categories);
+        } else {
+          setCategories([]);
+        }
+      });
+  };
+
+  useEffect(() => {
+    FetchCategory();
+  }, ['']);
+
+  // Create Product
 
   const CreateProduct = async (e) => {
     try {
@@ -147,9 +167,11 @@ const Page = () => {
           </label>
           <select name="category" value={formData.category} onChange={HandleChange} className="custom-input !py-3">
             <option value="">Select Category</option>
-            <option value="appliance">Appliance</option>
-            <option value="accessories">Accessories</option>
-            <option value="electrical">Electrical</option>
+            {categories.map((item, index) => (
+              <option value={item._id} key={index}>
+                {item.title}
+              </option>
+            ))}
           </select>
         </div>
         <div>

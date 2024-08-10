@@ -102,7 +102,7 @@ const Page = () => {
                   <TdImage src={product.images[0]?.url} css="w-20 h-14 object-fit rounded" />
                   <Text text={product.title} />
                   <Text text={product.slug} />
-                  <Text text={product.category} />
+                  <Text text={product.category?.title} />
                   <Actions id={product._id} handleDelete={DeleteProduct} data={product} isEditLink={true} editLink={`/neu-admin/product/edit/${product._id}`} />
                 </Row>
               ))

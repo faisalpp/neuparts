@@ -51,7 +51,7 @@ export async function GET(request) {
     let query = {};
 
     const ReviewCountPromise = Product.estimatedDocumentCount(query);
-    const GetProductsPromise = Product.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
+    const GetProductsPromise = Product.find(query).populate('category').sort({ createdAt: -1 }).limit(limit).skip(skip);
 
     const [count, products] = await Promise.all([ReviewCountPromise, GetProductsPromise]);
 
