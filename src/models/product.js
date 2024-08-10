@@ -11,7 +11,7 @@ const ProductSchema = new mongoose.Schema(
     type: { type: String, required: true },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ProductCategory",
+      ref: 'ProductCategory',
     },
     stock: { type: Number, required: true },
     images: { type: Array, required: true },
@@ -24,4 +24,4 @@ const ProductSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.Product || mongoose.model('Product', ProductSchema,'products');
+export default mongoose.models.Product || mongoose.model('Product', ProductSchema);

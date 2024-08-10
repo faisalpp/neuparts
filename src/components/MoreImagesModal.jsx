@@ -5,8 +5,8 @@ import Iframe from '../components/Reusable/Ifram';
 import Image from 'next/image';
 
 const MoreImagesModal = ({ state, setState, medias }) => {
-  const frstImg = medias ? medias.find((item) => item.file === 'image') : null;
-  const [image, setImage] = useState(frstImg ? { file: frstImg.file, data: frstImg.data } : {});
+  const frstImg = medias ? medias.find((item) => item.type === 'webp') : null;
+  const [image, setImage] = useState(frstImg ? { file: frstImg.url, data: frstImg.url } : {});
 
   return (
     <div className={`fixed ${state ? 'flex' : 'hidden'} top-0 z-[120] h-screen w-full items-center justify-center bg-black/50`}>
@@ -24,10 +24,10 @@ const MoreImagesModal = ({ state, setState, medias }) => {
             {medias &&
               medias.map((img, indx) => (
                 <div key={indx} className="relative flex cursor-pointer items-center justify-center rounded-md border-[1px] border-b3 px-1 py-1">
-                  {img.file === 'image' ? (
+                  {img.file === 'webp' ? (
                     <>
-                      <div onClick={() => setImage({ file: img.file, type: img.type, data: img.data, thumbnail: img.preview ? img.preview : '' })} className="absolute h-full w-12 bg-transparent"></div>
-                      <Image width={400} height={400} quality={100} src={img.data} alt="" className="h-[50px] w-[60px] object-contain" />
+                      <div onClick={() => setImage({ file: img.url, type: img.type, data: img.url, thumbnail: img.url ? img.url : '' })} className="absolute h-full w-12 bg-transparent"></div>
+                      <Image width={400} height={400} quality={100} src={img.url} alt="" className="h-[50px] w-[60px] object-contain" />
                     </>
                   ) : null}
                   {img.file === 'video' && img.type === 'url' ? (

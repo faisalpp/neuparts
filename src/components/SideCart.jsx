@@ -116,15 +116,7 @@ const SideCart = ({ sCart, cartMenuRef, setsCart }) => {
                   </div>
                   <h3 className="line-clamp-3 text-xs font-semibold lg:text-sm">GE 1.7 cu. ft. Over the Range Microwave with Convenience Cooking Controls</h3>
                 </div>
-                <div className="mb-3 flex w-full flex-col gap-6 space-y-2 border border-b1/10 px-3 lg:px-5">
-                  {products?.map((item, pindex) =>
-                    Array.from({ length: item.count }).map((_, index) => (
-                      <>
-                        <SideCartCard indx={`${pindex}-${index}-delivery`} key={`${pindex}-${index}-delivery`} cartId={cartId} item={item} type="delivery" />
-                      </>
-                    ))
-                  )}
-                </div>
+                <div className="mb-3 flex w-full flex-col gap-6 space-y-2 border border-b1/10 px-3 lg:px-5">{products?.map((item, pindex) => Array.from({ length: item.count }).map((_, index) => <SideCartCard indx={`${pindex}-${index}-delivery`} key={`${pindex}-${index}-delivery`} cartId={cartId} item={item} type="delivery" />))}</div>
               </div>
               <div className="relative flex flex-col justify-end gap-4 border-t border-gray-300 p-4 lg:gap-6 lg:p-6 maxlg:pb-0">
                 <div className="flex justify-between">

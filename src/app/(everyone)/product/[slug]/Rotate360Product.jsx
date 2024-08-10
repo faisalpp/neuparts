@@ -3,7 +3,7 @@ import React from 'react';
 import ToolTip from '@/components/ToolTip';
 import FourStar from '@/components/svgs/FourStar';
 
-const Rotate360Product = () => {
+const Rotate360Product = ({ product }) => {
   return (
     <div className="rounded-3xl">
       <div id="360-view" className="maincontainer flex flex-col items-center gap-5 py-10 lg:py-14 xl:py-20 ">
@@ -34,10 +34,10 @@ const Rotate360Product = () => {
             <div className="flex w-full items-center justify-center border-b border-gray-300 py-[15px]">
               <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
                 <FourStar />
-                New
+                {product?.condition}
               </div>
             </div>
-            <div className="w-full border-b-[1px] border-gray-300 py-4 text-center font-normal">WF45B6300AC</div>
+            <div className="w-full border-b-[1px] border-gray-300 py-4 text-center font-normal">{product?.model_no}</div>
             <div className="flex w-full items-center justify-center space-x-2 border-gray-300 py-3">
               <div className="flex items-center justify-center space-x-1 rounded-md border border-gray-300 py-1 pl-2 pr-2 sm:pr-8">
                 <Image width={200} height={200} quality={100} className="h-6 w-6" src="/nueshield.webp" alt="nueshield" />

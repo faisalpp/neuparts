@@ -33,9 +33,27 @@ const Product = ({ slug }) => {
   const [quantity, setQuantity] = useState(1);
 
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [loading2, setLoading2] = useState(false);
   const [date, setDate] = useState({});
+
+  const [product, setProduct] = useState('');
+
+  const FetchProduct = async () => {
+    await fetch(`/api/front/product?slug=${slug}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setProduct(data.product);
+          setLoading(false);
+        }
+      });
+  };
+
+  // get team members data
+  useEffect(() => {
+    FetchProduct();
+  }, ['']);
 
   const [deliveryPoints, setDeliveryPoints] = useState([
     { title: 'NeuShield <br /> 30-Day Warranty', image: '/svgs/shield-security.webp' },
@@ -47,134 +65,6 @@ const Product = ({ slug }) => {
   const router = useRouter();
 
   // const [product, setProduct] = useState([]);
-  const [product, setProduct] = useState({
-    productType: 'parent',
-    title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text',
-    slug: 'whirlpool-refrigerator-master',
-    category: 'refrigerators',
-    feature: 'ice-makers',
-    type: 'french-door-refrigerator',
-    color: 'white',
-    brand: 'general-electronics',
-    fuelType: '',
-    regPrice: 250,
-    salePrice: 200.5,
-    isSale: true,
-    rating: 3,
-    stock: 82,
-    modelNo: '123456',
-    itemId: '654321',
-    keyFeatures: [
-      {
-        title: '1st Feature',
-        description: 'This is Refrigerator First Feature.',
-        media: {
-          file: 'image',
-          type: 'url',
-          data: '/popular-parts.webp',
-          preview: '',
-        },
-      },
-      {
-        title: '2nd Feature',
-        description: 'This second feature.',
-        media: {
-          file: 'image',
-          type: 'url',
-          data: '/popular-parts.webp',
-          preview: '',
-        },
-      },
-    ],
-    featureVideo: {
-      type: 'url',
-      data: 'https://youtube.com/embed/IXgTwfaRiX8',
-      prevImg: 'https://img.youtube.com/vi/IXgTwfaRiX8/mqdefault.jpg',
-    },
-    threeSixty: {
-      type: 'url',
-      data: 'https://teal-evangelia-50.tiiny.site',
-      prevImg: 'https://img.youtube.com/vi/teal-evangelia-50.tiiny.site/mqdefault.jpg',
-    },
-    media: [
-      {
-        file: 'image',
-        type: 'url',
-        data: '/popular-parts.webp',
-        preview: '/popular-parts.webp',
-      },
-      {
-        file: 'image',
-        type: 'url',
-        data: '/popular-parts.webp',
-        preview: '/popular-parts.webp',
-      },
-      {
-        file: 'image',
-        type: 'url',
-        data: '/popular-parts.webp',
-        preview: '/popular-parts.webp',
-      },
-      {
-        file: 'image',
-        type: 'url',
-        data: '/popular-parts.webp',
-        preview: '/popular-parts.webp',
-      },
-      {
-        file: 'image',
-        type: 'url',
-        data: '/popular-parts.webp',
-        preview: '/popular-parts.webp',
-      },
-      {
-        file: 'image',
-        type: 'url',
-        data: '/popular-parts.webp',
-        preview: '/popular-parts.webp',
-      },
-    ],
-    bulletDescription: ['demo 1', 'demo 2', 'demo 3', 'demo 4', 'demo 5'],
-    tags: [
-      {
-        id: 1,
-        icon: '',
-        name: '3 Door French Door',
-        selected: true,
-      },
-      {
-        id: 2,
-        icon: 'rack',
-        name: '3rd Rack',
-        selected: false,
-      },
-      {
-        id: 3,
-        icon: '',
-        name: '4 DOOR FLEX QUATRO',
-        selected: false,
-      },
-      {
-        id: 4,
-        icon: '',
-        name: '4 DOOR FLEX',
-        selected: false,
-      },
-      {
-        id: 5,
-        icon: '',
-        name: '4 DOOR FRENCH DOOR',
-        selected: false,
-      },
-    ],
-    description: '<p>thsi description</p>',
-    specification: '<p>this is specification</p>',
-    deliveryInfo: '<p>this is delivery info</p>',
-    metaTitle: 'this meta title',
-    metaDescription: 'this is meta description',
-    metaKeywords: 'demo, refrigerator',
-    subCategory: '',
-  });
   const [otherProducts, setOtherProducts] = useState([
     {
       slug: 'test',
@@ -264,8 +154,6 @@ const Product = ({ slug }) => {
     setOpenModal('');
   };
 
-  const moreImg = product.media ? product.media.find((item) => item.file === 'image') : null;
-
   // Tags Elements Extended End
 
   const handlePickupDate = () => {
@@ -297,11 +185,11 @@ const Product = ({ slug }) => {
 
   const GetRecentAppliances = async () => {};
 
-  useEffect(() => {
-    if (product.length > 0) {
-      GetRecentAppliances();
-    }
-  }, [product]);
+  // useEffect(() => {
+  //   if (product.length > 0) {
+  //     GetRecentAppliances();
+  //   }
+  // }, [product]);
   return (
     <>
       {loading ? (
@@ -313,10 +201,10 @@ const Product = ({ slug }) => {
             <StickyNavbar addCart={addToCart} product={product} state={showNavbar} />
           </div>
 
-          <MoreImagesModal medias={product.media} state={imgModal} setState={setImgModal} />
+          <MoreImagesModal medias={product.images} state={imgModal} setState={setImgModal} />
 
           {/* All Modal */}
-          <CustomModal subCategory={product.subCategory} openmodal={openModal} closeModal={handleCloseModal} />
+          {/* <CustomModal subCategory={product.subCategory} openmodal={openModal} closeModal={handleCloseModal} /> */}
           {/* End */}
           {/* Bread Crumbs Start */}
           <div className="maincontainer flex items-center py-10">
@@ -346,26 +234,24 @@ const Product = ({ slug }) => {
               )}
               <div className="flex gap-2 md:gap-5 maxmd:flex-col">
                 <div className="flex h-full min-w-[70px] flex-col gap-2 2xl:min-w-100px maxmd:order-2 maxmd:flex-row">
-                  {product.media
-                    ? product.media.slice(0, 4).map((media, index) => (
-                        <>
-                          <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setMediaViewer({ file: media.file, data: media.data, thumbnail: media.preview ? media.preview : '' })}>
-                            <Image width={200} height={200} quality={100} src={media.data} className="w-10 2xl:w-20" alt="product" />
-                          </div>
-                        </>
+                  {product.images
+                    ? product.images.slice(0, 4).map((image, index) => (
+                        <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setMediaViewer({ file: image.url, data: image.url, thumbnail: image.url })}>
+                          <Image width={200} height={200} quality={100} src={image.url} className="w-10 2xl:w-20" alt="product" />
+                        </div>
                       ))
                     : null}
-                  {product.media?.length > 4 ? (
+                  {product.images?.length > 4 ? (
                     <div className="relative h-[70px] w-[70px] cursor-pointer rounded-lg border-[1px] border-blue-400 px-2 py-1 2xl:h-100px 2xl:w-100px">
                       <div onClick={() => setImgModal(true)} className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-b3/70 font-semibold text-white">
                         +4
                       </div>
-                      <Image width={200} height={200} quality={100} src={moreImg ? moreImg.data : null} className="h-full w-full object-contain" alt="product" />
+                      <Image width={200} height={200} quality={100} src={product.images[4] ? product.images[4].url : null} className="h-full w-full object-contain" alt="product" />
                     </div>
                   ) : null}
                 </div>
                 <div className="relative flex w-full items-center justify-center rounded-lg border-gray-300 px-2 py-10 lg:h-96 lg:border 2xl:h-auto 2xl:py-14 maxmd:order-1">
-                  {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={mediaViewer.data} alt={product.title} className="h-auto w-48" /> : null}
+                  {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={product.images ? product.images[0].url : ''} alt={product.images ? product.images[0].alt : ''} className="h-auto w-48" /> : null}
 
                   {/* Compatible Badge */}
                   <Image width={400} height={400} quality={100} src="/compatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" />
@@ -380,7 +266,7 @@ const Product = ({ slug }) => {
               <div className="mt-10 hidden flex-col items-center justify-center gap-y-3 lg:flex">
                 {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
                 {product.specification ? <FaqAccordion parser="true" title="Specifications" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.specification} chevrown /> : null}
-                {product.deliveryInfo ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.deliveryInfo} chevrown /> : null}
+                {product.delivery ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.delivery} chevrown /> : null}
               </div>
             </div>
 
@@ -393,11 +279,11 @@ const Product = ({ slug }) => {
               </div>
               <div className="flex gap-5 whitespace-nowrap sm:items-center">
                 <div className="flex items-center gap-5">
-                  <h4 className="text-2xl font-bold text-b3 lg:text-3xl ">${product.isSale ? product.salePrice : product.regPrice}</h4>
-                  {product.isSale ? <strike className="text-lg">${product.regPrice}</strike> : null}
+                  <h4 className="text-2xl font-bold text-b3 lg:text-3xl ">${product.sale_price ? product.sale_price : product.regular_price}</h4>
+                  {product.sale_price ? <strike className="text-lg">${product.regular_price}</strike> : null}
                 </div>
                 <div className="flex items-center gap-5 sm:w-full sm:justify-between lg:flex-wrap">
-                  {product.isSale ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-xs font-semibold text-black">${product.regPrice - product.salePrice} Savings</span> : null}
+                  {product.sale_price ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-xs font-semibold text-black">${product.regular_price - product.sale_price} Savings</span> : null}
                   {isFav ? (
                     <button onClick={(e) => removeFavorite(e)} className="hidden items-center justify-end text-b3 hover:underline md:flex">
                       <AiFillHeart className={`${favLoad ? 'animate-bounce' : null}`} />
@@ -418,16 +304,16 @@ const Product = ({ slug }) => {
                   </h4>
                   <IoSettingsOutline className="ml-2 text-base text-b16/50" />
                 </div>
-                <span className="text-base font-semibold text-b1">LGWM0L2CRV2T2</span>
+                <span className="text-base font-semibold text-b1">{product.part_number}</span>
               </div>
               <div className="mt-2 flex items-center space-x-5 lg:mt-4 lg:space-x-5">
                 <div className="flex items-center gap-1">
                   <h4 className="w-max text-base font-semibold text-b16/50">Condition</h4>
                   <ToolTip color="text-b16/50" />
                 </div>
-                <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
+                <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold uppercase text-white">
                   <FourStar />
-                  New
+                  {product.condition}
                 </div>
                 {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div> */}
                 {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-3 py-1 text-xs font-semibold text-white">New / Open Box</div> */}
@@ -440,19 +326,19 @@ const Product = ({ slug }) => {
                   <h4 className="w-max pr-3 text-base font-semibold text-b16/50">Type</h4>
                   <AiOutlineTag className="ml-2 h-5 w-5 text-b3" />
                 </div>
-                <span className="text-base font-semibold text-b1">Aftermarket Replacement Part</span>
+                <span className="text-base font-semibold text-b1">{product.type}</span>
               </div>
-              {product.isSale ? (
+              {product.sale_price ? (
                 <div className="mt-2 flex items-center gap-4">
                   <div className="flex text-sm font-semibold text-b16/50">
                     <h4>Discount</h4>
                     <span>%</span>
                   </div>
                   <div className="w-full rounded-lg bg-gray-200 md:w-52 maxmd:max-w-52">
-                    <span className="flex h-3 w-2/4 rounded-lg bg-gradient-to-r from-b4 to-b7"></span>
+                    <span className="flex h-3 w-2/4 rounded-lg bg-gradient-to-r from-b4 to-b7" style={{ width: `${((product.regular_price - product.sale_price) / product.regular_price) * 100}%` }}></span>
                   </div>
-                  <div className="flex items-center justify-center whitespace-nowrap rounded-full bg-b7 px-3 py-1.5 text-white md:px-5 md:py-2 maxmd:text-sm">
-                    <GasSvg /> 30% Off
+                  <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-b7 px-3 py-1.5 text-white md:px-5 md:py-2 maxmd:text-sm">
+                    <GasSvg /> {(((product.regular_price - product.sale_price) / product.regular_price) * 100).toFixed(1)}% Off
                   </div>
                 </div>
               ) : null}
@@ -466,7 +352,7 @@ const Product = ({ slug }) => {
                       <button type="button" onClick={() => setQuantity(quantity - 1)} className={`absolute left-2 top-2 grid h-6 w-6 place-items-center rounded-full text-sm font-medium leading-3 text-white ${quantity === 1 ? 'pointer-events-none bg-b3/25 text-gray-400' : 'bg-b3'}`}>
                         <MinusIcon className="h-4 w-4" />
                       </button>
-                      <input type="number" value={quantity} className="remove-arrow h-10 w-24 rounded-full bg-[#F3F3F3] px-8 text-center text-sm font-semibold text-black outline-none hover:border-b3/90" />
+                      <input type="number" value={quantity} readOnly className="remove-arrow h-10 w-24 rounded-full bg-[#F3F3F3] px-8 text-center text-sm font-semibold text-black outline-none hover:border-b3/90" />
                       <button type="button" onClick={() => setQuantity(quantity + 1)} className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full bg-b3 text-sm font-medium leading-3 text-white">
                         <PlusIcon className="h-4 w-4" />
                       </button>
@@ -510,18 +396,18 @@ const Product = ({ slug }) => {
               </div>
 
               {/* Other Product Section */}
-              <BuyingOtherOptions slug={slug} otherProducts={otherProducts} modelNo={product.modelNo} />
+              <BuyingOtherOptions slug={slug} otherProducts={otherProducts} modelNo={product.model_no} />
 
               <div className="mt-10 hidden flex-col items-center justify-center gap-y-3 maxlg:flex">
                 {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
                 {product.specification ? <FaqAccordion parser="true" title="Specifications" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.specification} chevrown /> : null}
-                {product.deliveryInfo ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.deliveryInfo} chevrown /> : null}
+                {product.delivery ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.delivery} chevrown /> : null}
               </div>
             </div>
           </div>
 
           {/* 360 Degree Product Section */}
-          <Rotate360Product />
+          <Rotate360Product product={product} />
 
           {/* More Parts */}
           <MoreParts />

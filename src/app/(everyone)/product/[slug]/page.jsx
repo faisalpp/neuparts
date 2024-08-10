@@ -4,6 +4,7 @@ import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
 
 const Page = async ({ params }) => {
   const { slug } = params;
+
   return (
     <>
       <ProductSearchBar />
