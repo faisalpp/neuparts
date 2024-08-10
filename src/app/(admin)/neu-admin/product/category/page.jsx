@@ -18,7 +18,7 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(5);
 
   const DeleteCategory = async (id) => {
     if (!id) {
@@ -89,7 +89,7 @@ const Page = () => {
 
   return (
     <>
-      <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
+      <div className="mx-10 flex flex-col">
         <ActionBtns buttons={[{ type: 'link', text: 'Add Category', link: '/neu-admin/product/category/create' }]} />
         <div className="flex h-full w-full flex-col items-center">
           <Table header={['Product Title', 'Slug', 'Menu', 'Actions']}>

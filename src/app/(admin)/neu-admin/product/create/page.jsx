@@ -144,7 +144,7 @@ const Page = () => {
           <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
             Condition
           </label>
-          <select name="condition" value={formData.type} onChange={HandleChange} className="custom-input !py-3">
+          <select name="condition" value={formData.condition} onChange={HandleChange} className="custom-input !py-3">
             <option value="">Select Condition</option>
             <option value="new">New</option>
             <option value="used">Used</option>

@@ -22,7 +22,7 @@ const layout = ({ children }) => {
             {/* Navbar End */}
 
             {/* Main Content Start */}
-            <main className="relative overflow-y-auto">{children}</main>
+            <main className="relative overflow-y-auto pb-10">{children}</main>
             {/* Main Content Start */}
           </div>
         </div>
