@@ -62,6 +62,5 @@ const CartSchema = new Schema({
 }, { timestamps: true }); // Enable automatic timestamps
 
 // Create and export the Cart model
-const Cart = mongoose.model('Cart', CartSchema);
-
+const Cart = mongoose.models.Cart || mongoose.model('Cart', CartSchema,'carts');
 module.exports = Cart;

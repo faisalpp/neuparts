@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import {connect} from '@/DB/index';
 import Product from '@/models/product'
-import Cart from '@/models/cart'
+// import Cart from '@/models/cart'
 
 export async function POST(request){
     await connect();
@@ -11,46 +11,47 @@ export async function POST(request){
      
      //get product
      let PRODUCT;
-     try{
-      PRODUCT = await Product.findOne({_id:productId});
+    //  try{
+      PRODUCT = await Product.findOne({_id:productId}).populate('category');
       if(!PRODUCT){
-        return  NextResponse.json({message: "Invalid product id!",success: false})   
-      } 
-     }catch(error){
-        return  NextResponse.json({message: "Something Went Wrong!",success: false})  
-     }
+        return  NextResponse.json({message: "Invalid product id!",success: false},{status:404})   
+      }
+      return NextResponse.json({PRODUCT}, {status: 200}) 
+    //  }catch(error){
+    //     return  NextResponse.json({message: "Something Went Wrong!",success: false},{status:500})  
+    //  }
      
      //get cart by id
-     let CART;
-     if(cartId != ''){
-      try{
-        CART = await Cart.findOne({_id:cartId})
-      }catch(error){
-       return  NextResponse.json({message: "Something Went Wrong!",success: false})
-      }
-     }
+    //  let CART;
+    //  if(cartId != ''){
+    //   try{
+    //     CART = await Cart.findOne({_id:cartId})
+    //   }catch(error){
+    //    return  NextResponse.json({message: "Something Went Wrong!",success: false})
+    //   }
+    //  }
 
      //if not exist create new cart
-     if(!CART){
-       try{
-        CART = await Cart.create({userId:null})
-       }catch(error){
-        return  NextResponse.json({message: "Something Went Wrong!",success: false})   
-       }
-     }
+    //  if(!CART){
+    //    try{
+    //     CART = await Cart.create({userId:null})
+    //    }catch(error){
+    //     return  NextResponse.json({message: "Something Went Wrong!",success: false})   
+    //    }
+    //  }
 
      
      //create cart item
      // Create the cart item
-    const cartItem = {
-        productId,
-        quantity,
-        category: {
-          id: category._id,
-          title: category.title,
-          image: category.image
-        }
-      };
+    // const cartItem = {
+    //     productId,
+    //     quantity,
+    //     category: {
+    //       id: category._id,
+    //       title: category.title,
+    //       image: category.image
+    //     }
+    //   };
 
 
 

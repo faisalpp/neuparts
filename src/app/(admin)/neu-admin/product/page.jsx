@@ -65,6 +65,7 @@ const Page = () => {
     fetch(`/api/admin/product?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         if (data.products.length > 0) {
           setPageCount(data.pagination.pageCount);
           setProducts(data.products);
