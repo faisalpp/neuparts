@@ -40,7 +40,7 @@ const Product = ({ slug }) => {
   const [product, setProduct] = useState('');
 
   const FetchProduct = async () => {
-    await fetch(`/api/front/product?slug=${slug}`)
+    await fetch(`/api/front/product/single?slug=${slug}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
