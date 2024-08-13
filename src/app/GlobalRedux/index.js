@@ -1,30 +1,28 @@
+'use client';
+
 import { configureStore } from "@reduxjs/toolkit";
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
+import { persistReducer} from 'redux-persist';
 import thunk from 'redux-thunk';
+import CartSlice from '@/app/GlobalRedux/slices/CartSlice'
 
 const reducers = combineReducers({
-  user: '',
-  cart: '',
-  admin: '',
-  order: '',
-  laundary: '',
-  adminCart: ''
+  cart: CartSlice,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
   devTools: true,
-  blacklist: ['adminCart'],
+  blacklist: [],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-const store = configureStore({
-  reducer: persistedReducer,
-  middleware: [thunk]
-});
-
-export default store;
+export const makeStore = () => {
+  return configureStore({
+    reducer: persistedReducer,
+    middleware: [thunk],
+  }); 
+}

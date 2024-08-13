@@ -58,7 +58,7 @@ const Page = () => {
 
   useEffect(() => {
     FetchCategory();
-  }, ['']);
+  }, []);
 
   // Create Product
 
@@ -119,13 +119,13 @@ const Page = () => {
             <label htmlFor="regular_price" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
               Regular Price
             </label>
-            <input name="regular_price" value={formData.regular_price} onChange={HandleChange} type="number" className="custom-input" />
+            <input min={0} name="regular_price" value={formData.regular_price} onChange={HandleChange} type="number" className="custom-input" />
           </div>
           <div>
             <label htmlFor="sale_price" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
               Sale Price
             </label>
-            <input name="sale_price" value={formData.sale_price} onChange={HandleChange} type="number" className="custom-input" />
+            <input min={0} name="sale_price" value={formData.sale_price} onChange={HandleChange} type="number" className="custom-input" />
           </div>
         </div>
         <div>

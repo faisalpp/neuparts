@@ -6,6 +6,7 @@ const ProductSchema = new mongoose.Schema(
     regular_price: { type: Number, required: true },
     sale_price: { type: Number, required: true },
     part_number: { type: String, required: true },
+    is_sale: { type: Boolean, required: true },
     model_no: { type: String, required: true },
     condition: { type: String, required: true },
     type: { type: String, required: true },
