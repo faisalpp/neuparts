@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { BiSearch, BiUserCircle } from 'react-icons/bi';
 import { IoMenu } from 'react-icons/io5';
@@ -13,13 +13,14 @@ import NavDropDown from '../Navbar/NavDropDown';
 import NavSearchMenu from '@/components/NavSearchMenu';
 import { FiPhone } from 'react-icons/fi';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
-import {toggleCart} from '@/app/GlobalRedux/slices/CartSlice'
+import { toggleCart } from '@/app/GlobalRedux/slices/CartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Navbar = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [megMenu, setMegMenu] = useState(false);
   const [searchMenu, setSearchMenu] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const searchButtonRef = useRef(null);
   const searchRef = useRef(null);
@@ -35,7 +36,7 @@ const Navbar = () => {
   const UserfirstName = '';
   const AdminfirstName = '';
 
-  const cartCount = useSelector((state)=>state.cart.cartCount);
+  const cartCount = useSelector((state) => state.cart.cartCount);
 
   const handleAdminLogout = async (e) => {
     e.preventDefault();
@@ -44,6 +45,21 @@ const Navbar = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
   };
+
+  const getCategories = async () => {
+    const res = await fetch('/api/front/navbar');
+    const data = await res.json();
+    const transformedCategories = data.categories.map((category) => ({
+      name: category.title,
+      url: `/products?category=${category.slug}`,
+    }));
+
+    setCategories(transformedCategories);
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, ['']);
 
   return (
     <>
@@ -64,10 +80,7 @@ const Navbar = () => {
               {/* Search Dropdown */}
               <NavSearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
             </div>
-            <div
-              onClick={() => dispatch(toggleCart())}
-              className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-b2 px-4 text-white"
-            >
+            <div onClick={() => dispatch(toggleCart())} className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-b2 px-4 text-white">
               <AiOutlineShoppingCart />
               <span className="ml-2 text-xs font-medium">Cart</span>
               <span className="ml-2 h-4 w-4 rounded-full bg-b3 text-center text-xs">{cartCount}</span>
@@ -228,19 +241,7 @@ const Navbar = () => {
               <div className="nav____item">
                 <span>Shop&nbsp;Now</span>
               </div>
-              <NavDropDown
-                icon={<RiArrowDropDownLine className="text-2xl" />}
-                title="Products"
-                links={[
-                  { name: 'Refrigerators', url: '/product/upper-rack-for-dish-washers' },
-                  { name: 'Washer & Dryer Sets', url: '/product/upper-rack-for-dish-washers' },
-                  { name: 'Dishwashers', url: '/product/upper-rack-for-dish-washers' },
-                  { name: 'Washing Machines', url: '/product/upper-rack-for-dish-washers' },
-                  { name: 'Dryers', url: '/product/upper-rack-for-dish-washers' },
-                  { name: 'Others', url: '/product/upper-rack-for-dish-washers' },
-                ]}
-                bold={600}
-              />
+              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} />
               <NavDropDown
                 icon={<RiArrowDropDownLine className="text-2xl" />}
                 title="Popular Brands"

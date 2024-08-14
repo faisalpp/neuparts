@@ -19,7 +19,8 @@ class APIFilters {
   }
   filter() {
     const queryCopy = { ...this.queryStr };
-    const removeFields = ['keyword', 'limit'];
+    const category = queryCopy?.category;
+    const removeFields = ['keyword', 'category', 'limit', 'page'];
     removeFields.forEach((key) => delete queryCopy[key]);
     let output = {};
     let prop = '';
@@ -41,7 +42,12 @@ class APIFilters {
       }
     }
 
-    this.query = this.query.find(output);
+    console.log(category);
+
+    this.query = this.query.find(output).populate({
+      path: 'category',
+      match: { slug: category ? category : { $exists: true } }, // Match the category's slug
+    });
     return this;
   }
 

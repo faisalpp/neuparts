@@ -9,9 +9,9 @@ const ProductCard3 = ({ isGrid, product }) => {
   return (
     <>
       {isGrid ? (
-        <Link href={`/product/${product.slug}`} className="grid place-items-center rounded-2xl border border-b16/10 p-2.5 md:p-4 2xl:p-5">
+        <Link href={`/product/${product.slug}`} className="flex flex-col gap-5 rounded-2xl border border-b16/10 p-2.5 md:p-4 2xl:p-5">
           <div className="relative">
-            <Image width={400} height={400} quality={100} src={product.image} alt="Product Feature Image" className={`mx-auto h-32 w-full object-contain md:h-[220px] 2xl:w-2/3 maxmd:p-4`} />
+            <Image width={400} height={400} quality={100} src={product.images[0].url} alt={product.images[0].alt} className={`mx-auto h-32 w-full object-cover md:h-[220px] 2xl:w-2/3 maxmd:p-4`} />
           </div>
           <div className="w-full space-y-3">
             <button type="button" className="flex items-center gap-2 text-b3 maxmd:text-xs">
@@ -25,7 +25,7 @@ const ProductCard3 = ({ isGrid, product }) => {
                 <Tag />
               </span>
               <div className="inline-flex w-fit rounded-full bg-b3 px-1.5 py-1 text-10px font-medium text-white sm:px-3 md:text-xs">
-                ${product.salePrice} - ${product.regPrice}
+                ${product.sale_price} - ${product.regular_price}
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-1 coxs:gap-2">
@@ -43,7 +43,7 @@ const ProductCard3 = ({ isGrid, product }) => {
       ) : (
         <div className="flex w-full items-center space-x-2 rounded-2xl border border-b16/10 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10">
           <Link href={`/product/${product.slug}`}>
-            <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
+            <Image width={400} height={400} quality={100} src={product.images[0].url} alt={product.images[0].alt} className="h-auto w-[124px] object-cover md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
           </Link>
 
           <div className="flex w-full flex-col gap-2 px-1 sm:gap-3 md:w-[60%] lg:px-5 3xl:w-[55%]">
@@ -61,7 +61,7 @@ const ProductCard3 = ({ isGrid, product }) => {
                 <Tag />
               </span>
               <div className="inline-flex w-fit rounded-full bg-b3 px-3 py-1 text-10px font-medium text-white sm:text-xs">
-                ${product.salePrice} - ${product.regPrice}
+                ${product.sale_price} - ${product.regular_price}
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-1 coxs:gap-2">

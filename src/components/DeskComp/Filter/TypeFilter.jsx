@@ -1,50 +1,51 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
+import { useRouter } from 'next/navigation';
 
-const TypeFilter = ({ title, filters, setFilt, filt }) => {
-  const totalProductCount = filters.reduce((sum, item) => sum + item.productCount, 0);
+const TypeFilter = ({ type, title, filters }) => {
+  const [filterActive, setFilterActive] = useState('all');
 
-  const handleType = (e, cat) => {
-    e.preventDefault();
-    if (cat === 'all') {
-      delete filt.category;
-      delete filt.rating;
-      setFilt((prev) => {
-        return { ...prev };
-      });
-    } else {
-      setFilt((prev) => {
-        return { ...prev, category: cat };
-      });
+  const router = useRouter();
+
+  let queryParams;
+  const handleFilterparams = (name, value) => {
+    if (typeof window !== 'undefined') {
+      queryParams = new URLSearchParams(window.location.search);
     }
+    setFilterActive(value);
+    if (value === 'all') {
+      queryParams.delete(name);
+    } else if (queryParams.has(name)) {
+      queryParams.set(name, value);
+    } else {
+      queryParams.append(name, value);
+    }
+    const parth = window.location.pathname + '?' + queryParams.toString();
+    router.push(parth);
   };
 
   return (
     <>
       <DropDown title={title}>
         <>
-          <div className="flex text-sm hover:underline">
-            <h4 onClick={(e) => handleType(e, 'all')} className="font-bold">
-              All
-            </h4>
+          <div className={`flex text-sm hover:underline ` + (filterActive == 'all' && 'font-bold')}>
+            <h4 onClick={(e) => handleFilterparams(type, 'all')}>All</h4>
             <div className="flex w-full justify-end text-xs">
-              <span>({totalProductCount})</span>
+              {/* <span>({totalProductCount})</span> */}
+              <span>(23)</span>
             </div>
           </div>
-          {filters
-            ? filters.map((item, index) =>
-                item.productCount > 0 ? (
-                  <span key={index} onClick={(e) => handleType(e, item.slug)}>
-                    <div className="flex text-sm hover:underline">
-                      <h4 className="w-full">{item.title}</h4>
-                      <div className="flex w-full justify-end text-xs">
-                        <span>({item.productCount})</span>
-                      </div>
-                    </div>
-                  </span>
-                ) : null
-              )
-            : null}
+          {filters.map((item, index) => (
+            <span key={index} onClick={(e) => handleFilterparams(type, item.slug)}>
+              <div className={`flex text-sm hover:underline ` + (filterActive == item.slug && 'font-bold')}>
+                <h4 className="w-full">{item.title}</h4>
+                <div className="flex justify-end text-xs">
+                  <span>(23)</span>
+                </div>
+              </div>
+            </span>
+          ))}
         </>
       </DropDown>
     </>

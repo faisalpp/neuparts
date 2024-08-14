@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductCard3 from '@/components/ProductCard3';
 import ProductFilter from '@/components/Product/FIlter';
 import FilterSvg from '@/components/svgs/FilterSvg';
@@ -9,59 +9,8 @@ import { BsGrid, BsChevronDown } from 'react-icons/bs';
 import Pagination from '@/components/Pagination/Pagination2';
 import Image from 'next/image';
 
-const AllProducts = () => {
-  const [categoriesFilters, setCategoriesFilters] = useState([
-    {
-      title: 'Appliance Type',
-      category: [
-        {
-          title: 'Refrigirators',
-          slug: '',
-          productCount: 84,
-        },
-        {
-          title: 'Refrigirators',
-          slug: '',
-          productCount: 84,
-        },
-        {
-          title: 'Refrigirators',
-          slug: '',
-          productCount: 84,
-        },
-        {
-          title: 'Refrigirators',
-          slug: '',
-          productCount: 84,
-        },
-      ],
-    },
-    {
-      title: 'Part Type',
-      category: [
-        {
-          title: 'Belts',
-          slug: '',
-          productCount: 84,
-        },
-        {
-          title: 'Doors',
-          slug: '',
-          productCount: 84,
-        },
-        {
-          title: 'Racks',
-          slug: '',
-          productCount: 84,
-        },
-        {
-          title: 'Rollers',
-          slug: '',
-          productCount: 84,
-        },
-      ],
-    },
-  ]);
+const AllProducts = ({ data }) => {
+  const [loading, setLoading] = useState(true);
   const [ratingFilters, setRatingFilters] = useState([
     {
       _id: 3,
@@ -77,48 +26,13 @@ const AllProducts = () => {
     },
   ]);
   const [saleFilter, setSaleFilter] = useState([{ count: 99 }]);
-  const [regularFilter, setRegularFilter] = useState({});
-  const [products, setProducts] = useState([
-    {
-      slug: 'product-test',
-      image: '/popular-parts.webp',
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-    },
-    {
-      slug: 'product-test',
-      image: '/popular-parts.webp',
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-    },
-    {
-      slug: 'product-test',
-      image: '/popular-parts.webp',
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-    },
-    {
-      slug: 'product-test',
-      image: '/popular-parts.webp',
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-    },
-  ]);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [data]);
+
   const [isGrid, setIsGrid] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const [params, setParams] = useState({ isSale: true, salePrice: { $gte: 200, $lte: 8000 }, sort: 1 });
 
@@ -152,17 +66,17 @@ const AllProducts = () => {
 
       <div className="maincontainer flex justify-center gap-12 xl:gap-x-60px">
         {/* Filters Start */}
-        <ProductFilter loading={filterLoading} query={params} setQuery={setParams} saleFilter={saleFilter} regularFilter={regularFilter} categoriesFilters={categoriesFilters} ratingFilters={ratingFilters} onClose={handleCloseFilter} isFilter={isFilter} />
+        <ProductFilter loading={filterLoading} query={params} setQuery={setParams} saleFilter={saleFilter} onClose={handleCloseFilter} isFilter={isFilter} />
         {/* Filters End */}
 
-        <div className={`grid ${isGrid ? 'grid-cols-2 gap-x-2 xl:grid-cols-3' : 'grid-cols-1'} mb-10 w-full gap-y-5`}>
+        <div className={`grid ${isGrid ? 'grid-cols-2 gap-x-2 xl:grid-cols-3' : 'grid-cols-1'} mb-10 w-full items-start gap-y-5`}>
           {loading ? (
             <div className="flex w-full items-center justify-center">
               <Image width={400} height={400} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" />
             </div>
-          ) : products?.length > 0 ? (
+          ) : data.products?.length > 0 ? (
             <>
-              {products.map((product, index) => (
+              {data.products.map((product, index) => (
                 <ProductCard3 key={index} product={product} isGrid={isGrid} />
               ))}
               <div className={isGrid ? 'col-span-2 xl:col-span-3' : ''}>
