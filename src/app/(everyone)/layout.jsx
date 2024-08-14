@@ -6,7 +6,7 @@ import ScrollToTop from '@/components/DeskComp/ScrollToTop';
 import Footer from '@/components/DeskComp/Footer';
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-
+import {StoreProvider} from '@/app/GlobalRedux/StoreProvider'
 
 export default function RootLayout({ children }) {
   return (
@@ -24,10 +24,12 @@ export default function RootLayout({ children }) {
         theme="light"
         animation= "bounce"
         />
-        <Navbar />
-        <ScrollToTop />
-        {children}
-        <Footer />
+        <StoreProvider>
+         <Navbar />
+         <ScrollToTop />
+          {children}
+         <Footer />
+        </StoreProvider>
       </body>
     </html>
   );

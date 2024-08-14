@@ -10,7 +10,8 @@ export async function POST(request) {
 
   try {
     const res = await request.json();
-    console.log(res);
+    
+    const is_sale = res.sale_price != 0 ? true : false;
 
     let slug = generateSlug(res.title);
     const regex = new RegExp(`^${slug}-\\d+$`);
@@ -26,7 +27,7 @@ export async function POST(request) {
       slug = slug + `-1`;
     }
 
-    const isCreated = await Product.create({ ...res, slug: slug });
+    const isCreated = await Product.create({ ...res, slug: slug,is_sale:is_sale });
 
     if (isCreated) {
       return NextResponse.json({ message: 'Product Created!', success: true });

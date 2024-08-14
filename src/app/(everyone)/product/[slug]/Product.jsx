@@ -3,15 +3,14 @@ import { useEffect } from 'react';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import { AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart, AiOutlineTag } from 'react-icons/ai';
 import { IoBagCheckOutline, IoCloseOutline, IoSettingsOutline } from 'react-icons/io5';
+import { BiLoaderAlt } from "react-icons/bi";
 import { useState } from 'react';
 import FaqAccordion from '@/components/FaqAccordion';
 import ToolTip from '@/components/ToolTip';
 import MoreImagesModal from '@/components/MoreImagesModal';
 import StickyNavbar from '@/components/DeskComp/Navbar/StickyNavbar';
-import CustomModal from '@/components/Modal/CustomModal';
 import Loader from '@/components/Loader/Loader';
 import LoopSection from '@/components/LoopSection';
-import { format, getDate } from 'date-fns';
 import Link from 'next/link';
 import Image from 'next/image';
 import FourStar from '@/components/svgs/FourStar';
@@ -20,29 +19,30 @@ import ProductCompatible from '@/components/Product/ProductCompatible';
 import MoreParts from './MoreParts';
 import Rotate360Product from './Rotate360Product';
 import ConditionReview from './ConditionReview';
-import ProductSlider from './ProductSlider';
 import CompatibleAppliance from './CompatibleAppliance';
 import CompareModel from './CompareModel';
 import BuyingOtherOptions from './BuyingOtherOptions';
 import WarantySection from './WarantySection';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/navigation';
+import {useDispatch, useSelector} from 'react-redux'
+import {addToCart} from '@/app/GlobalRedux/slices/CartSlice'
 
 const Product = ({ slug }) => {
+  const dispatch = useDispatch()
+
   // Get slug form url
   const [quantity, setQuantity] = useState(1);
-
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [loading2, setLoading2] = useState(false);
-  const [date, setDate] = useState({});
+  const [cartLoading, setCartLoading] = useState(false);
+  const [buyLoading, setBuyLoading] = useState(false);
+  const [product, setProduct] = useState({});
 
-  const [product, setProduct] = useState('');
 
   const FetchProduct = async () => {
     await fetch(`/api/front/product/single?slug=${slug}`)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data)
         if (data.success) {
           setProduct(data.product);
           setLoading(false);
@@ -50,10 +50,21 @@ const Product = ({ slug }) => {
       });
   };
 
-  // get team members data
   useEffect(() => {
     FetchProduct();
-  }, ['']);
+  }, []);
+
+  const cartId = useSelector((state)=>state.cart.cartId)
+  //add to cart
+  const AddToCart = async () => {
+    setCartLoading(true)
+    const res = await dispatch(addToCart({productId:product._id,cartId:cartId,quantity:quantity}))
+    if(res.payload.success){
+      setCartLoading(false)
+    }
+  };
+
+
 
   const [deliveryPoints, setDeliveryPoints] = useState([
     { title: 'NeuShield <br /> 30-Day Warranty', image: '/svgs/shield-security.webp' },
@@ -62,9 +73,6 @@ const Product = ({ slug }) => {
     { title: 'Fast 2-Day Shipping Available', image: '/svgs/package_2.webp' },
   ]);
 
-  const router = useRouter();
-
-  // const [product, setProduct] = useState([]);
   const [otherProducts, setOtherProducts] = useState([
     {
       slug: 'test',
@@ -112,15 +120,6 @@ const Product = ({ slug }) => {
     },
   ]);
 
-  const addToCart = async (e) => {
-    router.push('/mycart');
-    e.preventDefault();
-  };
-
-  useEffect(() => {
-    GetProduct();
-  }, []);
-
   const [mediaViewer, setMediaViewer] = useState({
     file: 'image',
     type: 'url',
@@ -128,8 +127,6 @@ const Product = ({ slug }) => {
     preview: '/popular-parts.webp',
   });
   const [isFav, setIsFav] = useState(false);
-
-  const GetProduct = async () => {};
 
   const [showNavbar, setShowNavbar] = useState(false);
 
@@ -146,31 +143,6 @@ const Product = ({ slug }) => {
 
   const [imgModal, setImgModal] = useState(false);
 
-  // All Modal
-
-  const [openModal, setOpenModal] = useState('');
-
-  const handleCloseModal = () => {
-    setOpenModal('');
-  };
-
-  // Tags Elements Extended End
-
-  const handlePickupDate = () => {
-    const currentDate = new Date();
-    const dayOfWeek = format(currentDate, 'EEEE');
-    const date = getDate(currentDate);
-    const month = format(currentDate, 'MMMM');
-    setDate({ day: dayOfWeek, date: date, month: month });
-  };
-
-  useEffect(() => {
-    // if(pickupInfo.location !== pickupLocation){
-    handlePickupDate();
-    // }
-  }, []);
-
-  //  const [isFav,setIsFav] = useState(false)
   const [favLoad, setFavLoad] = useState(false);
 
   const handleFavorites = async (e) => {
@@ -181,15 +153,6 @@ const Product = ({ slug }) => {
     e.preventDefault();
   };
 
-  const [relatedProducts, setRelatedProducts] = useState([]);
-
-  const GetRecentAppliances = async () => {};
-
-  // useEffect(() => {
-  //   if (product.length > 0) {
-  //     GetRecentAppliances();
-  //   }
-  // }, [product]);
   return (
     <>
       {loading ? (
@@ -198,7 +161,7 @@ const Product = ({ slug }) => {
         <>
           {/* StickyNavabr */}
           <div className="hidden lg:block">
-            <StickyNavbar addCart={addToCart} product={product} state={showNavbar} />
+            <StickyNavbar addCart={AddToCart} product={product} state={showNavbar} />
           </div>
 
           <MoreImagesModal medias={product.images} state={imgModal} setState={setImgModal} />
@@ -360,7 +323,7 @@ const Product = ({ slug }) => {
                   </div>
                   {product.stock > 0 ? (
                     <div className="flex items-center rounded-full bg-b13 px-3 py-2 text-xs text-white">
-                      <IoBagCheckOutline className="mr-1 text-sm" />2 in stock In Georgetown, TX
+                      <IoBagCheckOutline className="mr-1 text-sm" />{product.stock} in stock In Georgetown, TX
                     </div>
                   ) : (
                     <div className="flex items-center rounded-full bg-red-500 px-3 py-2 text-xs text-white">
@@ -372,13 +335,13 @@ const Product = ({ slug }) => {
 
                 {/* Buttons */}
                 <div className="grid grid-cols-2 gap-2">
-                  <button type="button" disabled={error || product.stock === 0 ? true : false} onClick={addToCart} className="button-hover flex h-full w-full items-center justify-center rounded-lg py-4 font-medium text-white">
+                  <button type="button" disabled={product.stock === 0 || cartLoading ? true : false} onClick={AddToCart} className="button-hover relative flex h-full w-full items-center justify-center rounded-lg py-4 font-medium text-white">
                     <AiOutlineShoppingCart className="text-lg" />
-                    <span className="ml-2 flex items-center font-medium">Add To Cart {loading2 ? <Image width={200} height={200} quality={100} alt="loader" src="/loader-bg.gif" className="ml-2 h-4 w-4" /> : null}</span>
+                    <span className="ml-2 flex items-center font-medium">Add To Cart {cartLoading ? <BiLoaderAlt className="absolute right-16 text-2xl animate-spin" /> : null}</span>
                   </button>
-                  <button type="button" disabled={error || product.stock === 0 ? true : false} onClick={addToCart} className="flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-medium text-white hover:bg-[#071822]/90">
+                  <button type="button" disabled={product.stock === 0 || buyLoading ? true : false} onClick={AddToCart} className="relative flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-medium text-white hover:bg-[#071822]/90">
                     <Image width={100} height={100} className="h-6 w-5 object-contain" alt="Sell" src="/svgs/sell.webp" />
-                    <span className="ml-2 flex items-center font-medium">Buy Now {loading2 ? <Image width={200} height={200} quality={100} alt="loader" src="/loader-bg.gif" className="ml-2 h-4 w-4" /> : null}</span>
+                    <span className="ml-2 flex items-center font-medium">Buy Now {buyLoading ? <BiLoaderAlt className="absolute right-16 text-2xl animate-spin" /> : null}</span>
                   </button>
                 </div>
               </div>

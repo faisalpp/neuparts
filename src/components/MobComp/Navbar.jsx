@@ -10,11 +10,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import NavSearchMenu from '../NavSearchMenu';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleCart } from '@/app/GlobalRedux/slices/CartSlice';
 
-const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
+const Navbar = () => {
   const [mobMenu, setMobMenu] = useState(false);
-
   const [searchMenu, setSearchMenu] = useState(false);
+
+  const dispatch = useDispatch()
 
   const cartCount = '';
   const isUser = '';
@@ -49,7 +52,7 @@ const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
             <NavSearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
           </div>
 
-          <div onClick={() => setsCart(!sCart)} className="relative h-6 w-6 items-center rounded-full text-white">
+          <div onClick={() => dispatch(toggleCart())} className="relative h-6 w-6 items-center rounded-full text-white">
             <AiOutlineShoppingCart className="h-6 w-6" />
             <span className="absolute -top-2 ml-3 rounded-full bg-b3 px-[6px] py-[2px] text-center text-[10px]">{cartCount ? cartCount : 0}</span>
           </div>

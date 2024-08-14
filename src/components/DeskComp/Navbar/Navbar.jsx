@@ -13,8 +13,11 @@ import NavDropDown from '../Navbar/NavDropDown';
 import NavSearchMenu from '@/components/NavSearchMenu';
 import { FiPhone } from 'react-icons/fi';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
+import {toggleCart} from '@/app/GlobalRedux/slices/CartSlice'
+import { useDispatch, useSelector } from 'react-redux';
 
-const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
+const Navbar = () => {
+  const dispatch = useDispatch()
   const [megMenu, setMegMenu] = useState(false);
   const [searchMenu, setSearchMenu] = useState(false);
 
@@ -24,8 +27,6 @@ const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
   const MenuButonRef = useRef(null);
   const MegaMenuRef = useRef(null);
 
-  const [applianceTypes, setApplianceTypes] = useState([]);
-
   useClickOutside([searchButtonRef, searchRef], () => setSearchMenu(false));
   useClickOutside([MenuButonRef, MegaMenuRef], () => setMegMenu(false));
 
@@ -34,7 +35,7 @@ const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
   const UserfirstName = '';
   const AdminfirstName = '';
 
-  const cartCount = 0;
+  const cartCount = useSelector((state)=>state.cart.cartCount);
 
   const handleAdminLogout = async (e) => {
     e.preventDefault();
@@ -64,9 +65,7 @@ const Navbar = ({ sCart, cartMenuRef, setsCart }) => {
               <NavSearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
             </div>
             <div
-              onClick={() => {
-                setsCart(!sCart);
-              }}
+              onClick={() => dispatch(toggleCart())}
               className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-b2 px-4 text-white"
             >
               <AiOutlineShoppingCart />

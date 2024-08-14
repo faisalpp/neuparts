@@ -7,6 +7,4 @@ const postCategoriesSchema = new mongoose.Schema({
     postType:{type:String,required:true},
 },{timestamps: true});
 
-const PostCategories = mongoose.models.PostCategories || mongoose.model('PostCategories',postCategoriesSchema,'postCategories');
-
-export default PostCategories;
+export default mongoose.models.PostCategories || mongoose.model('PostCategories',postCategoriesSchema);
