@@ -44,6 +44,10 @@ const AllProducts = ({ data }) => {
   const handleCloseFilter = () => {
     setIsFilter(false);
   };
+
+  function calculateTotalPages(totalProducts, productsPerPage) {
+    return Math.ceil(totalProducts / productsPerPage);
+  }
   return (
     <>
       <div className="maincontainer mt-5 flex items-center py-5">
@@ -80,7 +84,7 @@ const AllProducts = ({ data }) => {
                 <ProductCard3 key={index} product={product} isGrid={isGrid} />
               ))}
               <div className={isGrid ? 'col-span-2 xl:col-span-3' : ''}>
-                <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+                <Pagination totalPages={calculateTotalPages(data.productCount, 2)} />
               </div>
             </>
           ) : (

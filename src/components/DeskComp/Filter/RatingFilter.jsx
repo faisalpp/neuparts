@@ -3,10 +3,12 @@ import React, { useState } from 'react';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { Checkbox } from '@material-tailwind/react';
 import FourStar from '@/components/svgs/FourStar';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const TypeFilter = ({ filters }) => {
-  const [filterActive, setFilterActive] = useState('');
+  const searchParams = useSearchParams();
+
+  const [filterActive, setFilterActive] = useState(searchParams.get('condition') || '');
 
   const router = useRouter();
 

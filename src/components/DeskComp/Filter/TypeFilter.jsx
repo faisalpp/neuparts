@@ -1,10 +1,13 @@
 'use client';
 import React, { useState } from 'react';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const TypeFilter = ({ type, title, filters }) => {
-  const [filterActive, setFilterActive] = useState('all');
+  const searchParams = useSearchParams();
+  const [filterActive, setFilterActive] = useState(searchParams.get(type) || 'all');
+
+  const totalProductCount = filters.reduce((acc, curr) => acc + curr.productCount, 0);
 
   const router = useRouter();
 
@@ -32,20 +35,22 @@ const TypeFilter = ({ type, title, filters }) => {
           <div onClick={(e) => handleFilterparams(type, 'all')} className={`flex text-sm hover:underline ` + (filterActive == 'all' && 'font-bold')}>
             <h4>All</h4>
             <div className="flex w-full justify-end text-xs">
-              {/* <span>({totalProductCount})</span> */}
-              <span>(23)</span>
+              <span>({totalProductCount})</span>
             </div>
           </div>
-          {filters.map((item, index) => (
-            <span key={index} onClick={(e) => handleFilterparams(type, item.slug)}>
-              <div className={`flex text-sm hover:underline ` + (filterActive == item.slug && 'font-bold')}>
-                <h4 className="w-full">{item.title}</h4>
-                <div className="flex justify-end text-xs">
-                  <span>(23)</span>
-                </div>
-              </div>
-            </span>
-          ))}
+          {filters.map(
+            (item, index) =>
+              item.productCount > 0 && (
+                <span key={index} onClick={(e) => handleFilterparams(type, item.slug)}>
+                  <div className={`flex text-sm hover:underline ` + (filterActive == item.slug && 'font-bold')}>
+                    <h4 className="w-full">{item.title}</h4>
+                    <div className="flex justify-end text-xs">
+                      <span>({item.productCount})</span>
+                    </div>
+                  </div>
+                </span>
+              )
+          )}
         </>
       </DropDown>
     </>

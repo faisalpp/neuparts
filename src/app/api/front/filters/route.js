@@ -1,30 +1,58 @@
 import { NextResponse } from 'next/server';
 import { connect } from '@/DB/index';
 import Categories from '@/models/productcategory';
+import ProductTypes from '@/models/producttype';
 
 export async function GET(req) {
   await connect();
   try {
-    const categories = await Categories.find().sort({ createdAt: -1 });
+    const categories = await Categories.aggregate([
+      {
+        $lookup: {
+          from: 'products',
+          localField: '_id',
+          foreignField: 'category',
+          as: 'products',
+        },
+      },
+      {
+        $addFields: {
+          productCount: { $size: '$products' },
+        },
+      },
+      {
+        $project: {
+          products: 0,
+        },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+    ]);
 
-    const parttypes = [
+    const parttypes = await ProductTypes.aggregate([
       {
-        title: 'Appliances',
-        slug: 'appliance',
+        $lookup: {
+          from: 'products', // the name of the products collection
+          localField: 'slug',
+          foreignField: 'type',
+          as: 'products',
+        },
       },
       {
-        title: 'Doors',
-        slug: 'delts',
+        $addFields: {
+          productCount: { $size: '$products' }, // count the number of products in each product type
+        },
       },
       {
-        title: 'Belts',
-        slug: 'belts',
+        $project: {
+          products: 0, // optionally exclude the product array if you only want the count
+        },
       },
       {
-        title: 'Racks',
-        slug: 'racks',
+        $sort: { createdAt: -1 },
       },
-    ];
+    ]);
     const conditions = [
       {
         title: 'New',

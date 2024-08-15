@@ -11,6 +11,7 @@ const getProducts = async (searchParams) => {
     'regular_price[gte]': searchParams.min,
     'regular_price[lte]': searchParams.max,
     is_sale: searchParams.sale,
+    page: searchParams.page,
   };
 
   const searchQuery = queryString.stringify(urlParams);

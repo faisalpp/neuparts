@@ -14,7 +14,7 @@ export async function GET(req) {
     searchParams.forEach((value, key) => {
       paramsObj[key] = value;
     });
-    const resPerPage = 9;
+    const resPerPage = 2;
 
     const productCount = await Product.countDocuments();
     const apiFilters = new APIFilters(Product.find(), paramsObj).search().filter();
