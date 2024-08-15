@@ -9,17 +9,17 @@ const TypeFilter = ({ type, title, filters }) => {
   const router = useRouter();
 
   let queryParams;
-  const handleFilterparams = (name, value) => {
+  const handleFilterparams = (key, value) => {
     if (typeof window !== 'undefined') {
       queryParams = new URLSearchParams(window.location.search);
     }
     setFilterActive(value);
     if (value === 'all') {
-      queryParams.delete(name);
-    } else if (queryParams.has(name)) {
-      queryParams.set(name, value);
+      queryParams.delete(key);
+    } else if (queryParams.has(key)) {
+      queryParams.set(key, value);
     } else {
-      queryParams.append(name, value);
+      queryParams.append(key, value);
     }
     const parth = window.location.pathname + '?' + queryParams.toString();
     router.push(parth);
@@ -29,8 +29,8 @@ const TypeFilter = ({ type, title, filters }) => {
     <>
       <DropDown title={title}>
         <>
-          <div className={`flex text-sm hover:underline ` + (filterActive == 'all' && 'font-bold')}>
-            <h4 onClick={(e) => handleFilterparams(type, 'all')}>All</h4>
+          <div onClick={(e) => handleFilterparams(type, 'all')} className={`flex text-sm hover:underline ` + (filterActive == 'all' && 'font-bold')}>
+            <h4>All</h4>
             <div className="flex w-full justify-end text-xs">
               {/* <span>({totalProductCount})</span> */}
               <span>(23)</span>

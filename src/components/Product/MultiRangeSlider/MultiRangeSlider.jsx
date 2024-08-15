@@ -3,8 +3,10 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import './multiRangeSlider.css';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
+import { useRouter } from 'next/navigation';
 
 const MultiRangeSlider = ({ min, max, setFilt, filt }) => {
+  const router = useRouter();
   const defaultMinval = 200;
   const defaultMaxval = 8000;
   const [minVal, setMinVal] = useState(defaultMinval);
@@ -13,16 +15,33 @@ const MultiRangeSlider = ({ min, max, setFilt, filt }) => {
   const maxValRef = useRef(null);
   const range = useRef(null);
 
-  // Convert to percentage
-  const getPercent = useCallback((value) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
+  let queryParams;
+  const handleButtonCLick = () => {
+    if (typeof window !== 'undefined') {
+      queryParams = new URLSearchParams(window.location.search);
+      queryParams = getPriceQueryParams(queryParams, 'min', minVal);
+      queryParams = getPriceQueryParams(queryParams, 'max', maxVal);
+
+      const path = window.location.pathname + '?' + queryParams.toString();
+      router.push(path);
+    }
+  };
+
+  const getPriceQueryParams = (queryParams, key, value) => {
+    const hasValueParams = queryParams.has(key);
+    if (value && hasValueParams) {
+      queryParams.set(key, value);
+    } else if (value) {
+      queryParams.append(key, value);
+    } else if (hasValueParams) {
+      queryParams.delete(key);
+    }
+    return queryParams;
+  };
 
   useEffect(() => {
     setTimeout(() => {
-      if (filt.isSale) {
-        setFilt({ ...filt, salePrice: { $gte: minVal, $lte: maxVal } });
-      } else {
-        setFilt({ ...filt, regPrice: { $gte: minVal, $lte: maxVal } });
-      }
+      handleButtonCLick();
     }, 1500);
   }, [minVal, maxVal]);
 

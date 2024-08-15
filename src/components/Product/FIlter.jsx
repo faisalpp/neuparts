@@ -36,6 +36,20 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
     getFilters();
   }, ['']);
 
+  let queryParams;
+  const resetFilters = () => {
+    if (typeof window !== 'undefined') {
+      queryParams = new URLSearchParams(window.location.search);
+    }
+    let key;
+    let keys = [...queryParams.keys()];
+    for (key of keys) {
+      queryParams.delete(key);
+    }
+    const path = window.location.pathname + '?' + queryParams.toString();
+    router.push(path);
+  };
+
   const modalClass = isFilter ? 'maxlg:flex maxlg:top-[67px] maxlg:bottom-0' : 'maxlg:-bottom-[420px] maxlg:opacity-0 maxlg:pointer-events-none';
 
   return (
@@ -51,12 +65,7 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
               <button type="button" onClick={onClose} className="flex items-center gap-2 text-base font-semibold maxlg:font-bold">
                 <ArrowLeftIcon className="w- h-4 stroke-[2.5px] lg:hidden" /> Filters
               </button>
-              <span
-                onClick={() => {
-                  setQuery({ isSale: true, salePrice: { $gte: 200, $lte: 8000 }, sort: 1 });
-                }}
-                className="cursor-pointer text-sm text-[#22A6AB] hover:underline lg:text-xs"
-              >
+              <span onClick={() => resetFilters()} className="cursor-pointer text-sm text-[#22A6AB] hover:underline lg:text-xs">
                 Reset Filters
               </span>
             </div>
@@ -64,7 +73,7 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
               {Categories.length > 0 && <TypeFilter type="category" title="Appliance Type" filters={Categories} />}
               {PartTypes.length > 0 && <TypeFilter type="type" title="Part Type" filters={PartTypes} />}
 
-              <RatingFilter />
+              {Conditions.length > 0 && <RatingFilter filters={Conditions} />}
               {/* {filterheader != false && <HeaderFilter />} */}
               <MultiRangeSlider filt={query} setFilt={setQuery} min={9} max={9999} />
               <SaleFilter filt={query} setFilt={setQuery} sale={saleFilter} reg={onsale} />

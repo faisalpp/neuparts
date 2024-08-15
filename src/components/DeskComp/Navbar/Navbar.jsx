@@ -53,7 +53,6 @@ const Navbar = () => {
       name: category.title,
       url: `/products?category=${category.slug}`,
     }));
-
     setCategories(transformedCategories);
   };
 
