@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import LeftArrowSvg from '../../svgs/LeftArrowSvg';
+import LeftArrowSvg from '@/components/svgs/LeftArrowSvg';
 
 const UpdateButton = ({ prevTitle, nextTitle, prevLink, nextLink, loading }) => {
   return (

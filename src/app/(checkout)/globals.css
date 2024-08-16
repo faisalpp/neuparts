@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), #67D1F8;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.maincontainer {
+  @apply mx-auto w-[90%] 2xl:w-[85%] 3xl:max-w-1680px;
+}
+
+.bg-gradient {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), #67D1F8;
+}
+
+.text_between_line {
+  font-size: 14px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.text_between_line:before,
+.text_between_line:after {
+  background-color: #D9D9D9;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.text_between_line:before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+.text_between_line:after {
+  left: 0.5em;
+  margin-right: -50%;
+}

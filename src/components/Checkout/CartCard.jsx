@@ -1,28 +1,22 @@
-import React from 'react'
+import Image from 'next/image';
+import React from 'react';
 
-const CartCard = (props) => {
-
-    return (
-        <div className='flex justify-start mt-3 gap-14px' >
-            <div className='max-w-[64px] relative w-full'>
-                <img src={props.item.image} className='w-16 h-16 object-contain' alt='' />
-                <span className='absolute flex justify-center items-center text-xs font-medium w-5 h-5 rounded-full bg-b3 text-white -right-2 -top-2'>
-                    {props.item.count}
-                </span>
-            </div>
-            <div className='flex items-center gap-14px' >
-                <div>
-                    <h3 className='text-sm text-b16 font-medium tracking-032 !leading-[150%]'>
-                        {props.item.title}
-                    </h3>
-                    {props.item.rating === 5 ? <p className='text-b25 text-xs'>5 Stars (Flawless Cosmetic Rating)</p> : null}
-                    {props.item.rating === 4 ? <p className='text-b25 text-xs'>4 Stars (Flawless Cosmetic Rating)</p> : null}
-                    {props.item.rating === 3 ? <p className='text-b25 text-xs'>3 Stars (Flawless Cosmetic Rating)</p> : null}
-                </div>
-                {props.item.salePrice ? <div className='flex justify-between text-b3 text-sm font-medium'>${props.item.salePrice}</div> : <div className='flex justify-between text-b3 text-sm font-medium'>${props.item.regularPrice}</div>}
-            </div>
+const CartCard = () => {
+  return (
+    <div className="mt-3 flex justify-start gap-14px">
+      <div className="relative w-full max-w-[64px]">
+        <Image width={200} height={200} quality={100} src="/popular-parts.webp" className="h-16 w-16 object-contain" alt="p1" />
+        <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-b3 text-xs font-medium text-white">1</span>
+      </div>
+      <div className="flex items-center gap-14px">
+        <div>
+          <h3 className="text-sm font-medium !leading-[150%] tracking-032 line-clamp-1 text-b16">White GE 1.7 cu. ft. Over the Range Microwave with Convenience</h3>
+          <p className="text-xs text-b25">5 Stars (Flawless Cosmetic Rating)</p>
         </div>
-    )
-}
+        <div className="flex justify-between text-sm font-medium text-b3">$100.00</div>
+      </div>
+    </div>
+  );
+};
 
-export default CartCard
+export default CartCard;
