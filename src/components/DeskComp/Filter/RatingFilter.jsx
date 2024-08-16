@@ -36,7 +36,7 @@ const TypeFilter = ({ filters }) => {
       <DropDown title="Comatic Rating">
         {/* Item Start */}
         {filters.map((item, index) => (
-          <div className="flex items-center">
+          <div key={index} className="flex items-center">
             <div className="label-p-0 flex items-center gap-2">
               <Checkbox
                 name="condition"

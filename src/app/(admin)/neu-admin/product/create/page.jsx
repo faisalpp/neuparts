@@ -277,7 +277,7 @@ const Page = () => {
           <div className="flex items-center gap-2 rounded-md border border-gray-500 px-3 py-2">
             
             <div className='flex bg-red-500 w-100 h-20' >
-             {formData?.images?.length > 0 ? formData.images.map((img)=> <Image height={100} width={100} src={img.url} /> ):null}
+             {formData?.images?.length > 0 ? formData.images.map((img,i)=> <Image key={i} height={100} width={100} src={img.url} /> ):null}
             </div>
             
             <button type="button" onClick={() => setMediaPopup(true)} className="rounded-md bg-b4 px-4 py-3 text-white">Select</button>

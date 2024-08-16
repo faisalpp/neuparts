@@ -10,9 +10,9 @@ const Loader = ({count,rows}) => {
   return (
   <>
   {Rows.map((_,i)=> (
-   <tr className="bg-white dark:bg-gray-900">
+   <tr key={`tr-${i}`} className="bg-white dark:bg-gray-900">
    {cols.map((_,i)=>
-     <td key={i} className='py-5' ><p className="w-32 h-2 bg-gray-200 rounded-lg dark:bg-gray-700"></p></td>
+     <td key={`td-${i}`} className='py-5' ><p className="w-32 h-2 bg-gray-200 rounded-lg dark:bg-gray-700"></p></td>
     )} 
    </tr>
   ))}
