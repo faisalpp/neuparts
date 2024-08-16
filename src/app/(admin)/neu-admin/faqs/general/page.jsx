@@ -47,7 +47,7 @@ const Page = () => {
     try {
       await ValFaq.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
+      (error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -72,7 +72,7 @@ const Page = () => {
     fetch('/api/admin/faqs/general', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
+        (resp);
         if (resp.success) {
           setFormData({ id: '', title: '', content: '', category: '' });
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
@@ -105,7 +105,7 @@ const Page = () => {
     try {
       await UpValReview.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
+      (error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -180,7 +180,7 @@ const Page = () => {
     fetch('/api/admin/faqs/general', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
+        (resp);
         if (resp.success) {
           ManagePageCount(id);
           setReRender(true);
@@ -217,14 +217,14 @@ const Page = () => {
       fetch(`/api/admin/faqs/general/?page=${page}&limit=${limit}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          (data);
           if (data.success) {
             if (data.cats?.length > 0) {
               setFaqCats(data.cats);
               setFormData({ ...formData, category: data.cats[0]._id });
             }
             if (data.faqs.length > 0) {
-              console.log(data);
+              (data);
               toast.update(getToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
               setPageCount(data.pagination.pageCount);
               setFaqs(data.faqs);

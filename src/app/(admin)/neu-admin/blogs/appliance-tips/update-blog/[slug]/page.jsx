@@ -32,7 +32,7 @@ const Page = ({ params }) => {
       fetch(`/api/front/blog/appliance-tips/single?slug=${params.slug}`, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          (data);
           if (data.success) {
             const { _id, title, slug, content, thumbnail, joinedCategory } = data.blog[0];
             setFormData({ id: _id, title: title, slug: slug, content: content, thumbnail: thumbnail, category: joinedCategory._id, cat: joinedCategory });
@@ -42,9 +42,7 @@ const Page = ({ params }) => {
           }
         })
         .catch((error) => {
-          console.log(error);
           toast.error('Something went wrong!');
-          //  router.push('/neu-admin/blogs/appliance-tips')
         });
     }
   };
@@ -57,7 +55,6 @@ const Page = ({ params }) => {
     fetch('/api/admin/post-categories?postType=appliance-tips', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
         if (resp.success && resp.cats.length > 0) {
           setCategories(resp.cats);
         } else {
@@ -98,7 +95,6 @@ const Page = ({ params }) => {
     try {
       await ValBlog.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -123,7 +119,6 @@ const Page = ({ params }) => {
     fetch('/api/admin/blog/appliance-tips', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
           router.push('/neu-admin/blogs/appliance-tips');

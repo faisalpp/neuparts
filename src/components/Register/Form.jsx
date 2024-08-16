@@ -40,7 +40,7 @@ const Form = () => {
     try {
      await registerVal.validate(formData, {abortEarly: false});   
    } catch (error) {
-     console.log(error)
+     (error)
      error?.inner?.forEach((err) => {
        toast.error(err.message);
      });
@@ -54,7 +54,7 @@ const Form = () => {
      headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
    }).then((res) => res.json())
     .then((resp) => {
-      console.log(resp)
+      (resp)
      if(resp.success){
        setFormData({firstName:'',lastName:'',email:'',country:'US',phone:'',password:'',confirmPassword:''});
        toast.update(crtToastId,{render:'Signup Successfull!',type:'success',autoClose:1000,isLoading: false})

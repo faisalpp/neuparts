@@ -14,7 +14,7 @@ const SatisfiedSection = ({ page, title, dots, SectionStyle }) => {
     setReviews(data.reviews)
    })
    .catch(error=>{
-     console.log(error)
+     (error)
    })
   }
 

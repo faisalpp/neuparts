@@ -40,7 +40,7 @@ const Ifram = ({ style, src, title, icon, frameId, divId, genState, setGenState,
   };
   useEffect(() => {
     setIfrmae(document.getElementById(frameId));
-  }, ['']);
+  }, []);
 
   useEffect(() => {
     if (trigger) {

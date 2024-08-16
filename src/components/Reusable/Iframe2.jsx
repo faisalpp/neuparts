@@ -18,7 +18,7 @@ const Iframe2 = ({ isIframe, setIsIframe, style, src, title, icon, frameId, divI
         iframe.setAttribute('class', `${style}`);
       });
     }
-  }, ['']);
+  }, []);
 
   const handleLoader = () => {
     // Create a new iframe elemen

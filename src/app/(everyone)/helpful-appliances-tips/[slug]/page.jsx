@@ -37,7 +37,7 @@ const Page = ({ params }) => {
 
   useEffect(() => {
     getTipsCat();
-  }, ['']);
+  }, []);
 
   const handleEnterKey = async (e) => {
     setLoading(true);

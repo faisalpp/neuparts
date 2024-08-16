@@ -21,7 +21,7 @@ const DeliveryMap = ({ customStyle }) => {
       }
     });
   }
-  console.log(process.env.NEXT_GOOGLE_API_KEY)
+  (process.env.NEXT_GOOGLE_API_KEY)
   const loadMap = async (result, zipZoom) => {
     const loader = new Loader({
       apiKey: process.env.NEXT_GOOGLE_API_KEY, // Replace with your own API key

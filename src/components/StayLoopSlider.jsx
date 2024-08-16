@@ -22,13 +22,13 @@ const StayLoopSlider = ({ isIframe, setIsIframe, parentId, child, page, setPage,
   const [Box, setBox] = useState();
 
   const btnprev = () => {
-    // console.log('prev')
+    // ('prev')
     page > 1 ? setPage(page - 1) : setPage(1);
     let width = Box.clientWidth;
     Box.scrollLeft = Box.scrollLeft - width;
   };
   const btnnext = () => {
-    // console.log('next')
+    // ('next')
     page < totalPages && setPage(page + 1);
     let width = Box.clientWidth;
     Box.scrollLeft = Box.scrollLeft + width;
@@ -38,7 +38,7 @@ const StayLoopSlider = ({ isIframe, setIsIframe, parentId, child, page, setPage,
     e.preventDefault();
     const parent = document.getElementById(parentId);
     const child2 = document.getElementById(child);
-    //  console.log(parent)
+    //  (parent)
     if (parent && child2) {
       child2.remove();
     }

@@ -17,7 +17,7 @@ export async function PUT(request){
   await connect()
 
   const data = await request.json()
-  console.log(data)
+  (data)
   const MediaVal = Yup.object({
     id: Yup.string().required('Id is required!'),
     name: Yup.string().required('Name is required!'),

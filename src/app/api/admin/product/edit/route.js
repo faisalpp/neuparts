@@ -10,7 +10,7 @@ export async function GET(request) {
     const product = await Product.findById(id);
     return NextResponse.json(product);
   } catch (error) {
-    console.log(error);
+    (error);
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
 }

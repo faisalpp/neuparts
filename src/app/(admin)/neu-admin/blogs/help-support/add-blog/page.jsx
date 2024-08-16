@@ -64,12 +64,10 @@ const Page = () => {
 
   const CreateBlog = async (e) => {
     e.preventDefault();
-    console.log(formData);
 
     try {
       await ValBlog.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });

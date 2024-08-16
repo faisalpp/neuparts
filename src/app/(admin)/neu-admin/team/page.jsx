@@ -63,7 +63,7 @@ const Page = () => {
     try {
       await ValMember.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
+      (error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -122,7 +122,7 @@ const Page = () => {
     try {
       await upValMember.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
+      (error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });

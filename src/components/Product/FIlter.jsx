@@ -34,7 +34,7 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
 
   useEffect(() => {
     getFilters();
-  }, ['']);
+  }, []);
 
   let queryParams;
   const resetFilters = () => {

@@ -10,7 +10,7 @@ export async function GET(request) {
     const category = await Category.findById(id);
     return NextResponse.json(category);
   } catch (error) {
-    console.log(error);
+    (error);
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
 }

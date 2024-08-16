@@ -39,7 +39,6 @@ const Page = () => {
     fetch('/api/admin/post-categories?postType=appliance-tips', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
         if (resp.success && resp.cats.length > 0) {
           setCategories(resp.cats);
           setFormData({ ...formData, category: resp.cats[0] });
@@ -69,7 +68,6 @@ const Page = () => {
     try {
       await ValBlog.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });

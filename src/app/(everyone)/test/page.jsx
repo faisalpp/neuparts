@@ -79,11 +79,11 @@ export default function Page() {
         queryParams = new URLSearchParams(window.location.search);
       }
 
-      console.log(queryParams.toString());
+      (queryParams.toString());
 
       // const response = await axios.get(url);
       // const data = response.data;
-      // console.log(data);
+      // (data);
 
       //   setProducts(data);
       setLoading(false);

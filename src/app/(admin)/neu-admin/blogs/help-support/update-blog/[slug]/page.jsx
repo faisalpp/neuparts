@@ -38,7 +38,6 @@ const Page = ({ params }) => {
           }
         })
         .catch((error) => {
-          console.log(error);
           toast.error('Something went wrong!');
         });
     }
@@ -52,7 +51,6 @@ const Page = ({ params }) => {
     fetch('/api/admin/post-categories?postType=help-support', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
         if (resp.success && resp.cats.length > 0) {
           setCategories(resp.cats);
         } else {
@@ -88,11 +86,9 @@ const Page = ({ params }) => {
 
   const UpdateBlog = async (e) => {
     e.preventDefault();
-    console.log(formData);
     try {
       await ValBlog.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -117,7 +113,6 @@ const Page = ({ params }) => {
     fetch('/api/admin/blog/help-support', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
           router.push('/neu-admin/blogs/help-support');

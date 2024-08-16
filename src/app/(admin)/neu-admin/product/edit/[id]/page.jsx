@@ -59,7 +59,7 @@ const Page = ({ params }) => {
 
   useEffect(() => {
     FetchCategory();
-  }, ['']);
+  }, []);
 
   const GetProduct = async () => {
     const res = await fetch('/api/admin/product/edit?id=' + id);
@@ -69,13 +69,13 @@ const Page = ({ params }) => {
 
   useEffect(() => {
     GetProduct();
-  }, ['']);
+  }, []);
 
   const UpdateProduct = async (e) => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
+      (error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });

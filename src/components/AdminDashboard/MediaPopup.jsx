@@ -104,7 +104,7 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
         return;
       }
       if (!data.success) {
-        console.log(data);
+        (data);
         toast.error('Something went wrong!');
         setDelId(null);
         return;
@@ -156,7 +156,7 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
         return;
       }
       if (!data.success) {
-        console.log(data);
+        (data);
         toast.error('Something went wrong!');
         toast.update(updToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
         fileInputRef.current.value = '';
@@ -197,7 +197,7 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
     try {
       await MediaVal.validate({ id, name, alt }, { abortEarly: false });
     } catch (error) {
-      console.log(error);
+      (error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -276,7 +276,7 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
     try {
       const res = await fetch('/api/media/links', requestOptions);
       const data = await res.json();
-      console.log(data);
+      (data);
       if (!res.ok) {
         toast.update(embedToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
         return;
@@ -289,7 +289,7 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
       GetMedia();
       setUrlEmbed('');
     } catch (error) {
-      console.log(error);
+      (error);
       toast.update(embedToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
     }
   };

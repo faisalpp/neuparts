@@ -7,7 +7,7 @@ const GetFaqs = async () => {
   await connect();
 
   const faqs = await Post.find({postType:'faq-appliance-repair'});
-  console.log(faqs)
+  (faqs)
   return faqs;
 }
 

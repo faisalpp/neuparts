@@ -15,7 +15,7 @@ export async function POST(request){
     try{
      user = await Admin.findOne({email:email});
      if(!user){
-        console.log('null')
+        ('null')
       return NextResponse.json({success:false,msg:'Ivalid User Credentials!'},{status:401})
      }
     }catch(error){

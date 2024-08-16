@@ -31,11 +31,11 @@ const Form = () => {
 
   const DeleteMedia = async (e, id, url) => {
     e.preventDefault();
-    console.log(url);
+    (url);
     let delUrl = url;
     setDelLoader(id);
     const res = await deleteUserMedia({ url: delUrl });
-    console.log(res);
+    (res);
     if (res.status === 200) {
       const filt = medias.filter((item) => item.data !== delUrl);
       setMedias(filt);

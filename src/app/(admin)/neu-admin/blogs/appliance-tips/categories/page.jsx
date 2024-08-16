@@ -52,7 +52,6 @@ const Page = () => {
     try {
       await ValCat.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -77,7 +76,6 @@ const Page = () => {
     fetch('/api/admin/blog/appliance-tips/category', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
         if (resp.success) {
           ResetFormData();
           toast.update(crtToastId, { type: 'success', autoClose: 1000, isLoading: false });
@@ -110,7 +108,6 @@ const Page = () => {
     try {
       await UpValCat.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });

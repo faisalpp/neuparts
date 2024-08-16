@@ -30,7 +30,7 @@ const Page = () => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
+      (error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -53,7 +53,7 @@ const Page = () => {
     fetch('/api/admin/product/category', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
+        (resp);
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
           router.push('/neu-admin/blogs/general');

@@ -26,7 +26,7 @@ class APIFilters {
     let prop = '';
 
     for (let key in queryCopy) {
-      console.log('key', key);
+      ('key', key);
 
       if (!key.match(/\b(gt|gte|lt|lte)/)) {
         output[key] = queryCopy[key];
@@ -42,7 +42,7 @@ class APIFilters {
       }
     }
 
-    console.log(category);
+    (category);
 
     this.query = this.query.find(output).populate({
       path: 'category',

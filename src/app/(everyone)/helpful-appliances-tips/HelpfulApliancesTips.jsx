@@ -24,7 +24,7 @@ const HelpfulApliancesTips = () => {
     fetch(`/api/front/helpful-appliance-tips/categories/?page=${page}&limit=${limit}`)  
      .then((res) => res.json())
      .then((data) => {
-      console.log(data)
+      (data)
       if(data.cats.length > 0){
         setPageCount(data.pagination.pageCount)
         setTips((blogs)=>[...blogs,...data.cats])

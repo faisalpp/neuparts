@@ -58,7 +58,7 @@ const Navbar = () => {
 
   useEffect(() => {
     getCategories();
-  }, ['']);
+  }, []);
 
   return (
     <>

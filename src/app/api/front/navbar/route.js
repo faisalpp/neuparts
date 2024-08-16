@@ -8,7 +8,7 @@ export async function GET(req) {
     const categories = await Categories.find().sort({ createdAt: -1 });
     return NextResponse.json({ success: true, categories });
   } catch (error) {
-    console.log(error);
+    (error);
     return NextResponse.json({ success: false, message: 'Error retrieving attributes' });
   }
 }

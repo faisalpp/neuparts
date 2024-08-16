@@ -24,7 +24,7 @@ const Faqs = () => {
     fetch(`/api/front/faqs?category=${tab ? tab : activeTab}&page=${page}&limit=${limit}`,{method:'GET',headers:{'Content-Type':'application/json'}})
     .then((res)=>res.json())
     .then((data)=>{
-      console.log(data)
+      (data)
       if(data.faqs.length > 0){
         setFaqs(data.faqs)
         setPageCount(data.pagination.pageCount)
@@ -36,7 +36,7 @@ const Faqs = () => {
       }
     })
     .catch((error)=>{
-      console.log(error)
+      (error)
     })
   }
 
@@ -44,7 +44,7 @@ const Faqs = () => {
     fetch('/api/front/faqs/tabs',{method:'GET',headers:{'Content-Type':'application/json'}})
     .then((res)=>res.json())
     .then((data)=>{
-      console.log(data)
+      (data)
       if(data.tabs.length > 0){
         setTabs(data.tabs)
         setActiveTab(data.tabs[0]._id)
@@ -52,7 +52,7 @@ const Faqs = () => {
       }
     })
     .catch((error)=>{
-      console.log(error)
+      (error)
     })
   }
 
@@ -80,13 +80,13 @@ const Faqs = () => {
     fetch('/api/front/faqs/mobile',{method:'GET',headers:{'Content-Type':'application/json'}})
     .then((res)=>res.json())
     .then((data)=>{
-      console.log(data)
+      (data)
       if(data.faqs.length > 0){
         setMobFaqs(data.faqs)
       }
     })
     .catch((error)=>{
-      console.log(error)
+      (error)
     })
   }
 

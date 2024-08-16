@@ -29,7 +29,7 @@ const Form = () => {
    try {
     await ValAdmin.validate(formData, {abortEarly: false});   
   } catch (error) {
-    console.log(error)
+    (error)
     error?.inner?.forEach((err) => {
       toast.error(err.message);
     });

@@ -42,7 +42,7 @@ export async function GET(request){
       const [count,blogs] = await Promise.all([PostCountPromise,GetPostsPromise])
   
       const pageCount = Math.ceil(count / limit);
-      console.log(blogs)
+      (blogs)
       return  NextResponse.json({blogs:blogs,pagination:{pageCount,count},success: true})
     }catch(error){
       return NextResponse.json({error: error.message}, {status: 500})

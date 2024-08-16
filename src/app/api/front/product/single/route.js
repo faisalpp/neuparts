@@ -9,7 +9,7 @@ export async function GET(request) {
     const searchParams = request.nextUrl.searchParams;
     const slug = searchParams.get('slug');
 
-    console.log(slug);
+    (slug);
 
     const product = await Product.findOne({ slug: slug }).populate('category');
     if(!product){
@@ -17,7 +17,7 @@ export async function GET(request) {
     }
     return NextResponse.json({ product: product, success: true });
   } catch (error) {
-    console.log(error);
+    (error);
 
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }

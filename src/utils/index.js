@@ -56,7 +56,7 @@ export function copyLinkToClipboard(anchorRef,url){
 export function checkSlugForDigit(input) {
     const regex = /-\d+$/;
     const match = regex.test(input);
-    console.log(match)
+    (match)
     if (match) {
       return match[1]; // Returns the digits
     } else {

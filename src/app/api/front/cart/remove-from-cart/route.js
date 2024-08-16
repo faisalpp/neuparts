@@ -8,7 +8,7 @@ export async function POST(request){
     
         try {
             const { catId,productId, cartId } = await request.json();
-            console.log(`${catId}:${productId}:${cartId}`)
+            (`${catId}:${productId}:${cartId}`)
             // Get cart by id
             let CART;
             if (cartId) {

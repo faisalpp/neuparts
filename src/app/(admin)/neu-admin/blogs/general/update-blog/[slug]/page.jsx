@@ -31,7 +31,6 @@ const Page = ({ params }) => {
       fetch(`/api/front/blog/general/single/?slug=${params.slug}`, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.success) {
             const { _id, title, slug, content, thumbnail } = data.blog;
             setFormData({ id: _id, title: title, slug: slug, content: content, thumbnail: thumbnail });
@@ -41,7 +40,6 @@ const Page = ({ params }) => {
           }
         })
         .catch((error) => {
-          console.log(error);
           toast.error('Something went wrong!');
           router.push('/neu-admin/blogs/general');
         });
@@ -76,7 +74,6 @@ const Page = ({ params }) => {
     try {
       await ValBlog.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -101,7 +98,6 @@ const Page = ({ params }) => {
     fetch('/api/admin/blog/general', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
           router.push('/neu-admin/blogs/general');

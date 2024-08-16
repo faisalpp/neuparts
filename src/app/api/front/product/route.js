@@ -5,7 +5,7 @@ import APIFilters from '@/utils/APIFilters';
 
 export async function GET(req) {
   await connect();
-  console.log('yes');
+  ('yes');
   try {
     const searchParams = req.nextUrl.searchParams;
     const paramsObj = {};
@@ -22,7 +22,7 @@ export async function GET(req) {
     let filteredProducts = await apiFilters.query;
 
     let products = filteredProducts.filter((product) => product.category !== null);
-    console.log('products:', products);
+    ('products:', products);
 
     const filteredProductsCount = products.length;
 
@@ -32,7 +32,7 @@ export async function GET(req) {
 
     return NextResponse.json({ success: true, productCount, filteredProductsCount, products });
   } catch (error) {
-    console.log('yes');
+    ('yes');
     return NextResponse.json({ success: error, message: 'Error retrieving products' });
   }
 }

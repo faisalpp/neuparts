@@ -12,7 +12,7 @@ const ProductCompatible = () => {
   const [partNo, setPartNo] = useState('123456');
   const [step, setStep] = useState(1);
   const handleSearchTab = () => {
-    console.log('yes');
+    ('yes');
     if (partNo != '' && modelNo === '') {
       setStep(1);
     } else if (partNo != '' && modelNo != '') {

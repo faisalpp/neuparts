@@ -28,7 +28,7 @@ const Form = () => {
     try {
      await loginVal.validate({email,password}, {abortEarly: false});   
    } catch (error) {
-     console.log(error)
+     (error)
      error?.inner?.forEach((err) => {
        toast.error(err.message);
      });

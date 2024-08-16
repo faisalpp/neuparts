@@ -35,13 +35,13 @@ const Page = ({ params }) => {
 
   useEffect(() => {
     GetCategory();
-  }, ['']);
+  }, []);
 
   const UpdateCategory = async (e) => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
-      console.log(error);
+      (error);
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
