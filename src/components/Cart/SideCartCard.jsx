@@ -4,14 +4,19 @@ import FourStar from '@/components/svgs/FourStar';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import {removeFromCart} from '@/app/GlobalRedux/slices/CartSlice'
+import {deleteFromCart} from '@/app/GlobalRedux/slices/CartSlice'
 
 const SideCartCard = (props) => {
-  const cartId = useSelector((state)=>state.cart.cartId)
+  const [delLoading,setDelLoading] = useState(false)
   const dispatch = useDispatch()
+  const cartId = useSelector((state)=>state.cart.cartId)
 
-  const RemoveFromCart = async () => {
-    dispatch(removeFromCart({catId:props.catId,productId:props.item._id,cartId:cartId}))
+  const DeleteFromCart = async () => {
+   setDelLoading(true) 
+   const res = await dispatch(deleteFromCart({catId:props.catId,productId:props.item._id,cartId:cartId}))
+   if(res.payload.success){
+    setDelLoading(false) 
+   }
   }
 
   return (
@@ -20,8 +25,8 @@ const SideCartCard = (props) => {
       <div className="flex w-full flex-col justify-center gap-2">
         <div className="flex w-full justify-between gap-3">
           <h3 className="line-clamp-2 text-sm font-semibold">{props.item.title}</h3>
-          <button type="button" onClick={()=>RemoveFromCart()} className="grid h-6 w-6 place-items-center rounded-full bg-b3/10 maxlg:absolute maxlg:right-0 maxlg:top-0">
-            {props.delState === props.indx ? <RiDeleteBin6Line className="animate-bounce text-sm text-red-500" /> : <RiDeleteBin6Line className="text-sm text-b3" />}
+          <button type="button" onClick={()=>DeleteFromCart()} className="grid h-6 w-6 place-items-center rounded-full bg-b3/10 maxlg:absolute maxlg:right-0 maxlg:top-0">
+            {delLoading ? <RiDeleteBin6Line className="animate-bounce text-sm text-red-500" /> : <RiDeleteBin6Line className="text-sm text-b3" />}
           </button>
         </div>
         <div className="space-y-2">

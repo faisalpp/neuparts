@@ -3,14 +3,12 @@ import { AiOutlineArrowRight } from 'react-icons/ai';
 import Link from 'next/link';
 
 const Checkout = (props) => {
-  const orderInfo = '';
-
   return (
     <div className="flex flex-col gap-6 rounded-2xl border border-b1/10 px-5 py-10 md:p-10">
       <h2 className="text-xl font-bold text-b16">Order Summary</h2>
       <div className="flex justify-between text-b1">
-        <span>6 Items</span>
-        <span>$2,279.00</span>
+        <span>{props.cartCount} Items</span>
+        <span>${props.total}</span>
       </div>
       <div className="flex justify-between text-b1">
         <span>Delivery Fee</span>

@@ -1,23 +1,20 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import { BsCart3 } from 'react-icons/bs';
 import Checkout from '@/components/Cart/Checkout';
 import Loader2 from '@/components/Loader/Loader2';
 import Image from 'next/image';
 import CartCard from './CartCard';
+import { useSelector } from 'react-redux';
 
 const MyCart = () => {
-  const [loading, setLoading] = useState(false);
+  const CartItems = useSelector((state)=>state.cart.items)
+  const cartCount = useSelector((state)=>state.cart.cartCount)
+  const cartId = useSelector((state)=>state.cart.cartId)
+  const subTotal = useSelector((state)=>state.cart.cartSubTotal)
 
-  const [products, setProducts] = useState([
-    { image: '/popular-parts.webp', isSale: true, title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: 279.0, count: 1, salePrice: 279.0, condition: 'new' },
-    { image: '/popular-parts.webp', isSale: true, title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: 279.0, count: 1, salePrice: 279.0, condition: 'certified' },
-    { image: '/popular-parts.webp', isSale: true, title: 'Upper Rack for Dish Washers ft. Over the 3 racks with Convenience washing Controls and manual for long text', quantity: 1, regPrice: 279.0, count: 1, salePrice: 279.0, condition: 'used' },
-  ]);
-  const cartId = '';
-  const cartCount = '';
-  const total = '';
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -34,34 +31,34 @@ const MyCart = () => {
             </div>
             <h1 className="mt-4 text-32px font-bold text-b18 lg:text-40px">My Cart</h1>
           </div>
-          {products?.length > 0 ? (
+          {CartItems.length > 0 ? (
             <div className="maincontainer pb-10 lg:pb-16 xl:pb-20">
               <div className="grid grid-cols-1 gap-10 2xl:grid-cols-[1fr_440px] coxxl:grid-cols-[1fr_360px]">
                 <div className="order-2 space-y-14 rounded-2xl border border-b1/10 p-5 md:p-8 coxxl:order-none">
                   {/* Cart Card */}
 
                   {/* First */}
-                  {[1, 2].map((item, index) => (
+                  {CartItems.map((cat, index) => (
                     <div key={index}>
                       <div className="mb-6 flex items-center gap-3 rounded-xl border border-b8 bg-b3/10 p-4">
                         <div className="w-[74px] rounded bg-white p-1.5">
-                          <Image width={200} height={200} quality={100} className="h-auto w-[68px]" src="/oven.webp" alt="calendar_month" />
+                          <Image width={200} height={200} quality={100} className="h-auto w-[68px]" src={cat.cat_image} alt="calendar_month" />
                         </div>
-                        <h3 className="text-sm font-semibold text-b1">GE 1.7 cu. ft. Over the Range Microwave with Convenience Cooking Controls</h3>
+                        <h3 className="text-sm font-semibold text-b1">{cat.cat_title}</h3>
                       </div>
-                      <div className="grid w-full grid-cols-1 gap-10 lg:gap-12">{products?.map((item, pindex) => Array.from({ length: item.count }).map((_, index) => <CartCard indx={`${pindex}-${index}-delivery`} key={`${pindex}-${index}-delivery`} cartId={cartId} item={item} type="delivery" />))}</div>
+                      <div className="grid w-full grid-cols-1 gap-10 lg:gap-12">{cat.items.map((item, pindex) => <CartCard indx={`${pindex}-item`} key={`${pindex}-item`} catId={cat.cat_id} cartId={cartId} item={item} />)}</div>
                     </div>
                   ))}
 
                   {/* End Cart */}
                   <hr className="border-[hsla(0,0%,0%,0)] md:my-6 maxmd:!my-4" />
                   <div className="flex w-full flex-wrap items-center justify-between gap-2 maxmd:!mt-0">
-                    <span className="text-base font-semibold text-black sm:text-xl">Subtotal (4 Items):</span>
-                    <div className="text-2xl font-semibold sm:text-32px">$2,279.00</div>
+                    <span className="text-base font-semibold text-black sm:text-xl">Subtotal ({cartCount} Items):</span>
+                    <div className="text-2xl font-semibold sm:text-32px">${subTotal}</div>
                   </div>
                 </div>
                 <div>
-                  <Checkout cartCount={cartCount} total={total} />
+                  <Checkout cartCount={cartCount} total={subTotal} />
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { AiOutlineArrowRight, AiOutlineClose } from 'react-icons/ai';
+import {BsCart3} from 'react-icons/bs'
 import SideCartCard from './Cart/SideCartCard';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -51,7 +52,15 @@ const SideCart = ({ cartMenuRef }) => {
                 </div>
                 <div className="mb-3 flex w-full flex-col gap-6 space-y-2 border border-b1/10 px-3 lg:px-5">{cat.items.map((item, i) => <SideCartCard indx={`${i}-item`} key={`${i}-item`} catId={cat.cat_id} cartId={cartId} item={item} />)}</div>
               </div>
-               )):null}
+               )):(
+            <div className='flex flex-col px-2 space-y-5 w-full justify-center items-center h-full' >
+              <Image width={100} height={100} quality={100} src="/bag.webp" />
+              <h1 className='font-extrabold' >Your Cart is Empty</h1>
+              <h2 className='text-center' >Lorem Ipsum Doller Sit Amet, Consecture Audipicsing Elit</h2>
+              <button type='button' className='xy-center rounded-lg bg-b3 py-3 text-white font-medium w-1/2 text-sm'><BsCart3 className='mr-2' /> Start Shopping</button>
+            </div>
+               )}
+
               {CartItems.length > 0 ? 
               <div className="relative flex flex-col justify-end gap-4 border-t border-gray-300 p-4 lg:gap-6 lg:p-6 maxlg:pb-0">
                 <div className="flex justify-between">
@@ -61,7 +70,8 @@ const SideCart = ({ cartMenuRef }) => {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    route('/mycart/information');
+                    dispatch(toggleCart())
+                    route.push('/mycart');
                   }}
                   type="button" className={`rounded-lg text-xs font-medium text-white bg-b3 flex justify-center gap-2 px-4 py-3`}>
                   Proceed to Checkout

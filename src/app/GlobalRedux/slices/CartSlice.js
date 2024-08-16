@@ -1,6 +1,6 @@
 'use client';
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import {AddToCart,RemoveFromCart} from '../api/cart'
+import {AddToCart,RemoveFromCart,DeleteFromCart} from '../api/cart'
 
 const initialState = {
   cart:{},
@@ -8,7 +8,7 @@ const initialState = {
   sCart:false,
   cartId:null,
   cartCount:0,
-  cartSubTotal:0
+  cartSubTotal:0.00
 }
 
 // Create an async thunk for the Add To Cart
@@ -38,6 +38,20 @@ export const removeFromCart = createAsyncThunk("cart/remove", async (data) => {
       return { payload: error.response, error: true };
     }
   });
+
+  // Create an async thunk for the Delete from Cart
+export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
+    try{
+      const response = await DeleteFromCart(data); // Call your login API with the provided data
+      if(response.success){
+        return response; // Assuming your API response contains the user data
+      }else{
+        return response
+      }
+    }catch(error){
+      return { payload: error.response, error: true };
+    }
+  });
   
 
   export const cartSlice = createSlice({
@@ -58,19 +72,21 @@ export const removeFromCart = createAsyncThunk("cart/remove", async (data) => {
     extraReducers: (builder) => {
       builder
        .addCase(addToCart.fulfilled, (state, action) => {
-        const {cart} = action.payload;
+        const {cart,cartRender} = action.payload;
         if(cart){
          state.cart = cart
          state.cartId = cart._id
-         state.sCart = true
+         state.sCart = cartRender ? true : false
          state.items = cart.categories
+         state.cartCount = 0;
          if(cart.categories.length > 0){
           cart.categories.forEach((cat)=>{
            if(cat.items.length > 0){
             cat.items.forEach((it)=>{
              state.cartCount += it.quantity
-             let price = it.is_sale ? it.sale_price : it.regular
-             state.cartSubTotal += price
+             let price = it.is_sale ? it.sale_price : it.regular_price
+             let subTotal = state.cartSubTotal + price
+             state.cartSubTotal = parseFloat(subTotal.toFixed(2))
             })
            }
           })
@@ -88,8 +104,35 @@ export const removeFromCart = createAsyncThunk("cart/remove", async (data) => {
            if(cat.items.length > 0){
             cat.items.forEach((it)=>{
              state.cartCount -= it.quantity
-             let price = it.is_sale ? it.sale_price : it.regular
-             state.cartSubTotal -= price
+             let price = it.is_sale ? it.sale_price : it.regular_price
+             let subTotal = state.cartSubTotal - price
+             state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+            })
+           }else{
+            state.cartCount = 0;
+            state.cartSubTotal = 0.00;
+           }
+          })
+         }else{
+          state.cartCount = 0;
+          state.cartSubTotal = 0.00;
+         }
+        }
+      })
+      .addCase(deleteFromCart.fulfilled, (state, action) => {
+        const {cart} = action.payload;
+        if(cart){
+         state.cart = cart
+         state.cartId = cart._id
+         state.items = cart.categories
+         if(cart.categories.length > 0){
+          cart.categories.forEach((cat)=>{
+           if(cat.items.length > 0){
+            cat.items.forEach((it)=>{
+             state.cartCount -= it.quantity
+             let price = it.is_sale ? it.sale_price : it.regular_price
+             let subTotal = state.cartSubTotal - price
+             state.cartSubTotal = parseFloat(subTotal.toFixed(2))
             })
            }else{
             state.cartCount = 0;

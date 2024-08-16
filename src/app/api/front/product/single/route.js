@@ -12,6 +12,9 @@ export async function GET(request) {
     console.log(slug);
 
     const product = await Product.findOne({ slug: slug }).populate('category');
+    if(!product){
+      return NextResponse.json({ success: false });
+    }
     return NextResponse.json({ product: product, success: true });
   } catch (error) {
     console.log(error);

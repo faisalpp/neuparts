@@ -26,9 +26,11 @@ import WarantySection from './WarantySection';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import {useDispatch, useSelector} from 'react-redux'
 import {addToCart} from '@/app/GlobalRedux/slices/CartSlice'
+import { useRouter } from 'next/navigation';
 
 const Product = ({ slug }) => {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   // Get slug form url
   const [quantity, setQuantity] = useState(1);
@@ -42,10 +44,11 @@ const Product = ({ slug }) => {
     await fetch(`/api/front/product/single?slug=${slug}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         if (data.success) {
           setProduct(data.product);
           setLoading(false);
+        }else{
+         router.push('/404')
         }
       });
   };
@@ -58,8 +61,10 @@ const Product = ({ slug }) => {
   //add to cart
   const AddToCart = async () => {
     setCartLoading(true)
-    const res = await dispatch(addToCart({productId:product._id,cartId:cartId,quantity:quantity}))
+    const res = await dispatch(addToCart({productId:product._id,cartId:cartId,quantity:quantity,cartRender:true}))
     if(res.payload.success){
+      setCartLoading(false)
+    }else{
       setCartLoading(false)
     }
   };

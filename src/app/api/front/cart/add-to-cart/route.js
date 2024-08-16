@@ -6,8 +6,8 @@ import Cart from '@/models/cart'
 export async function POST(request){
     await connect();
 
-    // try {
-     const {productId,cartId,quantity} = await request.json()
+    try {
+     const {productId,cartId,quantity,cartRender} = await request.json()
      
      //get product
      let PRODUCT;
@@ -15,6 +15,7 @@ export async function POST(request){
      let isSale=false;
      try{
       PRODUCT = await Product.findOne({_id:productId}).populate('category');
+      console.log(productId)
       if(!PRODUCT){
         return  NextResponse.json({message: "Invalid product id!",success: false},{status:404})   
       }
@@ -85,12 +86,12 @@ export async function POST(request){
      try{
       const updatedCart = await CART.save()
        if(updatedCart){
-        return  NextResponse.json({cart: updatedCart,success: true},{status:200})   
+        return  NextResponse.json({cart: updatedCart,cartRender:cartRender,success: true},{status:200})   
        }
      }catch(error){
       return  NextResponse.json({message: "Cart update failed!",success: false})   
      }
-    // } catch (error) {
-    //     return NextResponse.json({error: error.message,success:false}, {status: 500})
-    // }
+    } catch (error) {
+        return NextResponse.json({error: error.message,success:false}, {status: 500})
+    }
 }
