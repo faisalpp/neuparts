@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import { AiOutlineShoppingCart, AiOutlineHeart, AiFillHeart, AiOutlineTag } from 'react-icons/ai';
 import { IoBagCheckOutline, IoCloseOutline, IoSettingsOutline } from 'react-icons/io5';
-import { BiLoaderAlt } from "react-icons/bi";
+import { BiLoaderAlt } from 'react-icons/bi';
 import { useState } from 'react';
 import FaqAccordion from '@/components/FaqAccordion';
 import ToolTip from '@/components/ToolTip';
@@ -24,22 +24,21 @@ import CompareModel from './CompareModel';
 import BuyingOtherOptions from './BuyingOtherOptions';
 import WarantySection from './WarantySection';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
-import {useDispatch, useSelector} from 'react-redux'
-import {addToCart} from '@/app/GlobalRedux/slices/CartSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '@/app/GlobalRedux/slices/CartSlice';
 import { useRouter } from 'next/navigation';
 
 const Product = ({ slug }) => {
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   // Get slug form url
   const [quantity, setQuantity] = useState(1);
-  const [stock,setStock] = useState(0)
+  const [stock, setStock] = useState(0);
   const [loading, setLoading] = useState(true);
   const [cartLoading, setCartLoading] = useState(false);
   const [buyLoading, setBuyLoading] = useState(false);
   const [product, setProduct] = useState({});
-
 
   const FetchProduct = async () => {
     await fetch(`/api/front/product/single?slug=${slug}`)
@@ -47,10 +46,10 @@ const Product = ({ slug }) => {
       .then((data) => {
         if (data.success) {
           setProduct(data.product);
-          setStock(data.product.stock)
+          setStock(data.product.stock);
           setLoading(false);
-        }else{
-         router.push('/404')
+        } else {
+          router.push('/404');
         }
       });
   };
@@ -59,20 +58,18 @@ const Product = ({ slug }) => {
     FetchProduct();
   }, []);
 
-  const cartId = useSelector((state)=>state.cart.cartId)
+  const cartId = useSelector((state) => state.cart.cartId);
   //add to cart
   const AddToCart = async () => {
-    setCartLoading(true)
-    const res = await dispatch(addToCart({productId:product._id,cartId:cartId,quantity:quantity,cartRender:true}))
-    if(res.payload.success){
-      setCartLoading(false)
-      setStock(res.payload.stock)
-    }else{
-      setCartLoading(false)
+    setCartLoading(true);
+    const res = await dispatch(addToCart({ productId: product._id, cartId: cartId, quantity: quantity, cartRender: true }));
+    if (res.payload.success) {
+      setCartLoading(false);
+      setStock(res.payload.stock);
+    } else {
+      setCartLoading(false);
     }
   };
-
-
 
   const [deliveryPoints, setDeliveryPoints] = useState([
     { title: 'NeuShield <br /> 30-Day Warranty', image: '/svgs/shield-security.webp' },
@@ -331,7 +328,8 @@ const Product = ({ slug }) => {
                   </div>
                   {stock > 0 ? (
                     <div className="flex items-center rounded-full bg-b13 px-3 py-2 text-xs text-white">
-                      <IoBagCheckOutline className="mr-1 text-sm" />{stock} in stock In Georgetown, TX
+                      <IoBagCheckOutline className="mr-1 text-sm" />
+                      {stock} in stock In Georgetown, TX
                     </div>
                   ) : (
                     <div className="flex items-center rounded-full bg-red-500 px-3 py-2 text-xs text-white">
@@ -345,11 +343,11 @@ const Product = ({ slug }) => {
                 <div className="grid grid-cols-2 gap-2">
                   <button type="button" disabled={product.stock === 0 || cartLoading ? true : false} onClick={AddToCart} className="button-hover relative flex h-full w-full items-center justify-center rounded-lg py-4 font-medium text-white">
                     <AiOutlineShoppingCart className="text-lg" />
-                    <span className="ml-2 flex items-center font-medium">Add To Cart {cartLoading ? <BiLoaderAlt className="absolute right-16 text-2xl animate-spin" /> : null}</span>
+                    <span className="ml-2 flex items-center font-medium">Add To Cart {cartLoading ? <BiLoaderAlt className="absolute right-16 animate-spin text-2xl" /> : null}</span>
                   </button>
                   <button type="button" disabled={product.stock === 0 || buyLoading ? true : false} onClick={AddToCart} className="relative flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-medium text-white hover:bg-[#071822]/90">
                     <Image width={100} height={100} className="h-6 w-5 object-contain" alt="Sell" src="/svgs/sell.webp" />
-                    <span className="ml-2 flex items-center font-medium">Buy Now {buyLoading ? <BiLoaderAlt className="absolute right-16 text-2xl animate-spin" /> : null}</span>
+                    <span className="ml-2 flex items-center font-medium">Buy Now {buyLoading ? <BiLoaderAlt className="absolute right-16 animate-spin text-2xl" /> : null}</span>
                   </button>
                 </div>
               </div>

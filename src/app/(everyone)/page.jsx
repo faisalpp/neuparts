@@ -8,14 +8,22 @@ import SatisfiedSection from '@/components/SatisfiedSection';
 import PupularParts from '@/components/PupularParts';
 import ChooseUs from '@/components/ChooseUs';
 
-export default function Home() {
+const getHome = async () => {
+  const res = await fetch(`${process.env.NEXT_BASE_API}/api/front/home`);
+  const data = await res.json();
+  return data;
+};
+
+const Page = async () => {
+  const productsData = await getHome();
+
   return (
     <>
       <HeroSection />
       <BrandsSlider />
-      <ApplianceSection category="appliance" title="Shop By Appliance Category" linktitle="View All Appliance Categories" />
-      <ApplianceSection category="parts" Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" />
-      <PupularParts />
+      {productsData && <ApplianceSection data={productsData.categories} title="Shop By Appliance Category" linktitle="View All Appliance Categories" />}
+      {productsData && <ApplianceSection data={productsData.parttyoes} Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" />}
+      {productsData && <PupularParts data={productsData.productsparts} />}
       <ChooseUs />
       <GallerySection />
       <MapSection />
@@ -23,4 +31,6 @@ export default function Home() {
       <NewsLetterSection backimage="/hero-bg.webp" />
     </>
   );
-}
+};
+
+export default Page;

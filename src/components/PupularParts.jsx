@@ -7,82 +7,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const PupularParts = () => {
-  const [pupolarParts, setPupolarParts] = useState([
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-      condtion: 'new',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-      condtion: 'new-open-box',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-      condtion: 'used-grade-a',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-      condtion: 'used-grade-c',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-      condtion: 'new',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-      condtion: 'new-open-box',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-      condtion: 'used-grade-a',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-      condtion: 'used-grade-c',
-    },
-  ]);
-
+const PupularParts = ({ data }) => {
   const settings = {
     dots: false,
     infinite: false,
@@ -130,13 +55,11 @@ const PupularParts = () => {
       <h2 className="text-center text-2xl font-bold md:mb-4 lg:text-3xl xl:text-4xl">Popular Parts</h2>
       <div className="mt-10 2xl:mt-20">
         <Slider {...settings} className="howitworkslider">
-          {pupolarParts.map((item, index) => (
-            <ProductCard2 key={index} product={item} sliderstyle="mx-2" />
-          ))}
+          {data && data.length > 0 && data.map((item, index) => <ProductCard2 key={index} product={item} sliderstyle="mx-2" />)}
         </Slider>
       </div>
       <div className="mt-16 flex justify-center">
-        <Link href="/applianceTypes" className="flex w-fit items-center rounded-md border-[1px] border-b3 px-4 py-3 font-semibold text-b3">
+        <Link href="/products" className="flex w-fit items-center rounded-md border-[1px] border-b3 px-4 py-3 font-semibold text-b3">
           <span className="lg:text-sm xl:text-[16px]">View All Parts</span>
           <BsArrowRightShort className="text-2xl" />
         </Link>

@@ -4,9 +4,10 @@ import MediaPopup from '@/components/AdminDashboard/MediaPopup';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
-const Page = () => {
+const Page = ({ params }) => {
+  const { id } = params;
   const [mediaPopup, setMediaPopup] = useState(false);
-  const [formData, setFormData] = useState({ title: '', thumbnail: '', isvisible: 1 });
+  const [formData, setFormData] = useState({ title: '', thumbnail: '' });
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
@@ -18,7 +19,6 @@ const Page = () => {
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
     thumbnail: Yup.string().required('Thumbnail is required!'),
-    isvisible: Yup.number().required('Visibility is required!'),
   });
 
   const HandleChange = (e) => {
@@ -26,7 +26,17 @@ const Page = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const CreateCategory = async (e) => {
+  const GetCategory = async () => {
+    const res = await fetch('/api/admin/product/sub-category/edit?id=' + id);
+    const data = await res.json();
+    setFormData(data);
+  };
+
+  useEffect(() => {
+    GetCategory();
+  }, []);
+
+  const UpdateCategory = async (e) => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
@@ -42,21 +52,19 @@ const Page = () => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Create Category...', // Show pending message
-        success: 'Category created successfully!', // Show success message
-        error: 'Failed to create category', // Show error message
+        pending: 'Update Sub Category...', // Show pending message
+        success: 'Sub Category update successfully!', // Show success message
+        error: 'Failed to update sub category', // Show error message
         closeOnClick: false,
         closeOnEscape: false,
       }
     );
     toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
-    fetch('/api/admin/product/category', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
+    fetch('/api/admin/product/sub-category', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        resp;
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
-          router.push('/neu-admin/blogs/general');
         } else {
           toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
         }
@@ -68,9 +76,9 @@ const Page = () => {
 
   return (
     <div className="p-5">
-      <MediaPopup state={mediaPopup} setState={setMediaPopup} files={files} setFiles={setFiles} />
-      <h2 className="text-3xl font-semibold">Create Category</h2>
-      <form action={CreateCategory} className="mt-4 space-y-4">
+      <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} />
+      <h2 className="text-3xl font-semibold">Update Sub Category</h2>
+      <form action={UpdateCategory} className="mt-4 space-y-4">
         <div>
           <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
             Title
@@ -87,15 +95,6 @@ const Page = () => {
               Select
             </button>
           </div>
-        </div>
-        <div>
-          <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Is Visible in Menu
-          </label>
-          <select name="isvisible" value={formData.isvisible} onChange={HandleChange} className="custom-input">
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-          </select>
         </div>
         <div className="col-span-2 flex w-full justify-center">
           <button className="rounded bg-b3 px-6 py-3 text-white">Submit</button>

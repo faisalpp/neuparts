@@ -17,12 +17,13 @@ export async function GET(req) {
     const resPerPage = 2;
 
     const productCount = await Product.countDocuments();
-    const apiFilters = new APIFilters(Product.find(), paramsObj).search().filter();
+    const apiFilters = new APIFilters(Product.find(), paramsObj).filter();
 
     let filteredProducts = await apiFilters.query;
 
+    console.log(filteredProducts);
+
     let products = filteredProducts.filter((product) => product.category !== null);
-    ('products:', products);
 
     const filteredProductsCount = products.length;
 
@@ -32,7 +33,6 @@ export async function GET(req) {
 
     return NextResponse.json({ success: true, productCount, filteredProductsCount, products });
   } catch (error) {
-    ('yes');
     return NextResponse.json({ success: error, message: 'Error retrieving products' });
   }
 }
