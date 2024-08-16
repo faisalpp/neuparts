@@ -92,13 +92,14 @@ const Page = () => {
       <div className="mx-10 flex flex-col">
         <ActionBtns buttons={[{ type: 'link', text: 'Add Category', link: '/neu-admin/product/category/create' }]} />
         <div className="flex h-full w-full flex-col items-center">
-          <Table header={['Product Title', 'Slug', 'Menu', 'Actions']}>
+          <Table header={['Thumbnail','Product Title', 'Slug', 'Menu', 'Actions']}>
             {/* hello pengea/dnd */}
             {rowLoader ? (
               <RowLoader count={5} />
             ) : categories?.length > 0 ? (
               categories.map((category, i) => (
                 <Row Key={i}>
+                  <TdImage src={category.thumbnail} css="w-20 h-14 object-fit rounded" />
                   <Text text={category.title} />
                   <Text text={category.slug} />
                   <Text text={category.isvisible ? 'Yes' : 'No'} />

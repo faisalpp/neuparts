@@ -1,25 +1,22 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import MediaPopup from '@/components/AdminDashboard/MediaPopup';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import { BiLoaderAlt } from "react-icons/bi";
+import Image from 'next/image';
 
 const Page = () => {
   const [mediaPopup, setMediaPopup] = useState(false);
-  const [mediaPopup2, setMediaPopup2] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '', model_no: '', condition: '', type: '', category: '', stock: 0, images: [], threesixty: [], description: '', specification: '', delivery: '' });
+  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '', model_no: '', condition: '', type: '', category: '', stock: 0, images: [],thumbnail:'', threesixty: '', description: '', specification: '', delivery: '' });
   const [files, setFiles] = useState([]);
-  const [files2, setFiles2] = useState([]);
 
   useEffect(() => {
     if (files.length > 0) {
       setFormData({ ...formData, images: files, thumbnail: files[0].url });
     }
-    if (files2.length > 0) {
-      setFormData({ ...formData, threesixty: files2, gallery: files2[0].url });
-    }
-  }, [files, files2]);
+  }, [files]);
 
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
@@ -102,127 +99,199 @@ const Page = () => {
       });
   };
 
+  // Generate CkEditor Instances dynamically
+  const deliveryEditorRef = useRef();
+  const descriptionEditorRef = useRef(); // Another editor ref
+  const specificationEditorRef = useRef(); // Another editor ref
+
+  const [editorLoader, setEditorLoader] = useState(false);
+
+  useEffect(() => {
+    const loadEditors = () => {
+      const CKEditor = require('@ckeditor/ckeditor5-react').CKEditor;
+      const Editor = require('ckeditor5-custom-build/build/ckeditor');
+
+      deliveryEditorRef.current = { CKEditor, Editor };
+      specificationEditorRef.current = { CKEditor, Editor };
+      descriptionEditorRef.current = { CKEditor, Editor };
+    };
+
+    loadEditors();
+    setEditorLoader(true);
+  }, []);
+
+
   return (
     <div className="p-5">
-      <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} isMultiple={true} />
-      <MediaPopup state={mediaPopup2} setState={setMediaPopup2} setFiles={setFiles2} isMultiple={true} />
-      <h2 className="text-3xl font-semibold">Create Product</h2>
-      <form action={CreateProduct} className="mt-4 grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Title
-          </label>
-          <input name="title" value={formData.title} onChange={HandleChange} type="text" className="custom-input" />
+      <MediaPopup state={mediaPopup} setState={setMediaPopup} files={files} setFiles={setFiles} isMultiple={true} />
+      <h2 className="text-3xl text-center font-semibold">Create Product</h2>
+      <form action={CreateProduct} className="mt-4 grid grid-cols-2 border-2 rounded-xl shadow-lg">
+        {/* Left Section Start */}
+        <div className='flex flex-col gap-10 px-5 py-5' >
+
+        <div className="col-span-2">
+          <label htmlFor="delivery" className="block text-lg font-semibold text-gray-800 dark:text-gray-300">Delivery</label>
+        {editorLoader ? (
+            <deliveryEditorRef.current.CKEditor
+              editor={deliveryEditorRef.current.Editor}
+              onChange={(e, editor) => setFormData({ ...formData, delivery: editor.getData() })}
+              config={{
+                height: '250px', // Set the initial height
+                toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'blockQuote', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+              }}
+              onReady={(editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+              onBlur={(event, editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+              onFocus={(event, editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+            />
+          ) : <div className='h-[250px] flex justify-center items-center animate-spin text-2xl' ><BiLoaderAlt/></div>}
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="regular_price" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-              Regular Price
-            </label>
+
+        <div>
+          <label htmlFor="specification" className="block text-lg font-semibold text-gray-800 dark:text-gray-300">
+            Specification
+          </label>
+          {editorLoader ? (
+            <specificationEditorRef.current.CKEditor
+              editor={specificationEditorRef.current.Editor}
+              onChange={(e, editor) => setFormData({ ...formData, specification: editor.getData() })}
+              config={{
+                height: '250px', // Set the initial height
+                toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'blockQuote', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+              }}
+              onReady={(editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+              onBlur={(event, editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+              onFocus={(event, editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+            />
+          ) : <div className='h-[250px] flex justify-center items-center animate-spin text-2xl' ><BiLoaderAlt/></div>}
+        </div>
+
+        <div>
+          <label htmlFor="description" className="block text-lg font-semibold text-gray-800 dark:text-gray-300">
+            Description
+          </label>
+          {editorLoader ? (
+            <descriptionEditorRef.current.CKEditor
+              editor={descriptionEditorRef.current.Editor}
+              onChange={(e, editor) => setFormData({ ...formData, description: editor.getData() })}
+              config={{
+                height: '250px', // Set the initial height
+                toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'blockQuote', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+              }}
+              onReady={(editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+              onBlur={(event, editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+              onFocus={(event, editor) => {editor.ui.view.editable.element.style.minHeight = '250px';}}
+            />
+          ) : <div className='h-[250px] flex justify-center items-center animate-spin text-2xl' ><BiLoaderAlt/></div>}
+        </div>
+
+
+        </div>
+        {/* Left Section End */}
+
+
+        {/* Right Section Start */}
+        <div className='flex flex-col gap-5 border-l-2 px-5 py-5' >
+
+         <div>
+           <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Title</label>
+           <input name="title" value={formData.title} onChange={HandleChange} type="text" className="custom-input" />
+         </div>
+         {/* regular and sale price start */}
+         <div className="flex gap-5" >
+          <div className="w-6/12" >
+             <label htmlFor="regular_price" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Regular Price</label>
             <input min={0} name="regular_price" value={formData.regular_price} onChange={HandleChange} type="number" className="custom-input" />
           </div>
-          <div>
-            <label htmlFor="sale_price" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-              Sale Price
-            </label>
+          <div className="w-6/12" >
+            <label htmlFor="sale_price" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Sale Price</label>
             <input min={0} name="sale_price" value={formData.sale_price} onChange={HandleChange} type="number" className="custom-input" />
           </div>
-        </div>
-        <div>
-          <label htmlFor="part_number" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Part Number
-          </label>
+          <div>
+           <label htmlFor="stock" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Stock</label>
+           <input name="stock" value={formData.stock} onChange={HandleChange} type="number" className="custom-input" />
+          </div>
+         </div>
+         {/* regular and sale price end */}
+
+         {/* part # & model no start */}
+        <div className='flex gap-5' >
+         <div className='w-6/12' >
+          <label htmlFor="part_number" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Part Number</label>
           <input name="part_number" value={formData.part_number} onChange={HandleChange} type="text" className="custom-input" />
-        </div>
-        <div>
-          <label htmlFor="model_no" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Model No
-          </label>
+         </div>
+         <div className="w-6/12" >
+          <label htmlFor="model_no" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Model No</label>
           <input name="model_no" value={formData.model_no} onChange={HandleChange} type="text" className="custom-input" />
+         </div>
         </div>
-        <div>
-          <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Condition
-          </label>
+       {/* part # & model no end */}
+
+       {/* Conditions Start */}
+       <div className='flex gap-5' >
+       <div className="w-6/12" >
+          <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Condition</label>
           <select name="condition" value={formData.condition} onChange={HandleChange} className="custom-input !py-3">
             <option value="">Select Condition</option>
-            <option value="new">New</option>
-            <option value="used">Used</option>
+            <option value="Like New / Open Box">Like New / Open Box</option>
+            <option value="Like New / Open Box">Certified Refurbished</option>
+            <option value="Used ● Grade A">Used ● Grade A</option>
+            <option value="Used ● Grade B">Used ● Grade B</option>
+            <option value="Used ● Grade C">Used ● Grade C</option>
+            <option value="Used ● Grade D">Used ● Grade D</option>
           </select>
         </div>
-        <div>
-          <label htmlFor="type" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Type
-          </label>
+
+        <div className="w-6/12" >
+          <label htmlFor="type" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Part Type</label>
           <select name="type" value={formData.type} onChange={HandleChange} className="custom-input !py-3">
             <option value="">Select Type</option>
-            <option value="appliance">Appliance</option>
-            <option value="accessories">Accessories</option>
-            <option value="electrical">Electrical</option>
+            <option value="Genuine OEM Part">Genuine OEM Part</option>
+            <option value="Genuine OEM Part">Aftermarket Replacement Part</option>
           </select>
         </div>
-        <div>
-          <label htmlFor="category" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Category
-          </label>
+        </div>
+       {/* Conditions End */}
+
+       {/* Category & 360 Url Start */}
+       <div className='flex gap-5' >
+        <div className='w-6/12' >
+          <label htmlFor="category" className="block text-base font-semibold text-gray-800 dark:text-gray-300">Category</label>
           <select name="category" value={formData.category} onChange={HandleChange} className="custom-input !py-3">
             <option value="">Select Category</option>
-            {categories.map((item, index) => (
-              <option value={item._id} key={index}>
-                {item.title}
-              </option>
-            ))}
+            {categories.map((item, index) => (<option value={item._id} key={index}>{item.title}</option>))}
           </select>
         </div>
-        <div>
-          <label htmlFor="stock" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Stock
-          </label>
-          <input name="stock" value={formData.stock} onChange={HandleChange} type="number" className="custom-input" />
-        </div>
-        <div>
+        <div className="w-6/12" >
+          <label htmlFor="threesixty" className="block text-base font-semibold text-gray-800 dark:text-gray-300">360° Iframe Url</label>
+          <input name="threesixty" value={formData.threesixty} onChange={HandleChange} type="text" placeholder='Just Iframe Url' className="custom-input" />
+         </div>
+
+       </div>
+
+       {/* Category & 360 End */}
+
+       <div>
           <label htmlFor="images" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
             Images
           </label>
           <div className="flex items-center gap-2 rounded-md border border-gray-500 px-3 py-2">
-            <input readOnly name="images" value={formData.thumbnail} type="text" placeholder="Select Files" className="custom-input !mt-0" />
-            <button type="button" onClick={() => setMediaPopup(true)} className="rounded-md bg-b4 px-4 py-3 text-white">
-              Select
-            </button>
+            
+            <div className='flex bg-red-500 w-100 h-20' >
+             {formData?.images?.length > 0 ? formData.images.map((img)=> <Image height={100} width={100} src={img.url} /> ):null}
+            </div>
+            
+            <button type="button" onClick={() => setMediaPopup(true)} className="rounded-md bg-b4 px-4 py-3 text-white">Select</button>
           </div>
         </div>
-        <div>
-          <label htmlFor="threesixty" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            360 deg
-          </label>
-          <div className="flex items-center gap-2 rounded-md border border-gray-500 px-3 py-2">
-            <input readOnly name="threesixty" value={formData.gallery} type="text" placeholder="Select Files" className="custom-input !mt-0" />
-            <button type="button" onClick={() => setMediaPopup2(true)} className="rounded-md bg-b4 px-4 py-3 text-white">
-              Select
-            </button>
-          </div>
-        </div>
-        <div>
-          <label htmlFor="description" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Description
-          </label>
-          <textarea name="description" value={formData.description} onChange={HandleChange} className="custom-input"></textarea>
-        </div>
-        <div>
-          <label htmlFor="specification" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Specification
-          </label>
-          <textarea name="specification" value={formData.specification} onChange={HandleChange} className="custom-input"></textarea>
-        </div>
-        <div className="col-span-2">
-          <label htmlFor="delivery" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Delivery
-          </label>
-          <textarea name="delivery" value={formData.delivery} onChange={HandleChange} className="custom-input"></textarea>
-        </div>
+
         <div className="col-span-2 flex w-full justify-center">
           <button className="rounded bg-b3 px-6 py-3 text-white">Submit</button>
         </div>
+
+        </div>
+        {/* Right Section End */}
+
+
       </form>
     </div>
   );

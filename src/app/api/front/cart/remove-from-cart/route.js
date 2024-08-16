@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 import {connect} from '@/DB/index';
 import Cart from '@/models/cart'
+import Product from '@/models/product'
 
 export async function POST(request){
     await connect();
     
-        // try {
+        try {
             const { catId,productId, cartId } = await request.json();
-            
+            console.log(`${catId}:${productId}:${cartId}`)
             // Get cart by id
             let CART;
             if (cartId) {
@@ -49,11 +50,12 @@ export async function POST(request){
             // Save the updated cart
             try {
                 const updatedCart = await CART.save();
-                return NextResponse.json({ cart: updatedCart, success: true }, { status: 200 });
+                await Product.findOneAndUpdate({ _id: productId },{ $inc: { stock: 1 } },{ new: true });
+              return NextResponse.json({ cart: updatedCart, success: true }, { status: 200 });
             } catch (error) {
                 return NextResponse.json({ message: "Cart update failed!", success: false, error: error }, { status: 500 });
             }
-        // } catch (error) {
-        //     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
-        // }
+        } catch (error) {
+            return NextResponse.json({ error: error.message, success: false }, { status: 500 });
+        }
 }

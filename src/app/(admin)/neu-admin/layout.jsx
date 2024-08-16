@@ -18,7 +18,7 @@ const layout = ({ children }) => {
           {/* Sidebar End */}
           <div className="flex w-full flex-col">
             {/* Navbar Start */}
-            <Navbar />
+            {/* <Navbar /> */}
             {/* Navbar End */}
 
             {/* Main Content Start */}

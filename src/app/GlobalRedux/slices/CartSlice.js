@@ -79,13 +79,16 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
          state.sCart = cartRender ? true : false
          state.items = cart.categories
          state.cartCount = 0;
+         state.cartSubTotal= 0;
          if(cart.categories.length > 0){
           cart.categories.forEach((cat)=>{
            if(cat.items.length > 0){
             cat.items.forEach((it)=>{
-             state.cartCount += it.quantity
+             let tmpQuantity = 0;
+             tmpQuantity += it.quantity 
+             state.cartCount = tmpQuantity
              let price = it.is_sale ? it.sale_price : it.regular_price
-             let subTotal = state.cartSubTotal + price
+             let subTotal = state.cartSubTotal + (price * tmpQuantity)
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
             })
            }
@@ -103,14 +106,11 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
           cart.categories.forEach((cat)=>{
            if(cat.items.length > 0){
             cat.items.forEach((it)=>{
-             state.cartCount -= it.quantity
+             state.cartCount -= 1
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal - price
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
             })
-           }else{
-            state.cartCount = 0;
-            state.cartSubTotal = 0.00;
            }
           })
          }else{
@@ -134,9 +134,6 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let subTotal = state.cartSubTotal - price
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
             })
-           }else{
-            state.cartCount = 0;
-            state.cartSubTotal = 0;
            }
           })
          }else{

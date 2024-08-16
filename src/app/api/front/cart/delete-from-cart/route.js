@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import {connect} from '@/DB/index';
 import Cart from '@/models/cart'
+import Product from '@/models/product'
 
 export async function POST(request){
     await connect();
     
         try {
-            const { catId,productId, cartId } = await request.json();
+            const { catId,productId, cartId,quantity } = await request.json();
             
             // Get cart by id
             let CART;
@@ -30,17 +31,19 @@ export async function POST(request){
             }
            
             // Find the item in the category
-            let itemIndex = CART.categories[categoryIndex].items.findIndex(item => item._id.toString() === productId.toString());
+            let itemIndex = CART.categories[categoryIndex].items.findIndex(item => item.id.toString() === productId.toString());
             if (itemIndex === -1) {
                 return NextResponse.json({ message: "Product not found in cart!", success: false }, { status: 404 });
             }
     
             // Remove the category if no items left
             CART.categories.splice(categoryIndex, 1);
-    
+
+            
             // Save the updated cart
             try {
                 const updatedCart = await CART.save();
+                await Product.findOneAndUpdate({ _id: productId },{ $inc: { stock: quantity } },{ new: true });
                 return NextResponse.json({ cart: updatedCart, success: true }, { status: 200 });
             } catch (error) {
                 return NextResponse.json({ message: "Cart update failed!", success: false, error: error }, { status: 500 });

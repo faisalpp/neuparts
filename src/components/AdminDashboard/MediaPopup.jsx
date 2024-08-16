@@ -9,7 +9,7 @@ import Popup from '@/components/AdminDashboard/Popup';
 import * as Yup from 'yup';
 import { AiOutlineClose } from 'react-icons/ai';
 
-const MediaPopup = ({ state, setState, setFiles, isMultiple }) => {
+const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
   const [media, setMedia] = useState([]);
   const [mediaPopup, setMediaPopup] = useState(false);
   const [tmpFiles, setTmpFiles] = useState([]);
@@ -18,7 +18,7 @@ const MediaPopup = ({ state, setState, setFiles, isMultiple }) => {
   const fileInputRef = useRef(null);
 
   const HandleMediaDone = () => {
-    setFiles(tmpFiles);
+    setFiles([...files,tmpFiles]);
     setMediaPopup(false);
     setState(false);
   };

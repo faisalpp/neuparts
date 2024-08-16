@@ -34,6 +34,7 @@ const Product = ({ slug }) => {
 
   // Get slug form url
   const [quantity, setQuantity] = useState(1);
+  const [stock,setStock] = useState(0)
   const [loading, setLoading] = useState(true);
   const [cartLoading, setCartLoading] = useState(false);
   const [buyLoading, setBuyLoading] = useState(false);
@@ -46,6 +47,7 @@ const Product = ({ slug }) => {
       .then((data) => {
         if (data.success) {
           setProduct(data.product);
+          setStock(data.product.stock)
           setLoading(false);
         }else{
          router.push('/404')
@@ -64,6 +66,7 @@ const Product = ({ slug }) => {
     const res = await dispatch(addToCart({productId:product._id,cartId:cartId,quantity:quantity,cartRender:true}))
     if(res.payload.success){
       setCartLoading(false)
+      setStock(res.payload.stock)
     }else{
       setCartLoading(false)
     }
@@ -326,9 +329,9 @@ const Product = ({ slug }) => {
                       </button>
                     </div>
                   </div>
-                  {product.stock > 0 ? (
+                  {stock > 0 ? (
                     <div className="flex items-center rounded-full bg-b13 px-3 py-2 text-xs text-white">
-                      <IoBagCheckOutline className="mr-1 text-sm" />{product.stock} in stock In Georgetown, TX
+                      <IoBagCheckOutline className="mr-1 text-sm" />{stock} in stock In Georgetown, TX
                     </div>
                   ) : (
                     <div className="flex items-center rounded-full bg-red-500 px-3 py-2 text-xs text-white">

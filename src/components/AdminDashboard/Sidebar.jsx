@@ -5,9 +5,11 @@ import Image from 'next/image';
 import { RiTeamFill } from 'react-icons/ri';
 import { MdPermMedia, MdDashboard, MdRateReview } from 'react-icons/md';
 import { FaQuoteRight } from 'react-icons/fa';
-import { GiAutoRepair } from 'react-icons/gi';
+import { GiAutoRepair,GiWashingMachine } from 'react-icons/gi';
 import { FaBlogger } from 'react-icons/fa';
 import { MdTipsAndUpdates, MdLiveHelp } from 'react-icons/md';
+import { BiCategory } from "react-icons/bi";
+import { FaCapsules } from "react-icons/fa6";
 import Logout from '@/components/AdminDashboard/Logout';
 
 const Sidebar = () => {
@@ -34,40 +36,25 @@ const Sidebar = () => {
       <div className="mt-16 flex flex-1 flex-col justify-between">
         <nav className="-mx-3 space-y-6 ">
           <div className="space-y-3">
-            {/* Example section */}
-            <div className="flex cursor-pointer items-center justify-between px-3 text-sm font-bold uppercase text-gray-500 transition-colors duration-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" onClick={() => toggleCollapse('analytics')}>
-              <span>Analytics</span>
-              {/* Arrow icon for indicating open/close state */}
-              <svg className={`h-4 w-4 transform ${collapsedSections.analytics ? '-rotate-90' : 'rotate-0'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
+          <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin">
+            <MdDashboard />
+            <span className="mx-2 text-sm font-semibold">Dashboard</span>
+          </Link>
+          <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/team">
+            <RiTeamFill />
+            <span className="mx-2 text-sm font-semibold">Team</span>
+          </Link>
+          <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/media">
+            <MdPermMedia />
+            <span className="mx-2 text-sm font-semibold">Media</span>
+          </Link>
+          <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/review">
+            <MdRateReview />
+            <span className="mx-2 text-sm font-semibold">Reviews</span>
+          </Link>
 
-            {/* Conditional rendering based on section's collapse state with transition */}
-            <div className={`transition-all duration-300 ${collapsedSections.analytics ? 'h-auto opacity-100' : 'h-0 overflow-hidden opacity-0'}`}>
-              <div className={`space-y-2 pl-3 ${collapsedSections.analytics ? 'visible' : 'invisible'}`}>
-                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin">
-                  <MdDashboard />
-                  <span className="mx-2 text-sm font-semibold">Dashboard</span>
-                </Link>
-
-                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/team">
-                  <RiTeamFill />
-                  <span className="mx-2 text-sm font-semibold">Team</span>
-                </Link>
-
-                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/media">
-                  <MdPermMedia />
-                  <span className="mx-2 text-sm font-semibold">Media</span>
-                </Link>
-
-                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/review">
-                  <MdRateReview />
-                  <span className="mx-2 text-sm font-semibold">Reviews</span>
-                </Link>
-              </div>
-            </div>
           </div>
+
           <div className="space-y-3">
             {/* Example section */}
             <div className="flex cursor-pointer items-center justify-between px-3 text-sm font-bold uppercase text-gray-500 transition-colors duration-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200" onClick={() => toggleCollapse('products')}>
@@ -82,13 +69,17 @@ const Sidebar = () => {
             <div className={`transition-all duration-300 ${collapsedSections.products ? 'h-auto opacity-100' : 'h-0 overflow-hidden opacity-0'}`}>
               <div className={`space-y-2 pl-3 ${collapsedSections.products ? 'visible' : 'invisible'}`}>
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product">
-                  <MdDashboard />
+                  <GiWashingMachine />
                   <span className="mx-2 text-sm font-semibold">Manage Products</span>
                 </Link>
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/category">
-                  <MdDashboard />
+                  <BiCategory />
                   <span className="mx-2 text-sm font-semibold">Manage Categories</span>
                 </Link>
+                {/* <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/attributes">
+                  <FaCapsules />
+                  <span className="mx-2 text-sm font-semibold">Manage Attributes</span>
+                </Link> */}
               </div>
             </div>
           </div>

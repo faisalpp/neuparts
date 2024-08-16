@@ -13,7 +13,7 @@ const SideCartCard = (props) => {
 
   const DeleteFromCart = async () => {
    setDelLoading(true) 
-   const res = await dispatch(deleteFromCart({catId:props.catId,productId:props.item._id,cartId:cartId}))
+   const res = await dispatch(deleteFromCart({catId:props.catId,productId:props.item.id,cartId:cartId,quantity:props.item.quantity}))
    if(res.payload.success){
     setDelLoading(false) 
    }

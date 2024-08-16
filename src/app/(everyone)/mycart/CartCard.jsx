@@ -15,14 +15,12 @@ const CartCard = (props) => {
   const [cartLoading,setCartLoading] = useState(false)
   const dispatch = useDispatch()
   const cartId = useSelector((state)=>state.cart.cartId)
-  const [quantity, setQuantity] = useState(props.item.quantity);
 
   const AddToCart = async () => {
     setCartLoading(true)
     const res = await dispatch(addToCart({productId:props.item.id,cartId:cartId,quantity:1,cartRender:false}))
     if(res.payload.success){
       setCartLoading(false)
-      setQuantity(quantity+1)
     }else{
       setCartLoading(false)
     }
@@ -30,10 +28,9 @@ const CartCard = (props) => {
 
   const RemoveToCart = async () => {
     setCartLoading(true)
-    const res = await dispatch(removeFromCart({productId:props.item.id,cartId:cartId,quantity:1}))
+    const res = await dispatch(removeFromCart({catId:props.catId,productId:props.item.id,cartId:cartId}))
     if(res.payload.success){
       setCartLoading(false)
-      setQuantity(quantity-1)
     }else{
       setCartLoading(false)
     }
@@ -41,7 +38,7 @@ const CartCard = (props) => {
 
   const DeleteFromCart = async () => {
     setDelLoading(true) 
-    const res = await dispatch(deleteFromCart({catId:props.catId,productId:props.item._id,cartId:cartId}))
+    const res = await dispatch(deleteFromCart({catId:props.catId,productId:props.item.id,cartId:cartId,quantity:props.item.quantity}))
     if(res.payload.success){
      setDelLoading(false) 
     }
@@ -71,7 +68,7 @@ const CartCard = (props) => {
               Quantity
             </label>
             <div className="relative w-24">
-              <button type="button" onClick={() => RemoveToCart()} className={`absolute left-2 top-2 grid h-6 w-6 place-items-center rounded-full text-sm font-medium leading-3 text-white ${quantity === 1 ? 'pointer-events-none bg-b3/25 text-gray-400' : 'bg-b3'}`}>
+              <button type="button" onClick={() => RemoveToCart()} className={`absolute left-2 top-2 grid h-6 w-6 place-items-center rounded-full text-sm font-medium leading-3 text-white ${props.item.quantity === 1 ? 'pointer-events-none bg-b3/25 text-gray-400' : 'bg-b3'}`}>
                 <MinusIcon className="h-4 w-4" />
               </button>
               {cartLoading ? <div className="absolute flex items-center justify-center bg-white/80 w-24 rounded-xl z-10 h-10" ><BiLoaderAlt className="text-xl animate-spin" /></div>:null}

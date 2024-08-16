@@ -15,7 +15,6 @@ export async function POST(request){
      let isSale=false;
      try{
       PRODUCT = await Product.findOne({_id:productId}).populate('category');
-      console.log(productId)
       if(!PRODUCT){
         return  NextResponse.json({message: "Invalid product id!",success: false},{status:404})   
       }
@@ -84,10 +83,9 @@ export async function POST(request){
      }
 
      try{
+      const updatedProd = await Product.findOneAndUpdate({ _id: productId },{ $inc: { stock: -quantity } },{ new: true });
       const updatedCart = await CART.save()
-       if(updatedCart){
-        return  NextResponse.json({cart: updatedCart,cartRender:cartRender,success: true},{status:200})   
-       }
+      return  NextResponse.json({cart: updatedCart,cartRender:cartRender,stock:updatedProd.stock,success: true},{status:200})   
      }catch(error){
       return  NextResponse.json({message: "Cart update failed!",success: false})   
      }
