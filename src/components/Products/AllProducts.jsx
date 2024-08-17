@@ -11,20 +11,7 @@ import Image from 'next/image';
 
 const AllProducts = ({ data }) => {
   const [loading, setLoading] = useState(true);
-  const [ratingFilters, setRatingFilters] = useState([
-    {
-      _id: 3,
-      count: 4,
-    },
-    {
-      _id: 4,
-      count: 4,
-    },
-    {
-      _id: 5,
-      count: 4,
-    },
-  ]);
+
   const [saleFilter, setSaleFilter] = useState([{ count: 99 }]);
 
   useEffect(() => {
@@ -78,7 +65,7 @@ const AllProducts = ({ data }) => {
             <div className="flex w-full items-center justify-center">
               <Image width={400} height={400} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" />
             </div>
-          ) : data.products?.length > 0 ? (
+          ) : data.products.length > 0 ? (
             <>
               {data.products.map((product, index) => (
                 <ProductCard3 key={index} product={product} isGrid={isGrid} />

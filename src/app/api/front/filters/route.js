@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connect } from '@/DB/index';
 import Categories from '@/models/productcategory';
 import ProductTypes from '@/models/producttype';
+import ProductConditions from '@/models/condition';
 
 export async function GET(req) {
   await connect();
@@ -34,8 +35,8 @@ export async function GET(req) {
       {
         $lookup: {
           from: 'products', // the name of the products collection
-          localField: 'slug',
-          foreignField: 'type',
+          localField: '_id',
+          foreignField: 'parttype',
           as: 'products',
         },
       },
@@ -53,35 +54,33 @@ export async function GET(req) {
         $sort: { createdAt: -1 },
       },
     ]);
-    const conditions = [
+    const conditions = await ProductConditions.aggregate([
       {
-        title: 'New',
-        slug: 'new',
+        $lookup: {
+          from: 'products', // the name of the products collection
+          localField: 'slug',
+          foreignField: 'condition',
+          as: 'products',
+        },
       },
       {
-        title: 'New / Open Box',
-        slug: 'new-open-box',
+        $addFields: {
+          productCount: { $size: '$products' }, // count the number of products in each product type
+        },
       },
       {
-        title: 'Certified Refurbished',
-        slug: 'certified-refurbished',
+        $project: {
+          products: 0, // optionally exclude the product array if you only want the count
+        },
       },
       {
-        title: 'Used • Grade A',
-        slug: 'used-grade-a',
+        $sort: { createdAt: -1 },
       },
-      {
-        title: 'Used • Grade B',
-        slug: 'used-grade-b',
-      },
-      {
-        title: 'Used • Grade C',
-        slug: 'used-grade-c',
-      },
-    ];
+    ]);
+
     return NextResponse.json({ success: true, categories: categories, parttypes: parttypes, conditions: conditions });
   } catch (error) {
-    (error);
+    error;
     return NextResponse.json({ success: false, message: 'Error retrieving attributes' });
   }
 }

@@ -20,6 +20,7 @@ const ProductSchema = new mongoose.Schema(
     },
     stock: { type: Number, required: true },
     images: { type: Array },
+    thumbnail: { type: String },
     threesixty: { type: String },
     description: { type: String, required: true },
     specification: { type: String, required: true },

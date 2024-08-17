@@ -31,6 +31,10 @@ const TypeFilter = ({ filters }) => {
     router.push(parth);
   }
 
+  const conditionClass = (condition) => {
+    return condition == 'new' ? 'bg-dark-light-cyan' : condition == 'new-open-box' ? 'bg-dark-light-cyan' : condition == 'certified' ? 'bg-dark-cyan' : 'bg-[#FF9A3E]';
+  };
+
   return (
     <>
       <DropDown title="Comatic Rating">
@@ -44,8 +48,8 @@ const TypeFilter = ({ filters }) => {
                 checked={filterActive === item.slug}
                 label={
                   <span className="ml-2 flex">
-                    <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
-                      <FourStar />
+                    <div className={'inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ' + conditionClass(item.slug)}>
+                      {item.slug === 'new' && <FourStar />}
                       {item.title}
                     </div>
                   </span>
@@ -57,77 +61,11 @@ const TypeFilter = ({ filters }) => {
               {/* <Checkbox ripple={false} checked={false} className="border-none checked:bg-b3 checked:text-white" /> */}
             </div>
             <div className="flex w-full justify-end text-xs">
-              <span>(84)</span>
+              <span>({item.productCount})</span>
             </div>
           </div>
         ))}
 
-        {/* <div className="flex items-center">
-          <div className="label-p-0 flex items-center gap-2">
-            <Checkbox ripple={false} checked={false} className="border-none bg-b1/10 checked:bg-b3 checked:text-white" />
-            <span className="flex">
-              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-3 py-1 text-xs font-semibold text-white">New / Open Box</div>
-            </span>
-          </div>
-          <div className="flex w-full justify-end text-xs">
-            <span>(84)</span>
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div className="label-p-0 flex items-center gap-2">
-            <Checkbox ripple={false} checked={false} className="border-none bg-b1/10 checked:bg-b3 checked:text-white" />
-            <span className="flex">
-              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>
-            </span>
-          </div>
-          <div className="flex w-full justify-end text-xs">
-            <span>(84)</span>
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div className="label-p-0 flex items-center gap-2">
-            <Checkbox ripple={false} checked={false} className="border-none bg-b1/10 checked:bg-b3 checked:text-white" />
-            <span className="flex">
-              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade A</div>
-            </span>
-          </div>
-          <div className="flex w-full justify-end text-xs">
-            <span>(84)</span>
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div className="label-p-0 flex items-center gap-2">
-            <Checkbox ripple={false} checked={false} className="border-none bg-b1/10 checked:bg-b3 checked:text-white" />
-            <span className="flex">
-              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade B</div>
-            </span>
-          </div>
-          <div className="flex w-full justify-end text-xs">
-            <span>(84)</span>
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div className="label-p-0 flex items-center gap-2">
-            <Checkbox ripple={false} checked={false} className="border-none bg-b1/10 checked:bg-b3 checked:text-white" />
-            <span className="flex">
-              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade C</div>
-            </span>
-          </div>
-          <div className="flex w-full justify-end text-xs">
-            <span>(84)</span>
-          </div>
-        </div>
-        <div className="flex items-center">
-          <div className="label-p-0 flex items-center gap-2">
-            <Checkbox ripple={false} checked={false} className="border-none bg-b1/10 checked:bg-b3 checked:text-white" />
-            <span className="flex">
-              <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div>
-            </span>
-          </div>
-          <div className="flex w-full justify-end text-xs">
-            <span>(84)</span>
-          </div>
-        </div> */}
         {/* Item End */}
       </DropDown>
     </>
