@@ -9,7 +9,7 @@ const Page = ({ params }) => {
   const [mediaPopup, setMediaPopup] = useState(false);
   const [mediaPopup2, setMediaPopup2] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '', model_no: '', condition: '', type: '', category: '', stock: 0, images: [], threesixty: [], description: '', specification: '', delivery: '' });
+  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '', model_no: '', condition: '', type: '', category: '', parttype: '', stock: 0, images: [], thumbnail: '', threesixty: '', description: '', specification: '', delivery: '' });
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState([]);
 
@@ -34,14 +34,32 @@ const Page = ({ params }) => {
     setEditorLoader(true);
   }, []);
 
+  const RemoveImage = (indx) => {
+    const newImages = formData.images.filter((_, i) => i != indx);
+    setFormData({ ...formData, images: newImages });
+  };
+
+  const RemoveThumbnail = () => {
+    setFormData({ ...formData, thumbnail: '/no-image.webp' });
+  };
+
   useEffect(() => {
     if (files.length > 0) {
-      setFormData({ ...formData, images: files, thumbnail: files[0].url });
+      let urls = [];
+      files.forEach((file) => {
+        urls.push(file.url);
+      });
+      setFormData({ ...formData, images: [...formData.images, ...urls] });
+      setFiles([]);
     }
+  }, [files]);
+
+  useEffect(() => {
     if (files2.length > 0) {
-      setFormData({ ...formData, threesixty: files2, gallery: files2[0].url });
+      setFormData({ ...formData, thumbnail: files2[0].url });
+      setFiles2([]);
     }
-  }, [files, files2]);
+  }, [files2]);
 
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
@@ -132,11 +150,10 @@ const Page = ({ params }) => {
 
   return (
     <div className="p-5">
-      <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} isMultiple={true} />
-      <MediaPopup state={mediaPopup2} setState={setMediaPopup2} setFiles={setFiles2} isMultiple={true} />
+      <MediaPopup state={mediaPopup} setState={setMediaPopup} files={files} setFiles={setFiles} isMultiple={true} />
+      <MediaPopup state={mediaPopup2} setState={setMediaPopup2} files={files2} setFiles={setFiles2} isMultiple={false} />
       <h2 className="text-3xl font-semibold">Update Product</h2>
       <form action={UpdateProduct} className="mt-4 grid grid-cols-2 gap-4">
-        {/* Left Section Start */}
         <div className="flex flex-col gap-5 border-l-2 px-5 py-5">
           <div>
             <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
@@ -253,115 +270,166 @@ const Page = ({ params }) => {
             </label>
             <input name="threesixty" value={formData.threesixty} onChange={HandleChange} type="text" placeholder="Just Iframe Url" className="custom-input" />
           </div>
-          <div>
-            <label htmlFor="images" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-              Images
-            </label>
-            <div className="flex items-center gap-2 rounded-md border border-gray-500 px-3 py-2">
-              <div className="w-100 flex h-20 bg-red-500">{formData?.images?.length > 0 ? formData.images.map((img, i) => <Image key={i} height={100} width={100} src={img.url} />) : null}</div>
+          <div className="w-100 flex gap-3">
+            <div className="w-3/12">
+              <label htmlFor="images" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+                Thumbnail
+              </label>
+              <div className="relative flex flex-col items-center rounded-md border border-gray-500 px-3">
+                <div className="w-100 mx-2 my-3 flex gap-5">
+                  {formData.thumbnail != '' ? (
+                    <div className="relative">
+                      {formData.thumbnail != '/no-image.webp' ? <IoCloseCircle onClick={() => RemoveThumbnail()} className="absolute right-1 top-1 rounded-full bg-white text-lg text-red-400" /> : null}
+                      <Image height={100} width={100} src={formData.thumbnail} className="h-24 w-32 rounded-md" />
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <Image height={100} width={100} src={'/no-image.webp'} className="h-24 w-32 rounded-md border-2" />
+                    </div>
+                  )}
+                </div>
+                <button type="button" onClick={() => setMediaPopup2(true)} className="mb-1 rounded-md bg-b4 px-3 py-1 text-sm text-white">
+                  Select
+                </button>
+              </div>
+            </div>
 
-              <button type="button" onClick={() => setMediaPopup(true)} className="rounded-md bg-b4 px-4 py-3 text-white">
-                Select
-              </button>
+            <div className="col-span-2 flex w-full justify-center">
+              <button className="rounded bg-b3 px-6 py-3 text-white">Submit</button>
             </div>
           </div>
+          {/* Left Section End */}
 
-          <div className="col-span-2 flex w-full justify-center">
-            <button className="rounded bg-b3 px-6 py-3 text-white">Submit</button>
+          {/* Right Section Start */}
+          <div className="mt-8 flex flex-col gap-10 px-5 py-5">
+            <Accordion
+              parser="true"
+              title="Appliance Description"
+              parent="w-full [&>div]:py-4 [&>div]:px-3 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0"
+              icon="text-xl"
+              textStyle="font-bold text-sm"
+              child="[&>p]:text-sm !mt-0"
+              isExpand={true}
+              chevrown
+              content={
+                editorLoader ? (
+                  <deliveryEditorRef.current.CKEditor
+                    editor={deliveryEditorRef.current.Editor}
+                    onChange={(e, editor) => setFormData({ ...formData, delivery: editor.getData() })}
+                    config={{
+                      height: '250px',
+                      toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+                    }}
+                    onReady={(editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                    onBlur={(event, editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                    onFocus={(event, editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                  />
+                ) : (
+                  <div className="flex h-[250px] animate-spin items-center justify-center text-2xl">
+                    <BiLoaderAlt />
+                  </div>
+                )
+              }
+            />
+
+            <Accordion
+              parser="true"
+              title="Specification"
+              parent="w-full [&>div]:py-4 [&>div]:px-3 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0"
+              icon="text-xl"
+              textStyle="font-bold text-sm"
+              child="[&>p]:text-sm !mt-0"
+              chevrown
+              content={
+                editorLoader ? (
+                  <specificationEditorRef.current.CKEditor
+                    editor={specificationEditorRef.current.Editor}
+                    onChange={(e, editor) => setFormData({ ...formData, specification: editor.getData() })}
+                    config={{
+                      height: '250px', // Set the initial height
+                      toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+                    }}
+                    onReady={(editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                    onBlur={(event, editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                    onFocus={(event, editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                  />
+                ) : (
+                  <div className="flex h-[250px] animate-spin items-center justify-center text-2xl">
+                    <BiLoaderAlt />
+                  </div>
+                )
+              }
+            />
+
+            <Accordion
+              parser="true"
+              title="Description"
+              parent="w-full [&>div]:py-4 [&>div]:px-3 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0"
+              icon="text-xl"
+              textStyle="font-bold text-sm"
+              child="[&>p]:text-sm !mt-0"
+              chevrown
+              content={
+                editorLoader ? (
+                  <descriptionEditorRef.current.CKEditor
+                    editor={descriptionEditorRef.current.Editor}
+                    onChange={(e, editor) => setFormData({ ...formData, description: editor.getData() })}
+                    config={{
+                      height: '250px', // Set the initial height
+                      toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+                    }}
+                    onReady={(editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                    onBlur={(event, editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                    onFocus={(event, editor) => {
+                      editor.ui.view.editable.element.style.minHeight = '250px';
+                    }}
+                  />
+                ) : (
+                  <div className="flex h-[250px] animate-spin items-center justify-center text-2xl">
+                    <BiLoaderAlt />
+                  </div>
+                )
+              }
+            />
+
+            <div className="w-full">
+              <label htmlFor="images" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+                Images
+              </label>
+              <div className="relative flex items-center gap-2 rounded-md border border-gray-500 px-3 py-2">
+                <button type="button" onClick={() => setMediaPopup(true)} className="absolute right-2 top-2 rounded-md bg-b4 px-3 py-1 text-sm text-white">
+                  Select
+                </button>
+                <div className="w-100 mx-2 mt-10 flex min-h-24 flex-wrap gap-5">
+                  {formData.images.length > 0
+                    ? formData.images.map((img, i) => (
+                        <div className="relative">
+                          <IoCloseCircle onClick={(e) => RemoveImage(i)} className="absolute right-1 top-1 rounded-full bg-white text-lg text-red-400" />
+                          <Image key={i} height={150} width={150} src={img} className="h-24 w-28 rounded-md" />
+                        </div>
+                      ))
+                    : null}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        {/* Left Section End */}
-
-        {/* Right Section Start */}
-        <div className="flex flex-col gap-10 px-5 py-5">
-          <div className="col-span-2">
-            <label htmlFor="delivery" className="block text-lg font-semibold text-gray-800 dark:text-gray-300">
-              Delivery
-            </label>
-            {editorLoader ? (
-              <deliveryEditorRef.current.CKEditor
-                editor={deliveryEditorRef.current.Editor}
-                onChange={(e, editor) => setFormData({ ...formData, delivery: editor.getData() })}
-                config={{
-                  height: '250px', // Set the initial height
-                  toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'blockQuote', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
-                }}
-                onReady={(editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-                onBlur={(event, editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-                onFocus={(event, editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-              />
-            ) : (
-              <div className="flex h-[250px] animate-spin items-center justify-center text-2xl">
-                <BiLoaderAlt />
-              </div>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="specification" className="block text-lg font-semibold text-gray-800 dark:text-gray-300">
-              Specification
-            </label>
-            {editorLoader ? (
-              <specificationEditorRef.current.CKEditor
-                editor={specificationEditorRef.current.Editor}
-                onChange={(e, editor) => setFormData({ ...formData, specification: editor.getData() })}
-                config={{
-                  height: '250px', // Set the initial height
-                  toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'blockQuote', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
-                }}
-                onReady={(editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-                onBlur={(event, editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-                onFocus={(event, editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-              />
-            ) : (
-              <div className="flex h-[250px] animate-spin items-center justify-center text-2xl">
-                <BiLoaderAlt />
-              </div>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="description" className="block text-lg font-semibold text-gray-800 dark:text-gray-300">
-              Description
-            </label>
-            {editorLoader ? (
-              <descriptionEditorRef.current.CKEditor
-                editor={descriptionEditorRef.current.Editor}
-                onChange={(e, editor) => setFormData({ ...formData, description: editor.getData() })}
-                config={{
-                  height: '250px', // Set the initial height
-                  toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'blockQuote', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
-                }}
-                onReady={(editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-                onBlur={(event, editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-                onFocus={(event, editor) => {
-                  editor.ui.view.editable.element.style.minHeight = '250px';
-                }}
-              />
-            ) : (
-              <div className="flex h-[250px] animate-spin items-center justify-center text-2xl">
-                <BiLoaderAlt />
-              </div>
-            )}
-          </div>
-        </div>
-        {/* Right Section End */}
       </form>
     </div>
   );
