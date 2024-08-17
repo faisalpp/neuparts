@@ -12,10 +12,11 @@ export async function GET(request) {
 
     const product = await Product.findOne({ slug: slug }).populate('category');
     const partproducts = await Product.find({ model_no: product.model_no }).populate('category');
+    const partCount = await Product.countDocuments({ part_number: product.part_number });
     if (!product) {
       return NextResponse.json({ success: false });
     }
-    return NextResponse.json({ product: product, partproducts, success: true });
+    return NextResponse.json({ product: product, partproducts, partCount, success: true });
   } catch (error) {
     error;
 

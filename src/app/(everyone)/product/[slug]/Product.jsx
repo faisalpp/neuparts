@@ -37,36 +37,43 @@ const Product = ({ slug }) => {
       title: 'New',
       slug: 'new',
       class: 'bg-dark-light-cyan',
+      description: 'This appliance replacement part is brand new. We partner with manufacturers and distributor to offer our customers the best price possible for our appliance parts. We stock many new parts for many appliance manufacturers including: Samsung, Whirlpool, Electrolux, Maytag, Roper, Amana, Ge, Frigidaire, LG, Haier, Kenmore, Viking, Hisense and many more!',
     },
     {
       title: 'New / Open Box',
       slug: 'new-open-box',
       class: 'bg-dark-light-cyan',
+      description: 'Like New / Open Box appliance parts may not arrive in their original packaging. COSMETICALLY  these parts are similar to a new parts however, some very minor Cosmetic damage may exist from their “Open Box” state.  Any moderate or major COSMETIC damage would be indicated and represented in a lower condition grade. All Like New / Open Box parts are MECHANICALLY  inspected and tested to verify their functionality is 100% within manufacturer specifications. Like New / Open Box parts are a great way to save money, we liquidate these parts at big discounts compared to new parts. Expect to have a similar condition to a new part at a larger discount. ',
     },
     {
       title: 'Certified Refurbished',
       slug: 'certified',
       class: 'bg-dark-cyan',
+      description: 'Certified Refurbished appliance parts are typically previously used parts that have been inspected refurbished to manufacturer specifications if needed. COSMETICALLY  these parts may show signs of wear or use.  These parts will not include major COSMETIC damage.  All Certified Refurbished parts are MECHANICALLY inspected and tested to verify their functionality is 100% within manufacturer specifications. Certified Refurbished appliance parts are a great way to save money, we liquidate these parts at big discounts compared to new parts. Expect to have a similar condition to a new part at a larger discount. ',
     },
     {
       title: 'Used • Grade A',
       slug: 'used-grade-a',
       class: 'bg-[#FF9A3E]',
+      description: 'Our A Grade Used parts are the bargain shoppers best friend. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A,B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade the bigger the discount!  All used parts are inspected, tested and ensured to operate to manufacturer specifications. Our grading system is based on their cosmetic appearance (how they look) not on their functionality. All Used parts are verified 100% to Manufacturer specifications.  Each Used part comes with their own set of pictures so you can see any signs of use or imperfections. Expect to see very little to no signs of use on A Grade Used Parts.',
     },
     {
       title: 'Used • Grade B',
       slug: 'used-grade-b',
       class: 'bg-[#FF9A3E]',
+      description: 'Used B Grade Parts are an incredible value and one of the core reasons why our customers love what we do. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A,B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade the bigger the discount! All used parts are inspected, tested and ensured to operate to manufacturer specifications. Our grading system is based on their cosmetic appearance (how they look) not on their functionality. All Used parts are verified 100% to Manufacturer specifications.  Each Used part comes with their own set of pictures so you can see any signs of use or imperfections. Expect to see very little to Medium signs of use on B Grade Used Parts.',
     },
     {
       title: 'Used • Grade C',
       slug: 'used-grade-c',
       class: 'bg-[#FF9A3E]',
+      description: 'Used If your looking to save some money our Used C grade appliance parts is a great tool to do so. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A,B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade the bigger the discount! All used parts are inspected, tested and ensured to operate to manufacturer specifications. Our grading system is based on their cosmetic appearance (how they look) not on their functionality. All Used parts are verified 100% to Manufacturer specifications.  Each Used part comes with their own set of pictures so you can see any signs of use or imperfections. Expect to see very little to Medium signs of use on B Grade Used Parts.',
     },
     {
       title: 'Used • Grade D',
       slug: 'used-grade-d',
       class: 'bg-[#FF9A3E]',
+      description: 'Used If your looking to save some money our Used D grade appliance parts is a great tool to do so. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A,B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade the bigger the discount! All used parts are inspected, tested and ensured to operate to manufacturer specifications. Our grading system is based on their cosmetic appearance (how they look) not on their functionality. All Used parts are verified 100% to Manufacturer specifications.  Each Used part comes with their own set of pictures so you can see any signs of use or imperfections. Expect to see very little to Medium signs of use on B Grade Used Parts.',
     },
   ];
 
@@ -77,6 +84,7 @@ const Product = ({ slug }) => {
   const [cartLoading, setCartLoading] = useState(false);
   const [buyLoading, setBuyLoading] = useState(false);
   const [product, setProduct] = useState({});
+  const [partscount, setPartsCount] = useState(0);
   const [partproducts, setPartProducts] = useState({});
 
   const FetchProduct = async () => {
@@ -85,6 +93,7 @@ const Product = ({ slug }) => {
       .then((data) => {
         if (data.success) {
           setPartProducts(data.partproducts);
+          setPartsCount(data.partCount);
           setProduct(data.product);
           setStock(data.product.stock);
           setLoading(false);
@@ -286,8 +295,8 @@ const Product = ({ slug }) => {
             <div className="mt-4 flex flex-col space-y-5 px-1 lg:col-span-7 lg:mt-0 lg:px-0">
               <h2 className="line-clamp-3 text-xl font-bold leading-8 md:line-clamp-2 md:text-2xl lg:w-full">{product.title}</h2>
               <div className="flex w-full items-center justify-between">
-                <Link href={`/all-buying-options`} className="cursor-pointer text-xs font-bold text-b3 underline lg:w-80 lg:text-sm">
-                  View 15 More Buying Options ↓
+                <Link href={`/product/${product.slug}/buying-options`} className="cursor-pointer text-xs font-bold text-b3 underline lg:w-80 lg:text-sm">
+                  View {partscount} More Buying Options ↓
                 </Link>
               </div>
               <div className="flex gap-5 whitespace-nowrap sm:items-center">
