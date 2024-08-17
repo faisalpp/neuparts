@@ -8,7 +8,9 @@ const initialState = {
   sCart:false,
   cartId:null,
   cartCount:0,
-  cartSubTotal:0.00
+  cartSubTotal:0.00,
+  cartVat:0.00,
+  cartGrandTotal:0.00
 }
 
 // Create an async thunk for the Add To Cart
@@ -59,8 +61,14 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
     initialState,
     reducers: {
       resetCart: (state, action) => {
-        state.cart = {}
-        state.cartCount = 0
+        state.cart = {},
+        state.items = [],  
+        state.sCart = false,
+        state.cartId = null,
+        state.cartCount = 0,
+        state.cartSubTotal = 0.00,
+        state.cartVat = 0.00,
+        state.cartGrandTotal = 0.00
       },
       toggleCart: (state, action) => {
         state.sCart = !state.sCart 
@@ -90,6 +98,8 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal + (price * tmpQuantity)
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+             state.cartVat = (subTotal * (10/100))
+             state.cartGrandTotal = subTotal + state.cartVat
             })
            }
           })
@@ -110,6 +120,8 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal - price
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+             state.cartVat = (subTotal * (10/100))
+             state.cartGrandTotal = subTotal + state.cartVat
             })
            }
           })
@@ -133,6 +145,8 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal - price
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+             state.cartVat = (subTotal * (10/100))
+             state.cartGrandTotal = subTotal + state.cartVat
             })
            }
           })

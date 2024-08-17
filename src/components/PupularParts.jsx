@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductCard2 from '@/components/ProductCard2';
 import Link from 'next/link';
 import { BsArrowRightShort } from 'react-icons/bs';
@@ -50,12 +50,31 @@ const PupularParts = ({ data }) => {
       },
     ],
   };
+
+  
+  const [loader,setLoader] = useState(true)
+  const [products,setProducts] = useState([])
+
+  const GetPopularParts = async () => {
+   const res = await fetch('/api/front/popular-parts');
+   const data = await res.json()
+   if(data.success){
+    setProducts(data.products)
+    setLoader(false)
+   }
+  }
+
+  useEffect(()=>{
+    GetPopularParts()
+  },[])
+
+
   return (
     <div className="maincontainer flex flex-col justify-center py-10 lg:py-16 xl:py-20 2xl:py-120px">
       <h2 className="text-center text-2xl font-bold md:mb-4 lg:text-3xl xl:text-4xl">Popular Parts</h2>
       <div className="mt-10 2xl:mt-20">
         <Slider {...settings} className="howitworkslider">
-          {data && data.length > 0 && data.map((item, index) => <ProductCard2 key={index} product={item} sliderstyle="mx-2" />)}
+          {loader ? null : products.length > 0 ? products.map((item, index) => <ProductCard2 key={index} product={item} sliderstyle="mx-2" />):null}
         </Slider>
       </div>
       <div className="mt-16 flex justify-center">

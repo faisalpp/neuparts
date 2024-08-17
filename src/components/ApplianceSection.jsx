@@ -1,10 +1,7 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import SProductCard from '../components/SProductCard';
 import { BsArrowRightShort } from 'react-icons/bs';
-// import { GetAppliances } from '../api/frontEnd'
 import Link from 'next/link';
-import Image from 'next/image';
 
 const ApplianceSection = ({ data, title, Style, linktitle }) => {
   return (

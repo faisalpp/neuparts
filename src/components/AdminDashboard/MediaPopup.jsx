@@ -18,7 +18,7 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
   const fileInputRef = useRef(null);
 
   const HandleMediaDone = () => {
-    setFiles([...files,tmpFiles]);
+    setFiles(tmpFiles);
     setMediaPopup(false);
     setState(false);
   };

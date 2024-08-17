@@ -6,9 +6,11 @@ import { combineReducers } from 'redux';
 import { persistReducer} from 'redux-persist';
 import thunk from 'redux-thunk';
 import CartSlice from '@/app/GlobalRedux/slices/CartSlice'
+import OrderSlice from '@/app/GlobalRedux/slices/OrderSlice'
 
 const reducers = combineReducers({
   cart: CartSlice,
+  order:OrderSlice
 });
 
 const persistConfig = {

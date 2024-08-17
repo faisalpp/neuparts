@@ -61,11 +61,9 @@ const Page = () => {
 
   const FetchBlogs = async () => {
     setRowLoader(true);
-
     fetch(`/api/admin/product?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
-        (data)
         if (data.products.length > 0) {
           setPageCount(data.pagination.pageCount);
           setProducts(data.products);

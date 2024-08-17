@@ -21,6 +21,7 @@ export async function GET(req,res){
     let isZip = false;
     try{
       const res2 = await axios.get(url, { params, headers: {'Authorization': TOKEN} })
+      console.log(res2)
       if(res2.data.location.zip === zip){
         isZip = true
       }

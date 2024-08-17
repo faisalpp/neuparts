@@ -7,23 +7,32 @@ import NewsLetterSection from '@/components/NewsLetterSection';
 import SatisfiedSection from '@/components/SatisfiedSection';
 import PupularParts from '@/components/PupularParts';
 import ChooseUs from '@/components/ChooseUs';
+import { connect } from '@/DB';
+import Category from '@/models/productcategory'
+import ProductType from '@/models/producttype'
+import Product from '@/models/product'
 
 const getHome = async () => {
-  const res = await fetch(`${process.env.NEXT_BASE_API}/api/front/home`);
-  const data = await res.json();
-  return data;
-};
+    await connect();
+
+    const categories = await Category.find().sort({ createdAt: -1 });
+    const parttypes = await ProductType.find().sort({ createdAt: -1 });
+    
+    return { categories: categories, parttypes: parttypes}
+}
+
 
 const Page = async () => {
   const productsData = await getHome();
+  
 
   return (
     <>
       <HeroSection />
       <BrandsSlider />
-      {productsData && <ApplianceSection data={productsData.categories} title="Shop By Appliance Category" linktitle="View All Appliance Categories" />}
-      {productsData && <ApplianceSection data={productsData.parttyoes} Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" />}
-      {productsData && <PupularParts data={productsData.productsparts} />}
+      {productsData ? <ApplianceSection data={productsData.categories} title="Shop By Appliance Category" linktitle="View All Appliance Categories" /> : null}
+      {productsData ? <ApplianceSection data={productsData.parttypes} Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" /> : null}
+      <PupularParts />
       <ChooseUs />
       <GallerySection />
       <MapSection />
