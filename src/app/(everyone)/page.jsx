@@ -8,22 +8,14 @@ import SatisfiedSection from '@/components/SatisfiedSection';
 import PupularParts from '@/components/PupularParts';
 import ChooseUs from '@/components/ChooseUs';
 
-const getHome = async () => {
-  const res = await fetch(`${process.env.NEXT_BASE_API}/api/front/home`);
-  const data = await res.json();
-  return data;
-};
-
 const Page = async () => {
-  const productsData = await getHome();
-
   return (
     <>
       <HeroSection />
       <BrandsSlider />
-      {productsData && <ApplianceSection data={productsData.categories} title="Shop By Appliance Category" linktitle="View All Appliance Categories" />}
-      {productsData && <ApplianceSection data={productsData.parttyoes} Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" />}
-      {productsData && <PupularParts data={productsData.productsparts} />}
+      <ApplianceSection type="categories" title="Shop By Appliance Category" linktitle="View All Appliance Categories" />
+      <ApplianceSection type="parttyoes" Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" />
+      <PupularParts type="productsparts" />
       <ChooseUs />
       <GallerySection />
       <MapSection />

@@ -84,7 +84,7 @@ const AllProducts = ({ data }) => {
                 <ProductCard3 key={index} product={product} isGrid={isGrid} />
               ))}
               <div className={isGrid ? 'col-span-2 xl:col-span-3' : ''}>
-                <Pagination totalPages={calculateTotalPages(data.productCount, 2)} />
+                <Pagination totalPages={calculateTotalPages(data.productCount, 10)} />
               </div>
             </>
           ) : (
