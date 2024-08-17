@@ -3,7 +3,7 @@ import React from 'react';
 import ToolTip from '@/components/ToolTip';
 import FourStar from '@/components/svgs/FourStar';
 
-const Rotate360Product = ({ product }) => {
+const Rotate360Product = ({ product, condition }) => {
   return (
     <div className="rounded-3xl">
       <div id="360-view" className="maincontainer flex flex-col items-center gap-5 py-10 lg:py-14 xl:py-20 ">
@@ -32,9 +32,9 @@ const Rotate360Product = ({ product }) => {
           <div className="flex w-full flex-col items-center border-l-[1px] border-white">
             <h5 className="w-full border-b-[1px] border-gray-300 py-4 text-center font-normal">#12354567876</h5>
             <div className="flex w-full items-center justify-center border-b border-gray-300 py-[15px]">
-              <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
-                <FourStar />
-                {product?.condition}
+              <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase text-white ` + condition().class}>
+                {condition().slug === 'new' && <FourStar />}
+                {condition().title}
               </div>
             </div>
             <div className="w-full border-b-[1px] border-gray-300 py-4 text-center font-normal">{product?.model_no}</div>

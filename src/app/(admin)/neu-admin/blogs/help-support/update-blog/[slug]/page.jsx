@@ -48,7 +48,7 @@ const Page = ({ params }) => {
   }, []);
 
   const GetCategories = async () => {
-    fetch('/api/admin/post-categories?postType=help-support', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+    fetch('/api/admin/blog/help-support/category', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success && resp.cats.length > 0) {

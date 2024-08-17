@@ -13,7 +13,10 @@ import TableNav from '@/components/AdminDashboard/TableNav';
 import TdImage from '@/components/AdminDashboard/Table/TD/TdImage';
 import Popup from '@/components/AdminDashboard/Popup';
 import MediaPopup from '@/components/AdminDashboard/MediaPopup';
+import DND from '@/components/AdminDashboard/Table/TD/Dnd';
 import * as Yup from 'yup';
+
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 
 const Page = () => {
   const [createPopup, setCreatePopup] = useState(false);
@@ -26,7 +29,7 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(6);
 
   useEffect(() => {
     if (files.length > 0) {
@@ -264,6 +267,40 @@ const Page = () => {
     }
   }, [updatePopup]);
 
+  const HandleDragEvent = async (result) => {
+    if (!result.destination) return;
+
+    const sourceIndex = result.source.index;
+    const destinationIndex = result.destination.index;
+
+    // Create a copy of the team members array
+    const updatedcats = Array.from(cats);
+
+    // Optimistically update the state
+    const [removed] = updatedcats.splice(sourceIndex, 1);
+    updatedcats.splice(destinationIndex, 0, removed);
+
+    updatedcats.forEach((member, index) => {
+      member.index = index;
+    });
+
+    setCats(updatedcats);
+
+    try {
+      // Make an API call to update the database with the new order
+      await fetch('/api/admin/blog/dragcategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cats: updatedcats, type: 'appliance-tips' }),
+      });
+    } catch (error) {
+      console.error('Something went wrong');
+      // Optionally, revert the state or show an error message
+    }
+  };
+
   return (
     <>
       <Popup state={createPopup} setState={setCreatePopup}>
@@ -327,26 +364,37 @@ const Page = () => {
       <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} />
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
         <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Blog Category' }]} />
-        <div className="mt-10 flex h-full w-full flex-col items-center">
-          <Table header={['Thumbnail', 'Title', 'slug', 'Actions']}>
-            {/* hello pengea/dnd */}
-            {rowLoader ? (
-              <RowLoader />
-            ) : cats?.length > 0 ? (
-              cats.map((cat, i) => (
-                <Row Key={i}>
-                  <TdImage src={cat.thumbnail} css="w-20 h-14 object-fit rounded" />
-                  <Text text={cat.title} />
-                  <Text text={cat.slug} />
-                  <Actions id={cat._id} handleDelete={DeleteCat} data={cat} handleEdit={handleUpdatePopup} />
-                </Row>
-              ))
-            ) : (
-              <NoData colspan={4} alert="No Categories Found!" />
+        <DragDropContext onDragEnd={HandleDragEvent} className="mt-10 flex h-full w-full flex-col items-center">
+          <Droppable droppableId="teams">
+            {(droppableProvided) => (
+              <div {...droppableProvided.droppableProps} ref={droppableProvided.innerRef} className="mt-10 flex h-full w-full flex-col items-center">
+                <Table header={['Thumbnail', 'Title', 'slug', 'Actions']}>
+                  {/* hello pengea/dnd */}
+                  {rowLoader ? (
+                    <RowLoader />
+                  ) : cats?.length > 0 ? (
+                    cats.map((cat, i) => (
+                      <Draggable key={cat._id} draggableId={cat._id} index={i}>
+                        {(provided) => (
+                          <Row Key={i} isDragable={true} Ref={provided.innerRef} draggableProps={provided.draggableProps}>
+                            <TdImage src={cat.thumbnail} css="w-20 h-14 object-fit rounded" />
+                            <Text text={cat.title} />
+                            <Text text={cat.slug} />
+                            <Actions id={cat._id} handleDelete={DeleteCat} data={cat} handleEdit={handleUpdatePopup} />
+                            <DND provider={provided} />
+                          </Row>
+                        )}
+                      </Draggable>
+                    ))
+                  ) : (
+                    <NoData colspan={4} alert="No Categories Found!" />
+                  )}
+                </Table>
+              </div>
             )}
-          </Table>
+          </Droppable>
           {pageCount > 1 ? <TableNav page={page} setPage={setPage} pageCount={pageCount} /> : null}
-        </div>
+        </DragDropContext>
       </div>
     </>
   );

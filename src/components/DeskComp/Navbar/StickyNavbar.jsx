@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import FourStar from '@/components/svgs/FourStar';
 
-const StickyNavbar = ({ state, product, addCart }) => {
+const StickyNavbar = ({ state, product, addCart, condition }) => {
   // Scroll Sticky Navbar Item to Sections
   const scrollToSection = (sectionId) => {
     const targetSection = document.getElementById(sectionId);
@@ -45,8 +45,6 @@ const StickyNavbar = ({ state, product, addCart }) => {
     };
   }, []);
 
-  const frstImg = product.media ? product.media.find((item) => item.file === 'image') : null;
-
   return (
     <>
       <div className={`fixed top-0 z-[100] ${state ? 'hidden lg:flex' : 'hidden'} w-full flex-col bg-white shadow-lg`}>
@@ -54,12 +52,12 @@ const StickyNavbar = ({ state, product, addCart }) => {
           <div className="maincontainer items-center justify-center py-6 lg:flex">
             <div className="max-w-6/12 flex w-6/12 items-center space-x-5">
               <div className="w-full max-w-28 rounded-lg border-[1px] border-gray-200 px-2 py-1">
-                <Image width={400} height={400} quality={100} src={product ? product.images[0].url : ''} className="h-auto w-28" alt={product.title} />
+                <Image width={400} height={400} quality={100} src={product ? product.thumbnail : ''} className="h-auto w-28" alt={product.title} />
               </div>
               <div>
-                <div className="mb-2.5 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
-                  <FourStar />
-                  New
+                <div className={`mb-2.5 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + condition().class}>
+                  {condition().slug === 'new' && <FourStar />}
+                  {condition().title}
                 </div>
                 <h2 className="line-clamp-2 text-2xl font-bold leading-8">{product.title}</h2>
               </div>

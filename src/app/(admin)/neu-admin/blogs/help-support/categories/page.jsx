@@ -273,6 +273,19 @@ const Page = () => {
     });
 
     setCats(updatedcats);
+
+    try {
+      // Make an API call to update the database with the new order
+      await fetch('/api/admin/blog/dragcategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cats: updatedcats, type: 'help-and-support' }),
+      });
+    } catch (error) {
+      console.error('Something went wrong');
+    }
   };
 
   return (

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connect } from '@/DB/index';
 import Post from '@/models/posts';
 import PostCategories from '@/models/postCategories';
+import ApplianceCategories from '@/models/applianceCategories';
 
 export async function GET(request) {
   try {
@@ -14,7 +15,7 @@ export async function GET(request) {
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * parseInt(limit);
 
-    const postCategory = await PostCategories.findOne({ slug: category });
+    const postCategory = await ApplianceCategories.findOne({ slug: category });
 
     // Find related posts in the same category
     const query = {

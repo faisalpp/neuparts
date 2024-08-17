@@ -385,7 +385,7 @@ const Page = () => {
                     teamMembers.map((member, i) => (
                       <Draggable key={member._id} draggableId={member._id} index={i}>
                         {(provided) => (
-                          <Row isDragable={true} Ref={provided.innerRef} draggableProps={provided.draggableProps}>
+                          <Row key={i} isDragable={true} Ref={provided.innerRef} draggableProps={provided.draggableProps}>
                             <TdImage src={member.avatar} css="w-20 h-16 object-fit rounded-full" />
                             <Text text={member.name} />
                             <Text text={limitString(member.bio, 200)} />

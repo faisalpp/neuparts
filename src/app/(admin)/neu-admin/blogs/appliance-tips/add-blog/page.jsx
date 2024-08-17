@@ -36,9 +36,11 @@ const Page = () => {
   };
 
   const GetCategories = async () => {
-    fetch('/api/admin/post-categories?postType=appliance-tips', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+    fetch(`/api/admin/blog/appliance-tips/category`)
       .then((res) => res.json())
       .then((resp) => {
+        console.log(resp);
+
         if (resp.success && resp.cats.length > 0) {
           setCategories(resp.cats);
           setFormData({ ...formData, category: resp.cats[0] });

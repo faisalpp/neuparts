@@ -32,6 +32,44 @@ const Product = ({ slug }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const conditions = [
+    {
+      title: 'New',
+      slug: 'new',
+      class: 'bg-dark-light-cyan',
+    },
+    {
+      title: 'New / Open Box',
+      slug: 'new-open-box',
+      class: 'bg-dark-light-cyan',
+    },
+    {
+      title: 'Certified Refurbished',
+      slug: 'certified',
+      class: 'bg-dark-cyan',
+    },
+    {
+      title: 'Used • Grade A',
+      slug: 'used-grade-a',
+      class: 'bg-[#FF9A3E]',
+    },
+    {
+      title: 'Used • Grade B',
+      slug: 'used-grade-b',
+      class: 'bg-[#FF9A3E]',
+    },
+    {
+      title: 'Used • Grade C',
+      slug: 'used-grade-c',
+      class: 'bg-[#FF9A3E]',
+    },
+    {
+      title: 'Used • Grade D',
+      slug: 'used-grade-d',
+      class: 'bg-[#FF9A3E]',
+    },
+  ];
+
   // Get slug form url
   const [quantity, setQuantity] = useState(1);
   const [stock, setStock] = useState(0);
@@ -39,12 +77,14 @@ const Product = ({ slug }) => {
   const [cartLoading, setCartLoading] = useState(false);
   const [buyLoading, setBuyLoading] = useState(false);
   const [product, setProduct] = useState({});
+  const [partproducts, setPartProducts] = useState({});
 
   const FetchProduct = async () => {
     await fetch(`/api/front/product/single?slug=${slug}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
+          setPartProducts(data.partproducts);
           setProduct(data.product);
           setStock(data.product.stock);
           setLoading(false);
@@ -158,6 +198,11 @@ const Product = ({ slug }) => {
     e.preventDefault();
   };
 
+  // Match condition
+  const ConditionData = () => {
+    return conditions.find((item) => item.slug === product?.condition);
+  };
+
   return (
     <>
       {loading ? (
@@ -166,7 +211,7 @@ const Product = ({ slug }) => {
         <>
           {/* StickyNavabr */}
           <div className="hidden lg:block">
-            <StickyNavbar addCart={AddToCart} product={product} state={showNavbar} />
+            <StickyNavbar addCart={AddToCart} product={product} state={showNavbar} condition={ConditionData} />
           </div>
 
           <MoreImagesModal medias={product.images} state={imgModal} setState={setImgModal} />
@@ -204,8 +249,8 @@ const Product = ({ slug }) => {
                 <div className="flex h-full min-w-[70px] flex-col gap-2 2xl:min-w-100px maxmd:order-2 maxmd:flex-row">
                   {product.images
                     ? product.images.slice(0, 4).map((image, index) => (
-                        <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setMediaViewer({ file: image.url, data: image.url, thumbnail: image.url })}>
-                          <Image width={200} height={200} quality={100} src={image.url} className="w-10 2xl:w-20" alt="product" />
+                        <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setMediaViewer({ file: image, data: image, thumbnail: image })}>
+                          <Image width={200} height={200} quality={100} src={image} className="w-10 2xl:w-20" alt="product" />
                         </div>
                       ))
                     : null}
@@ -214,12 +259,12 @@ const Product = ({ slug }) => {
                       <div onClick={() => setImgModal(true)} className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-b3/70 font-semibold text-white">
                         +4
                       </div>
-                      <Image width={200} height={200} quality={100} src={product.images[4] ? product.images[4].url : null} className="h-full w-full object-contain" alt="product" />
+                      <Image width={200} height={200} quality={100} src={product.images[4]} className="h-full w-full object-contain" alt="product" />
                     </div>
                   ) : null}
                 </div>
                 <div className="relative flex w-full items-center justify-center rounded-lg border-gray-300 px-2 py-10 lg:h-96 lg:border 2xl:h-auto 2xl:py-14 maxmd:order-1">
-                  {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={product.images ? product.images[0].url : ''} alt={product.images ? product.images[0].alt : ''} className="h-auto w-48" /> : null}
+                  {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={product.thumbnail ? product.thumbnail : ''} alt={product.title} className="h-auto w-48" /> : null}
 
                   {/* Compatible Badge */}
                   <Image width={400} height={400} quality={100} src="/compatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" />
@@ -279,15 +324,10 @@ const Product = ({ slug }) => {
                   <h4 className="w-max text-base font-semibold text-b16/50">Condition</h4>
                   <ToolTip color="text-b16/50" />
                 </div>
-                <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold uppercase text-white">
-                  <FourStar />
-                  {product.condition}
+                <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase text-white ` + ConditionData().class}>
+                  {ConditionData().slug === 'new' && <FourStar />}
+                  {ConditionData().title}
                 </div>
-                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div> */}
-                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-3 py-1 text-xs font-semibold text-white">New / Open Box</div> */}
-                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade B</div> */}
-                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade C</div> */}
-                {/* <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div> */}
               </div>
               <div className="mt-2 flex items-center space-x-5 rounded-lg border border-b3 bg-b3/10 p-2 md:p-4 lg:mt-4 lg:space-x-5">
                 <div className="flex items-center gap-1">
@@ -376,15 +416,15 @@ const Product = ({ slug }) => {
           </div>
 
           {/* 360 Degree Product Section */}
-          <Rotate360Product product={product} />
+          <Rotate360Product product={product} condition={ConditionData} />
 
           {/* More Parts */}
-          <MoreParts />
+          {partproducts.length > 0 && <MoreParts data={partproducts} />}
 
-          <CompatibleAppliance />
+          <CompatibleAppliance partNo={product.part_number} />
 
           {/* Review */}
-          <ConditionReview />
+          <ConditionReview condition={ConditionData} />
 
           {/* <ProductSlider /> */}
 

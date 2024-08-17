@@ -10,7 +10,7 @@ const ProductCard2 = ({ sliderstyle, stars, product }) => {
       <div className={`group relative flex flex-col rounded-2xl border-2 border-gray-100 bg-white ${sliderstyle ? sliderstyle : 'sm:mx-2'} overflow-hidden`}>
         <span className="absolute right-0 top-0 z-20 mr-1 mt-2 rounded-2xl bg-b4 px-4 py-2 text-xs font-bold">{(100 - (product.sale_price / product.regular_price) * 100).toFixed(0)}% Off</span>
         <div className="relative flex w-full justify-center px-3 pt-10 lg:px-5 xl:px-5">
-          <Image src={product.images ? product.images[0].url : '/popular-parts.webp'} width={400} height={400} quality={100} className=" xl:w-54 h-60 w-[160px] object-contain lg:w-52" alt={product.title} />
+          <Image src={product.thumbnail ? product.thumbnail : '/popular-parts.webp'} width={400} height={400} quality={100} className=" xl:w-54 h-60 w-[160px] object-contain lg:w-52" alt={product.title} />
           <div className="pointer-events-none absolute bottom-0 left-0 right-0 top-0 flex scale-0 items-center justify-center bg-b3/50 opacity-0 duration-300 group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
             <Link href={`/product/${product.slug}`} className="rounded-lg bg-white px-5 py-2 font-semibold text-black duration-300">
               View Details
@@ -22,8 +22,8 @@ const ProductCard2 = ({ sliderstyle, stars, product }) => {
             <h3 className="text-line-camp font-reg text-sm font-semibold xl:text-base">{product.title}</h3>
           </Link>
           <div className="flex">
-            <p className="font-semibold text-b3">${product.isSale ? product.sale_price : product.regular_price}</p>
-            {product.isSale ? (
+            <p className="font-semibold text-b3">${product.is_sale ? product.sale_price : product.regular_price}</p>
+            {product.is_sale ? (
               <div className="flex w-full items-center justify-end space-x-2">
                 <strike className="text-[rgba(17,16,16,0.64)]">${product.regular_price}</strike>
                 <span className="rounded-xl bg-b4 px-2 py-1 text-xs font-semibold">{(100 - (product.sale_price / product.regular_price) * 100).toFixed(0)}%</span>
@@ -52,7 +52,7 @@ const ProductCard2 = ({ sliderstyle, stars, product }) => {
               <h4>Discount</h4>&nbsp;%
             </div>
             <div className="grow rounded-lg bg-gray-100">
-              <span className="flex h-2 w-20 rounded-lg bg-gradient-to-r from-b4 to-b7"></span>
+              <span className="flex h-2 rounded-lg bg-gradient-to-r from-b4 to-b7" style={{ width: `${((product.regular_price - product.sale_price) / product.regular_price) * 100}%` }}></span>
             </div>
           </div>
         </div>

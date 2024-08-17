@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
-const CompatibleAppliance = () => {
+const CompatibleAppliance = ({ partNo }) => {
   const [modelNo, setModelNo] = useState([
     {
       modelNo: 'WF45B6300AC',
@@ -43,7 +43,7 @@ const CompatibleAppliance = () => {
     <div className="bg-b3/5" id="testimonials-view">
       <div className="maincontainer flex flex-col justify-center py-10 lg:py-16 xl:py-20 2xl:py-120px">
         <h2 className="mb-4 text-center text-2xl font-bold lg:text-3xl xl:text-4xl">
-          Part <span className="text-dark-red">LGWM0L2CRV2T2</span>
+          Part <span className="text-dark-red">{partNo}</span>
         </h2>
         <h2 className="my-14 mb-4 text-center text-2xl font-bold xl:my-60px xl:text-32px">Compatible Appliance Model Numbers</h2>
         <div className="mx-auto flex w-full max-w-2xl items-center gap-2 maxsm:flex-col">

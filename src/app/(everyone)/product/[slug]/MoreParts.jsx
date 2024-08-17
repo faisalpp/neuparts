@@ -8,10 +8,10 @@ import 'slick-carousel/slick/slick-theme.css';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import Image from 'next/image';
 
-const MoreParts = () => {
+const MoreParts = ({ data }) => {
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     arrows: true,
     speed: 300,
     slidesToShow: 4,
@@ -55,59 +55,25 @@ const MoreParts = () => {
     </button>
   );
 
-  const [pupolarParts, setPupolarParts] = useState([
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-    },
-    {
-      title: 'Upper Rack for Dish Washers',
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-    },
-  ]);
   return (
     <div className="bg-b3/5" id="testimonials-view">
       <div className="maincontainer flex flex-col justify-center py-10 lg:py-16 xl:py-20 2xl:py-120px">
         <h2 className="text-center text-2xl font-bold md:mb-4 lg:text-3xl xl:text-4xl">More Parts for Your Model</h2>
         <div className="mt-10">
-          {pupolarParts.length > 0 ? (
-            <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className="relative maxmd:mb-10">
-              {pupolarParts.map((item, index) => (
-                <ProductCard2 key={index} product={item} />
-              ))}
-            </Slider>
-          ) : (
+          {/* {data.length > 0 ? ( */}
+          <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className="relative maxmd:mb-10">
+            {data.map((item, index) => (
+              <ProductCard2 key={index} product={item} />
+            ))}
+          </Slider>
+          {/* ) : (
             <div className="flex w-full items-center justify-center">
               <Image width={400} height={400} quality={100} alt="Loader" src="/loader-bg.gif" className="h-10 w-10 " />
             </div>
-          )}
+          )} */}
         </div>
         <div className="mt-10 flex justify-center md:mt-16">
-          <Link href="/applianceTypes" className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
+          <Link href="/products" className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
             <span className="text-xs md:text-sm xl:text-base">View More</span>
             <BsArrowRightShort className="text-2xl" />
           </Link>

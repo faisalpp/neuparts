@@ -5,6 +5,7 @@ const helpsCategoriesSchema = new mongoose.Schema(
     title: { type: String, required: true },
     thumbnail: { type: String, required: false },
     slug: { type: String, required: false },
+    index: { type: Number, required: false },
   },
   { timestamps: true }
 );
