@@ -39,12 +39,19 @@ class APIFilters {
         output[prop][`$${operator}`] = queryCopy[key];
       }
     }
-    console.log(category);
 
-    this.query = this.query.find(output).populate({
-      path: 'category',
-      match: { slug: category ? category : { $exists: true } }, // Match the category's slug
-    });
+    this.query = this.query
+      .find(output)
+      .populate({
+        path: 'category',
+        match: { slug: category || { $exists: true } },
+      })
+      .find({ category: { $ne: null } });
+    // this.query = this.query.find(output).populate({
+    //   path: 'category',
+    //   match: { slug: category || { $exists: true } },
+    // });
+    this.query = this.query.find(output).populate('category');
     return this;
   }
 

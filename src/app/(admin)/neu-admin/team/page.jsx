@@ -63,7 +63,7 @@ const Page = () => {
     try {
       await ValMember.validate(formData, { abortEarly: false });
     } catch (error) {
-      (error);
+      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -122,7 +122,7 @@ const Page = () => {
     try {
       await upValMember.validate(formData, { abortEarly: false });
     } catch (error) {
-      (error);
+      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -327,7 +327,7 @@ const Page = () => {
                 </button>
               </div>
             </div>
-            <button class="text-md mt-3 w-fit transform self-center rounded-lg bg-blue-600 px-6 py-3 font-medium capitalize tracking-wide text-white transition-colors duration-300 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Submit</button>
+            <button className="text-md mt-3 w-fit transform self-center rounded-lg bg-blue-600 px-6 py-3 font-medium capitalize tracking-wide text-white transition-colors duration-300 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Submit</button>
           </div>
         </form>
       </Popup>
@@ -367,7 +367,7 @@ const Page = () => {
               </div>
             </div>
 
-            <button class="text-md mt-3 w-fit transform self-center rounded-lg bg-blue-600 px-6 py-3 font-medium capitalize tracking-wide text-white transition-colors duration-300 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Submit</button>
+            <button className="text-md mt-3 w-fit transform self-center rounded-lg bg-blue-600 px-6 py-3 font-medium capitalize tracking-wide text-white transition-colors duration-300 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Submit</button>
           </div>
         </form>
       </Popup>
