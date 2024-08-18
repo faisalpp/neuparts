@@ -9,7 +9,7 @@ import { GiAutoRepair, GiWashingMachine } from 'react-icons/gi';
 import { FaBlogger } from 'react-icons/fa';
 import { MdTipsAndUpdates, MdLiveHelp } from 'react-icons/md';
 import { BiCategory } from 'react-icons/bi';
-import { FaCapsules } from 'react-icons/fa6';
+import { RiSeoLine } from "react-icons/ri";
 import Logout from '@/components/AdminDashboard/Logout';
 
 const Sidebar = () => {
@@ -79,10 +79,6 @@ const Sidebar = () => {
                   <BiCategory />
                   <span className="mx-2 text-sm font-semibold">Manage Sub Categories</span>
                 </Link>
-                {/* <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/attributes">
-                  <FaCapsules />
-                  <span className="mx-2 text-sm font-semibold">Manage Attributes</span>
-                </Link> */}
               </div>
             </div>
           </div>
