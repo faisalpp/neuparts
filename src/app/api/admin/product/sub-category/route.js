@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { connect } from '@/DB/index';
 import ProductTyoe from '@/models/producttype';
 import { generateSlug } from '@/utils/index';
-//
 
 export async function POST(request) {
   await connect();
