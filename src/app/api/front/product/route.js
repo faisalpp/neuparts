@@ -5,9 +5,10 @@ import APIFilters from '@/utils/APIFilters';
 
 export async function GET(req) {
   await connect();
-
+  
   try {
-    const searchParams = req.nextUrl.searchParams;
+    // const searchParams = req.nextUrl.searchParams;
+    const searchParams = [];
     const paramsObj = {};
 
     searchParams.forEach((value, key) => {
@@ -20,8 +21,6 @@ export async function GET(req) {
     const apiFilters = new APIFilters(Product.find(), paramsObj).filter();
     let products = await apiFilters.query;
 
-    // console.log(products);
-
     const filteredProductsCount = products.length;
 
     apiFilters.pagination(resPerPage);
@@ -29,7 +28,6 @@ export async function GET(req) {
 
     return NextResponse.json({ success: true, productCount, filteredProductsCount, products });
   } catch (error) {
-    console.log(error);
     return NextResponse.json({ success: false, message: 'Error retrieving products' });
   }
 }
