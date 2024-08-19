@@ -35,7 +35,7 @@ const ProductCard3 = ({ isGrid, product }) => {
               </span>
               <div className="inline-flex w-fit rounded-full bg-b3 px-1.5 py-1 text-10px font-medium text-white sm:px-3 md:text-xs">10%-70%</div>
             </div>
-            <Link href="/all-buying-options" className="flex items-center font-semibold text-b3 underline maxsm:text-10px">
+            <Link href={`/product/${product.slug}/buying-options`} className="flex items-center font-semibold text-b3 underline maxsm:text-10px">
               15 Buying Options →
             </Link>
           </div>
@@ -73,7 +73,7 @@ const ProductCard3 = ({ isGrid, product }) => {
               </span>
               <div className="inline-flex w-fit rounded-full bg-b3 px-3 py-1 text-10px font-medium text-white sm:text-xs">10%-70%</div>
             </div>
-            <Link href="/all-buying-options" className="flex items-center font-semibold text-b3 underline maxsm:text-sm">
+            <Link href={`/product/${product.slug}/buying-options`} className="flex items-center font-semibold text-b3 underline maxsm:text-sm">
               15 Buying Options →
             </Link>
           </div>
