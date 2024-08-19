@@ -1,26 +1,11 @@
-import React from 'react'
-import NeuShieldPopup from '../NeuShieldPopup'
-import FreeCurbsideReturn from '../FreeCurbsideReturn'
-import CompleteLaundary from '../CompleteLaundary'
-import CosmaticRating from '../CosmaticRating'
+import React from 'react';
+import NeuShieldPopup from '../NeuShieldPopup';
+import FreeCurbsideReturn from '../FreeCurbsideReturn';
+import CompleteLaundary from '../CompleteLaundary';
+import CosmaticPopup from '../CosmaticPopup';
 
-const CustomModal = ({ openmodal, closeModal,subCategory }) => {
-    return (
-        <div>
-            {openmodal === "1" && (
-                <NeuShieldPopup closeModal={closeModal} />
-            )}
-            {openmodal === "2" && (
-                <CompleteLaundary closeModal={closeModal} subCategory={subCategory} />
-            )}
-            {openmodal === "3" && (
-                <FreeCurbsideReturn closeModal={closeModal} />
-            )}
-            {openmodal === "4" && (
-                <CosmaticRating closeModal={closeModal} />
-            )}
-        </div>
-    )
-}
+const CustomModal = ({ openModal, closeModal, data }) => {
+  return <>{openModal ? <CosmaticPopup data={data} closeModal={closeModal} /> : null}</>;
+};
 
-export default CustomModal
+export default CustomModal;

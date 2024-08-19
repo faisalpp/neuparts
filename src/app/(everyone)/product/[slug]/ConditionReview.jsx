@@ -13,7 +13,7 @@ const ConditionReview = ({ condition }) => {
           <span className="font-bold">Condition:</span> <span className="font-medium">{condition().title}</span>{' '}
         </h3>
         <p className="text-[22px] font-medium">What To Expect</p>
-        <p className="md:text-center lg:px-10">{condition().description}</p>
+        <p className="md:text-center lg:px-10" dangerouslySetInnerHTML={{ __html: condition().description }}></p>
       </div>
     </div>
   );

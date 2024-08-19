@@ -16,6 +16,7 @@ import Image from 'next/image';
 import FourStar from '@/components/svgs/FourStar';
 import GasSvg from '@/components/svgs/GasSvg';
 import ProductCompatible from '@/components/Product/ProductCompatible';
+import CustomModal from '@/components/Modal/CustomModal';
 import MoreParts from './MoreParts';
 import Rotate360Product from './Rotate360Product';
 import ConditionReview from './ConditionReview';
@@ -23,7 +24,7 @@ import CompatibleAppliance from './CompatibleAppliance';
 import CompareModel from './CompareModel';
 import BuyingOtherOptions from './BuyingOtherOptions';
 import WarantySection from './WarantySection';
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { MinusIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/app/GlobalRedux/slices/CartSlice';
 import { useRouter } from 'next/navigation';
@@ -38,42 +39,49 @@ const Product = ({ slug }) => {
       slug: 'new',
       class: 'bg-dark-light-cyan',
       description: 'This appliance replacement part is brand new. We partner with manufacturers and distributor to offer our customers the best price possible for our appliance parts. We stock many new parts for many appliance manufacturers including: Samsung, Whirlpool, Electrolux, Maytag, Roper, Amana, Ge, Frigidaire, LG, Haier, Kenmore, Viking, Hisense and many more!',
+      lists: ['This appliance replacement part is brand new.', 'We partner with manufacturers and distributor to offer our customers the best price possible for our appliance parts.', 'We stock many new parts for many appliance manufacturers including: Samsung, Whirlpool, Electrolux, Maytag, Roper, Amana, Ge, Frigidaire, LG, Haier, Kenmore, Viking, Hisense and many more!'],
     },
     {
       title: 'New / Open Box',
       slug: 'new-open-box',
       class: 'bg-dark-light-cyan',
       description: 'Like New / Open Box appliance parts may not arrive in their original packaging. COSMETICALLY  these parts are similar to a new parts however, some very minor Cosmetic damage may exist from their “Open Box” state.  Any moderate or major COSMETIC damage would be indicated and represented in a lower condition grade. All Like New / Open Box parts are MECHANICALLY  inspected and tested to verify their functionality is 100% within manufacturer specifications. Like New / Open Box parts are a great way to save money, we liquidate these parts at big discounts compared to new parts. Expect to have a similar condition to a new part at a larger discount. ',
+      lists: ['Like New / Open Box appliance replacement parts may not arrive in their original packaging', '<b>COSMETICALLY</b>  these parts are similar to a new parts however, some very minor Cosmetic damage may exist from their “Open Box” state.', 'Any moderate or major <b>COSMETIC</b> damage would be indicated and represented in a lower condition grade.', 'All Like New / Open Box parts are <b>MECHANICALLY</b> inspected and tested to verify their functionality is 100% within manufacturer specifications.', 'Like New / Open Box parts are a great way to save money, we liquidate these parts at big discounts compared to new parts.', 'Expect to have a similar condition to a new part at a larger discount.'],
     },
     {
       title: 'Certified Refurbished',
       slug: 'certified',
       class: 'bg-dark-cyan',
       description: 'Certified Refurbished appliance parts are typically previously used parts that have been inspected refurbished to manufacturer specifications if needed. COSMETICALLY  these parts may show signs of wear or use.  These parts will not include major COSMETIC damage.  All Certified Refurbished parts are MECHANICALLY inspected and tested to verify their functionality is 100% within manufacturer specifications. Certified Refurbished appliance parts are a great way to save money, we liquidate these parts at big discounts compared to new parts. Expect to have a similar condition to a new part at a larger discount. ',
+      lists: ['Certified Refurbished appliance parts are typically previously used parts that have been inspected refurbished to manufacturer specifications if needed.', '<b>COSMETICALLY</b> these parts may show signs of wear or use.', 'These parts will not include major <b>COSMETIC</b> damage.', 'All Certified Refurbished parts are MECHANICALLY inspected and tested to verify their functionality is 100% within manufacturer specifications.', 'Certified Refurbished appliance parts are a great way to save money, we liquidate these parts at big discounts compared to new parts.', 'Expect to have a similar condition to a new part at a larger discount.'],
     },
     {
       title: 'Used • Grade A',
       slug: 'used-grade-a',
       class: 'bg-[#FF9A3E]',
-      description: 'Our A Grade Used parts are the bargain shoppers best friend. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A,B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade the bigger the discount!  All used parts are inspected, tested and ensured to operate to manufacturer specifications. Our grading system is based on their cosmetic appearance (how they look) not on their functionality. All Used parts are verified 100% to Manufacturer specifications.  Each Used part comes with their own set of pictures so you can see any signs of use or imperfections. Expect to see very little to no signs of use on A Grade Used Parts.',
+      description: 'Our A Grade Used parts are the bargain shopper’s best friend. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A, B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade, the bigger the discount! All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications. Our grading system is based on their COSMETIC appearance (how they look) not on their functionality. Each Used part comes with its own set of pictures so you can see any signs of use or imperfections. Expect to see very little to no signs of use or other Cosmetic imperfections. Although they may show signs of cosmetic wear, they will function like new.',
+      lists: ['Our A Grade Used parts are the bargain shopper’s best friend.', 'We grade the COSMETIC appearance of each used part A, B, C, or D.', 'The lower the grade, the bigger the discount!', 'All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications.', 'Our grading system is based on their COSMETIC appearance (how they look) not on their functionality.', 'Each Used part comes with its own set of pictures so you can see any signs of use or imperfections.', 'Expect to see very little to no signs of use or other Cosmetic imperfections.', 'Although they may show signs of cosmetic wear, they will function like new.'],
     },
     {
       title: 'Used • Grade B',
       slug: 'used-grade-b',
       class: 'bg-[#FF9A3E]',
-      description: 'Used B Grade Parts are an incredible value and one of the core reasons why our customers love what we do. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A,B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade the bigger the discount! All used parts are inspected, tested and ensured to operate to manufacturer specifications. Our grading system is based on their cosmetic appearance (how they look) not on their functionality. All Used parts are verified 100% to Manufacturer specifications.  Each Used part comes with their own set of pictures so you can see any signs of use or imperfections. Expect to see very little to Medium signs of use on B Grade Used Parts.',
+      description: 'Used B Grade Parts are an incredible value and one of the core reasons why our customers love what we do. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A, B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade, the bigger the discount! All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications. Our grading system is based on their COSMETIC appearance (how they look) not on their functionality. Each Used part comes with its own set of pictures so you can see any signs of use or imperfections. Expect to see very little to medium signs of use or other Cosmetic imperfections. Although they may show signs of cosmetic wear, they will function like new.',
+      lists: ['Used B Grade Parts are an incredible value and one of the core reasons why our customers love what we do.', 'We grade the COSMETIC appearance of each used part A, B, C, or D.', 'The lower the grade, the bigger the discount!', 'All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications.', 'Our grading system is based on their COSMETIC appearance (how they look) not on their functionality.', 'Each Used part comes with its own set of pictures so you can see any signs of use or imperfections.', 'Expect to see very little to medium signs of use or other Cosmetic imperfections.', 'Although they may show signs of cosmetic wear, they will function like new.'],
     },
     {
       title: 'Used • Grade C',
       slug: 'used-grade-c',
       class: 'bg-[#FF9A3E]',
-      description: 'Used If your looking to save some money our Used C grade appliance parts is a great tool to do so. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A,B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade the bigger the discount! All used parts are inspected, tested and ensured to operate to manufacturer specifications. Our grading system is based on their cosmetic appearance (how they look) not on their functionality. All Used parts are verified 100% to Manufacturer specifications.  Each Used part comes with their own set of pictures so you can see any signs of use or imperfections. Expect to see very little to Medium signs of use on B Grade Used Parts.',
+      description: 'If you’re looking to save money, Used C grade appliance parts are a great tool to do so. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A, B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade, the bigger the discount! All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications. Our grading system is based on their COSMETIC appearance (how they look) not on their functionality. All Used parts are verified to work as intended based on Manufacturer specifications. Each Used part comes with its own set of pictures so you can see any signs of use or imperfections. Expect to see Medium to Heavy signs of use or other Cosmetic imperfections. Although they may show signs of cosmetic wear, they will function like new.',
+      lists: ['Used C grade appliance parts are a great tool to save money.', 'We grade the COSMETIC appearance of each used part A, B, C, or D.', 'The lower the grade, the bigger the discount!', 'All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications.', 'Our grading system is based on their COSMETIC appearance (how they look) not on their functionality.', 'All Used parts are verified to work as intended based on Manufacturer specifications.', 'Each Used part comes with its own set of pictures so you can see any signs of use or imperfections.', 'Expect to see Medium to Heavy signs of use or other Cosmetic imperfections.', 'Although they may show signs of cosmetic wear, they will function like new.'],
     },
     {
       title: 'Used • Grade D',
       slug: 'used-grade-d',
       class: 'bg-[#FF9A3E]',
-      description: 'Used If your looking to save some money our Used D grade appliance parts is a great tool to do so. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A,B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade the bigger the discount! All used parts are inspected, tested and ensured to operate to manufacturer specifications. Our grading system is based on their cosmetic appearance (how they look) not on their functionality. All Used parts are verified 100% to Manufacturer specifications.  Each Used part comes with their own set of pictures so you can see any signs of use or imperfections. Expect to see very little to Medium signs of use on B Grade Used Parts.',
+      description: 'These parts include the deepest discounts we have available. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A, B, C, or D. A being the best cosmetic rating and D being the lowest. The lower the grade, the bigger the discount! All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications. Our grading system is based on their COSMETIC appearance (how they look) not on their functionality. All Used parts are verified to work as intended based on Manufacturer specifications. Each Used part comes with its own set of pictures so you can see any signs of use or imperfections. Expect to see Heavy signs of use or other Cosmetic imperfections. Although they may show signs of cosmetic wear, they will function like new.',
+      lists: ['These parts include the deepest discounts we have available.', 'We grade the COSMETIC appearance of each used part A, B, C, or D.', 'The lower the grade, the bigger the discount!', 'All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications.', 'Our grading system is based on their COSMETIC appearance (how they look) not on their functionality.', 'All Used parts are verified to work as intended based on Manufacturer specifications.', 'Each Used part comes with its own set of pictures so you can see any signs of use or imperfections.', 'Expect to see Heavy signs of use or other Cosmetic imperfections.', 'Although they may show signs of cosmetic wear, they will function like new.'],
     },
   ];
 
@@ -212,6 +220,12 @@ const Product = ({ slug }) => {
     return conditions.find((item) => item.slug === product?.condition);
   };
 
+  const [openModal, setOpenModal] = useState('');
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <>
       {loading ? (
@@ -226,7 +240,7 @@ const Product = ({ slug }) => {
           <MoreImagesModal medias={product.images} state={imgModal} setState={setImgModal} />
 
           {/* All Modal */}
-          {/* <CustomModal subCategory={product.subCategory} openmodal={openModal} closeModal={handleCloseModal} /> */}
+          <CustomModal data={ConditionData} openModal={openModal} closeModal={handleCloseModal} />
           {/* End */}
           {/* Bread Crumbs Start */}
           <div className="maincontainer flex items-center py-10">
@@ -331,7 +345,8 @@ const Product = ({ slug }) => {
               <div className="mt-2 flex items-center space-x-5 lg:mt-4 lg:space-x-5">
                 <div className="flex items-center gap-1">
                   <h4 className="w-max text-base font-semibold text-b16/50">Condition</h4>
-                  <ToolTip color="text-b16/50" />
+                  {/* <ToolTip color="text-b16/50" /> */}
+                  <QuestionMarkCircleIcon onClick={() => setOpenModal(true)} strokeWidth={2} className={`h-5 w-5 cursor-pointer text-b16/50 hover:text-b3`} />
                 </div>
                 <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase text-white ` + ConditionData().class}>
                   {ConditionData().slug === 'new' && <FourStar />}
