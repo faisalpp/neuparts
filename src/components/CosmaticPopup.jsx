@@ -1,7 +1,5 @@
 import React from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
-import Link from 'next/link';
-import Image from 'next/image';
 import { FaRegCircle } from 'react-icons/fa';
 import FourStar from './svgs/FourStar';
 
