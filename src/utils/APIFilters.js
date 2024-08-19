@@ -20,7 +20,8 @@ class APIFilters {
   filter() {
     const queryCopy = { ...this.queryStr };
     const category = queryCopy?.category;
-    const removeFields = ['keyword', 'category', 'limit', 'page'];
+    const parttype = queryCopy?.parttype;
+    const removeFields = ['keyword', 'category', 'parttype', 'limit', 'page'];
     removeFields.forEach((key) => delete queryCopy[key]);
     let output = {};
     let prop = '';
@@ -46,19 +47,10 @@ class APIFilters {
         path: 'category',
         match: { slug: category || { $exists: true } },
       })
-      .find({ category: { $ne: null } });
-    // this.query = this.query.find(output).populate({
-    //   path: 'category',
-    //   match: { slug: category || { $exists: true } },
-    // });
-    this.query = this.query.find(output).populate('category');
-    return this;
-  }
-
-  pagination(resPerPage) {
-    const currntPage = Number(this.queryStr.page) || 1;
-    const skip = resPerPage * (currntPage - 1);
-    this.query = this.query.skip(skip).limit(resPerPage);
+      .populate({
+        path: 'parttype',
+        match: { slug: parttype || { $exists: true } },
+      });
     return this;
   }
 }

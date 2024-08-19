@@ -5,7 +5,7 @@ import './multiRangeSlider.css';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { useRouter } from 'next/navigation';
 
-const MultiRangeSlider = ({ min, max, setFilt, filt }) => {
+const MultiRangeSlider = ({ min, max }) => {
   const router = useRouter();
   const defaultMinval = 200;
   const defaultMaxval = 8000;

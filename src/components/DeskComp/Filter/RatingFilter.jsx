@@ -22,6 +22,7 @@ const TypeFilter = ({ filters }) => {
 
     if (value === filterActive) {
       queryParams.delete(key);
+      setFilterActive('');
     } else if (queryParams.has(key)) {
       queryParams.set(key, value);
     } else {
@@ -39,32 +40,34 @@ const TypeFilter = ({ filters }) => {
     <>
       <DropDown title="Comatic Rating">
         {/* Item Start */}
-        {filters.map((item, index) => (
-          <div key={index} className="flex items-center">
-            <div className="label-p-0 flex items-center gap-2">
-              <Checkbox
-                name="condition"
-                onClick={(e) => handleClick('condition', item.slug)}
-                checked={filterActive === item.slug}
-                label={
-                  <span className="ml-2 flex">
-                    <div className={'inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ' + conditionClass(item.slug)}>
-                      {item.slug === 'new' && <FourStar />}
-                      {item.title}
-                    </div>
-                  </span>
-                }
-                ripple={false}
-                className="checked:!bg-b3 checked:!text-white"
-              />
+        {filters.map((item, index) =>
+          item.productCount === 0 ? null : (
+            <div key={index} className="flex items-center">
+              <div className="label-p-0 flex items-center gap-2">
+                <Checkbox
+                  name="condition"
+                  onClick={(e) => handleClick('condition', item.slug)}
+                  checked={filterActive === item.slug}
+                  label={
+                    <span className="ml-2 flex">
+                      <div className={'inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ' + conditionClass(item.slug)}>
+                        {item.slug === 'new' && <FourStar />}
+                        {item.title}
+                      </div>
+                    </span>
+                  }
+                  ripple={false}
+                  className="checked:!bg-b3 checked:!text-white"
+                />
 
-              {/* <Checkbox ripple={false} checked={false} className="border-none checked:bg-b3 checked:text-white" /> */}
+                {/* <Checkbox ripple={false} checked={false} className="border-none checked:bg-b3 checked:text-white" /> */}
+              </div>
+              <div className="flex w-full justify-end text-xs">
+                <span>({item.productCount})</span>
+              </div>
             </div>
-            <div className="flex w-full justify-end text-xs">
-              <span>({item.productCount})</span>
-            </div>
-          </div>
-        ))}
+          )
+        )}
 
         {/* Item End */}
       </DropDown>

@@ -3,6 +3,7 @@ import { connect } from '@/DB/index';
 import Categories from '@/models/productcategory';
 import ProductTypes from '@/models/producttype';
 import ProductConditions from '@/models/condition';
+import Product from '@/models/product';
 
 export async function GET(req) {
   await connect();
@@ -78,9 +79,12 @@ export async function GET(req) {
       },
     ]);
 
-    return NextResponse.json({ success: true, categories: categories, parttypes: parttypes, conditions: conditions });
+    const isSale = await Product.countDocuments({ is_sale: true });
+
+    return NextResponse.json({ success: true, categories: categories, parttypes: parttypes, conditions: conditions, isSale: isSale });
   } catch (error) {
-    error;
+    console.log(error);
+
     return NextResponse.json({ success: false, message: 'Error retrieving attributes' });
   }
 }

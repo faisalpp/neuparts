@@ -4,7 +4,7 @@ import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { Checkbox } from '@material-tailwind/react';
 import { useRouter } from 'next/navigation';
 
-const SaleFilter = () => {
+const SaleFilter = ({ countSale }) => {
   const [filterActive, setFilterActive] = useState(false);
 
   const router = useRouter();
@@ -33,12 +33,12 @@ const SaleFilter = () => {
       <DropDown title="On Sale">
         <>
           {/* Item Start */}
-          <div className="flex items-center">
+          <div className="flex cursor-pointer items-center" onClick={(e) => handleClick('sale', !filterActive)}>
             <div className="label-p-0 flex items-center gap-2">
-              <Checkbox name="sale" ripple={false} checked={filterActive} onClick={(e) => handleClick('sale', !filterActive)} className="checked:bg-b3 checked:text-white" label={<span className="ml-2 flex">Yes</span>} />
+              <Checkbox name="sale" ripple={false} checked={filterActive} className="checked:bg-b3 checked:text-white" label={<span className="ml-2 flex">Yes</span>} />
             </div>
             <div className="flex w-full justify-end text-xs">
-              <span>(1)</span>
+              <span>({countSale})</span>
             </div>
           </div>
         </>

@@ -16,6 +16,7 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
   const [Categories, setCategories] = useState([]);
   const [PartTypes, setPartTypes] = useState([]);
   const [Conditions, setConditions] = useState([]);
+  const [countSale, setCountSale] = useState(0);
   const [onsale, setOnSale] = useState(false);
   const router = useRouter();
 
@@ -26,10 +27,13 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
   const getFilters = async () => {
     const res = await fetch('/api/front/filters');
     const data = await res.json();
-    setCategories(data.categories);
-    setPartTypes(data.parttypes);
-    setConditions(data.conditions);
-    setLoading(false);
+    if (data.success) {
+      setCategories(data.categories);
+      setPartTypes(data.parttypes);
+      setConditions(data.conditions);
+      setCountSale(data.isSale);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -75,8 +79,8 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
 
               {Conditions.length > 0 && <RatingFilter filters={Conditions} />}
               {/* {filterheader != false && <HeaderFilter />} */}
-              <MultiRangeSlider filt={query} setFilt={setQuery} min={9} max={9999} />
-              <SaleFilter filt={query} setFilt={setQuery} sale={saleFilter} reg={onsale} />
+              <MultiRangeSlider min={9} max={9999} />
+              {countSale > 0 && <SaleFilter countSale={countSale} />}
             </div>
             <div className="sticky bottom-0 z-40 grid grid-cols-2 lg:hidden">
               <button type="button" className="bg-b1 px-2 py-4 text-white">
