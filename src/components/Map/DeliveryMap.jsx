@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import { Loader } from '@googlemaps/js-api-loader';
-import MobMapForm from '../MobMapForm';
 import MapForm from '../MapForm';
 import axios from 'axios';
 import { RiLoader4Line } from 'react-icons/ri';
@@ -21,10 +20,9 @@ const DeliveryMap = ({ customStyle }) => {
       }
     });
   }
-  (process.env.NEXT_GOOGLE_API_KEY)
   const loadMap = async (result, zipZoom) => {
     const loader = new Loader({
-      apiKey: process.env.NEXT_GOOGLE_API_KEY, // Replace with your own API key
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY, // Replace with your own API key
       version: 'weekly', // or specify a specific version (e.g., 'weekly', 'weekly.next', 'beta')
     });
 
