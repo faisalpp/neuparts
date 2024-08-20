@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connect } from '@/DB/index';
+import connect from '@/lib/db';
 import Categories from '@/models/productcategory';
 
 export async function GET(req) {
@@ -8,7 +8,7 @@ export async function GET(req) {
     const categories = await Categories.find().sort({ createdAt: -1 });
     return NextResponse.json({ success: true, categories });
   } catch (error) {
-    (error);
+    error;
     return NextResponse.json({ success: false, message: 'Error retrieving attributes' });
   }
 }

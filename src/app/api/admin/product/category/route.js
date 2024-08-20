@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connect } from '@/DB/index';
+import connect from '@/lib/db';
 import Category from '@/models/productcategory';
 import { generateSlug } from '@/utils/index';
 
@@ -30,7 +30,7 @@ export async function POST(request) {
     }
     return NextResponse.json({ message: 'Something Went Wrong!', success: false });
   } catch (error) {
-    (error);
+    error;
 
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connect } from '@/DB/index';
+import connect from '@/lib/db';
 import Product from '@/models/product';
 
 export async function GET(request) {
@@ -10,7 +10,7 @@ export async function GET(request) {
     const product = await Product.findById(id);
     return NextResponse.json(product);
   } catch (error) {
-    (error);
+    error;
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
 }

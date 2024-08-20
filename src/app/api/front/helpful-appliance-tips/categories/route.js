@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connect } from '@/DB/index';
+import connect from '@/lib/db';
 import ApplianceCategories from '@/models/applianceCategories';
 
 export async function GET(request) {

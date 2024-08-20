@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connect } from '@/DB/index';
+import connect from '@/lib/db';
 import Category from '@/models/productcategory';
 import ProductTyoe from '@/models/producttype';
 

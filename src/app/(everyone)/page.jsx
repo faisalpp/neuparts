@@ -7,24 +7,22 @@ import NewsLetterSection from '@/components/NewsLetterSection';
 import SatisfiedSection from '@/components/SatisfiedSection';
 import PupularParts from '@/components/PupularParts';
 import ChooseUs from '@/components/ChooseUs';
-import { connect } from '@/DB';
-import Category from '@/models/productcategory'
-import ProductType from '@/models/producttype'
-import Product from '@/models/product'
+import connect from '@/lib/db';
+import Category from '@/models/productcategory';
+import ProductType from '@/models/producttype';
+import Product from '@/models/product';
 
 const getHome = async () => {
-    await connect();
+  await connect();
 
-    const categories = await Category.find().sort({ createdAt: -1 });
-    const parttypes = await ProductType.find().sort({ createdAt: -1 });
-    
-    return { categories: categories, parttypes: parttypes}
-}
+  const categories = await Category.find().sort({ createdAt: -1 });
+  const parttypes = await ProductType.find().sort({ createdAt: -1 });
 
+  return { categories: categories, parttypes: parttypes };
+};
 
 const Page = async () => {
   const productsData = await getHome();
-  
 
   return (
     <>

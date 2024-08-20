@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
-import {connect} from '@/DB/index';
-import Media from '@/models/media'
-import {uploadFile,deleteFiles} from '@/services/aws.js'
+import { NextResponse } from 'next/server';
+import connect from '@/lib/db';
+import Media from '@/models/media';
+import { uploadFile, deleteFiles } from '@/services/aws.js';
 
 export async function POST(request) {
   try {
@@ -38,7 +38,7 @@ export async function POST(request) {
       name: fileAlt,
       url: URL,
       alt: fileAlt,
-      type:fileType
+      type: fileType,
     });
 
     if (isCreated) {
@@ -51,46 +51,44 @@ export async function POST(request) {
   }
 }
 
-
-export async function DELETE(request){
-    try{
-      await connect();
-    const {_id} = await request.json()
-    if(!_id){
-     return  NextResponse.json({message:'Media id is required!',success: false},{status:400})  
+export async function DELETE(request) {
+  try {
+    await connect();
+    const { _id } = await request.json();
+    if (!_id) {
+      return NextResponse.json({ message: 'Media id is required!', success: false }, { status: 400 });
     }
 
     //find is media exist
     let getMedia;
-    try{
+    try {
       getMedia = await Media.findById(_id);
-    }catch(error){
-      return  NextResponse.json({message:'Something went wrong!',error:error,success: false},{status:500})
+    } catch (error) {
+      return NextResponse.json({ message: 'Something went wrong!', error: error, success: false }, { status: 500 });
     }
-    
-    if(!getMedia){
-      return  NextResponse.json({message:'Media not found!',success: false},{status:404})
+
+    if (!getMedia) {
+      return NextResponse.json({ message: 'Media not found!', success: false }, { status: 404 });
     }
-    
+
     // delete from amazon
-    if(getMedia.type != 'embed'){
-      const {resp} = await deleteFiles(getMedia.url)
-      if(resp.$metadata.httpStatusCode != 204){
-        return  NextResponse.json({message:'Aws Media Delete Failed!',success: false},{status:500})
+    if (getMedia.type != 'embed') {
+      const { resp } = await deleteFiles(getMedia.url);
+      if (resp.$metadata.httpStatusCode != 204) {
+        return NextResponse.json({ message: 'Aws Media Delete Failed!', success: false }, { status: 500 });
       }
     }
 
-    try{
-     const isDeleted = await Media.findByIdAndDelete(_id)
-     if(isDeleted){
-       return  NextResponse.json({message:'Media Deleted!',success: true},{status:200})
-     }
-     return  NextResponse.json({message:'Media Delete Failed!',success: false},{status:404})
-    }catch(error){
-      return  NextResponse.json({message:'Media Delete Failed!',success: false},{status:500})
+    try {
+      const isDeleted = await Media.findByIdAndDelete(_id);
+      if (isDeleted) {
+        return NextResponse.json({ message: 'Media Deleted!', success: true }, { status: 200 });
+      }
+      return NextResponse.json({ message: 'Media Delete Failed!', success: false }, { status: 404 });
+    } catch (error) {
+      return NextResponse.json({ message: 'Media Delete Failed!', success: false }, { status: 500 });
     }
-
-    }catch(error){
-     return  NextResponse.json({message:'Media Delete Failed!',error:error,success: false},{status:500})
-    }  
+  } catch (error) {
+    return NextResponse.json({ message: 'Media Delete Failed!', error: error, success: false }, { status: 500 });
+  }
 }

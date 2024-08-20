@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { connect } from '@/DB/index';
+import connect from '@/lib/db';
 import ApplianceCategories from '@/models/applianceCategories';
 import * as Yup from 'yup';
 import { generateSlug } from '@/utils/index';
