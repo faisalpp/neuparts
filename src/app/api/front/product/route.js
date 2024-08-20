@@ -6,7 +6,7 @@ import APIFilters from '@/utils/APIFilters';
 export async function GET(req) {
   await connect();
 
-  try {
+  // try {
     const searchParams = req.nextUrl.searchParams;
     // const searchParams = [];
     const paramsObj = {};
@@ -33,7 +33,7 @@ export async function GET(req) {
     const paginatedProducts = products.slice(startIndex, startIndex + resPerPage);
 
     return NextResponse.json({ success: true, productCount, filteredProductsCount, products: paginatedProducts });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: 'Error retrieving products' });
-  }
+  // } catch (error) {
+  //   return NextResponse.json({ success: false, message: 'Error retrieving products' });
+  // }
 }

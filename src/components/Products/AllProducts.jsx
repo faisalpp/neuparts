@@ -15,7 +15,7 @@ const AllProducts = ({ data }) => {
   const [saleFilter, setSaleFilter] = useState([{ count: 99 }]);
 
   useEffect(() => {
-    setLoading(false);
+      setLoading(false);
   }, [data]);
 
   const [isGrid, setIsGrid] = useState(false);
@@ -65,7 +65,7 @@ const AllProducts = ({ data }) => {
             <div className="flex w-full items-center justify-center">
               <Image width={400} height={400} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" />
             </div>
-          ) : data.products.length > 0 ? (
+          ) : data.products?.length > 0 ? (
             <>
               {data.products.map((product, index) => (
                 <ProductCard3 key={index} product={product} isGrid={isGrid} />
