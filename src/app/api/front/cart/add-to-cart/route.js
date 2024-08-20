@@ -55,7 +55,7 @@ export async function POST(request) {
         items: [
           {
             id: PRODUCT._id,
-            thumbnail: PRODUCT.images[0].url,
+            thumbnail: PRODUCT.thumbnail,
             title: PRODUCT.title,
             regular_price: PRODUCT.regular_price,
             sale_price: PRODUCT.sale_price,
@@ -73,7 +73,7 @@ export async function POST(request) {
       } else {
         CART.categories[categoryIndex].items.push({
           id: PRODUCT._id,
-          thumbnail: PRODUCT.images[0].url,
+          thumbnail: PRODUCT.thumbnail,
           title: PRODUCT.title,
           regular_price: PRODUCT.regular_price,
           sale_price: PRODUCT.sale_price,
