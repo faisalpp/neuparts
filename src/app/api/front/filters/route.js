@@ -83,8 +83,6 @@ export async function GET(req) {
 
     return NextResponse.json({ success: true, categories: categories, parttypes: parttypes, conditions: conditions, isSale: isSale });
   } catch (error) {
-    console.log(error);
-
     return NextResponse.json({ success: false, message: 'Error retrieving attributes' });
   }
 }

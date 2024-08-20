@@ -2,9 +2,8 @@ import Image from 'next/image';
 import React from 'react';
 
 const CartCard = (prop) => {
-  console.log(prop.item.title)
   return (
-    <div className="mt-3 flex justify-start gap-14px">
+    <div key={prop.Key} className="mt-3 flex justify-start gap-14px">
       <div className="relative w-full max-w-[64px]">
         <Image width={200} height={200} quality={100} src={prop.item.thumbnail} className="h-16 w-16 object-contain" alt="p1" />
         <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-b3 text-xs font-medium text-white">{prop.item.quantity}</span>

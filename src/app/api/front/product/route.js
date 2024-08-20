@@ -34,8 +34,6 @@ export async function GET(req) {
 
     return NextResponse.json({ success: true, productCount, filteredProductsCount, products: paginatedProducts });
   } catch (error) {
-    console.log(error);
-
     return NextResponse.json({ success: false, message: 'Error retrieving products' });
   }
 }

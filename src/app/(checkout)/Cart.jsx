@@ -22,7 +22,7 @@ const Cart = () => {
       <div className="bg-gradient h-full w-full max-w-full px-4 py-14 sm:px-11">
         <div className="mr-auto flex w-full max-w-[418px] flex-col gap-5 3xl:max-w-xl">
           <div className="flex w-full flex-col gap-6 rounded-lg bg-white px-4 py-4 sm:px-6"> 
-            {cart.length > 0 ? cart.map((cat)=> cat.items.length > 0 ? cat.items.map((item)=> <CartCard item={item} /> )  : null ) :null}     
+            {cart.length > 0 ? cart.map((cat)=> cat.items.length > 0 ? cat.items.map((item,i)=> <CartCard Key={i} item={item} /> )  : null ) :null}     
           </div>
           <hr />
           <div className="flex w-full items-center gap-14px">

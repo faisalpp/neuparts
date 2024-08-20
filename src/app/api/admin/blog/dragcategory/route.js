@@ -8,7 +8,6 @@ export async function POST(request) {
   const { cats, type } = await request.json();
 
   try {
-    console.log(type);
     if (type === 'appliance-tips') {
       await Promise.all(
         cats.map(async (cat) => {

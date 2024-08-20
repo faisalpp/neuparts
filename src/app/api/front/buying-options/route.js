@@ -7,7 +7,6 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const slug = searchParams.get('slug');
-    console.log(slug);
 
     const product = await Product.findOne({ slug: slug });
     const partproducts = await Product.find({ part_number: product.part_number }).sort({ createdAt: -1 });

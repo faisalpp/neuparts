@@ -28,7 +28,6 @@ const getProducts = async (searchParams) => {
 
 const Page = async ({ searchParams }) => {
   const productsData = await getProducts(searchParams);
-
   return <AllProducts data={productsData} />;
 };
 
