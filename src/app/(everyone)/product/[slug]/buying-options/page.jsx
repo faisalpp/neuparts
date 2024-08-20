@@ -16,7 +16,6 @@ const Page = async ({ params }) => {
   const { slug } = params;
 
   const data = await fetchProducts(slug);
-  // console.log(data);
 
   return (
     <>

@@ -39,8 +39,6 @@ const Page = () => {
     fetch(`/api/admin/blog/appliance-tips/category`)
       .then((res) => res.json())
       .then((resp) => {
-        console.log(resp);
-
         if (resp.success && resp.cats.length > 0) {
           setCategories(resp.cats);
           setFormData({ ...formData, category: resp.cats[0] });

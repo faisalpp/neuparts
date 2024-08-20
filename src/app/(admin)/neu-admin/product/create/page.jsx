@@ -314,9 +314,9 @@ const Page = () => {
             <div className="mx-2 mt-10 flex w-[100%] min-h-32 max-h-32 overflow-y-scroll flex-wrap gap-5">
               {formData.images.length > 0
                 ? formData.images.map((img, i) => (
-                    <div className="relative border-2 h-fit px-1 py-1 rounded-md">
+                    <div key={i} className="relative border-2 h-fit px-1 py-1 rounded-md">
                       <IoCloseCircle onClick={(e) => RemoveImage(i)} className="absolute right-1 top-1 rounded-full bg-white text-lg text-red-400" />
-                      <Image key={i} height={150} width={150} src={img} className="h-20 w-24 rounded-md" />
+                      <Image height={150} width={150} src={img} className="h-20 w-24 rounded-md" />
                     </div>
                   ))
                 : null}
