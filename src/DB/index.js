@@ -1,23 +1,19 @@
 import mongoose from 'mongoose';
 
-let cached = global.mongoose;
+const connect = async () => {
+  if (mongoose.connections[0].readyState) return;
+  const MongoUrl = process.env.NEXT_MONGODB_CONNECTION_STRING;
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
-export async function connect() {
-  if (cached.conn) {
-    return cached.conn;
+  try {
+    await mongoose.connect(MongoUrl),
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      };
+    console.log('Connection Successfully');
+  } catch (error) {
+    throw new Error('Error Connecting Mongoose');
   }
+};
 
-  if (!cached.promise) {
-
-    cached.promise = mongoose.connect(process.env.NEXT_MONGODB_CONNECTION_STRING).then((mongoose) => {
-      return mongoose;
-    });
-  }
-
-  cached.conn = await cached.promise;
-  return cached.conn;
-}
+export default connect;
