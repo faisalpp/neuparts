@@ -97,7 +97,7 @@ const Page = () => {
           setPageCount(data.pagination.pageCount);
           setImages(data.images);
         } else {
-          toast.update(getToastId, { render: 'Something went wrong!', type: 'error', autoClose: 1000, isLoading: false });
+          toast.update(getToastId, { render: 'No Data Found!', type: 'info', autoClose: 1000, isLoading: false });
           setImages([]);
         }
       });
@@ -130,9 +130,9 @@ const Page = () => {
                 {delLoader === image._id ? <Image height={150} width={150} src='/del-loader.gif' className="absolute h-28 w-32 rounded-md border-2 px-2 py-2 cursor-pointer" /> : null}
                 <Image height={150} width={150} src={image.url} className="h-28 w-32 rounded-md border-2 px-2 py-2" />
               </div>
-             ) ):null
-          }
+             ) ):null}
         </div>
+        {images.length === 0 ? <div className='flex justify-center items-center h-full' > <Image height={150} width={150} src='/not-found.webp' className="h-28 w-32" /></div>:null}
         </div>
           {pageCount > 1 ? <div className="flex justify-center w-100" ><TableNav page={page} setPage={setPage} pageCount={pageCount} /></div> : null}
       </div>

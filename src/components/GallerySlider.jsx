@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 
-const GallerySlider = ({ page, setPage, totalPages, media, setImg, img }) => {
+const GallerySlider = ({media, setImg, img }) => {
   useEffect(() => {
     let box = document.getElementById('id6');
     setBox(box);
@@ -11,15 +11,16 @@ const GallerySlider = ({ page, setPage, totalPages, media, setImg, img }) => {
 
   const [Box, setBox] = useState();
   const btnprev = () => {
-    page > 1 ? setPage(page - 1) : setPage(1);
+    // page > 1 ? setPage(page - 1) : setPage(1);
     let width = Box.clientWidth;
     Box.scrollLeft = Box.scrollLeft - width;
   };
   const btnnext = () => {
-    page < totalPages && setPage(page + 1);
+    // page < totalPages && setPage(page + 1);
     let width = Box.clientWidth;
     Box.scrollLeft = Box.scrollLeft + width;
   };
+
   const handleImage = (image) => {
     setImg(image);
   };
@@ -38,7 +39,7 @@ const GallerySlider = ({ page, setPage, totalPages, media, setImg, img }) => {
           </div>
         </button>
         <div id="id6" className="flex space-x-4 overflow-x-scroll scroll-smooth lg:space-x-3 lg:overflow-x-hidden xl:space-x-[9px]">
-          {media.length > 0 ? media.map((item, index) => <Image width={400} height={400} quality={100} alt="" key={index} onClick={() => handleImage(item.image)} src={item.image} className={`h-32 w-36 cursor-pointer rounded-2xl lg:h-[100px] lg:w-[130px] xl:h-[142px] xl:w-[171px] ${img == item.image ? 'rounded-xl border-2 border-white' : 'border-none'}  `} />) : null}
+          {media.length > 0 ? media.map((item, index) => <Image width={400} height={400} quality={100} alt="" key={index} onClick={() => handleImage(item.url)} src={item.url} className={`h-32 w-36 cursor-pointer rounded-2xl lg:h-[100px] lg:w-[130px] xl:h-[142px] xl:w-[171px] ${img == item.url ? 'rounded-xl border-2 border-white' : 'border-none'}  `} />) : null}
         </div>
       </div>
     </>

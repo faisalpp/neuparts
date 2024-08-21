@@ -24,7 +24,7 @@ const getHome = async () => {
 
 const Page = async () => {
   const productsData = await getHome();
-
+  
   return (
     <>
       <HeroSection />

@@ -1,13 +1,22 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import GallerySlider from '../components/GallerySlider';
 import { BsArrowRightShort } from 'react-icons/bs';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const GallerySection = ({data}) => {
-  const [media, setMedia] = useState(data);
-  const [img, setImg] = useState(data[0].url);
+  const [loading,setLoading] = useState(false)
+  const [img, setImg] = useState('');
+  const [media,setMedia] = useState(data)
+
+  useEffect(() => {
+    if(media.length > 0){
+      setImg(media[0].url)
+    }
+  }, [media])
+  
+
 
   return (
     <div className="bg-b3 ">
@@ -15,13 +24,13 @@ const GallerySection = ({data}) => {
         <div className=" mt-5 lg:mt-10 xl:mt-10">
           {loading ? (
             <div className="flex h-52 w-full items-center justify-center bg-black/10 lg:h-[400px] xl:h-[565px]">
-              <Image width={1000} height={1000} alt="" src="/loader-bg.gif" />
+              <Image width={100} height={100} alt="" src="/loader-bg.gif" />
             </div>
           ) : (
-            <Image width={1000} height={1000} alt="" src={img} className="h-52 w-full rounded-3xl lg:h-[400px] xl:h-[565px]" />
+            <Image width={500} height={500} alt="" src={img} className="h-52 w-full rounded-3xl lg:h-[400px] xl:h-[565px]" />
           )}
           <div>
-            <GallerySlider page={page} setPage={setPage} totalPages={totalPages} media={media} setImg={setImg} img={img} />
+            <GallerySlider media={data} setImg={setImg} img={img} />
           </div>
         </div>
         <div className="flex justify-center py-5">
