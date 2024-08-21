@@ -59,8 +59,8 @@ const PupularParts = () => {
     const data = await res.json();
     if (data.success) {
       setProducts(data.products);
-      setLoader(false);
     }
+    setLoader(false);
   };
 
   useEffect(() => {

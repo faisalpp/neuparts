@@ -9,7 +9,7 @@ import 'slick-carousel/slick/slick-theme.css';
 const CosmaticSlider = ({ products, sliderstyle }) => {
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     arrows: true,
     speed: 300,
     slidesToShow: 4,

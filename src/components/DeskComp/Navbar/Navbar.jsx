@@ -196,7 +196,7 @@ const Navbar = () => {
               <h4 className="font-semibold text-white">About Us</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
                 <Link href="/our-story">Our Story</Link>
-                <Link href="/our-showroom">Our Outlet</Link>
+                <Link href="/our-showroom">Our Showroom</Link>
                 <Link href="/our-companies">Our&nbsp;Companies</Link>
                 <Link href="/faqs">FAQ</Link>
               </div>
