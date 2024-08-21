@@ -23,7 +23,6 @@ const getProducts = async (searchParams) => {
 
   const res = await fetch(`${process.env.NEXT_BASE_API}/api/front/product?${searchQuery}`, requestOptions);
   const data = await res.json();
-  console.log(data)
   return data;
 };
 

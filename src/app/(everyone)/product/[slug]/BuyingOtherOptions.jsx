@@ -9,10 +9,10 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
 
-const BuyingOtherOptions = ({ slug, otherProducts, modelNo }) => {
+const BuyingOtherOptions = ({ slug, otherProducts, condition, handleCondition }) => {
   const settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     arrows: true,
     speed: 300,
     margin: 10,
@@ -73,15 +73,15 @@ const BuyingOtherOptions = ({ slug, otherProducts, modelNo }) => {
     <div className=" rounded-lg py-5">
       <div className="mb-3 flex items-center justify-between">
         <h6 className="font-bold">Product Buying Options</h6>
-        <Link href={`/all-buying-options`} className="flex items-center text-sm font-bold text-b3 hover:underline">
+        <Link href={`/product/${slug}/buying-options`} className="flex items-center text-sm font-bold text-b3 hover:underline">
           View All <BsArrowRightShort />
         </Link>
       </div>
       <div className="reviewslider-wrapper slider-container mt-4">
         {otherProducts.length > 0 ? (
           <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className="relative maxmd:mb-10">
-            {otherProducts.map((product, index) => (
-              <OtherProductCard key={index} slug={slug} product={product} />
+            {[...otherProducts, ...otherProducts].map((product, index) => (
+              <OtherProductCard key={index} slug={slug} product={product} condition={condition} handleCondition={handleCondition} />
             ))}
           </Slider>
         ) : (

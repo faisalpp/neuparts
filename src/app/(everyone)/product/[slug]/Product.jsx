@@ -94,16 +94,18 @@ const Product = ({ slug }) => {
   const [product, setProduct] = useState({});
   const [partscount, setPartsCount] = useState(0);
   const [partproducts, setPartProducts] = useState({});
+  const [buyingOptions, setBuyingOptions] = useState([]);
 
   const FetchProduct = async () => {
     await fetch(`/api/front/product/single?slug=${slug}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          setPartProducts(data.partproducts);
           setPartsCount(data.partCount);
           setProduct(data.product);
           setStock(data.product.stock);
+          setPartProducts([...data.partproducts, ...data.partproducts]);
+          setBuyingOptions(data.buyingOptions);
           setLoading(false);
         } else {
           router.push('/404');
@@ -135,53 +137,6 @@ const Product = ({ slug }) => {
     { title: 'Fast 2-Day Shipping Available', image: '/svgs/package_2.webp' },
   ]);
 
-  const [otherProducts, setOtherProducts] = useState([
-    {
-      slug: 'test',
-      title: 'Upper Rack for Dish Washers',
-      condition: 'new',
-      quantity: 1,
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-    },
-    {
-      slug: 'whirlpool-refrigerator-master',
-      title: 'Upper Rack for Dish Washers',
-      condition: 'new-open-box',
-      quantity: 0,
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-    },
-    {
-      slug: 'whirlpool-refrigerator-master',
-      title: 'Upper Rack for Dish Washers',
-      condition: 'used',
-      quantity: 2,
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-    },
-    {
-      slug: 'whirlpool-refrigerator-master',
-      title: 'Upper Rack for Dish Washers',
-      condition: 'used',
-      quantity: 2,
-      isSale: true,
-      salePrice: 279.0,
-      regPrice: 230.0,
-      rating: 5,
-      image: '/popular-parts.webp',
-    },
-  ]);
-
   const [mediaViewer, setMediaViewer] = useState({
     file: 'image',
     type: 'url',
@@ -206,6 +161,7 @@ const Product = ({ slug }) => {
   const [imgModal, setImgModal] = useState(false);
 
   const [favLoad, setFavLoad] = useState(false);
+  const [activeCondition, setActiveCondition] = useState({});
 
   const handleFavorites = async (e) => {
     e.preventDefault();
@@ -216,14 +172,15 @@ const Product = ({ slug }) => {
   };
 
   // Match condition
-  const ConditionData = () => {
-    return conditions.find((item) => item.slug === product?.condition);
+  const ConditionData = (cond) => {
+    return conditions.find((item) => (item.slug === cond ? cond : product?.condition));
   };
 
-  const [openModal, setOpenModal] = useState('');
+  const [openModal, setOpenModal] = useState(false);
 
-  const handleCloseModal = () => {
-    setOpenModal(false);
+  const handleCloseModal = (cond) => {
+    setOpenModal(!openModal);
+    if (cond) setActiveCondition(ConditionData(cond));
   };
 
   return (
@@ -249,11 +206,11 @@ const Product = ({ slug }) => {
               <RiArrowDropRightLine className="text-xl text-gray-500" />
               <h5 className="text-xs text-b3">Part Categories</h5>
               <RiArrowDropRightLine className="text-xl text-gray-500" />
-              <h5 className="text-xs text-b3">Dishwashers</h5>
+              <h5 className="text-xs text-b3">{product.category?.title}</h5>
               <RiArrowDropRightLine className="text-xl text-gray-500" />
-              <h5 className="text-xs text-b3">Racks & Trays</h5>
+              <h5 className="text-xs text-b3">{product.parttype?.title}</h5>
               <RiArrowDropRightLine className="text-xl text-gray-500" />
-              <h5 className="text-xs text-gray-500">Lower Rack</h5>
+              <h5 className="text-xs text-gray-500">{product.title}</h5>
             </div>
           </div>
           {/* Bread Crumbs End */}
@@ -346,7 +303,7 @@ const Product = ({ slug }) => {
                 <div className="flex items-center gap-1">
                   <h4 className="w-max text-base font-semibold text-b16/50">Condition</h4>
                   {/* <ToolTip color="text-b16/50" /> */}
-                  <QuestionMarkCircleIcon onClick={() => setOpenModal(true)} strokeWidth={2} className={`h-5 w-5 cursor-pointer text-b16/50 hover:text-b3`} />
+                  <QuestionMarkCircleIcon onClick={() => handleCloseModal(product.condition)} strokeWidth={2} className={`h-5 w-5 cursor-pointer text-b16/50 hover:text-b3`} />
                 </div>
                 <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase text-white ` + ConditionData().class}>
                   {ConditionData().slug === 'new' && <FourStar />}
@@ -429,7 +386,7 @@ const Product = ({ slug }) => {
               </div>
 
               {/* Other Product Section */}
-              <BuyingOtherOptions slug={slug} otherProducts={otherProducts} modelNo={product.model_no} />
+              <BuyingOtherOptions slug={slug} otherProducts={buyingOptions} condition={ConditionData} handleCondition={handleCloseModal} />
 
               <div className="mt-10 hidden flex-col items-center justify-center gap-y-3 maxlg:flex">
                 {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
@@ -452,7 +409,7 @@ const Product = ({ slug }) => {
 
           {/* <ProductSlider /> */}
 
-          <CompareModel />
+          <CompareModel products={buyingOptions} condition={ConditionData} />
 
           <LoopSection />
 

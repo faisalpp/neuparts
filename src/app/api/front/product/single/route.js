@@ -10,13 +10,25 @@ export async function GET(request) {
 
     slug;
 
-    const product = await Product.findOne({ slug: slug }).populate('category');
-    const partproducts = await Product.find({ model_no: product.model_no }).populate('category');
-    const partCount = await Product.countDocuments({ part_number: product.part_number });
+    const product = await Product.findOne({ slug: slug }).populate('category').populate('parttype');
     if (!product) {
       return NextResponse.json({ success: false });
     }
-    return NextResponse.json({ product: product, partproducts, partCount, success: true });
+    const partproducts = await Product.find({
+      model_no: product.model_no,
+      _id: { $ne: product._id },
+    }).populate('category');
+
+    const buyingOptions = await Product.find({
+      part_number: product.part_number,
+      _id: { $ne: product._id },
+    });
+
+    const partCount = await Product.countDocuments({
+      part_number: product.part_number,
+      _id: { $ne: product._id },
+    });
+    return NextResponse.json({ product: product, partproducts, buyingOptions, partCount, success: true });
   } catch (error) {
     error;
 
