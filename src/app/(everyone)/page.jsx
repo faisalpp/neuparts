@@ -10,15 +10,16 @@ import ChooseUs from '@/components/ChooseUs';
 import connect from '@/lib/db';
 import Category from '@/models/productcategory';
 import ProductType from '@/models/producttype';
-import Product from '@/models/product';
+import HomeGallery from '@/models/homeGallery';
 
 const getHome = async () => {
   await connect();
 
   const categories = await Category.find().sort({ createdAt: -1 });
   const parttypes = await ProductType.find().sort({ createdAt: -1 });
+  const homeGallery = await HomeGallery.find().sort({ createdAt: -1 });
 
-  return { categories: categories, parttypes: parttypes };
+  return { categories: categories, parttypes: parttypes,homeGallery:homeGallery };
 };
 
 const Page = async () => {
@@ -32,7 +33,7 @@ const Page = async () => {
       {productsData ? <ApplianceSection data={productsData.parttypes} Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" /> : null}
       <PupularParts />
       <ChooseUs />
-      <GallerySection />
+      {productsData ? <GallerySection data={productsData.homeGallery} /> : null}
       <MapSection />
       <SatisfiedSection page="home-page" title="Join Thousands of our Satisfied Customers." />
       <NewsLetterSection backimage="/hero-bg.webp" />

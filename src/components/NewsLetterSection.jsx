@@ -3,12 +3,36 @@ import React, { useState } from 'react';
 import InputCheckbox from './InputCheckbox';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 const NewsLetterSection = ({ backimage }) => {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const SubscribeNews = async (e) => {
     e.preventDefault();
+    if(email != '' ){
+      setLoading(true)
+      const crtToastId = toast.loading('Subscribing to newsletter...');
+      fetch('/api/front/news-letter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({email:email}) })
+      .then((res) => res.json())
+      .then((resp) => {
+        if (resp.success) {
+          toast.update(crtToastId, { type: 'success',render:'Newsletter subscribed successfully!', autoClose: 1000, isLoading: false });
+        } else {
+          toast.update(crtToastId, { type:'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });
+        }
+        setLoading(false)
+        setEmail('')
+      })
+      .catch((error) => {
+        toast.update(crtToastId, { type: 'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });
+        setLoading(false)
+        setEmail('')
+      });
+    }else{
+     toast.error('Invalid email address!')
+    }
   };
 
   return (
@@ -25,7 +49,7 @@ const NewsLetterSection = ({ backimage }) => {
             <h4 className="text-sm font-bold">Email</h4>
             <form onSubmit={SubscribeNews} className="flex flex-col items-center space-y-2 md:space-x-5 lg:flex-row lg:space-y-0">
               <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="w-full rounded-md bg-white px-2 py-2 text-xs outline-none placeholder:font-normal placeholder:text-[#777E90] md:w-72 lg:py-3 xl:py-3" placeholder="Type here" />
-              <button className="w-full rounded-md bg-b3 px-7 py-3 text-xs font-bold text-white md:w-max md:whitespace-nowrap">Get Updates</button>
+              <button disabled={loading === true} className="w-full rounded-md bg-b3 px-7 py-3 text-xs font-bold text-white md:w-max md:whitespace-nowrap">Get Updates</button>
             </form>
             <div className="label-p-0 flex items-center gap-4 py-2">
               <InputCheckbox />

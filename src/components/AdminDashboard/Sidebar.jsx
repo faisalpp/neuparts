@@ -9,7 +9,9 @@ import { GiAutoRepair, GiWashingMachine } from 'react-icons/gi';
 import { FaBlogger } from 'react-icons/fa';
 import { MdTipsAndUpdates, MdLiveHelp } from 'react-icons/md';
 import { BiCategory } from 'react-icons/bi';
-import { RiSeoLine } from "react-icons/ri";
+import { FaImages } from "react-icons/fa";
+import { BiSolidVideos } from "react-icons/bi";
+import { LuBoxes } from "react-icons/lu";
 import Logout from '@/components/AdminDashboard/Logout';
 
 const Sidebar = () => {
@@ -42,15 +44,27 @@ const Sidebar = () => {
             </Link>
             <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/team">
               <RiTeamFill />
-              <span className="mx-2 text-sm font-semibold">Team</span>
+              <span className="mx-2 text-sm font-semibold">Team Members</span>
             </Link>
             <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/media">
               <MdPermMedia />
               <span className="mx-2 text-sm font-semibold">Media</span>
             </Link>
+            <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/home-gallery">
+              <FaImages/>
+              <span className="mx-2 text-sm font-semibold">Home Gallery</span>
+            </Link>
+            <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
+              <BiSolidVideos/>
+              <span className="mx-2 text-sm font-semibold">Static Videos</span>
+            </Link>
             <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/review">
               <MdRateReview />
               <span className="mx-2 text-sm font-semibold">Reviews</span>
+            </Link>
+            <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
+              <LuBoxes/>
+              <span className="mx-2 text-sm font-semibold">Orders</span>
             </Link>
           </div>
 

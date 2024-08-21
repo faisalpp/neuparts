@@ -5,21 +5,35 @@ import { FiPhone } from 'react-icons/fi';
 import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
-// import { subscribeNewLetter } from '../../api/frontEnd'
-// import Toast from '../../utils/Toast'
 
 const Footer = () => {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const SubscribeNews = async (e) => {
     e.preventDefault();
-    // const res = await subscribeNewLetter({ email: email })
-    // if (res.status === 200) {
-    //   Toast(res.data.msg, 'success', 1000)
-    //   setEmail('')
-    // } else {
-    //   Toast(res.data.message, 'error', 1000)
-    // }
+    if(email != '' ){
+      setLoading(true)
+      const crtToastId = toast.loading('Subscribing to newsletter...');
+      fetch('/api/front/news-letter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({email:email}) })
+      .then((res) => res.json())
+      .then((resp) => {
+        if (resp.success) {
+          toast.update(crtToastId, { type: 'success',render:'Newsletter subscribed successfully!', autoClose: 1000, isLoading: false });
+        } else {
+          toast.update(crtToastId, { type:'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });
+        }
+        setLoading(false)
+        setEmail('')
+      })
+      .catch((error) => {
+        toast.update(crtToastId, { type: 'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });
+        setLoading(false)
+        setEmail('')
+      });
+    }else{
+     toast.error('Invalid email address!')
+    }
   };
 
   return (
@@ -96,7 +110,7 @@ const Footer = () => {
             <h4 className="text-lg font-bold">Get Latest Discount Offers</h4>
             <form onSubmit={SubscribeNews} className="col-start-4 col-end-8 mt-3 flex h-10 w-full items-center space-x-2 rounded-lg bg-b2 px-3 ">
               <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" className="w-full bg-b2 text-xs text-white/90 outline-none" />
-              <button type="submit">
+              <button disabled={loading === false} type="submit">
                 <IoSendSharp className="text-white" />
               </button>
             </form>

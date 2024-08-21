@@ -1,37 +1,13 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import GallerySlider from '../components/GallerySlider';
 import { BsArrowRightShort } from 'react-icons/bs';
 import Image from 'next/image';
 import Link from 'next/link';
-// import { getGalleryImages } from '../api/frontEnd'
 
-const GallerySection = () => {
-  const [media, setMedia] = useState([{ image: '/g8.webp' }, { image: '/g3.webp' }, { image: '/g4.webp' }, { image: '/g5.webp' }, { image: '/g6.webp' }, { image: '/g7.webp' }, { image: '/g2.webp' }, { image: '/g3.webp' }, { image: '/g5.webp' }, { image: '/g7.webp' }, { image: '/g8.webp' }]);
-  const [img, setImg] = useState('/g8.webp');
-
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(20);
-  const [totalPages, setTotalPages] = useState(0);
-  const [loading, setLoading] = useState(false);
-
-  // const GetLoopMedia = async () => {
-  //   const res = await getGalleryImages({ page: page, limit: limit });
-
-  //   if (res.status === 200) {
-  //     setMedia(prev => [...prev, ...res.data.gallery])
-  //     setImg(res.data.gallery[0].url)
-  //     setTotalPages(Math.ceil(res.data.totalCount / limit))
-  //     setLoading(false)
-  //   } else {
-  //     setLoading(false)
-  //     setMedia([])
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   GetLoopMedia()
-  // }, [page])
+const GallerySection = ({data}) => {
+  const [media, setMedia] = useState(data);
+  const [img, setImg] = useState(data[0].url);
 
   return (
     <div className="bg-b3 ">

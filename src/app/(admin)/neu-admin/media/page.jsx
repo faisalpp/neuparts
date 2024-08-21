@@ -95,6 +95,7 @@ const Page = () => {
     try{
     const res = await fetch('/api/aws',requestOptions);
     const data = await res.json()
+    console.log(data)
     if(!res.ok){
      toast.error('Something went wrong!');
      toast.update(updToastId,{type:toast.TYPE?.ERROR,autoClose:2000,isLoading: false})
