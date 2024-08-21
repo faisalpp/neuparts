@@ -9,7 +9,7 @@ export async function GET(request) {
     const slug = searchParams.get('slug');
 
     const product = await Product.findOne({ slug: slug });
-    const partproducts = await Product.find({ part_number: product.part_number }).sort({ createdAt: -1 });
+    const partproducts = await Product.find({ part_number: product.part_number, _id: { $ne: product._id } }).sort({ createdAt: -1 });
 
     return NextResponse.json({ product, partproducts, success: true });
   } catch (error) {
