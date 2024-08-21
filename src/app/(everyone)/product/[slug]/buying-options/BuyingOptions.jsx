@@ -2,24 +2,75 @@
 import FourStar from '@/components/svgs/FourStar';
 import React, { useState } from 'react';
 import { BsGrid } from 'react-icons/bs';
-import { FaBars, FaRegHeart } from 'react-icons/fa';
-import FilterSvg from '@/components/svgs/FilterSvg';
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { FaBars } from 'react-icons/fa';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
-import Tag from '@/components/svgs/Tag';
 import ToolTip from '@/components/ToolTip';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 const BuyingOptions = ({ data }) => {
-  const [isGrid, setIsGrid] = useState(true);
-  const [isFilter, setIsFilter] = useState(false);
+  // Button configuration array
+  const filterButtons = [
+    {
+      title: 'New',
+      slug: 'new',
+      borderColor: 'border-dark-blue',
+      activeClass: 'bg-transparent text-dark-blue',
+      defaultClass: 'bg-dark-blue text-white',
+      icon: <FourStar />,
+    },
+    {
+      title: 'Like New / Open Box',
+      slug: 'new-open-box',
+      borderColor: 'border-dark-light-cyan',
+      activeClass: 'bg-transparent text-dark-light-cyan',
+      defaultClass: 'bg-dark-light-cyan text-white',
+    },
+    {
+      title: 'Used • Grade A',
+      slug: 'used-grade-a',
+      borderColor: 'border-c-orange',
+      activeClass: 'bg-transparent text-c-orange',
+      defaultClass: 'bg-c-orange text-white',
+    },
+    {
+      title: 'Used • Grade B',
+      slug: 'used-grade-b',
+      borderColor: 'border-c-orange',
+      activeClass: 'bg-transparent text-c-orange',
+      defaultClass: 'bg-c-orange text-white',
+    },
+    {
+      title: 'Used • Grade C',
+      slug: 'used-grade-c',
+      borderColor: 'border-c-orange',
+      activeClass: 'bg-transparent text-c-orange',
+      defaultClass: 'bg-c-orange text-white',
+    },
+    {
+      title: 'Used • Grade D',
+      slug: 'used-grade-d',
+      borderColor: 'border-c-orange',
+      activeClass: 'bg-transparent text-c-orange',
+      defaultClass: 'bg-c-orange text-white',
+    },
+  ];
 
-  const modalClass = isFilter ? 'maxlg:flex maxlg:top-[67px] maxlg:bottom-0' : 'maxlg:-bottom-[420px] maxlg:opacity-0 maxlg:pointer-events-none';
+  const [isGrid, setIsGrid] = useState(true);
+  const [filterCondition, setFilterCondition] = useState('All');
+
+  // Function to filter products based on condition
+  const filteredData = filterCondition === 'All' ? data : data.filter((item) => item.condition === filterCondition);
+
+  // Helper function to check if a condition has products
+  const hasProducts = (condition) => {
+    return data.some((item) => item.condition === condition);
+  };
 
   return (
     <>
-      {/* FIlter */}
+      {/* Filter */}
       <div className="mb-10">
         <div className="mt-5 flex items-center justify-between py-5">
           <h2 className="text-2xl font-bold text-black">Buying Options</h2>
@@ -33,15 +84,15 @@ const BuyingOptions = ({ data }) => {
           <h3 className="text-black">Filter by Cosmetic Ratings</h3>
           <div className={`z-40 duration-200`}>
             <div className="flex h-auto w-full flex-wrap items-center gap-3 bg-white lg:gap-2.5">
-              <button className="rounded-full border border-b33 px-4 py-3 text-xs font-semibold duration-200 maxmd:w-full">Show All</button>
-              <button className="inline-flex items-center justify-center gap-1 rounded-full border border-dark-blue bg-dark-blue px-4 py-3 text-xs font-semibold text-white duration-200 hover:bg-transparent hover:text-dark-blue">
-                <FourStar />
-                New
+              <button onClick={() => setFilterCondition('All')} className={`rounded-full border px-4 py-3 text-xs font-semibold duration-200 ${filterCondition === 'All' ? '' : 'bg-dark-blue text-white'}`}>
+                Show All
               </button>
-              <button className="rounded-full border border-dark-light-cyan bg-dark-light-cyan px-4 py-3 text-xs font-semibold text-white duration-200 hover:bg-transparent hover:text-dark-light-cyan">Like New / Open Box</button>
-              <button className="rounded-full border border-c-orange bg-c-orange px-4 py-3 text-xs font-semibold text-white duration-200 hover:bg-transparent hover:text-c-orange">Used • Grade A</button>
-              <button className="rounded-full border border-c-orange bg-c-orange px-4 py-3 text-xs font-semibold text-white duration-200 hover:bg-transparent hover:text-c-orange">Used • Grade C</button>
-              <button className="rounded-full border border-c-orange bg-c-orange px-4 py-3 text-xs font-semibold text-white duration-200 hover:bg-transparent hover:text-c-orange">Used • Grade D</button>
+              {filterButtons.map((button, index) => (
+                <button key={index} onClick={() => setFilterCondition(button.slug)} className={`flex items-center gap-1 rounded-full border ${button.borderColor} px-4 py-3 text-xs font-semibold duration-200 ${filterCondition === button.slug ? button.activeClass : button.defaultClass} ${!hasProducts(button.slug) ? ' pointer-events-none cursor-default grayscale' : ''}`}>
+                  {button.icon && button.icon}
+                  {button.title}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -49,7 +100,7 @@ const BuyingOptions = ({ data }) => {
 
       {/* Buying Cards */}
       <div className={`grid ${isGrid ? 'grid-cols-2 gap-2 md:gap-4 xl:grid-cols-3' : 'grid-cols-1 gap-4'} mb-10 w-full`}>
-        {data.map((item, index) => (
+        {filteredData.map((item, index) => (
           <BuyingCards product={item} isGrid={isGrid} key={index} />
         ))}
       </div>
@@ -90,7 +141,7 @@ export const BuyingCards = ({ isGrid, product }) => {
             <h4 className="w-[44px] text-[9px] font-semibold text-b18 sm:w-[75px] sm:text-sm xs:w-[60px] xs:text-xs">Quantity</h4>
             <AiOutlineShoppingCart className="text-lg text-b18" />
           </div>
-          <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border border-b18/50 px-4 py-1 text-xs font-semibold text-black">1</div>
+          <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border border-b18/50 px-4 py-1 text-xs font-semibold text-black">{product.stock}</div>
         </div>
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-1">
