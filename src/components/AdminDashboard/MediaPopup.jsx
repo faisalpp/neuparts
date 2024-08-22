@@ -17,6 +17,11 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
   const [delId, setDelId] = useState(null);
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    console.log(media)
+  }, [state])
+  
+
   const HandleMediaDone = () => {
     setFiles(tmpFiles);
     setMediaPopup(false);
@@ -74,14 +79,16 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
 
   const GetMedia = async () => {
     setLoading(true);
-    const res = await fetch('/api/media', { method: 'GET' });
-    if (res.ok) {
-      const data = await res.json();
+    fetch('/api/media', { method: 'GET' })
+    .then((res)=>res.json())
+    .then((data)=>{
+      console.log(data)
       setMedia(data.media);
-    } else {
+      setLoading(false);
+    })
+    .catch((error)=>{
       toast.error('Something Went Wrong!');
-    }
-    setLoading(false);
+    })
   };
 
   useEffect(() => {
@@ -95,50 +102,33 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ _id: id }),
     };
-    try {
-      const res = await fetch('/api/aws', requestOptions);
-      const data = await res.json();
-      if (!res.ok) {
+      fetch('/api/aws', requestOptions)
+      .then((res)=>res.json())
+      .then((data)=>{
+        if(data.success){
+          toast.success('Media Deleted Successfully!');
+          GetMedia();
+        }else{
+          toast.success('Something went wrong!');
+        }
+        setDelId(null);
+      })
+      .catch((error)=>{
         toast.error('Something went wrong!');
         setDelId(null);
-        return;
-      }
-      if (!data.success) {
-        (data);
-        toast.error('Something went wrong!');
-        setDelId(null);
-        return;
-      }
-      toast.success('Media Deleted Successfully!');
-      GetMedia();
-    } catch (error) {
-      console.error('Fetch error:', error);
-      toast.error('Something went wrong!');
-      setDelId(null);
-    }
+      })
   };
 
   const UploadSelectedMedia = async (e) => {
-    const updToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 2000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Uploading Media...', // Show pending message
-        success: 'Media upload successfully!', // Show success message
-        error: 'Media upload failed', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-
+    
     const file = e.target.files[0];
     if (!file) {
       toast.error('No Media Selected!');
       return;
     }
-    toast.update(updToastId, { type: toast.TYPE?.PENDING, autoClose: 2000, isLoading: true });
+    
+    const updToastId = toast.loading('Uploading Media...')
+    
     const formData = new FormData();
     formData.append('file', file);
 
@@ -146,31 +136,20 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
       method: 'POST',
       body: formData,
     };
-    try {
-      const res = await fetch('/api/aws', requestOptions);
-      const data = await res.json();
-      if (!res.ok) {
-        toast.error('Something went wrong!');
-        toast.update(updToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
+    
+    fetch('/api/aws', requestOptions)
+      .then((res)=> res.json())
+      .then((data)=>{
+        if(data.success){
+          GetMedia();
+          toast.update(updToastId, { type: 'success',render:'Media uploaded successfully!', autoClose: 2000, isLoading: false });
+          fileInputRef.current.value = '';    
+        }
+      })
+      .catch((error)=>{
+        toast.update(updToastId, { type: 'error',render:'Something went wrong!', autoClose: 2000, isLoading: false });
         fileInputRef.current.value = '';
-        return;
-      }
-      if (!data.success) {
-        (data);
-        toast.error('Something went wrong!');
-        toast.update(updToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
-        fileInputRef.current.value = '';
-        return;
-      }
-      toast.update(updToastId, { type: toast.TYPE?.SUCCESS, autoClose: 2000, isLoading: false });
-      fileInputRef.current.value = '';
-      GetMedia();
-    } catch (error) {
-      console.error('Fetch error:', error);
-      toast.error('Something went wrong!');
-      toast.update(updToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
-      fileInputRef.current.value = '';
-    }
+      })
   };
 
   const imageFormats = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
@@ -204,45 +183,27 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
       return;
     }
 
-    const delToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 2000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Updating Media...', // Show pending message
-        success: 'Media update successfully!', // Show success message
-        error: 'Media update failed', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-
-    toast.update(delToastId, { type: toast.TYPE?.PENDING, autoClose: 2000, isLoading: true });
-
+    const delToastId = toast.loading('Updating Media...')
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: id, name: name, alt: alt }),
     };
-    try {
-      const res = await fetch('/api/media', requestOptions);
-      const data = await res.json();
-      if (!res.ok) {
-        toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
-        return;
-      }
-      if (!data.success) {
-        toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
-        return;
-      }
-      toast.update(delToastId, { type: toast.TYPE?.SUCCESS, autoClose: 2000, isLoading: false });
-      GetMedia();
-      setMediaData({ id: '', name: '', alt: '', type: '', url: '', atch: [] });
-      setMediaPopup(false);
-    } catch (error) {
-      toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 2000, isLoading: false });
-    }
+
+      fetch('/api/media', requestOptions)
+      .then((res)=>res.json())
+      .then((data)=>{
+        if(data.success){
+          setMediaData({ id: '', name: '', alt: '', type: '', url: '', atch: [] });
+          setMediaPopup(false);
+          GetMedia();
+        }else{
+          toast.update(delToastId, { type: 'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });  
+        }
+      })
+      .catch((error)=>{
+        toast.update(delToastId, { type: 'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });
+      })      
   };
 
   const [urlEmbed, setUrlEmbed] = useState('');

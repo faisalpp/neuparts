@@ -1,17 +1,27 @@
 import mongoose from 'mongoose';
 
+let cachedConnection = null;
+
 const connect = async () => {
-  if (mongoose.connections[0].readyState) return;
+  // Use cached connection if it exists
+  if (cachedConnection) {
+    return cachedConnection;
+  }
+
+  // If there's an active connection in mongoose, use it
+  if (mongoose.connections[0].readyState) {
+    cachedConnection = mongoose.connections[0];
+    return cachedConnection;
+  }
+
   const MongoUrl = process.env.NEXT_MONGODB_CONNECTION_STRING;
 
   try {
-    await mongoose.connect(MongoUrl),
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      };
+    cachedConnection = await mongoose.connect(MongoUrl);
     console.log('Connection Successfully');
+    return cachedConnection;
   } catch (error) {
+    console.error('Error Connecting Mongoose:', error);
     throw new Error('Error Connecting Mongoose');
   }
 };

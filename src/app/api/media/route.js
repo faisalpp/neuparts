@@ -4,8 +4,8 @@ import connect from '@/lib/db';
 import * as Yup from 'yup';
 
 export async function GET() {
-  await connect();
   try {
+    await connect();
     const allMedia = await Media.find({});
     return NextResponse.json({ media: allMedia, success: true });
   } catch (error) {
