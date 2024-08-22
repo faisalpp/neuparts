@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Media from '@/models/media';
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
