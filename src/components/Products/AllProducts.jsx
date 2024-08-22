@@ -1,40 +1,55 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import ProductCard3 from '@/components/ProductCard3';
 import ProductFilter from '@/components/Product/FIlter';
 import FilterSvg from '@/components/svgs/FilterSvg';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import { FaBars } from 'react-icons/fa';
-import { BsGrid, BsChevronDown } from 'react-icons/bs';
+import { BsGrid } from 'react-icons/bs';
 import Pagination from '@/components/Pagination/Pagination2';
 import Image from 'next/image';
+import queryString from 'query-string';
 
-const AllProducts = ({ data }) => {
+const AllProducts = ({ searchParams }) => {
   const [loading, setLoading] = useState(true);
-
-  const [saleFilter, setSaleFilter] = useState([{ count: 99 }]);
-
-  useEffect(() => {
-      setLoading(false);
-  }, [data]);
-
+  const [data, setData] = useState(null);
   const [isGrid, setIsGrid] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
 
-  const [params, setParams] = useState({ isSale: true, salePrice: { $gte: 200, $lte: 8000 }, sort: 1 });
+  const getProducts = async () => {
+    setLoading(true);
+    const urlParams = {
+      category: searchParams.category,
+      parttype: searchParams.type,
+      condition: searchParams.condition,
+      'regular_price[gte]': searchParams.min,
+      'regular_price[lte]': searchParams.max,
+      is_sale: searchParams.sale,
+      page: searchParams.page,
+    };
 
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(3);
+    const searchQuery = queryString.stringify(urlParams);
 
-  const [filterLoading, setFilterLoading] = useState(false);
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
 
-  const handleCloseFilter = () => {
-    setIsFilter(false);
+    const res = await fetch(`/api/front/product?${searchQuery}`, requestOptions);
+    const data = await res.json();
+    setData(data);
+    setLoading(false);
   };
+
+  useEffect(() => {
+    getProducts();
+  }, [searchParams]);
 
   function calculateTotalPages(totalProducts, productsPerPage) {
     return Math.ceil(totalProducts / productsPerPage);
   }
+
   return (
     <>
       <div className="maincontainer mt-5 flex items-center py-5">
@@ -43,7 +58,6 @@ const AllProducts = ({ data }) => {
           <RiArrowDropRightLine className="text-xl text-gray-500" />
           <h5 className="text-xs text-b1">Products</h5>
         </div>
-        {/*  */}
         <div className="flex w-full items-center justify-end space-x-5 text-b1/65">
           <BsGrid className={`cursor-pointer ${isGrid && 'text-b3'}`} onClick={() => setIsGrid(true)} />
           <FaBars className={`cursor-pointer ${!isGrid && 'text-b3'}`} onClick={() => setIsGrid(false)} />
@@ -53,19 +67,16 @@ const AllProducts = ({ data }) => {
         <FilterSvg />
         Filters
       </button>
-      {/* Bread Crumbs End */}
 
       <div className="maincontainer flex justify-center gap-12 xl:gap-x-60px">
-        {/* Filters Start */}
-        <ProductFilter loading={filterLoading} query={params} setQuery={setParams} saleFilter={saleFilter} onClose={handleCloseFilter} isFilter={isFilter} />
-        {/* Filters End */}
+        <ProductFilter loading={loading} query={searchParams} onClose={() => setIsFilter(false)} isFilter={isFilter} />
 
         <div className={`grid ${isGrid ? 'grid-cols-2 gap-x-2 xl:grid-cols-3' : 'grid-cols-1'} mb-10 w-full items-start gap-y-5`}>
           {loading ? (
-            <div className="flex w-full items-center justify-center">
-              <Image width={400} height={400} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" />
+            <div className="mt-5 flex w-full items-center justify-center md:mt-10">
+              <Image width={80} height={80} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" unoptimized />
             </div>
-          ) : data.products?.length > 0 ? (
+          ) : data?.products?.length > 0 ? (
             <>
               {data.products.map((product, index) => (
                 <ProductCard3 key={index} product={product} isGrid={isGrid} />

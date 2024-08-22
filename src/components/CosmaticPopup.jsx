@@ -10,14 +10,14 @@ const CosmaticPopup = ({ closeModal, data }) => {
         <button type="button" onClick={closeModal} className="absolute -right-10 top-0 flex h-8 w-8 items-center justify-center rounded-full bg-b3 p-1 text-white">
           <IoCloseOutline className="text-3xl" />
         </button>
-        <h2 className="text-lg font-semibold">{data().title}</h2>
-        <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase text-white ` + data().class}>
-          {data().slug === 'new' && <FourStar />}
-          {data().title}
+        <h2 className="text-lg font-semibold">{data.title}</h2>
+        <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold uppercase text-white ` + data.class}>
+          {data.slug === 'new' && <FourStar />}
+          {data.title}
         </div>
         <h3 className="mt-4 font-semibold">What To Expect</h3>
         <ul className="space-y-4">
-          {data().lists.map((list, index) => (
+          {data.lists.map((list, index) => (
             <li className="flex items-start gap-2" key={index}>
               <FaRegCircle strokeWidth={4} className="mt-1.5 h-3 w-3 text-b3" />
               <span className="block">{list}</span>

@@ -4,10 +4,26 @@ import MenuCheckbox from '@/components/Reusable/MenuCheckbox';
 import Image from 'next/image';
 import FourStar from '@/components/svgs/FourStar';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { isPagesAPIRouteMatch } from 'next/dist/server/future/route-matches/pages-api-route-match';
 import Link from 'next/link';
+import { BsArrowRightShort } from 'react-icons/bs';
+import { useSearchParams } from 'next/navigation';
 
-const CompareModel = ({ products, condition }) => {
+const CompareModel = ({ products, condition, defaultProduct, slug }) => {
+  const conditions = ['new', 'new-open-box', 'certified', 'used-grade-a', 'used-grade-b', 'used-grade-c', 'used-grade-d'];
+
+  const filteredProducts = conditions.map((cond) => {
+    // Filter products by current condition
+    const productsByCondition = products.filter((product) => product.condition === cond);
+
+    // If products exist for the condition, find the one with maximum stock
+    if (productsByCondition.length > 0) {
+      return productsByCondition.reduce((maxStockProduct, product) => (product.stock > maxStockProduct.stock ? product : maxStockProduct));
+    } else {
+      // If no products exist, return an empty object with the condition and stock 0
+      return { ...defaultProduct, condition: cond, stock: 0 };
+    }
+  });
+
   const [filters, setFilters] = useState([
     { title: 'Condition', icon: 'star.webp', items: [] },
     { title: 'Price', icon: 'percent.webp', items: [] },
@@ -44,9 +60,9 @@ const CompareModel = ({ products, condition }) => {
               </tr>
             </thead>
             <tbody>
-              {products.length > 0 &&
-                products.map((item, index) => (
-                  <tr key={index} className="border-b border-b-black/10 bg-white">
+              {filteredProducts.length > 0 &&
+                filteredProducts.map((item, index) => (
+                  <tr key={index} className={`border-b border-b-black/10 bg-white ` + (item.stock ? '' : 'pointer-events-none select-none grayscale')}>
                     <th scope="row" className="flex items-center gap-2 whitespace-nowrap py-6 pr-2 font-semibold text-b1">
                       <Image width={60} height={60} className="h-10 w-10 object-contain" src="/popular-parts.webp" alt={item.title} /> {item.title}
                     </th>
@@ -84,6 +100,12 @@ const CompareModel = ({ products, condition }) => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="mt-10 flex justify-center md:mt-16">
+        <Link href={`/product/${slug}/buying-options`} className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
+          <span className="text-xs md:text-sm xl:text-base">View More</span>
+          <BsArrowRightShort className="text-2xl" />
+        </Link>
       </div>
     </div>
   );

@@ -9,10 +9,25 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
 
-const BuyingOtherOptions = ({ slug, otherProducts, condition, handleCondition }) => {
+const BuyingOtherOptions = ({ slug, otherProducts, condition, handleCondition, defaultProduct }) => {
+  const conditions = ['new', 'new-open-box', 'certified', 'used-grade-a', 'used-grade-b', 'used-grade-c', 'used-grade-d'];
+
+  const filteredProducts = conditions.map((cond) => {
+    // Filter products by current condition
+    const productsByCondition = otherProducts.filter((product) => product.condition === cond);
+
+    // If products exist for the condition, find the one with maximum stock
+    if (productsByCondition.length > 0) {
+      return productsByCondition.reduce((maxStockProduct, product) => (product.stock > maxStockProduct.stock ? product : maxStockProduct));
+    } else {
+      // If no products exist, return an empty object with the condition and stock 0
+      return { ...defaultProduct, condition: cond, stock: 0 };
+    }
+  });
+
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     arrows: true,
     speed: 300,
     margin: 10,
@@ -54,6 +69,7 @@ const BuyingOtherOptions = ({ slug, otherProducts, condition, handleCondition })
       },
     ],
   };
+
   const PrevButton = ({ onClick }) => (
     <button onClick={onClick} className="prev-button pointer-events-none absolute -left-3 top-0 z-30 block h-full">
       <div className="group pointer-events-auto flex cursor-pointer rounded-full bg-black/50 px-2 py-2 text-white hover:bg-b3">
@@ -69,6 +85,7 @@ const BuyingOtherOptions = ({ slug, otherProducts, condition, handleCondition })
       </div>
     </button>
   );
+
   return (
     <div className=" rounded-lg py-5">
       <div className="mb-3 flex items-center justify-between">
@@ -78,10 +95,10 @@ const BuyingOtherOptions = ({ slug, otherProducts, condition, handleCondition })
         </Link>
       </div>
       <div className="reviewslider-wrapper slider-container mt-4">
-        {otherProducts.length > 0 ? (
+        {filteredProducts.length > 0 ? (
           <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className="relative maxmd:mb-10">
-            {[...otherProducts, ...otherProducts].map((product, index) => (
-              <OtherProductCard key={index} slug={slug} product={product} condition={condition} handleCondition={handleCondition} />
+            {filteredProducts.map((product, index) => (
+              <OtherProductCard key={index} slug={slug} product={product} condition={condition(product.condition)} handleCondition={() => handleCondition(product.condition)} />
             ))}
           </Slider>
         ) : (

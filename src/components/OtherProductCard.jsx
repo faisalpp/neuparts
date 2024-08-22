@@ -9,11 +9,11 @@ const OtherProductCard = ({ slug, product, condition, handleCondition }) => {
   return (
     <>
       <div className="px-1">
-        <div className={`border-gray-300} flex w-full cursor-pointer flex-col rounded-xl border-2 bg-white px-1 py-4 hover:border-2 hover:border-b3 ${product.stock ? '' : 'grayscale'} ${slug === product?.slug ? 'border-b3' : 'border-gray-300'}`}>
+        <div className={`border-gray-300} flex w-full cursor-pointer flex-col rounded-xl border-2 bg-white px-1 py-4 hover:border-2 hover:border-b3 ${product.stock ? '' : 'pointer-events-none select-none grayscale'} ${slug === product?.slug ? 'border-b3' : 'border-gray-300'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center ">
               <h6 className="w-max text-[10px] font-semibold text-gray-500">Condition</h6>
-              <QuestionMarkCircleIcon onClick={() => handleCondition(product.condition)} strokeWidth={2} className={`h-5 w-5 cursor-pointer text-b16/50 hover:text-b3`} />
+              <QuestionMarkCircleIcon onClick={handleCondition} strokeWidth={2} className={`h-5 w-5 cursor-pointer text-b16/50 hover:text-b3`} />
             </div>
             <div>
               {product.stock ? (
@@ -33,9 +33,9 @@ const OtherProductCard = ({ slug, product, condition, handleCondition }) => {
           <Link href={`/product/${product?.slug}`}>
             {/* Conditions */}
             <div className="mt-0.5">
-              <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + condition(product.condition).class}>
+              <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + condition.class}>
                 {product.condition == 'new' && <FourStar />}
-                {condition(product.condition).title}
+                {condition.title}
               </div>
             </div>
             {/* End */}

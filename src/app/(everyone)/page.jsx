@@ -19,12 +19,12 @@ const getHome = async () => {
   const parttypes = await ProductType.find().sort({ createdAt: -1 });
   const homeGallery = await HomeGallery.find().sort({ createdAt: -1 });
 
-  return { categories: categories, parttypes: parttypes,homeGallery:homeGallery };
+  return { categories: categories, parttypes: parttypes, homeGallery: homeGallery };
 };
 
 const Page = async () => {
   const productsData = await getHome();
-  
+
   return (
     <>
       <HeroSection />

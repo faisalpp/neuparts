@@ -173,14 +173,16 @@ const Product = ({ slug }) => {
 
   // Match condition
   const ConditionData = (cond) => {
-    return conditions.find((item) => (item.slug === cond ? cond : product?.condition));
+    return conditions.find((item) => item.slug === (cond ? cond : product?.condition));
   };
 
   const [openModal, setOpenModal] = useState(false);
 
   const handleCloseModal = (cond) => {
     setOpenModal(!openModal);
-    if (cond) setActiveCondition(ConditionData(cond));
+    if (cond) {
+      setActiveCondition(ConditionData(cond));
+    }
   };
 
   return (
@@ -197,7 +199,7 @@ const Product = ({ slug }) => {
           <MoreImagesModal medias={product.images} state={imgModal} setState={setImgModal} />
 
           {/* All Modal */}
-          <CustomModal data={ConditionData} openModal={openModal} closeModal={handleCloseModal} />
+          <CustomModal data={activeCondition} openModal={openModal} closeModal={handleCloseModal} />
           {/* End */}
           {/* Bread Crumbs Start */}
           <div className="maincontainer flex items-center py-10">
@@ -386,7 +388,7 @@ const Product = ({ slug }) => {
               </div>
 
               {/* Other Product Section */}
-              <BuyingOtherOptions slug={slug} otherProducts={buyingOptions} condition={ConditionData} handleCondition={handleCloseModal} />
+              <BuyingOtherOptions slug={slug} otherProducts={buyingOptions} defaultProduct={product} condition={ConditionData} handleCondition={handleCloseModal} />
 
               <div className="mt-10 hidden flex-col items-center justify-center gap-y-3 maxlg:flex">
                 {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
@@ -409,7 +411,7 @@ const Product = ({ slug }) => {
 
           {/* <ProductSlider /> */}
 
-          <CompareModel products={buyingOptions} condition={ConditionData} />
+          <CompareModel products={buyingOptions} condition={ConditionData} defaultProduct={product} slug={slug} />
 
           <LoopSection />
 

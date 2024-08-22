@@ -1,20 +1,70 @@
 'use client';
 import FourStar from '@/components/svgs/FourStar';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React from 'react';
 import { IoSettingsOutline } from 'react-icons/io5';
 import GasSvg from '@/components/svgs/GasSvg';
 
 const BuyingHero = ({ data }) => {
-  const aggregatedProducts = data.partproducts.reduce((acc, product) => {
-    if (!acc[product.condition]) {
-      acc[product.condition] = { ...product, count: 1 };
+  const conditions = [
+    {
+      title: 'New',
+      slug: 'new',
+      class: 'bg-dark-light-cyan',
+    },
+    {
+      title: 'New / Open Box',
+      slug: 'new-open-box',
+      class: 'bg-dark-light-cyan',
+    },
+    {
+      title: 'Certified Refurbished',
+      slug: 'certified',
+      class: 'bg-dark-cyan',
+    },
+    {
+      title: 'Used • Grade A',
+      slug: 'used-grade-a',
+      class: 'bg-[#FF9A3E]',
+    },
+    {
+      title: 'Used • Grade B',
+      slug: 'used-grade-b',
+      class: 'bg-[#FF9A3E]',
+    },
+    {
+      title: 'Used • Grade C',
+      slug: 'used-grade-c',
+      class: 'bg-[#FF9A3E]',
+    },
+    {
+      title: 'Used • Grade D',
+      slug: 'used-grade-d',
+      class: 'bg-[#FF9A3E]',
+    },
+  ];
+
+  const conditionData = (cond) => {
+    return conditions.find((item) => item.slug === cond);
+  };
+
+  // Aggregate products by condition and check for existence
+  const aggregatedProducts = conditions.reduce((acc, condition) => {
+    const matchingProducts = data.partproducts.filter((product) => product.condition === condition.slug);
+
+    if (matchingProducts.length > 0) {
+      const productWithMaxStock = matchingProducts.reduce((maxProduct, currentProduct) => (currentProduct.stock > maxProduct.stock ? currentProduct : maxProduct), matchingProducts[0]);
+
+      acc[condition.slug] = { ...productWithMaxStock, count: matchingProducts.length };
     } else {
-      acc[product.condition].count += 1;
-      if (product.sale_price < acc[product.condition].sale_price || acc[product.condition].sale_price === undefined) {
-        acc[product.condition] = { ...acc[product.condition], ...product };
-      }
+      acc[condition.slug] = {
+        ...data.product,
+        condition: condition.slug,
+        stock: 0,
+        count: 0,
+      };
     }
+
     return acc;
   }, {});
 
@@ -23,7 +73,7 @@ const BuyingHero = ({ data }) => {
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-[360px_auto] xl:grid-cols-[530px_auto] ">
       <div className="grid place-items-center">
-        <Image width={200} height={200} quality={100} src="/popular-parts.webp" priority={1} alt="Product" className="h-auto w-2/3 object-contain" />
+        <Image width={200} height={200} quality={100} src={data.product.thumbnail} priority={1} alt="Product" className="h-auto w-2/3 object-contain" />
       </div>
       <div>
         <h1 className="mb-6 line-clamp-2 text-2xl font-bold text-b18">{data.product.title}</h1>
@@ -40,17 +90,12 @@ const BuyingHero = ({ data }) => {
             productConditions.map((condition, index) => {
               const product = aggregatedProducts[condition];
               return (
-                <div className={`grid grid-cols-2 gap-x-2 gap-y-4 rounded-[20px] bg-b3/5 p-4 sm:grid-cols-6 sm:gap-4 md:p-5 ${product.stock ? '' : 'grayscale'}`} key={index}>
+                <div className={`grid grid-cols-2 gap-x-2 gap-y-4 rounded-[20px] bg-b3/5 p-4 sm:grid-cols-6 sm:gap-4 md:p-5 ${product.stock ? '' : 'pointer-events-none select-none grayscale'}`} key={index}>
                   <div className="col-span-2 flex items-center justify-between gap-2 sm:col-span-3">
-                    {product.condition === 'new' && (
-                      <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full bg-dark-blue px-3 py-1 text-xs font-semibold text-white">
-                        <FourStar />
-                        New
-                      </div>
-                    )}
-                    {product.condition === 'certified' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>}
-                    {product.condition === 'new-open-box' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-3 py-1 text-xs font-semibold text-white">New / Open Box</div>}
-                    {['used-grade-a', 'used-grade-b', 'used-grade-c', 'used-grade-d'].includes(product.condition) && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-3 py-1 text-xs font-semibold text-white">Used • Grade {product.condition.split('-').pop().toUpperCase()}</div>}
+                    <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + conditionData(product.condition).class}>
+                      {product.condition === 'new' && <FourStar />}
+                      {conditionData(product.condition).title}
+                    </div>
                     <span className="text-sm text-black">
                       <strong>{product.count}</strong> buying options
                     </span>
