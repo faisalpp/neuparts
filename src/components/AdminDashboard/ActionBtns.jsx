@@ -29,6 +29,16 @@ const ActionBtns = ({ buttons }) => {
                 </Link>
               );
             }
+            if(btn.type === 'drop-down'){
+              return (
+              <div className='flex items-center gap-2' >
+              <span className='text-lg' >Filter:</span>
+              <select className='h-10 text-sm border-2 border-gray-200 rounded-md' >
+               <option>Product Page</option>
+              </select>
+              </div>
+              )
+            }
           })
         : null}
     </div>

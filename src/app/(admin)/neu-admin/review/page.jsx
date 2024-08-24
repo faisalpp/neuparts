@@ -432,7 +432,7 @@ const Page = () => {
                   <Text text={review.name} />
                   <Text text={limitString(review.review, 200)} />
                   <Tablet text={review.rating} />
-                  <Text text={review.pages} />
+                  <Text text={review.pages} isArray={true} />
                   <Actions id={review._id} handleDelete={DeleteTeamMember} data={review} handleEdit={handleUpdatePopup} />
                 </Row>
               ))

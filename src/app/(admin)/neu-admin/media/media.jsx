@@ -20,7 +20,6 @@ const Media = () => {
     fetch('/api/media', { cache: 'no-store' })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           setMedia(data.media);
         } else {

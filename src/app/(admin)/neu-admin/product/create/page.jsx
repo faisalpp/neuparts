@@ -254,11 +254,11 @@ const Page = () => {
             </label>
             <select name="parttype" value={formData.parttype} onChange={HandleChange} className="custom-input !py-3">
               <option value="">Select Part Type</option>
-              {parttypes.map((item, index) => (
+              {/* {parttypes.map((item, index) => (
                 <option value={item._id} key={index}>
                   {item.title}
                 </option>
-              ))}
+              ))} */}
             </select>
           </div>
         </div>
