@@ -33,8 +33,11 @@ const ActionBtns = ({ buttons }) => {
               return (
               <div className='flex items-center gap-2' >
               <span className='text-lg' >Filter:</span>
-              <select className='h-10 text-sm border-2 border-gray-200 rounded-md' >
-               <option>Product Page</option>
+              <select onChange={(e)=>btn.setState(e.target.value)} className='h-10 text-sm border-2 border-gray-200 rounded-md' >
+               {btn.options.length > 0 ? 
+                btn.options.map((option,i)=><option value={option.value} key={i} >{option.name}</option>)
+                :
+               <option>No Options Found!</option>}
               </select>
               </div>
               )

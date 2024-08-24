@@ -8,13 +8,14 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
+    const type = searchParams.get('type') || '';
 
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * limit;
 
-    let query = {};
+    let query = {page:type};
 
-    const ReviewCountPromise = StaticVideos.estimatedDocumentCount(query);
+    const ReviewCountPromise = StaticVideos.countDocuments(query);
     const GetReviewsPromise = StaticVideos.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
 
     const [count, videos] = await Promise.all([ReviewCountPromise, GetReviewsPromise]);
@@ -32,48 +33,31 @@ export async function POST(request) {
 
   const ValReview = Yup.object({
     url: Yup.string().required('Url is required!'),
-    pages: Yup.array().of(Yup.string().required('Page is required!')).min(1, 'At least one page is required!'),
+    page: Yup.string().required('Page is required!')
   });
 
+  
   try {
-    const { url, pages } = await request.json();
-    await ValReview.validate({ url, pages }, { abortEarly: false });
+    const { url, page } = await request.json();
+    await ValReview.validate({ url, page }, { abortEarly: false });
+    
+    let isFound;
+    if(page != 'product-page'){
+     isFound = await StaticVideos.findOne({page:page})
+    }
 
-    const isCreated = await StaticVideos.create({
-      url,
-      pages,
-    });
-
-    if (isCreated) {
+    if(isFound){
+     const isUpdated = await StaticVideos.findByIdAndUpdate(isFound._id,{url:url})
+     if (isUpdated) {
       return NextResponse.json({ message: 'Video Created!', success: true });
+     }
+    }else{
+      const isCreated = await StaticVideos.create({url,page});
+      if (isCreated) {
+        return NextResponse.json({ message: 'Video Created!', success: true });
+      }
     }
-    return NextResponse.json({ message: 'Something Went Wrong!', success: false });
-  } catch (error) {
-    return NextResponse.json({ error: error.message, success: false }, { status: 500 });
-  }
-}
-
-export async function PUT(request) {
-  await connect();
-
-  const ValReview = Yup.object({
-    id: Yup.string().required('Review id is required!'),
-    url: Yup.string().required('Url is required!'),
-    pages: Yup.array().of(Yup.string().required('Page is required!')).min(1, 'At least one page is required!'),
-  });
-
-  try {
-    const { id, url, pages } = await request.json();
-    await ValReview.validate({ id, url, pages }, { abortEarly: false });
-
-    const isUpdated = await Review.findByIdAndUpdate(id, {
-      url,
-      pages,
-    });
-
-    if (isUpdated) {
-      return NextResponse.json({ message: 'Video Updated!', success: true });
-    }
+    
     return NextResponse.json({ message: 'Something Went Wrong!', success: false });
   } catch (error) {
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });

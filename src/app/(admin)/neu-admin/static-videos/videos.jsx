@@ -9,22 +9,21 @@ import * as Yup from 'yup';
 import MediaPopup from '@/components/AdminDashboard/MediaPopup';
 import Image from 'next/image';
 import ReactPlayer from 'react-player'
+import {IoCloseCircle} from 'react-icons/io5'
 
 const Videos = () => {
   const [mediaPopup, setMediaPopup] = useState(false);
   const [files,setFiles] = useState([])
 
   const [createPopup, setCreatePopup] = useState(false);
-  const [updatePopup, setUpdatePopup] = useState(false);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const updateFormRef = useRef(null);
 
   const [videos, setVideos] = useState([]);
-  const [rowLoader, setRowLoader] = useState(true);
   const [reRender, setReRender] = useState(false);
+  const [delLoader, setDelLoader] = useState(false);
+  const [type,setType] = useState('product-page')
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
 
   const [formData, setFormData] = useState({ id:'',url: '', pages: [] });
 
@@ -37,7 +36,7 @@ const Videos = () => {
 
   const ValReview = Yup.object({
     url: Yup.string().required('Url is required!'),
-    pages: Yup.array().of(Yup.string().required('Page is required!')).min(1, 'At least one page is required!'),
+    page: Yup.string().required('Page is required!'),
   });
 
   const CreateReview = async (e) => {
@@ -59,7 +58,7 @@ const Videos = () => {
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
-          setFormData({ id: '', url: '',pages: [] });
+          setFormData({ id: '', url: '',page: '' });
           toast.update(crtToastId, { type: 'success',render:'Video uploaded!', autoClose: 1000, isLoading: false });
           setReRender(true);
           setCreatePopup(false);
@@ -72,63 +71,7 @@ const Videos = () => {
       });
   };
 
-  const handleUpdatePopup = (data) => {
-    const { _id, name, review, rating, pages } = data;
-    setFormData({ id: _id, name: name, review: review, rating: rating, pages: pages });
-    setUpdatePopup(true);
-    setIsInitialLoad(true);
-  };
 
-  useEffect(() => {
-    if (updatePopup && isInitialLoad) {
-      formData.pages.forEach((page) => {
-        const checkbox = updateFormRef.current.querySelector(`input[name='${page}']`);
-        if (checkbox) {
-          checkbox.checked = true;
-        }
-      });
-      setIsInitialLoad(false);
-    } else if (!updatePopup) {
-      const checkboxes = updateFormRef.current.querySelectorAll("input[type='checkbox']");
-      checkboxes.forEach((checkbox) => {
-        checkbox.checked = false;
-      });
-    }
-  }, [updatePopup, formData, isInitialLoad]);
-
-  const UpValReview = Yup.object({
-    id: Yup.string().required('id is required!'),
-    url: Yup.string().required('Url is required!'),
-    pages: Yup.array().of(Yup.string().required('Page is required!')).min(1, 'At least one page is required!'),
-  });
-
-  const UpdateTeamMember = async (e) => {
-    e.preventDefault();
-
-    try {
-      await UpValReview.validate(formData, { abortEarly: false });
-    } catch (error) {
-      error?.inner?.forEach((err) => {
-        toast.error(err.message);
-      });
-      return;
-    }
-    // Show pending toast
-    const updToastId = toast.loading('Updating video Url...')
-
-    fetch('/api/admin/static-videos', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
-      .then((res) => res.json())
-      .then((resp) => {
-        if (resp.success) {
-          setReRender(true);
-          setFormData({ id: '', url: '', pages: [] });
-          setUpdatePopup(false);
-          toast.update(updToastId, { render: 'Video update successfull!', type: 'success', autoClose: 1000, isLoading: false });
-        } else {
-          toast.update(updToastId, { render: 'Something went wrong!', type: 'error', autoClose: 1000, isLoading: false });
-        }
-      });
-  };
 
   //handel empty page request
   const ManagePageCount = (id) => {
@@ -143,12 +86,13 @@ const Videos = () => {
     setPageCount(newPageCount);
   };
 
-  const DeleteTeamMember = async (id) => {
+  const DeleteVideo = async (id) => {
     if (!id) {
-      toast.error('Review id required!');
+      toast.error('Video id required!');
       return;
     }
-
+     
+    setDelLoader(true)
     // Show pending toast
     const delToastId = toast.loading('Deleting video...')
 
@@ -162,29 +106,29 @@ const Videos = () => {
         } else {
           toast.update(delToastId, { type: 'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });
         }
+        setDelLoader(false)
       })
       .catch((error) => {
         toast.update(delToastId, { type: 'error',render:'Something went wrong!', autoClose: 3000, isLoading: false });
+        setDelLoader(false)
       });
   };
 
-  const FetchReviews = async () => {
-    setRowLoader(true);
-
+  const FetchVideos = async () => {
     // Show pending toast
     const getToastId = toast.loading('Getting videos...')
 
-    fetch(`/api/admin/static-videos/?page=${page}&limit=${limit}`)
+    fetch(`/api/admin/static-videos/?page=${page}&limit=${limit}&type=${type}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.videos.length > 0) {
+          toast.update(getToastId, {type:'success', autoClose: 1000, isLoading: false });
           setPageCount(data.pagination.pageCount);
           setVideos(data.videos);
         } else {
           toast.update(getToastId, { render: 'No data found!', type:'info', autoClose: 1000, isLoading: false });
           setVideos([]);
         }
-        setRowLoader(false);
       })
       .catch((error)=>{
         toast.update(getToastId, { render: 'Something went wrong!', type:'error', autoClose: 1000, isLoading: false });
@@ -192,30 +136,22 @@ const Videos = () => {
       })
   };
 
-  // get team members data
   useEffect(() => {
-    FetchReviews();
-  }, [page]);
+    FetchVideos();
+  }, [page,type]);
 
   useEffect(() => {
     if (reRender) {
-      FetchReviews();
+      FetchVideos();
       setReRender(false);
     }
   }, [reRender]);
 
   const handlePages = (e) => {
-    const { name, checked } = e.target;
-    setFormData((prevFormData) => {
-      if (checked) {
-        return { ...prevFormData, pages: [...prevFormData.pages, name] };
-      } else {
-        return {
-          ...prevFormData,
-          pages: prevFormData.pages.filter((page) => page !== name),
-        };
-      }
-    });
+    const { checked,title } = e.target;
+    if (checked) {
+    setFormData({ ...formData, page: title });
+    }
   };
 
   return (
@@ -241,87 +177,24 @@ const Videos = () => {
               </label>
               <div className="mt-2 flex flex-wrap gap-2">
                 <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="product-page" />
+                  <input onChange={(e) => handlePages(e)} type="radio" name="page" title="product-page" />
                   <span className="text-sm">Product Page</span>
                 </div>
                 <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="our-story" />
+                  <input onChange={(e) => handlePages(e)} type="radio" name="page" title="our-story" />
                   <span className="text-sm">Our Story</span>
                 </div>
                 <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="our-companies" />
+                  <input onChange={(e) => handlePages(e)} type="radio" name="page" title="our-companies" />
                   <span className="text-sm">Our Companies</span>
                 </div>
                 <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="our-showroom" />
+                  <input onChange={(e) => handlePages(e)} type="radio" name="page" title="our-showroom" />
                   <span className="text-sm">Our Showroom</span>
                 </div>
                 <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="faqs" />
+                  <input onChange={(e) => handlePages(e)} type="radio" name="page" title="faqs" />
                   <span className="text-sm">Faq&quot;s</span>
-                </div>
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="help-appliance-tips" />
-                  <span className="text-sm">Helpful Appliance Tips</span>
-                </div>
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="all" />
-                  <span className="text-sm">All</span>
-                </div>
-              </div>
-            </div>
-            <button className="text-md mt-3 w-fit transform self-center rounded-lg bg-blue-600 px-6 py-3 font-medium capitalize tracking-wide text-white transition-colors duration-300 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">Submit</button>
-          </div>
-        </form>
-      </Popup>
-
-      <Popup state={updatePopup} setState={setUpdatePopup}>
-        <form ref={updateFormRef} onSubmit={UpdateTeamMember} className="mx-10 flex w-full flex-col">
-          <h1 className="text-center text-xl font-semibold">Upload Static Video</h1>
-          <div className="flex flex-col gap-3 py-10">
-          <div>
-              <label htmlFor="role" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-                Video
-              </label>
-              <div className="flex rounded-md border border-gray-500 px-3 py-2">
-                <input readOnly name="avatar" value={formData.url} type="text" placeholder="Select Single File" className="block w-6/12 w-full rounded-lg bg-gray-500 bg-white px-5 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:placeholder-gray-500" />
-                <button type="button" onClick={() => setMediaPopup(true)} className="rounded-md bg-b4 px-4 py-1 text-white">
-                  Select
-                </button>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="pages" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-                Pages
-              </label>
-              <div className="mt-2 flex flex-wrap gap-2">
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="product-page" />
-                  <span className="text-sm">Product Page</span>
-                </div>
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="our-story" />
-                  <span className="text-sm">Our Story</span>
-                </div>
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="our-companies" />
-                  <span className="text-sm">Our Companies</span>
-                </div>
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="our-showroom" />
-                  <span className="text-sm">Our Showroom</span>
-                </div>
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="faqs" />
-                  <span className="text-sm">Faq&quot;s</span>
-                </div>
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="help-appliance-tips" />
-                  <span className="text-sm">Helpful Appliance Tips</span>
-                </div>
-                <div className="flex gap-2">
-                  <input onChange={(e) => handlePages(e)} type="checkbox" name="all" />
-                  <span className="text-sm">All</span>
                 </div>
               </div>
             </div>
@@ -332,15 +205,15 @@ const Videos = () => {
 
       <MediaPopup state={mediaPopup} setState={setMediaPopup} files={files} setFiles={setFiles} isMultiple={false} />
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'trigger', trigger:()=>{setCreatePopup(true)}, text: 'Upload' },{type:'drop-down'}]} />
+        <ActionBtns buttons={[{ type: 'trigger', trigger:()=>{setCreatePopup(true)}, text: 'Upload' },{type:'drop-down',setState:setType,options:[{name:'Product Page',value:'product-page'},{name:'Our Story',value:'our-story'},{name:'Our Companies',value:'our-companies'},{name:'Our Showroom',value:'our-showroom'},{name:'Faqs',value:'faqs'}]}]} />
         <div className="mt-10 flex h-full w-full flex-col px-5 py-5 shadow-xl border-2 rounded-md">
          <div className='flex flex-wrap gap-5 h-auto' >
           {videos.length > 0 ? 
             videos.map((video,i)=>(
                 <div key={i} className="relative">
-                {/* <IoCloseCircle onClick={()=>DeleteImage(image._id)} className="absolute right-1 top-1 rounded-full bg-white text-lg text-red-400" /> */}
-                {/* {delLoader === image._id ? <Image height={150} width={150} src='/del-loader.gif' className="absolute h-28 w-32 rounded-md border-2 px-2 py-2 cursor-pointer" /> : null} */}
-                <ReactPlayer url={video.url} width={100} />
+                <IoCloseCircle onClick={()=>DeleteVideo(video._id)} className="absolute right-1 top-1 rounded-full bg-white text-lg text-red-400" />
+                {delLoader === video._id ? <Image height={150} width={150} src='/del-loader.gif' className="absolute h-full w-64 rounded-md px-2 py-2 cursor-pointer" /> : null}
+                <ReactPlayer url={video.url} width={180} height={130} />
               </div>
              ) ):null}
         </div>

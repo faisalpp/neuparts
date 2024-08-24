@@ -40,8 +40,8 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
-  await connect();
   try {
+    await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
 

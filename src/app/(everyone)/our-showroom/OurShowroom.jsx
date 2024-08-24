@@ -6,10 +6,10 @@ import { RiArrowDropRightLine } from 'react-icons/ri';
 import SatisfiedSection from '@/components/SatisfiedSection';
 import MassiveAppliance from '@/components/OurStory/MassiveAppliance';
 import NewsLetterSection from '@/components/NewsLetterSection';
-import Iframe from '@/components/Reusable/Ifram';
+import VideoSection from '@/components/VideoSection'
 
 const OurShowroom = () => {
-  const [video, setVideo] = useState({ url: 'https://www.youtube.com/embed/WQWVW4DUmZ0', type: 'iframe', thumbnail: '/g8.webp' });
+
 
   return (
     <>
@@ -27,10 +27,7 @@ const OurShowroom = () => {
       </div>
 
       {/* Video Section */}
-      <div className="mx-auto w-full 3xl:max-w-1680px">
-        {video && video.type === 'iframe' ? <Iframe icon="text-8xl" thumbnail={video.thumbnail} thumbRounded="false" divId={`our-show-room-${video.type}`} frameId="showroom-section-video" style="w-full h-[250px] md:h-[700px] 2xl:h-[920px]" src={video.url} title="Introducing our Next Generation of High End Kitchen Appliances | Miele" /> : null}
-        {video && video.type !== 'iframe' ? <video controls autoPlay className="h-[250px] w-full object-cover md:h-[700px] 2xl:h-[920px]" src={video.url} /> : null}
-      </div>
+      <VideoSection type='our-showroom' />
 
       <MassiveAppliance title="Shop Massive Discount Appliances" sliderstyle="mx-2 3xl:mx-5" />
       {/* Shop Austin Section */}
