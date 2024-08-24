@@ -14,10 +14,18 @@ export async function GET(request) {
     if (!product) {
       return NextResponse.json({ success: false });
     }
-    const partproducts = await Product.find({
-      model_no: product.model_no,
+    // const partproducts = await Product.find({
+    //   part_number: product.part_number,
+    //   _id: { $ne: product._id },
+    // }).populate('category');
+    let partproducts = await Product.find({
       _id: { $ne: product._id },
-    }).populate('category');
+    }).populate({
+      path: 'category',
+      match: { slug: product.category.slug },
+    });
+
+    partproducts = partproducts.filter((product) => product.category !== null);
 
     const buyingOptions = await Product.find({
       part_number: product.part_number,

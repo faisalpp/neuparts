@@ -7,7 +7,6 @@ const ProductSchema = new mongoose.Schema(
     sale_price: { type: Number, required: true },
     part_number: { type: String, required: true },
     is_sale: { type: Boolean, required: true },
-    model_no: { type: String, required: true },
     condition: { type: String, required: true },
     type: { type: String, required: true },
     category: {
@@ -17,6 +16,10 @@ const ProductSchema = new mongoose.Schema(
     parttype: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ProductTyoe',
+    },
+    subcategory: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'SubCategpry',
     },
     stock: { type: Number, required: true },
     images: { type: Array },

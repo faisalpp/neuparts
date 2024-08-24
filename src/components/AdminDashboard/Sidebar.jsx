@@ -9,9 +9,9 @@ import { GiAutoRepair, GiWashingMachine } from 'react-icons/gi';
 import { FaBlogger } from 'react-icons/fa';
 import { MdTipsAndUpdates, MdLiveHelp } from 'react-icons/md';
 import { BiCategory } from 'react-icons/bi';
-import { FaImages } from "react-icons/fa";
-import { BiSolidVideos } from "react-icons/bi";
-import { LuBoxes } from "react-icons/lu";
+import { FaImages } from 'react-icons/fa';
+import { BiSolidVideos } from 'react-icons/bi';
+import { LuBoxes } from 'react-icons/lu';
 import Logout from '@/components/AdminDashboard/Logout';
 
 const Sidebar = () => {
@@ -51,11 +51,11 @@ const Sidebar = () => {
               <span className="mx-2 text-sm font-semibold">Media</span>
             </Link>
             <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/home-gallery">
-              <FaImages/>
+              <FaImages />
               <span className="mx-2 text-sm font-semibold">Home Gallery</span>
             </Link>
             <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/static-videos">
-              <BiSolidVideos/>
+              <BiSolidVideos />
               <span className="mx-2 text-sm font-semibold">Static Videos</span>
             </Link>
             <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/review">
@@ -63,7 +63,7 @@ const Sidebar = () => {
               <span className="mx-2 text-sm font-semibold">Reviews</span>
             </Link>
             <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
-              <LuBoxes/>
+              <LuBoxes />
               <span className="mx-2 text-sm font-semibold">Orders</span>
             </Link>
           </div>
@@ -92,6 +92,10 @@ const Sidebar = () => {
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/sub-category">
                   <BiCategory />
                   <span className="mx-2 text-sm font-semibold">Manage Sub Categories</span>
+                </Link>
+                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/parttype">
+                  <BiCategory />
+                  <span className="mx-2 text-sm font-semibold">Manage Part Type</span>
                 </Link>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
-import SubCategory from '@/models/subcategory';
+import ProductTyoe from '@/models/producttype';
 import { generateSlug } from '@/utils/index';
 
 export async function POST(request) {
@@ -12,18 +12,18 @@ export async function POST(request) {
     let slug = generateSlug(res.title);
     const regex = new RegExp(`^${slug}-\\d+$`);
 
-    const blogCount = await SubCategory.countDocuments({ slug: regex });
+    const blogCount = await ProductTyoe.countDocuments({ slug: regex });
     if (blogCount > 0) {
       let inc = parseInt(blogCount) + 1;
       slug = slug + `-${inc}`;
     }
 
-    const exactMatch = await SubCategory.countDocuments({ slug: slug });
+    const exactMatch = await ProductTyoe.countDocuments({ slug: slug });
     if (exactMatch) {
       slug = slug + `-1`;
     }
 
-    const isCreated = await SubCategory.create({ ...res, slug: slug });
+    const isCreated = await ProductTyoe.create({ ...res, slug: slug });
 
     if (isCreated) {
       return NextResponse.json({ message: 'Part Type Created!', success: true });
@@ -47,15 +47,15 @@ export async function GET(request) {
 
     let query = {};
 
-    const ReviewCountPromise = SubCategory.estimatedDocumentCount(query);
-    const GetSubCategoryPromise = SubCategory.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
+    const ReviewCountPromise = ProductTyoe.estimatedDocumentCount(query);
+    const GetSubCategoryPromise = ProductTyoe.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
 
-    const [count, subcategories] = await Promise.all([ReviewCountPromise, GetSubCategoryPromise]);
+    const [count, producttypes] = await Promise.all([ReviewCountPromise, GetSubCategoryPromise]);
 
     const pageCount = Math.ceil(count / limit);
 
     // const products = await Product.find({});
-    return NextResponse.json({ subcategories, pagination: { pageCount, count }, success: true });
+    return NextResponse.json({ producttypes, pagination: { pageCount, count }, success: true });
   } catch (error) {
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
@@ -70,7 +70,7 @@ export async function DELETE(request) {
       return NextResponse.json({ message: 'Part Type id required!', success: false });
     }
 
-    const isDeleted = await SubCategory.findByIdAndDelete(id);
+    const isDeleted = await ProductTyoe.findByIdAndDelete(id);
     if (isDeleted) {
       return NextResponse.json({ message: 'Part Type Deleted!', success: true });
     }
@@ -89,7 +89,7 @@ export async function PUT(request) {
       return NextResponse.json({ message: 'Part Type id required!', success: false });
     }
 
-    const isUpdated = await SubCategory.findByIdAndUpdate(id, res);
+    const isUpdated = await ProductTyoe.findByIdAndUpdate(id, res);
     if (isUpdated) {
       return NextResponse.json({ message: 'Category Updated!', success: true });
     }

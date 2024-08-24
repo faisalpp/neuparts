@@ -18,6 +18,7 @@ const Page = ({ params }) => {
 
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
+    thumbnail: Yup.string().required('Thumbnail is required!'),
   });
 
   const HandleChange = (e) => {
@@ -26,7 +27,7 @@ const Page = ({ params }) => {
   };
 
   const GetCategory = async () => {
-    const res = await fetch('/api/admin/product/sub-category/edit?id=' + id);
+    const res = await fetch('/api/admin/product/parttype/edit?id=' + id);
     const data = await res.json();
     setFormData(data);
   };
@@ -59,7 +60,7 @@ const Page = ({ params }) => {
       }
     );
     toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
-    fetch('/api/admin/product/sub-category', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
+    fetch('/api/admin/product/parttype', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {

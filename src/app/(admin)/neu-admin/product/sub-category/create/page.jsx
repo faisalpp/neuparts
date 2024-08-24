@@ -17,7 +17,6 @@ const Page = () => {
 
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
-    thumbnail: Yup.string().required('Thumbnail is required!'),
   });
 
   const HandleChange = (e) => {
@@ -55,7 +54,7 @@ const Page = () => {
         resp;
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
-          router.push('/neu-admin/blogs/general');
+          router.push('/neu-admin/product/sub-category');
         } else {
           toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
         }

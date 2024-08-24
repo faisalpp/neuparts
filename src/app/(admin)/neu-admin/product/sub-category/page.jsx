@@ -49,6 +49,7 @@ const Page = () => {
         if (resp.success) {
           ManagePageCount(id);
           setReRender(true);
+          FetchCategory();
           toast.update(delToastId, { render: resp.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
         } else {
           toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
@@ -67,7 +68,7 @@ const Page = () => {
       .then((data) => {
         if (data.success) {
           setPageCount(data.pagination.pageCount);
-          setCategories(data.producttypes);
+          setCategories(data.subcategories);
         } else {
           setCategories([]);
         }

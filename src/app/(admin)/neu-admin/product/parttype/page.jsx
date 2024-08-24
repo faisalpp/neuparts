@@ -13,16 +13,16 @@ import ActionBtns from '@/components/AdminDashboard/ActionBtns';
 import TableNav from '@/components/AdminDashboard/TableNav';
 
 const Page = () => {
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [rowLoader, setRowLoader] = useState(true);
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
 
-  const DeleteProduct = async (id) => {
+  const DeleteCategory = async (id) => {
     if (!id) {
-      toast.error('Product id required!');
+      toast.error('Sub Category id required!');
       return;
     }
 
@@ -33,9 +33,9 @@ const Page = () => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Deleting Product...', // Show pending message
-        success: 'Product deleted successfully!', // Show success message
-        error: 'Failed to delete product', // Show error message
+        pending: 'Deleting Sun Category...', // Show pending message
+        success: 'Sun Category deleted successfully!', // Show success message
+        error: 'Failed to delete sun category', // Show error message
         closeOnClick: false,
         closeOnEscape: false,
       }
@@ -43,13 +43,12 @@ const Page = () => {
 
     toast.update(delToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
 
-    fetch('/api/admin/product', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
+    await fetch('/api/admin/product/parttype', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
           ManagePageCount(id);
           setReRender(true);
-          FetchBlogs();
           toast.update(delToastId, { render: resp.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
         } else {
           toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
@@ -60,16 +59,17 @@ const Page = () => {
       });
   };
 
-  const FetchBlogs = async () => {
+  const FetchCategory = async () => {
     setRowLoader(true);
-    fetch(`/api/admin/product?page=${page}&limit=${limit}`)
+
+    await fetch(`/api/admin/product/parttype?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.products.length > 0) {
+        if (data.success) {
           setPageCount(data.pagination.pageCount);
-          setProducts(data.products);
+          setCategories(data.producttypes);
         } else {
-          setProducts([]);
+          setCategories([]);
         }
         setRowLoader(false);
       });
@@ -77,33 +77,32 @@ const Page = () => {
 
   // get team members data
   useEffect(() => {
-    FetchBlogs();
+    FetchCategory();
   }, [page]);
 
-  useEffect(() => {
-    if (reRender) {
-      FetchBlogs();
-      setReRender(false);
-    }
-  }, [reRender]);
+  // useEffect(() => {
+  //   if (reRender) {
+  //     FetchCategory();
+  //     setReRender(false);
+  //   }
+  // }, [reRender]);
 
   return (
     <>
-      <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'link', text: 'Add Product', link: '/neu-admin/product/create' }]} />
+      <div className="mx-10 flex flex-col">
+        <ActionBtns buttons={[{ type: 'link', text: 'Add Part Type', link: '/neu-admin/product/parttype/create' }]} />
         <div className="flex h-full w-full flex-col items-center">
-          <Table header={['Thumbnail', 'Product Title', 'Slug', 'Category', 'Actions']}>
+          <Table header={['Thumbnail', 'Product Title', 'Slug', 'Actions']}>
             {/* hello pengea/dnd */}
             {rowLoader ? (
               <RowLoader count={5} />
-            ) : products?.length > 0 ? (
-              products.map((product, i) => (
+            ) : categories?.length > 0 ? (
+              categories.map((category, i) => (
                 <Row Key={i}>
-                  <TdImage src={product.thumbnail} css="w-20 h-14 object-fit rounded" />
-                  <Text text={product.title} />
-                  <Text text={product.slug} />
-                  <Text text={product.category?.title} />
-                  <Actions id={product._id} handleDelete={DeleteProduct} data={product} isEditLink={true} editLink={`/neu-admin/product/edit/${product._id}`} />
+                  <TdImage src={category.thumbnail} css="w-20 h-14 object-fit rounded" />
+                  <Text text={category.title} />
+                  <Text text={category.slug} />
+                  <Actions id={category._id} handleDelete={DeleteCategory} data={category} isEditLink={true} editLink={`/neu-admin/product/parttype/edit/${category._id}`} />
                 </Row>
               ))
             ) : (

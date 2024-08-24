@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const Page = () => {
   const [mediaPopup, setMediaPopup] = useState(false);
-  const [formData, setFormData] = useState({ title: '', thumbnail: '', isvisible: 1 });
+  const [formData, setFormData] = useState({ title: '', model_no: '', thumbnail: '', description: '', isvisible: 1 });
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
@@ -17,6 +17,7 @@ const Page = () => {
 
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
+    model_no: Yup.string().required('Model No. is required!'),
     thumbnail: Yup.string().required('Thumbnail is required!'),
     isvisible: Yup.number().required('Visibility is required!'),
   });
@@ -70,12 +71,24 @@ const Page = () => {
     <div className="p-5">
       <MediaPopup state={mediaPopup} setState={setMediaPopup} files={files} setFiles={setFiles} />
       <h2 className="text-3xl font-semibold">Create Category</h2>
-      <form action={CreateCategory} className="mt-4 space-y-4">
+      <form action={CreateCategory} className="mt-4 grid grid-cols-2 gap-4">
         <div>
           <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
             Title
           </label>
           <input name="title" value={formData.title} onChange={HandleChange} type="text" className="custom-input" />
+        </div>
+        <div>
+          <label htmlFor="model_no" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+            Model No
+          </label>
+          <input name="model_no" value={formData.model_no} onChange={HandleChange} type="text" className="custom-input" />
+        </div>
+        <div className="col-span-2">
+          <label htmlFor="description" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+            Description
+          </label>
+          <textarea name="description" value={formData.description} onChange={HandleChange} type="text" id="description" className="custom-input"></textarea>
         </div>
         <div>
           <label htmlFor="thumbnail" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
