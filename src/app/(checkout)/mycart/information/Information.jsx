@@ -115,7 +115,7 @@ const Information = () => {
         <h3 className="text-sm font-medium text-b16">Delivery method</h3>
         <div className="mt-14px rounded-md border border-b31 [&>*:last-child]:border-0 [&>*]:border-b [&>*]:border-b31">
         <DeliveryRadio name="delivery_method" id="Shipping" icon="shipment.png" title="Ship" checked={shippingMethod === 'Shipping'} onChange={handleOptionChange}/>
-        <DeliveryRadio name="delivery_method" id="Pickup" icon="pick-up.png" title="Pick up" checked={shippingMethod === 'Pickup'} onChange={handleOptionChange}/>
+        <DeliveryRadio name="delivery_method" id="Pickup" icon="pick-up.png" title="Pickup" checked={shippingMethod === 'Pickup'} onChange={handleOptionChange}/>
           </div>
       </div>
       {/* Shipping */}

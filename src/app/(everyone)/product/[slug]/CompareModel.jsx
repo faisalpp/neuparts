@@ -6,7 +6,7 @@ import FourStar from '@/components/svgs/FourStar';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import Link from 'next/link';
 import { BsArrowRightShort } from 'react-icons/bs';
-import { useSearchParams } from 'next/navigation';
+
 
 const CompareModel = ({ products, condition, defaultProduct, slug }) => {
   const conditions = ['new', 'new-open-box', 'certified', 'used-grade-a', 'used-grade-b', 'used-grade-c', 'used-grade-d'];
@@ -101,12 +101,13 @@ const CompareModel = ({ products, condition, defaultProduct, slug }) => {
           </table>
         </div>
       </div>
+      {filteredProducts.length > 0 ? 
       <div className="mt-10 flex justify-center md:mt-16">
         <Link href={`/product/${slug}/buying-options`} className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
           <span className="text-xs md:text-sm xl:text-base">View More</span>
           <BsArrowRightShort className="text-2xl" />
         </Link>
-      </div>
+      </div>:null}
     </div>
   );
 };

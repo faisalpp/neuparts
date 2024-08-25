@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 const Shipping = () => {
 
   const order = useSelector((state)=>state.order.orderInfo)
+ 
+  const detail = `${order.address} ${order.appartment}, ${order.city} ${order.province}, ${order.country}`
 
   return (
     <>
@@ -24,7 +26,7 @@ const Shipping = () => {
       <div className="flex flex-col gap-3 rounded-md border border-b31 p-3">
         <ReviewDetail title="Contact" detail={order.email} />
         <hr />
-        <ReviewDetail title="Ship to" detail="151 O’Connor St Ground floor, Ottawa ON K2P 2L8, Canada" />
+        <ReviewDetail title="Ship to" detail={detail} />
       </div>
 
       {/* Shipping Method */}
