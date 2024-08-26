@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiQuestionFill } from 'react-icons/ri';
 import LeftArrowSvg from '@/components/svgs/LeftArrowSvg';
 import CustomInput from '@/components/Reusable/CustomInput';
@@ -11,13 +11,17 @@ import RadioSvg from '@/components/svgs/RadioSvg';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { setOrderInfo } from '@/app/GlobalRedux/slices/OrderSlice';
+import {calcShipping,setShippingStatus} from '@/app/GlobalRedux/slices/CartSlice'
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup'
 import { toast } from 'react-toastify';
+import { BiLoaderAlt } from "react-icons/bi";
 
 const Information = () => {
   const dispatch = useDispatch()
   const router = useRouter()
+
+  const [zipLoader,setZipLoader] = useState(false)
 
   const [email,setEmail] = useState('')
   const [keepUpdates,setKeepUpdates] = useState(false)
@@ -31,7 +35,7 @@ const Information = () => {
   const [postalCode,setPostalCode] = useState('')
   const [phone,setPhone] = useState('')
   const [saveAddress,setSaveAddress] = useState(false)
-  const [shippingMethod,setShippingMethod] = useState('Shipping')
+  const [shippingMethod,setShippingMethod] = useState({method:'Pickup',rate:'Free'})
 
   const Countrys = [{name:'US',value:'US'}];
   const Provinces = [{name:'Alberta',value:'Alberta'}];
@@ -47,9 +51,35 @@ const Information = () => {
     }
    }
 
-   const handleOptionChange = (event) => {
-    setShippingMethod(event.target.id);
+   const GetShippingFare = async () => {
+     setZipLoader(true)
+     fetch(`/api/check-zipcode/shipping?zip=${postalCode}`)
+     .then((res)=>res.json())
+     .then((data)=>{
+      setZipLoader(false)
+      dispatch(calcShipping({method:'Shipping',rate:data.data.location.rate}))
+     })
+     .catch((error)=>{
+      setZipLoader(false)
+      dispatch(setShippingStatus())
+      toast.error('Zip Code not applicable for shipping!')
+     })
+    }
+
+   const handleOptionChange = async (event) => {
+    if(event.target.id === 'Shipping'){
+      setShippingMethod({method:'Shipping',rate:'Free'});
+    }else{
+      setShippingMethod({method:'Pickup',rate:'Free'});
+    }
    };
+
+   useEffect(() => {
+    if(postalCode.length >= 5 && shippingMethod.method === 'Shipping'){
+      GetShippingFare()
+    }
+   }, [postalCode])
+   
 
    const orderValidationSchema = Yup.object().shape({
     email: Yup.string().required('Email is Required!'),
@@ -114,8 +144,8 @@ const Information = () => {
       <div className="my-8 space-y-14px">
         <h3 className="text-sm font-medium text-b16">Delivery method</h3>
         <div className="mt-14px rounded-md border border-b31 [&>*:last-child]:border-0 [&>*]:border-b [&>*]:border-b31">
-        <DeliveryRadio name="delivery_method" id="Shipping" icon="shipment.png" title="Ship" checked={shippingMethod === 'Shipping'} onChange={handleOptionChange}/>
-        <DeliveryRadio name="delivery_method" id="Pickup" icon="pick-up.png" title="Pickup" checked={shippingMethod === 'Pickup'} onChange={handleOptionChange}/>
+        <DeliveryRadio name="delivery_method" id="Shipping" icon="shipment.png" title="Ship" checked={shippingMethod.method === 'Shipping'} onChange={handleOptionChange}/>
+        <DeliveryRadio name="delivery_method" id="Pickup" icon="pick-up.png" title="Pickup" checked={shippingMethod.method === 'Pickup'} onChange={handleOptionChange} />
           </div>
       </div>
       {/* Shipping */}
@@ -131,7 +161,8 @@ const Information = () => {
             <div className="grid grid-cols-2 gap-14px md:grid-cols-3">
               <CustomSelect setState={setCountry} id="country_region" label="Country / region" Options={Countrys} />
               <CustomSelect setState={setProvince} id="province" label="Province" Options={Provinces} />
-              <div className="col-span-2 md:col-span-1 [&>*]:h-full">
+              <div className="relative col-span-2 md:col-span-1 [&>*]:h-full">
+                {zipLoader ? <BiLoaderAlt className='absolute right-5 animate-spin text-red-500 z-10 ' /> : null }
                 <CustomInput state={postalCode} setState={setPostalCode} colorStyle="border-b31 placeholder:text-b25  md:h-full" placeholder="Postal Code" type="number" />
               </div>
             </div>

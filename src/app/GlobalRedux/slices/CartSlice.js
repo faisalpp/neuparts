@@ -7,6 +7,7 @@ const initialState = {
   items:[],  
   sCart:false,
   cartId:null,
+  shippingMethod:{method:'Pickup',rate:'Free',status:true},
   cartCount:0,
   cartSubTotal:0.00,
   cartVat:0.00,
@@ -75,6 +76,34 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
       },
       hideCart: (state, action) => {
         state.sCart = false 
+      },
+      setShippingStatus: (state,action) => {
+        state.shippingMethod = {status:false}
+      },
+      calcShipping: (state,action) => {
+       const {method,rate} = action.payload
+       state.shippingMethod = action.payload
+       if(rate != 'Free'){
+       state.cartCount = 0;
+       state.cartSubTotal= 0;
+       if(cart.items.length > 0){
+        cart.items.forEach((cat)=>{
+         if(cat.items.length > 0){
+          cat.items.forEach((it)=>{
+           let tmpQuantity = 0;
+           tmpQuantity += it.quantity 
+           state.cartCount = tmpQuantity
+           let price = it.is_sale ? it.sale_price : it.regular_price
+           let subTotal = state.cartSubTotal + (price * tmpQuantity)
+           subTotal += rate
+           state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+           state.cartVat = (subTotal * (10/100))
+           state.cartGrandTotal = subTotal + state.cartVat
+          })
+         }
+        })
+        }
+       }
       }
     },
     extraReducers: (builder) => {
@@ -160,6 +189,6 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
     
   });
   
-  export const { toggleCart,hideCart,resetCart } = cartSlice.actions;
+  export const { toggleCart,hideCart,resetCart,calcShipping,setShippingStatus } = cartSlice.actions;
   
   export default cartSlice.reducer;

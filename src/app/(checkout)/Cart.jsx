@@ -10,6 +10,7 @@ const Cart = () => {
 
  const cart = useSelector((state)=>state.cart.items)
  const subTotal = useSelector((state)=>state.cart.cartSubTotal)
+ const shipping = useSelector((state)=>state.cart.shippingMethod)
  const Vat = useSelector((state)=>state.cart.cartVat)
  const grandTotal = useSelector((state)=>state.cart.cartGrandTotal)
  
@@ -39,7 +40,11 @@ const Cart = () => {
             </div>
             <div className="flex justify-between">
               <span className="text-b32">Shipping</span>
-              <span className="font-medium text-b25">*Calculated at next step</span>
+              {shipping?.method === 'Shipping' ? 
+               <span className="font-medium text-b25">${`${shipping.rate}`}</span>
+               : shipping?.method === 'Pickup' ? <span className="font-medium text-b25">Free</span> :
+                <span className="font-medium text-b25">*Calculated at next step</span>
+              } 
             </div>
             <div className="flex justify-between">
               <span className="text-b32">Taxes</span>
