@@ -11,7 +11,7 @@ import RadioSvg from '@/components/svgs/RadioSvg';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import { setOrderInfo } from '@/app/GlobalRedux/slices/OrderSlice';
-import {calcShipping,setShippingStatus} from '@/app/GlobalRedux/slices/CartSlice'
+import {calcShipping} from '@/app/GlobalRedux/slices/CartSlice'
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup'
 import { toast } from 'react-toastify';
@@ -35,10 +35,14 @@ const Information = () => {
   const [postalCode,setPostalCode] = useState('')
   const [phone,setPhone] = useState('')
   const [saveAddress,setSaveAddress] = useState(false)
-  const [shippingMethod,setShippingMethod] = useState({method:'Pickup',rate:'Free'})
+  const [shippingMethod,setShippingMethod] = useState('Pickup')
 
   const Countrys = [{name:'US',value:'US'}];
   const Provinces = [{name:'Alberta',value:'Alberta'}];
+
+  useEffect(()=>{
+    dispatch(calcShipping({method:shippingMethod,rate:'Free'}))
+  },[])
 
    
   const handleCheckbox = (e) => {
@@ -53,29 +57,36 @@ const Information = () => {
 
    const GetShippingFare = async () => {
      setZipLoader(true)
+     setShippingMethod('Shipping')
      fetch(`/api/check-zipcode/shipping?zip=${postalCode}`)
      .then((res)=>res.json())
      .then((data)=>{
       setZipLoader(false)
+      setShippingMethod('Shipping')
       dispatch(calcShipping({method:'Shipping',rate:data.data.location.rate}))
      })
      .catch((error)=>{
       setZipLoader(false)
-      dispatch(setShippingStatus())
+      dispatch(calcShipping({method:'Shipping',rate:'N/A'}))
       toast.error('Zip Code not applicable for shipping!')
      })
     }
 
-   const handleOptionChange = async (event) => {
+   const handleOptionChange = (event) => {
     if(event.target.id === 'Shipping'){
-      setShippingMethod({method:'Shipping',rate:'Free'});
+     if(postalCode.length >= 5){
+       GetShippingFare()
+     }else{
+      toast.error('Postal Code must have exactly 5 digits!')
+     }
     }else{
-      setShippingMethod({method:'Pickup',rate:'Free'});
+      dispatch(calcShipping({method:event.target.id,rate:'Free'}))
+      setShippingMethod(event.target.id);
     }
    };
 
    useEffect(() => {
-    if(postalCode.length >= 5 && shippingMethod.method === 'Shipping'){
+    if(postalCode.length >= 5 && shippingMethod === 'Shipping'){
       GetShippingFare()
     }
    }, [postalCode])
@@ -96,9 +107,9 @@ const Information = () => {
 
    const Submit = async () => {
     try{
-      const obj = { email:email, keepUpdates:keepUpdates,firstName:firstName,lastName:lastName,address:address,appartment:appartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress,shippingMethod:shippingMethod}
-      await orderValidationSchema.validate(obj, { abortEarly: false }); 
-      dispatch(setOrderInfo(obj))
+      const shippingAddr = { email:email, keepUpdates:keepUpdates,firstName:firstName,lastName:lastName,address:address,appartment:appartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress,shippingMethod:shippingMethod}
+      await orderValidationSchema.validate(shippingAddr, { abortEarly: false }); 
+      dispatch(setOrderInfo({shippingAddress:shippingAddr}))
       router.push('/mycart/shipping')
    }catch(error){ 
       if (error) {
@@ -144,8 +155,8 @@ const Information = () => {
       <div className="my-8 space-y-14px">
         <h3 className="text-sm font-medium text-b16">Delivery method</h3>
         <div className="mt-14px rounded-md border border-b31 [&>*:last-child]:border-0 [&>*]:border-b [&>*]:border-b31">
-        <DeliveryRadio name="delivery_method" id="Shipping" icon="shipment.png" title="Ship" checked={shippingMethod.method === 'Shipping'} onChange={handleOptionChange}/>
-        <DeliveryRadio name="delivery_method" id="Pickup" icon="pick-up.png" title="Pickup" checked={shippingMethod.method === 'Pickup'} onChange={handleOptionChange} />
+        <DeliveryRadio name="delivery_method" id="Shipping" icon="shipment.png" title="Ship" checked={shippingMethod === 'Shipping'} onChange={handleOptionChange}/>
+        <DeliveryRadio name="delivery_method" id="Pickup" icon="pick-up.png" title="Pickup" checked={shippingMethod === 'Pickup'} onChange={handleOptionChange} />
           </div>
       </div>
       {/* Shipping */}

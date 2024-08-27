@@ -38,14 +38,14 @@ const Cart = () => {
               <span className="text-b32">Subtotal</span>
               <span className="font-medium text-b16">${subTotal}</span>
             </div>
-            <div className="flex justify-between">
+            {shipping.method === 'Shipping' ? <div className="flex justify-between">
               <span className="text-b32">Shipping</span>
-              {shipping?.method === 'Shipping' ? 
-               <span className="font-medium text-b25">${`${shipping.rate}`}</span>
-               : shipping?.method === 'Pickup' ? <span className="font-medium text-b25">Free</span> :
+              {shipping.method === 'Shipping' ? 
+               <span className="font-medium text-b16">{shipping.rate != 'N/A' ? '$' : ''}{shipping.rate}</span>
+               :
                 <span className="font-medium text-b25">*Calculated at next step</span>
               } 
-            </div>
+            </div>:null}
             <div className="flex justify-between">
               <span className="text-b32">Taxes</span>
               <span className="font-medium text-b16">${Vat}</span>

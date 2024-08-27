@@ -7,7 +7,7 @@ const initialState = {
   items:[],  
   sCart:false,
   cartId:null,
-  shippingMethod:{method:'Pickup',rate:'Free',status:true},
+  shippingMethod:{method:'Pickup',rate:'Free'},
   cartCount:0,
   cartSubTotal:0.00,
   cartVat:0.00,
@@ -83,27 +83,27 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
       calcShipping: (state,action) => {
        const {method,rate} = action.payload
        state.shippingMethod = action.payload
-       if(rate != 'Free'){
-       state.cartCount = 0;
-       state.cartSubTotal= 0;
-       if(cart.items.length > 0){
-        cart.items.forEach((cat)=>{
-         if(cat.items.length > 0){
-          cat.items.forEach((it)=>{
-           let tmpQuantity = 0;
-           tmpQuantity += it.quantity 
-           state.cartCount = tmpQuantity
-           let price = it.is_sale ? it.sale_price : it.regular_price
-           let subTotal = state.cartSubTotal + (price * tmpQuantity)
-           subTotal += rate
-           state.cartSubTotal = parseFloat(subTotal.toFixed(2))
-           state.cartVat = (subTotal * (10/100))
-           state.cartGrandTotal = subTotal + state.cartVat
-          })
-         }
-        })
+        state.cartCount = 0;
+        state.cartSubTotal= 0;
+        if(state.items.length > 0){
+         state.items.forEach((cat)=>{
+          if(cat.items.length > 0){
+           cat.items.forEach((it)=>{
+            let tmpQuantity = 0;
+            tmpQuantity += it.quantity 
+            state.cartCount = tmpQuantity
+            let price = it.is_sale ? it.sale_price : it.regular_price
+            let subTotal = state.cartSubTotal + (price * tmpQuantity)
+            if(method === 'Shipping' && rate != 'N/A'){
+             subTotal += parseFloat(rate)
+            }
+            state.cartSubTotal = subTotal
+            state.cartVat = (subTotal * (10/100))
+            state.cartGrandTotal = subTotal + state.cartVat
+           })
+          }
+         })
         }
-       }
       }
     },
     extraReducers: (builder) => {

@@ -11,7 +11,7 @@ const Shipping = () => {
 
   const order = useSelector((state)=>state.order.orderInfo)
  
-  const detail = `${order.address} ${order.appartment}, ${order.city} ${order.province}, ${order.country}`
+  const detail = `${order.shippingAddress.address} ${order.shippingAddress.appartment}, ${order.shippingAddress.city} ${order.shippingAddress.province}, ${order.shippingAddress.country}`
 
   return (
     <>
@@ -24,7 +24,7 @@ const Shipping = () => {
       {/* Shipping */}
 
       <div className="flex flex-col gap-3 rounded-md border border-b31 p-3">
-        <ReviewDetail title="Contact" detail={order.email} />
+        <ReviewDetail title="Contact" detail={order.shippingAddress.email} />
         <hr />
         <ReviewDetail title="Ship to" detail={detail} />
       </div>

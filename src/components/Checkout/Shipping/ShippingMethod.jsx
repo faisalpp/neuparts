@@ -28,16 +28,14 @@ const ShippingRadio = ({ id, title, subtitle, price, checked }) => {
 
 const ShippingMethod = () => {
   
-  const order = useSelector((state)=>state.order.orderInfo)
+  const shipping = useSelector((state)=>state.cart.shippingMethod)
 
   return (
     <div className="mt-8 space-y-14px">
       <h3 className="text-lg font-medium text-b16">Shipping method</h3>
-      {order.shippingMethod === 'Shipping' ? 
+      {shipping.method === 'Shipping' ? 
       <div className="rounded-md border border-b31 [&>*:last-child]:border-0 [&>*]:border-b [&>*]:border-b31">
-        <ShippingRadio id="expedited" title="Canada Post Expedited Parcel" subtitle="1 to 7 business days" price={"$10.00"} checked={true} />
-        <ShippingRadio id="xpresspost" title="Canada Post Xpresspost" subtitle="1 to 3 business days" price="$15.00" />
-        <ShippingRadio id="priority" title="Canada Post Priority" subtitle="1 to 3 business days" price="$20.00" />
+        <ShippingRadio id="expedited" title="Home Delivery" subtitle="1 to 7 business days" price={`$${shipping.rate}`} checked={true} />
       </div>
       :
       <div className="rounded-md border border-b31 [&>*:last-child]:border-0 [&>*]:border-b [&>*]:border-b31">
