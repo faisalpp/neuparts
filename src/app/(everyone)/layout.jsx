@@ -5,6 +5,7 @@ import Footer from '@/components/DeskComp/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StoreProvider } from '@/app/GlobalRedux/StoreProvider';
+import StoreData from '@/provider';
 
 export default function RootLayout({ children }) {
   return (
@@ -12,10 +13,12 @@ export default function RootLayout({ children }) {
       <body>
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" animation="bounce" />
         <StoreProvider>
-          <Navbar />
-          <ScrollToTop />
-          {children}
-          <Footer />
+          <StoreData>
+            <Navbar />
+            <ScrollToTop />
+            {children}
+            <Footer />
+          </StoreData>
         </StoreProvider>
       </body>
     </html>

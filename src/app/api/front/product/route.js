@@ -2,37 +2,43 @@ import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import Product from '@/models/product';
 import APIFilters from '@/utils/APIFilters';
+import ProductCategory from '@/models/productcategory';
 
 export async function GET(req) {
   await connect();
 
   // try {
-    const searchParams = req.nextUrl.searchParams;
-    // const searchParams = [];
-    const paramsObj = {};
+  const searchParams = req.nextUrl.searchParams;
+  // const searchParams = [];
+  const paramsObj = {};
 
-    searchParams.forEach((value, key) => {
-      paramsObj[key] = value;
-    });
+  searchParams.forEach((value, key) => {
+    paramsObj[key] = value;
+  });
 
-    const resPerPage = 10;
-    const productCount = await Product.countDocuments();
+  const resPerPage = 10;
+  const productCount = await Product.countDocuments();
 
-    const apiFilters = new APIFilters(Product.find(), paramsObj).filter();
-    // Get all filtered products first
-    let products = await apiFilters.query.clone();
+  let ModelCategory = '';
+  if (paramsObj.model_no) {
+    ModelCategory = await ProductCategory.findOne({ model_no: paramsObj.model_no });
+  }
 
-    // Manually filter out products with null categories
-    products = products.filter((product) => product.category !== null && product.parttype !== null);
+  const apiFilters = new APIFilters(Product.find(), paramsObj).filter();
+  // Get all filtered products first
+  let products = await apiFilters.query.clone();
 
-    const filteredProductsCount = products.length;
+  // Manually filter out products with null categories
+  products = products.filter((product) => product.category !== null && product.parttype !== null);
 
-    // Apply pagination to the filtered products manually
-    const currentPage = Number(paramsObj.page) || 1;
-    const startIndex = (currentPage - 1) * resPerPage;
-    const paginatedProducts = products.slice(startIndex, startIndex + resPerPage);
+  const filteredProductsCount = products.length;
 
-    return NextResponse.json({ success: true, productCount, filteredProductsCount, products: paginatedProducts });
+  // Apply pagination to the filtered products manually
+  const currentPage = Number(paramsObj.page) || 1;
+  const startIndex = (currentPage - 1) * resPerPage;
+  const paginatedProducts = products.slice(startIndex, startIndex + resPerPage);
+
+  return NextResponse.json({ success: true, productCount, filteredProductsCount, products: paginatedProducts, ModelCategory });
   // } catch (error) {
   //   return NextResponse.json({ success: false, message: 'Error retrieving products' });
   // }

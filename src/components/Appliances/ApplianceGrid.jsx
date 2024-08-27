@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiFillStar } from 'react-icons/ai';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaRegHeart } from 'react-icons/fa';
@@ -7,14 +6,6 @@ import Tag from '@/components/svgs/Tag';
 import ProductCard from '@/components/Product/ProductCard';
 
 const ApplianceGrid = ({ isGrid, product }) => {
-  const StarIconPrinter = ({ numberOfTimes }) => {
-    const starIcons = Array.from({ length: numberOfTimes }, (_, index) => (
-      <AiFillStar key={index} className="text-lg text-b7" /> // Render the star icon component for each iteration
-    ));
-
-    return <div className="mt-2 flex items-center">{starIcons}</div>; // Render the array of star icons
-  };
-
   return (
     <>
       {isGrid ? (
@@ -22,7 +13,7 @@ const ApplianceGrid = ({ isGrid, product }) => {
       ) : (
         <Link className="flex w-full cursor-pointer items-center space-x-2 rounded-2xl border-[1px] border-gray-200 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10" href={`/product/${product.slug}`}>
           {/* <div className="relative w-44 coxs:w-52"> */}
-          <Image width={400} height={400} quality={100} src="/popular-parts.webp" alt="Product Feature Image" className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
+          <Image width={400} height={400} quality={100} src={product.thumbnail} alt={product.title} className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
           {/* </div> */}
 
           <div className="flex w-[60%] flex-col gap-3 px-1 lg:px-5 3xl:w-[55%]">
@@ -36,16 +27,16 @@ const ApplianceGrid = ({ isGrid, product }) => {
                 Part <br /> Number
               </span>
               <Tag />
-              <div className="inline-flex rounded-full border border-black px-3 py-1 text-xs font-medium text-b1">WTWX2342</div>
+              <div className="inline-flex rounded-full border border-black px-3 py-1 text-xs font-medium text-b1">{product.part_number}</div>
             </div>
             <div className="flex items-center gap-1 coxs:gap-2 maxxs:flex-wrap">
               <span className="text-xs font-semibold text-b1 sm:text-sm">Price Range</span>
               <Tag />
               <div className="inline-flex rounded-full bg-b3 px-1 py-1 text-xs font-medium text-white sm:px-3">
-                ${product.salePrice} - ${product.regPrice}
+                ${product.sale_price} - ${product.regular_price}
               </div>
             </div>
-            <Link href="/" className="flex items-center font-semibold text-b3 underline maxsm:text-sm">
+            <Link href={`/product/${product.slug}/buying-options`} className="flex items-center font-semibold text-b3 underline maxsm:text-sm">
               15 Buying Options →
             </Link>
           </div>

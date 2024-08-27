@@ -56,7 +56,7 @@ const ProductSearchBar = () => {
             </div>
             <div className="flex gap-1 lg:items-center lg:gap-2 maxlg:mt-2 maxlg:flex-col">
               <label className="text-sm font-semibold lg:text-xs maxlg:text-b18">Port No.</label>
-              <input onChange={(e) => setPartNo(e.target.value)} type="text" value={partNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797] lg:max-w-40" placeholder="Enter model number" />
+              <input onChange={(e) => setPartNo(e.target.value)} type="text" value={partNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797] lg:max-w-40" placeholder="Enter part number" />
             </div>
             <button type="button" onClick={() => handleSearchTab()} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-3 maxlg:w-full">
               <BiSearch />

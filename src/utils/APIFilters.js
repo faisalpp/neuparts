@@ -21,7 +21,7 @@ class APIFilters {
     const queryCopy = { ...this.queryStr };
     const category = queryCopy?.category;
     const parttype = queryCopy?.parttype;
-    const removeFields = ['keyword', 'category', 'parttype', 'limit', 'page'];
+    const removeFields = ['keyword', 'category', 'parttype', 'limit', 'page', 'model_no', 'part_number'];
     removeFields.forEach((key) => delete queryCopy[key]);
     let output = {};
     let prop = '';
