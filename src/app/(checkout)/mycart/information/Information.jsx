@@ -108,8 +108,9 @@ const Information = () => {
    const Submit = async () => {
     try{
       const shippingAddr = { email:email, keepUpdates:keepUpdates,firstName:firstName,lastName:lastName,address:address,appartment:appartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress,shippingMethod:shippingMethod}
+      const billingAddr = { email:email,firstName:firstName,lastName:lastName,address:address,appartment:appartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress}
       await orderValidationSchema.validate(shippingAddr, { abortEarly: false }); 
-      dispatch(setOrderInfo({shippingAddress:shippingAddr}))
+      dispatch(setOrderInfo({shippingAddress:shippingAddr,billingAddress:billingAddr}))
       router.push('/mycart/shipping')
    }catch(error){ 
       if (error) {
