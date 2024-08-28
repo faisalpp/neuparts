@@ -41,7 +41,7 @@ function Context({ children }) {
     setShowSuggestions(false); // Hide suggestions when a suggestion is clicked
     setError(''); // Clear any previous error
   };
-  const filteredModels = modelSuggestions.filter((model) => model.toLowerCase().includes(modelNo.toLowerCase()));
+  const filteredModels = modelSuggestions.filter((model) => model?.toLowerCase().includes(modelNo?.toLowerCase()));
 
   const SearchResult = async () => {
     try {
