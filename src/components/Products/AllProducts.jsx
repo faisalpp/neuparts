@@ -48,8 +48,8 @@ const AllProducts = ({ searchParams }) => {
     };
 
     const res = await fetch(`/api/front/product?${searchQuery}`, requestOptions);
-    const data = await res.json();
-    setData(data);
+    const allData = await res.json();
+    setData(allData);
     setLoading(false);
   };
 
@@ -82,46 +82,52 @@ const AllProducts = ({ searchParams }) => {
 
         {/* Bread Crumbs End */}
 
+        {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
+
         {/* Product Search Details */}
 
-        {!searchLoading && result?.modelCategory ? (
+        {!searchLoading && result ? (
           <div className="product-search-details">
             {/* Product Model Details */}
-            <div className="mt-6 grid grid-cols-1 items-center gap-10 rounded-lg border border-b3 bg-b3/10 p-6 md:mt-8 md:grid-cols-[220px_auto] md:p-8">
-              {result.modelCategory.thumbnail ? (
-                <div className="grid place-items-center rounded-lg bg-white py-7">
-                  <Image src={result.modelCategory.thumbnail} className="h-40 w-40 object-contain" alt="Dish Water" width={600} height={600} quality={100} />
+            {result.modelCategory ? (
+              <>
+                <div className="mt-6 grid grid-cols-1 items-center gap-10 rounded-lg border border-b3 bg-b3/10 p-6 md:mt-8 md:grid-cols-[220px_auto] md:p-8">
+                  {result.modelCategory.thumbnail ? (
+                    <div className="grid place-items-center rounded-lg bg-white py-7">
+                      <Image src={result.modelCategory.thumbnail} className="h-40 w-40 object-contain" alt="Dish Water" width={600} height={600} quality={100} />
+                    </div>
+                  ) : null}
+                  <div>
+                    <div className="inline-flex rounded-lg border border-b2 px-3 py-3 font-semibold text-b2 md:px-4">Appliance Repair and Replacement parts for {result.modelCategory.model_no}</div>
+                    <h2 className="mt-4 text-xl font-bold text-b1 md:text-2xl lg:text-32px">Model Number: {result.modelCategory.model_no}</h2>
+                    {result.modelCategory.description ? <p className="mt-2.5 text-lg font-medium text-b1 md:text-xl 2xl:text-2xl">{result.modelCategory.description}</p> : null}
+                  </div>
                 </div>
-              ) : null}
-              <div>
-                <div className="inline-flex rounded-lg border border-b2 px-3 py-3 font-semibold text-b2 md:px-4">Appliance Repair and Replacement parts for {result.modelCategory.model_no}</div>
-                <h2 className="mt-4 text-xl font-bold text-b1 md:text-2xl lg:text-32px">Model Number: {result.modelCategory.model_no}</h2>
-                {result.modelCategory.description ? <p className="mt-2.5 text-lg font-medium text-b1 md:text-xl 2xl:text-2xl">{result.modelCategory.description}</p> : null}
-              </div>
-            </div>
-            {/* End Model Details */}
+                {/* End Model Details */}
 
-            {/* Part Number to search */}
-            <div className="my-10 md:my-20 2xl:my-100px">
-              <h2 className="mt-4 text-2xl font-bold text-b1 lg:text-[30px]">Model Number: {result.modelCategory.model_no}</h2>
-              <div className="mt-8 flex max-w-[910px] items-center gap-2 maxsm:flex-col">
-                <div className="relative w-full">
-                  <CiSearch className="absolute left-4 top-3.5 h-7 w-7 text-b1/30" />
-                  <input onChange={(e) => setModelNo(e.target.value)} type="text" value={modelNo} className="h-14 w-full rounded-lg border border-[#F6F7F9] bg-[#F6F7F9] pl-14 text-sm font-medium outline-none duration-200 placeholder:font-medium placeholder:text-b1/30 focus:border-b3" placeholder="Know your part number? Enter it here..." />
+                {/* Part Number to search */}
+                <div className="my-10 md:my-20 2xl:my-100px">
+                  <h2 className="mt-4 text-2xl font-bold text-b1 lg:text-[30px]">Model Number: {result.modelCategory.model_no}</h2>
+                  <div className="mt-8 flex max-w-[910px] items-center gap-2 maxsm:flex-col">
+                    <div className="relative w-full">
+                      <CiSearch className="absolute left-4 top-3.5 h-7 w-7 text-b1/30" />
+                      <input onChange={(e) => setModelNo(e.target.value)} type="text" value={modelNo} className="h-14 w-full rounded-lg border border-[#F6F7F9] bg-[#F6F7F9] pl-14 text-sm font-medium outline-none duration-200 placeholder:font-medium placeholder:text-b1/30 focus:border-b3" placeholder="Know your part number? Enter it here..." />
+                    </div>
+                    <button type="button" className="button-hover flex cursor-pointer items-center justify-center rounded-md px-6 py-5 text-white maxmd:w-full">
+                      <BiSearch />
+                      <span className="ml-1 text-xs font-medium">Search</span>
+                    </button>
+                  </div>
                 </div>
-                <button type="button" className="button-hover flex cursor-pointer items-center justify-center rounded-md px-6 py-5 text-white maxmd:w-full">
-                  <BiSearch />
-                  <span className="ml-1 text-xs font-medium">Search</span>
-                </button>
-              </div>
-            </div>
 
-            {/* Model Categoris */}
-            {result.partTypes.length ? <ModelCategories data={result} /> : null}
+                {/* Model Categoris */}
+                {result.partTypes.length ? <ModelCategories data={result} /> : null}
 
-            <h2 className="mb-10 mt-10 text-2xl font-semibold text-b1 md:mb-20">
-              Compatible Parts for Model <span className="text-dark-red">{result.modelCategory.model_no}</span>
-            </h2>
+                <h2 className="mb-10 mt-10 text-2xl font-semibold text-b1 md:mb-20">
+                  Compatible Parts for Model <span className="text-dark-red">{result.modelCategory.model_no}</span>
+                </h2>
+              </>
+            ) : null}
           </div>
         ) : (
           ''

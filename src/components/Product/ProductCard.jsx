@@ -16,7 +16,7 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <div className="flex flex-col gap-y-3 p-3 lg:p-5 xl:p-6">
-        <p className="line-clamp-2 font-reg text-sm font-semibold xl:text-base">{product.title}</p>
+        <h3 className="line-clamp-2 font-reg text-sm font-semibold xl:text-base">{product.title}</h3>
         <div className="flex">
           <h4 className="font-semibold text-b3">${product.is_sale ? product.sale_price : product.regular_price}</h4>
           {product.is_sale ? (

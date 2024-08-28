@@ -9,9 +9,9 @@ import Image from 'next/image';
 import HeaderFilter from '@/components/DeskComp/Filter/HeaderFilter';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }) => {
+const Filter = ({ onClose, isFilter }) => {
   const [loading, setLoading] = useState(true);
   const [Categories, setCategories] = useState([]);
   const [PartTypes, setPartTypes] = useState([]);
@@ -20,12 +20,19 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
   const [onsale, setOnSale] = useState(false);
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+
   const handleFilterClick = (event) => {
     event.stopPropagation();
   };
+  let modelNo = searchParams.get('modelno');
+  let partNo = searchParams.get('partno');
 
   const getFilters = async () => {
-    const res = await fetch('/api/front/filters');
+    modelNo = searchParams.get('modelno');
+    partNo = searchParams.get('partno');
+
+    const res = await fetch('/api/front/filters?model_no=' + modelNo);
     const data = await res.json();
     if (data.success) {
       setCategories(data.categories);
@@ -38,7 +45,7 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
 
   useEffect(() => {
     getFilters();
-  }, []);
+  }, [modelNo, partNo]);
 
   let queryParams;
   const resetFilters = () => {
@@ -74,13 +81,13 @@ const Filter = ({ filterheader, onClose, isFilter, saleFilter, setQuery, query }
               </span>
             </div>
             <div className="pb-5 lg:pb-10 maxlg:px-[5%]">
-              {Categories.length > 0 && <TypeFilter type="category" title="Appliance Type" filters={Categories} />}
+              {!modelNo && Categories.length > 0 && <TypeFilter type="category" title="Appliance Type" filters={Categories} />}
               {PartTypes.length > 0 && <TypeFilter type="type" title="Part Type" filters={PartTypes} />}
 
               {Conditions.length > 0 && <RatingFilter filters={Conditions} />}
               {/* {filterheader != false && <HeaderFilter />} */}
               <MultiRangeSlider min={9} max={9999} />
-              {countSale > 0 && <SaleFilter countSale={countSale} />}
+              {!modelNo && countSale > 0 && <SaleFilter countSale={countSale} />}
             </div>
             <div className="sticky bottom-0 z-40 grid grid-cols-2 lg:hidden">
               <button type="button" className="bg-b1 px-2 py-4 text-white">

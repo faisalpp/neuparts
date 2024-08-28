@@ -23,6 +23,7 @@ class APIFilters {
     const parttype = queryCopy?.parttype;
     const removeFields = ['keyword', 'category', 'parttype', 'limit', 'page', 'model_no', 'part_number'];
     removeFields.forEach((key) => delete queryCopy[key]);
+
     let output = {};
     let prop = '';
 
@@ -31,7 +32,6 @@ class APIFilters {
         output[key] = queryCopy[key];
       } else {
         prop = key.split('[')[0];
-
         let operator = key.match(/\[(.*)\]/)[1];
 
         if (!output[prop]) {
@@ -51,6 +51,7 @@ class APIFilters {
         path: 'parttype',
         match: { slug: parttype || { $exists: true } },
       });
+
     return this;
   }
 }

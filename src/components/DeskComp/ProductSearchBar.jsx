@@ -1,25 +1,21 @@
 'use client';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { IoExtensionPuzzleOutline } from 'react-icons/io5';
 import Rotate from '@/components/svgs/Rotate';
 import { FiCheck } from 'react-icons/fi';
 import { BiSearch } from 'react-icons/bi';
 import { RxCross2 } from 'react-icons/rx';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { StoreData } from '@/provider';
+import Spinner from '../svgs/Spinner';
+import Link from 'next/link';
 
 const ProductSearchBar = () => {
+  const { modelNo, partNo, filteredModels, showSuggestions, error, setPartNo, step, handleSearchClick, handleSuggestionClick, searchLoading, result, handleModelNoChange } = useContext(StoreData);
+
   const [searchBar, setSearchBar] = useState(false);
-  const [modelNo, setModelNo] = useState('');
-  const [partNo, setPartNo] = useState('');
-  const [step, setStep] = useState(0);
-  const handleSearchTab = () => {
-    if (partNo != '' && modelNo === '') {
-      setStep(1);
-    } else if (modelNo != '') {
-      setStep(2);
-    }
-  };
+
   return (
     <div id="product-search-bar" className={`${step == 0 ? 'bg-white' : 'bg-[#14313D]'} sticky top-[68px] z-40 lg:top-[136px] lg:z-50 lg:bg-[#14313D] maxlg:shadow-[0px_4px_20px_rgba(0,0,0,0.08)]`}>
       {/* Mobile Search Bar */}
@@ -52,15 +48,33 @@ const ProductSearchBar = () => {
             <h3 className="mr-6 text-base lg:text-sm maxlg:font-semibold maxlg:text-b18">Search By</h3>
             <div className="flex gap-1 lg:items-center lg:gap-2 maxlg:mt-2 maxlg:flex-col">
               <label className="text-sm font-semibold lg:text-xs maxlg:text-b18">Model No.</label>
-              <input onChange={(e) => setModelNo(e.target.value)} type="text" value={modelNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797] lg:max-w-40" placeholder="Enter model number" />
+              <div className="relative w-full lg:max-w-40">
+                <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797]" placeholder="Enter model number" />
+                {showSuggestions && modelNo && (
+                  <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black">
+                    {filteredModels.map((model, index) => (
+                      <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
+                        {model}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {error && <span className="absolute -bottom-5 left-1 inline-flex text-left text-[13px] text-red-500">{error}</span>}
+              </div>
             </div>
             <div className="flex gap-1 lg:items-center lg:gap-2 maxlg:mt-2 maxlg:flex-col">
               <label className="text-sm font-semibold lg:text-xs maxlg:text-b18">Port No.</label>
               <input onChange={(e) => setPartNo(e.target.value)} type="text" value={partNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797] lg:max-w-40" placeholder="Enter part number" />
             </div>
-            <button type="button" onClick={() => handleSearchTab()} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-3 maxlg:w-full">
-              <BiSearch />
-              <span className="ml-1 text-xs font-medium">Search</span>
+            <button type="button" onClick={() => handleSearchClick()} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-3 maxlg:w-full">
+              {searchLoading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <BiSearch className="ml-1 text-xs font-medium" />
+                  Search
+                </>
+              )}
             </button>
           </>
         )}
@@ -71,10 +85,28 @@ const ProductSearchBar = () => {
               <IoExtensionPuzzleOutline className="h-6 w-6" />
               Compatibility Check
             </button>
-            <input onChange={(e) => setModelNo(e.target.value)} type="text" value={modelNo} className="w-full max-w-96 rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797]" placeholder="Enter your Model Number" />
-            <button type="button" onClick={() => handleSearchTab()} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-4 maxlg:w-full">
-              <BiSearch />
-              <span className="ml-1 text-xs font-medium">Search</span>
+            <div className="relative w-full max-w-96">
+              <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797]" placeholder="Enter your Model Number" />
+              {showSuggestions && modelNo && (
+                <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black">
+                  {filteredModels.map((model, index) => (
+                    <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
+                      {model}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {error && <span className="absolute -bottom-5 left-1 inline-flex text-left text-[13px] text-red-500">{error}</span>}
+            </div>
+            <button type="button" onClick={() => handleSearchClick()} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-4 maxlg:w-full">
+              {searchLoading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <BiSearch />
+                  <span className="ml-1 text-xs font-medium">Search</span>
+                </>
+              )}
             </button>
           </>
         )}
@@ -87,17 +119,23 @@ const ProductSearchBar = () => {
               Compatibility Check
             </button>
             <div className="flex w-full items-center gap-2.5 lg:w-1/3">
-              <div className="grid h-8 min-w-8 place-items-center rounded bg-white">
-                <Image width={100} height={100} quality={100} src="/p1.webp" className="h-6 w-6 object-contain" alt="" />
-              </div>
-              <h3 className="line-clamp-2 text-sm font-semibold">GE 1.7 cu. ft. Over the Range Microwave with Convenience Cooking Controls</h3>
+              {result.product.thumbnail ? (
+                <div className="grid h-8 min-w-8 place-items-center rounded bg-white">
+                  <Image width={100} height={100} quality={100} src={result.product.thumbnail} className="h-6 w-6 object-contain" alt={result.product.title} />
+                </div>
+              ) : null}
+              {result.product.title ? (
+                <Link href={'/product/' + result.product.slug}>
+                  <h3 className="line-clamp-2 text-sm font-semibold">{result.product.title}</h3>
+                </Link>
+              ) : null}
             </div>
             <button type="button" className="flex h-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-[#3F4C54] bg-b2 p-3 text-xs font-semibold lg:p-2 lg:text-sm maxlg:my-4 maxlg:w-full">
               <Rotate className="h-6 w-6" />
-              Model Number: 2345367
+              Model Number: {result.product.category.model_no}
             </button>
             {/* Parts Show Are Comaptible With Model */}
-            {partNo === '' && modelNo === '2345367' && (
+            {partNo === '' && modelNo === result.product.category.model_no && (
               <div className="flex items-start gap-1 rounded-lg bg-[#00EE34] px-2.5 py-1.5">
                 <div className="grid h-6 min-w-6 place-items-center rounded-full bg-black text-[#00EE34]">
                   <FiCheck />
@@ -109,7 +147,7 @@ const ProductSearchBar = () => {
               </div>
             )}
             {/* Parts Show Are Not Comaptible With Model */}
-            {partNo === '' && modelNo != '2345367' && modelNo != '' && (
+            {partNo != result.product.part_number && modelNo === result.product.category.model_no && modelNo != '' && partNo != '' && (
               <div className="flex items-start gap-1 rounded-lg bg-dark-red px-2.5 py-1.5">
                 <div className="grid h-6 min-w-6 place-items-center rounded-full bg-white text-dark-red">
                   <RxCross2 />
@@ -121,7 +159,7 @@ const ProductSearchBar = () => {
               </div>
             )}
             {/* Model and Part Cpmpatible */}
-            {modelNo === '2345367' && partNo === '123456' && (
+            {modelNo === result.product.category.model_no && partNo === result.product.part_number && (
               <div className="flex h-full items-center gap-1 rounded-lg bg-[#00EE34] px-2.5 py-1.5">
                 <div className="grid h-6 min-w-6 place-items-center rounded-full bg-black text-[#00EE34]">
                   <FiCheck />
@@ -131,7 +169,7 @@ const ProductSearchBar = () => {
             )}
 
             {/* Model and Part NotCpmpatible */}
-            {modelNo != '2345367' && partNo != '123456' && modelNo != '' && partNo != '' && (
+            {modelNo != result.product.category.model_no && partNo != result.product.part_number && modelNo != '' && partNo != '' && (
               <div className="flex items-center gap-1 rounded-lg bg-dark-red px-2.5 py-1.5">
                 <div className="grid h-6 min-w-6 place-items-center rounded-full bg-white text-dark-red">
                   <RxCross2 />

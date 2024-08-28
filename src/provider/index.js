@@ -1,35 +1,34 @@
 'use client';
 import { createContext, useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export const StoreData = createContext(null);
 
 function Context({ children }) {
   const searchParams = useSearchParams();
-  const [partNo, setPartNo] = useState(searchParams.get('partno'));
-  const [modelNo, setModelNo] = useState(searchParams.get('modelno'));
+  const [partNo, setPartNo] = useState(searchParams.get('partno') ? searchParams.get('partno') : '');
+  const [modelNo, setModelNo] = useState(searchParams.get('modelno') ? searchParams.get('modelno') : '');
   const [modelSuggestions, setModelSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [error, setError] = useState('');
   const [searchLoading, setSearchLoading] = useState(false);
   const [result, setResult] = useState('');
+  const [step, setStep] = useState(0);
 
-  useEffect(() => {
-    // Fetch model numbers when the component mounts
-    const fetchModelNumbers = async () => {
-      try {
-        const response = await fetch('/api/front/product/models');
-        const data = await response.json();
-        console.log(data.modelNos);
+  const router = useRouter();
 
-        setModelSuggestions(data.modelNos);
-      } catch (error) {
-        console.error('Failed to fetch model numbers:', error);
-      }
-    };
+  // Fetch model numbers when the component mounts
+  const fetchModelNumbers = async () => {
+    try {
+      const response = await fetch('/api/front/product/models');
+      const data = await response.json();
 
-    fetchModelNumbers();
-  }, []);
+      setModelSuggestions(data.modelNos);
+    } catch (error) {
+      console.error('Failed to fetch model numbers:', error);
+    }
+  };
+
   const handleModelNoChange = (e) => {
     setModelNo(e);
     setShowSuggestions(true); // Show suggestions when user types
@@ -55,6 +54,13 @@ function Context({ children }) {
       });
       const data = await response.json();
       setResult(data);
+      if (partNo != '' && modelNo === '') {
+        setStep(1);
+      } else if (modelNo != '') {
+        setStep(2);
+      } else {
+        setStep(0);
+      }
       setSearchLoading(false);
       // console.log(data);
     } catch (error) {
@@ -62,11 +68,29 @@ function Context({ children }) {
     }
   };
 
+  const handleSearchClick = async () => {
+    if (modelNo && !modelSuggestions.includes(modelNo)) {
+      setError('Invalid model number.');
+    } else {
+      // Navigate to the search page
+      await SearchResult();
+      if (partNo != '' && modelNo === '') {
+        setStep(1);
+      } else if (modelNo != '') {
+        setStep(2);
+      } else {
+        setStep(0);
+      }
+      router.push(`/products?modelno=${modelNo}&partno=${partNo}`);
+    }
+  };
+
   useEffect(() => {
+    fetchModelNumbers();
     SearchResult();
   }, ['']);
 
-  return <StoreData.Provider value={{ partNo, modelNo, filteredModels, showSuggestions, modelSuggestions, error, searchLoading, result, setError, setModelSuggestions, setPartNo, handleModelNoChange, handleSuggestionClick, SearchResult, SearchResult, SearchResult }}>{children}</StoreData.Provider>;
+  return <StoreData.Provider value={{ partNo, modelNo, filteredModels, showSuggestions, modelSuggestions, error, searchLoading, result, step, setError, setModelSuggestions, setPartNo, setModelNo, handleModelNoChange, handleSuggestionClick, SearchResult, SearchResult, SearchResult, handleSearchClick }}>{children}</StoreData.Provider>;
 }
 
 export default Context;

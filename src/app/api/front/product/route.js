@@ -7,9 +7,7 @@ import ProductCategory from '@/models/productcategory';
 export async function GET(req) {
   await connect();
 
-  // try {
   const searchParams = req.nextUrl.searchParams;
-  // const searchParams = [];
   const paramsObj = {};
 
   searchParams.forEach((value, key) => {
@@ -17,29 +15,35 @@ export async function GET(req) {
   });
 
   const resPerPage = 10;
-  const productCount = await Product.countDocuments();
+  const currentPage = Number(paramsObj.page) || 1;
 
-  let ModelCategory = '';
+  let filteredProducts = Product.find();
+
+  // If model_no is provided, filter products by category that matches the model_no
   if (paramsObj.model_no) {
-    ModelCategory = await ProductCategory.findOne({ model_no: paramsObj.model_no });
+    const category = await ProductCategory.findOne({ model_no: paramsObj.model_no });
+
+    if (category) {
+      paramsObj.category = category.slug; // Add the category ID to the filters
+      filteredProducts = filteredProducts.where('category').equals(category._id);
+    }
   }
 
-  const apiFilters = new APIFilters(Product.find(), paramsObj).filter();
-  // Get all filtered products first
+  // Apply the other filters
+  const apiFilters = new APIFilters(filteredProducts, paramsObj).filter();
+
+  // Get all filtered products with pagination
   let products = await apiFilters.query.clone();
 
-  // Manually filter out products with null categories
+  // Manually filter out products with null categories or parttypes
   products = products.filter((product) => product.category !== null && product.parttype !== null);
 
+  const productCount = await Product.countDocuments();
   const filteredProductsCount = products.length;
 
-  // Apply pagination to the filtered products manually
-  const currentPage = Number(paramsObj.page) || 1;
+  // Apply pagination manually
   const startIndex = (currentPage - 1) * resPerPage;
   const paginatedProducts = products.slice(startIndex, startIndex + resPerPage);
 
-  return NextResponse.json({ success: true, productCount, filteredProductsCount, products: paginatedProducts, ModelCategory });
-  // } catch (error) {
-  //   return NextResponse.json({ success: false, message: 'Error retrieving products' });
-  // }
+  return NextResponse.json({ success: true, productCount, filteredProductsCount, products: paginatedProducts });
 }

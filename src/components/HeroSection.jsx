@@ -10,21 +10,21 @@ import { useRouter } from 'next/navigation';
 import Spinner from '@/components/svgs/Spinner';
 
 const HeroSection = () => {
-  const { partNo, modelNo, filteredModels, setPartNo, showSuggestions, modelSuggestions, error, searchLoading, SearchResult, handleModelNoChange, handleSuggestionClick, setError } = useContext(StoreData);
+  const { partNo, modelNo, filteredModels, setPartNo, showSuggestions, modelSuggestions, error, searchLoading, SearchResult, handleModelNoChange, handleSuggestionClick, setError, handleSearchClick } = useContext(StoreData);
 
   const [searchBy, setSearchBy] = useState('tab');
 
   const router = useRouter();
 
-  const handleSearchClick = async () => {
-    if (modelNo && !modelSuggestions.includes(modelNo)) {
-      setError('Invalid model number.');
-    } else {
-      // Navigate to the search page
-      await SearchResult();
-      router.push(`/products?modelno=${modelNo}&partno=${partNo}`);
-    }
-  };
+  // const handleSearchClick = async () => {
+  //   if (modelNo && !modelSuggestions.includes(modelNo)) {
+  //     setError('Invalid model number.');
+  //   } else {
+  //     // Navigate to the search page
+  //     await SearchResult();
+  //     router.push(`/products?modelno=${modelNo}&partno=${partNo}`);
+  //   }
+  // };
 
   return (
     <>
@@ -56,7 +56,7 @@ const HeroSection = () => {
                     <div className="relative w-full">
                       <input type="text" value={modelNo} onChange={(e) => handleModelNoChange(e.target.value)} className="w-full rounded-lg border border-b3 px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none placeholder:text-dark-gray maxmd:text-lg" placeholder="Enter model number" />
                       {showSuggestions && modelNo && (
-                        <ul className="absolute top-full z-20 mt-2 w-full rounded-lg border border-gray-300 bg-white">
+                        <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white shadow-lg">
                           {filteredModels.map((model, index) => (
                             <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
                               {model}
@@ -68,9 +68,9 @@ const HeroSection = () => {
                     <input type="text" value={partNo} onChange={(e) => setPartNo(e.target.value)} className="w-full rounded-lg border border-b3 px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none placeholder:text-dark-gray maxmd:text-lg" placeholder="Enter part number" />
                     <Image width={400} height={400} quality={100} src="/best-result.webp" alt="Best Results" className="absolute -bottom-[3.8rem] left-0 right-0 z-10 mx-auto h-auto w-72 maxmd:hidden" />
                   </div>
-                  <button type="button" onClick={handleSearchClick} className="button-hover flex h-full w-full items-center justify-center rounded-lg py-3 font-bold text-white md:max-w-40 maxmd:text-lg">
+                  <button type="button" onClick={() => handleSearchClick()} className="button-hover flex h-full w-full items-center justify-center rounded-lg py-3 font-bold text-white md:max-w-40 maxmd:text-lg">
                     {searchLoading ? (
-                      <Spinner/>
+                      <Spinner />
                     ) : (
                       <>
                         <MdSearch className="mr-2 text-2xl" />

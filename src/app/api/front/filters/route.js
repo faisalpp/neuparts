@@ -7,15 +7,54 @@ import Product from '@/models/product';
 
 export async function GET(req) {
   await connect();
+  const searchParams = req.nextUrl.searchParams;
   try {
-    const categories = await Categories.aggregate([
+    // const { model_no, part_number } = searchParams.get('model_no');
+    const model_no = searchParams.get('model_no');
+
+    let categories = [];
+    let category = null;
+
+    if (model_no) {
+      category = await Categories.findOne({ model_no: model_no });
+    } else {
+      categories = await Categories.aggregate([
+        {
+          $lookup: {
+            from: 'products',
+            localField: '_id',
+            foreignField: 'category',
+            as: 'products',
+          },
+        },
+        {
+          $addFields: {
+            productCount: { $size: '$products' },
+          },
+        },
+        {
+          $project: {
+            products: 0,
+          },
+        },
+        {
+          $sort: { createdAt: -1 },
+        },
+      ]);
+    }
+
+    const parttypes = await ProductTypes.aggregate([
       {
         $lookup: {
           from: 'products',
           localField: '_id',
-          foreignField: 'category',
+          foreignField: 'parttype',
           as: 'products',
         },
+      },
+      // Step 3: Conditional filtering based on the presence of model_no and the related category
+      {
+        $match: category ? { 'products.category': category._id } : {},
       },
       {
         $addFields: {
@@ -32,29 +71,6 @@ export async function GET(req) {
       },
     ]);
 
-    const parttypes = await ProductTypes.aggregate([
-      {
-        $lookup: {
-          from: 'products', // the name of the products collection
-          localField: '_id',
-          foreignField: 'parttype',
-          as: 'products',
-        },
-      },
-      {
-        $addFields: {
-          productCount: { $size: '$products' }, // count the number of products in each product type
-        },
-      },
-      {
-        $project: {
-          products: 0, // optionally exclude the product array if you only want the count
-        },
-      },
-      {
-        $sort: { createdAt: -1 },
-      },
-    ]);
     const conditions = await ProductConditions.aggregate([
       {
         $lookup: {
@@ -63,6 +79,9 @@ export async function GET(req) {
           foreignField: 'condition',
           as: 'products',
         },
+      },
+      {
+        $match: category ? { 'products.category': category._id } : {},
       },
       {
         $addFields: {
