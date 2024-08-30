@@ -45,21 +45,23 @@ function Context({ children }) {
   const SearchResult = async () => {
     try {
       setSearchLoading(true);
-      const response = await fetch('/api/front/product/search', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ model_no: modelNo, part_number: partNo }),
-      });
-      const data = await response.json();
-      setResult(data);
-      if (partNo != '' && modelNo === '') {
-        setStep(1);
-      } else if (modelNo != '') {
-        setStep(2);
-      } else {
-        setStep(0);
+      if (modelNo || partNo) {
+        const response = await fetch('/api/front/product/search', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ model_no: modelNo, part_number: partNo }),
+        });
+        const data = await response.json();
+        setResult(data);
+        if (partNo != '' && modelNo === '') {
+          setStep(1);
+        } else if (modelNo != '') {
+          setStep(2);
+        } else {
+          setStep(0);
+        }
       }
       setSearchLoading(false);
       // console.log(data);

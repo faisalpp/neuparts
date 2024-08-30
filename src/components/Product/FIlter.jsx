@@ -29,7 +29,7 @@ const Filter = ({ onClose, isFilter }) => {
   let partNo = searchParams.get('partno');
 
   const getFilters = async () => {
-    modelNo = searchParams.get('modelno');
+    modelNo = searchParams.get('modelno') || 'all';
     partNo = searchParams.get('partno');
 
     const res = await fetch('/api/front/filters?model_no=' + modelNo);

@@ -15,7 +15,7 @@ export async function GET(req) {
     let categories = [];
     let category = null;
 
-    if (model_no) {
+    if (model_no != 'all') {
       category = await Categories.findOne({ model_no: model_no });
     } else {
       categories = await Categories.aggregate([
