@@ -25,7 +25,7 @@ export async function POST(request) {
   const expiredAt = new Date(Date.now() + 1 * 60 * 60 * 1000);
 
   if (hash) {
-    const session = await encrypt({ email: user.email, expiredAt });
+    const session = await encrypt({ id:user._id,email: user.email, expires:expiredAt });
     cookies().set('neu-admin', session, { expires: expiredAt, httpOnly: false });
     return NextResponse.json({ success: true, msg: 'Login successfull!' }, { status: 200 });
   } else {

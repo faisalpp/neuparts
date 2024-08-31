@@ -90,7 +90,7 @@ function Context({ children }) {
   useEffect(() => {
     fetchModelNumbers();
     SearchResult();
-  }, ['']);
+  }, []);
 
   return <StoreData.Provider value={{ partNo, modelNo, filteredModels, showSuggestions, modelSuggestions, error, searchLoading, result, step, setError, setModelSuggestions, setPartNo, setModelNo, handleModelNoChange, handleSuggestionClick, SearchResult, SearchResult, SearchResult, handleSearchClick }}>{children}</StoreData.Provider>;
 }

@@ -31,7 +31,7 @@ const ActionBtns = ({ buttons }) => {
             }
             if(btn.type === 'drop-down'){
               return (
-              <div className='flex items-center gap-2' >
+              <div key={i} className='flex items-center gap-2' >
               <span className='text-lg' >Filter:</span>
               <select onChange={(e)=>btn.setState(e.target.value)} className='h-10 text-sm border-2 border-gray-200 rounded-md' >
                {btn.options.length > 0 ? 

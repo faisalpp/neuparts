@@ -3,6 +3,7 @@
 import React,{useEffect,useState} from 'react'
 import {Elements} from '@stripe/react-stripe-js'
 import {loadStripe} from '@stripe/stripe-js'
+import { BiLoaderAlt } from "react-icons/bi";
 
 const StripeProvider = ({children}) => {
 
@@ -25,7 +26,13 @@ const StripeProvider = ({children}) => {
    </Elements>
   )
  }else{
-    return <h2>Loading...</h2>
+    return (
+      <div className='fixed flex items-center justify-center w-full bg-white/90 z-10' style={{height:'100vh'}} >
+         <div className='flex flex-col items-center gap-3' >
+          <BiLoaderAlt className='animate-spin text-6xl text-b3' />
+         </div>
+        </div>
+    )
  }
 
 }

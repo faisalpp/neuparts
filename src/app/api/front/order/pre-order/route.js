@@ -1,8 +1,9 @@
 import Order from '@/models/order';
-import Address from '@/model/address'
-import NewsLetter from '@/model/newsLetter'
+import Address from '@/models/address'
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
+import {checkSession} from '@/lib/auth'
+import {GetOrderNo,SubscribeNewsLetter,generateRandomPassword,CreateCustomer} from '@/utils/order'
 
 export async function POST(request) {
 
@@ -12,38 +13,86 @@ export async function POST(request) {
     const {items,billingAddress,shippingAddress,subTotal,coupons,vat,grandTotal} = await request.json()
 
     // Todo: generate unique order no
-
+    const ORDER_NO = await GetOrderNo();
+    if(!ORDER_NO){
+      return NextResponse.json({ message: 'Order no is not generatable!', success: false });    
+    }
     // Todo: newsletter subscribe
+    if(shippingAddress.keepUpdates){
+      const isSubscribed = await SubscribeNewsLetter(shippingAddress.email)
+      if(!isSubscribed){
+        return NextResponse.json({ message: 'Newsletter not subscribed!', success: false });    
+      }
+    }
 
     // Todo: create user if not loggedIn
+    let USER;
+    const isUser = checkSession(request,'neu-user')
+    const isAdmin = checkSession(request,'neu-admin')
+    if(isUser){
+      USER = {_id:isUser.id}
+    }else if(isAdmin){
+      USER = {_id:isAdmin.id}
+    }
+    
+   if(!USER){
+    const newPass = generateRandomPassword()
+    USER = CreateCustomer({firstName: shippingAddress.firstName,
+      lastName: shippingAddress.lastName,country: shippingAddress.country,
+      phone: shippingAddress.phone,email: shippingAddress.email,password: newPass})
+    if(!USER){
+      return NextResponse.json({ message: 'Creating new user failed!', success: false });    
+    }
+   }
 
+    // create billing address record put user id
+    let BILLING_ADDRESS;
+    try{
+     BILLING_ADDRESS = await Address.create({
+       email: billingAddress.email,first_name : billingAddress.firstName,
+       last_name : billingAddress.lastName,address : billingAddress.address,
+       appartment : billingAddress.appartment,city : billingAddress.city,
+       province : billingAddress.province,country : billingAddress.country,
+       postal_code : billingAddress.postalCode,phone: billingAddress.phone,
+       type:'billing',user: USER._id
+     })
+    }catch(error){
+      return NextResponse.json({ message: 'Creating billing address failed!', success: false });    
+    }
 
-    // create billing address record put user id if saveAddress true
-    const billing = await Address.create({
-      email: billingAddress.email,first_name : billingAddress.first_name,
-      last_name : billingAddress.last_name,address : billingAddress.address,
-      appartment : billingAddress.appartment,city : billingAddress.city,
-      province : billingAddress.province,country : billingAddress.country,
-      postal_code : billingAddress.postal_code,phone: billingAddress.phone,
-      type:'billing',is_next: billingAddress.saveAddress ? true : false
-    })
-
-    // create shipping address record put user id if saveAddress true
-    const shipping = await Address.create({
-      email: shippingAddress.email,first_name : shippingAddress.first_name,
-      last_name : shippingAddress.last_name,address : shippingAddress.address,
-      appartment : shippingAddress.appartment,city : shippingAddress.city,
-      province : shippingAddress.province,country : shippingAddress.country,
-      postal_code : shippingAddress.postal_code,phone: shippingAddress.phone,
-      type:'shipping',is_next: shippingAddress.saveAddress ? true : false
-    })
-
+    // create shipping address record put user id
+    let SHIPPING_ADDRESS;
+    try{
+     SHIPPING_ADDRESS = await Address.create({
+       email: shippingAddress.email,first_name : shippingAddress.firstName,
+       last_name : shippingAddress.lastName,address : shippingAddress.address,
+       appartment : shippingAddress.appartment,city : shippingAddress.city,
+       province : shippingAddress.province,country : shippingAddress.country,
+       postal_code : shippingAddress.postalCode,phone: shippingAddress.phone,
+       type:'shipping',user: USER._id
+     })
+    }catch(error){
+      return NextResponse.json({ message: 'Creating shipping address failed!', success: false });    
+    }
 
     // Todo: create order with above data
-    const isCreated = await Order.create({});
+    const isOrdered = await Order.create({
+      order_no:ORDER_NO,
+      items:items,
+      coupons:coupons,
+      billing_address:BILLING_ADDRESS._id,
+      shipping_address:SHIPPING_ADDRESS._id,
+      sub_total:subTotal,
+      vat:vat,
+      grand_total:grandTotal,
+      order_status:'Pending',
+      payment_status:'Pending'
+    });
 
-    return NextResponse.json({ success: true });
-
+    if(isOrdered){
+      return NextResponse.json({order_id: isOrdered._id,success: true });
+    }
+    return NextResponse.json({ message: 'Processing order failed!', success: false });
   } catch (error) {
     return NextResponse.json({ message: 'Internal Server Error!', success: false });
   }

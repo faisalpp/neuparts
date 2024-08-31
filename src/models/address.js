@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const addressesSchema = new mongoose.Schema({
+    user : {type: String},
     email : {type: String, required:true},
     first_name : {type: String, required:true},
     last_name : {type: String, required:true},
@@ -11,10 +12,9 @@ const addressesSchema = new mongoose.Schema({
     country : {type: String, required:true},
     postal_code : {type: String, required:true},
     phone : {type: String, required:true},
-    type : {type: String, required:true},
-    is_next: {type: Boolean, required:true}, 
+    type : {type: String, required:true}, 
 },{timestamps: true});
 
-const Address = mongoose.models.Addresses || mongoose.model('Addresses',addressesSchema,'addresses');
+const Address = mongoose.models.Address || mongoose.model('Address',addressesSchema);
 
 export default Address;
