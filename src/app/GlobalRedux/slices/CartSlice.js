@@ -172,7 +172,7 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal + (price * tmpQuantity)
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
-             if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
+             if(state.shippingMethod?.method === 'Shipping' && state.shippingMethod?.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
              }
              state.cartVat = (subTotal * (10/100))
