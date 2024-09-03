@@ -1,12 +1,12 @@
 import React from 'react';
 import CaretDown from '@/components/svgs/CaretDown';
 
-const CustomSelect = ({ label, id, Options, setState }) => {
+const CustomSelect = ({ label, id, Options, setState,fieldName='' }) => {
   return (
     <div className="relative">
-      <select id={id} onChange={(e) => setState(e.target.value)} className="w-full appearance-none rounded-lg border border-b31 px-[11px] pb-1 pt-[19px] text-sm font-medium text-b16 outline-none">
+      <select id={id} onChange={(e) => {fieldName != '' ? setState(e) : setState(e.target.value)}} className="w-full appearance-none rounded-lg border border-b31 px-[11px] pb-1 pt-[19px] text-sm font-medium text-b16 outline-none">
         {Options.map((option, index) => (
-          <option key={index} value={option.value}>
+          <option key={index} value={option.value} name={fieldName}>
             {option.name}
           </option>
         ))}

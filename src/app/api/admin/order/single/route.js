@@ -4,7 +4,7 @@ import Order from '@/models/order';
 import User from '@/models/user';
 
 export async function GET(request) {
-//   try {
+  try {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const id = searchParams.get('id');
@@ -13,7 +13,7 @@ export async function GET(request) {
     const user = await User.findOne({_id:order.user})
 
     return NextResponse.json({ order: order,user:user, success: true });
-//   } catch (error) {
-//     return NextResponse.json({ error: error.message }, { status: 500 });
-//   }
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }

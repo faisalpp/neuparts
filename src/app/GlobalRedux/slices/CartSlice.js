@@ -143,7 +143,7 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
               let subTotal = state.cartSubTotal + (price * tmpQuantity)
               state.cartSubTotal = parseFloat(subTotal.toFixed(2))
               if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
-                subTotal += parseFloat(rate)
+                subTotal += parseFloat(state.shippingMethod.rate)
               }
               state.cartVat = (subTotal * (10/100))
               state.cartGrandTotal = subTotal + state.cartVat
@@ -173,7 +173,7 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let subTotal = state.cartSubTotal + (price * tmpQuantity)
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
-              subTotal += parseFloat(rate)
+              subTotal += parseFloat(state.shippingMethod.rate)
              }
              state.cartVat = (subTotal * (10/100))
              state.cartGrandTotal = subTotal + state.cartVat
@@ -198,7 +198,7 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let subTotal = state.cartSubTotal - price
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
-              subTotal += parseFloat(rate)
+              subTotal += parseFloat(state.shippingMethod.rate)
              }
              state.cartVat = (subTotal * (10/100))
              state.cartGrandTotal = subTotal + state.cartVat
@@ -226,7 +226,7 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let subTotal = state.cartSubTotal - price
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
-              subTotal += parseFloat(rate)
+              subTotal += parseFloat(state.shippingMethod.rate)
              }
              state.cartVat = (subTotal * (10/100))
              state.cartGrandTotal = subTotal + state.cartVat

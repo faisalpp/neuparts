@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Address from './address'
 
 const ordersSchema = new mongoose.Schema({
     user : {type: String},

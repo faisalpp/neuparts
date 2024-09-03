@@ -4,7 +4,7 @@ import Order from '@/models/order';
 
 
 export async function GET(request) {
-  // try {
+  try {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
@@ -22,7 +22,7 @@ export async function GET(request) {
     const pageCount = Math.ceil(count / limit);
 
     return NextResponse.json({ orders: orders, pagination: { pageCount, count }, success: true });
-  // } catch (error) {
-  //   return NextResponse.json({ error: error.message }, { status: 500 });
-  // }
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
