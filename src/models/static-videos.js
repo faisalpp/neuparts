@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const staticVideosSchema = new mongoose.Schema({
     url : {type: String, required:true},

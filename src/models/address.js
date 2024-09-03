@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const addressesSchema = new mongoose.Schema({
     user : {type: String},

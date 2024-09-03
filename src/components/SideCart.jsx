@@ -1,12 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineArrowRight, AiOutlineClose } from 'react-icons/ai';
 import {BsCart3} from 'react-icons/bs'
 import SideCartCard from './Cart/SideCartCard';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCart } from '@/app/GlobalRedux/slices/CartSlice';
+import { toggleCart,getCart,setCartLoader,resetCart } from '@/app/GlobalRedux/slices/CartSlice';
 
 const SideCart = ({ cartMenuRef }) => {
   const route = useRouter();
@@ -18,6 +18,21 @@ const SideCart = ({ cartMenuRef }) => {
   const subTotal = useSelector((state)=>state.cart.cartSubTotal)
 
   const [loading, setLoading] = useState(false);
+
+  const GetCart = async () => {
+   if(sCart){
+    dispatch(setCartLoader())
+    const res = await dispatch(getCart({cartId:cartId}))
+    if(!res.payload.success){
+     dispatch(resetCart())
+    }
+    dispatch(setCartLoader())
+   }
+  }
+
+  useEffect(()=>{
+   GetCart()
+  },[sCart])
 
  
   return (

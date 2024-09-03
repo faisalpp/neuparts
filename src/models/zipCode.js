@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const zipCodeSchema = new mongoose.Schema({
     zipCode: {type: String, required:true,unique:true},

@@ -9,12 +9,13 @@ export async function POST(request) {
     await connect();
 
     const {orderId,intent,paymentStatus} = await request.json()
-
-    const isUpdated = await Order.findByIdAndUpdate(orderId,{
-     payment_intent:intent,
-     payment_status: paymentStatus
-    }) 
-
+    console.log(orderId)
+    console.log(intent)
+    console.log(paymentStatus)
+    const isUpdated = await Order.findByIdAndUpdate(orderId,
+      {payment_intent: intent,payment_status: paymentStatus},
+      { new: true });
+    console.log(isUpdated)
     if(isUpdated){
       return NextResponse.json({success: true },{status:200});
     }

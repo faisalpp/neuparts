@@ -22,7 +22,7 @@ export async function POST(request) {
   }
 
   const hash = await bcrypt.compare(password, user.password);
-  const expiredAt = new Date(Date.now() + 1 * 60 * 60 * 1000);
+  const expiredAt = new Date(Date.now() + 2 * 60 * 60 * 1000);
 
   if (hash) {
     const session = await encrypt({ id:user._id,email: user.email, expires:expiredAt });

@@ -1,6 +1,7 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const ordersSchema = new mongoose.Schema({
+    user : {type: String},
     order_no : {type: String, required:true},
     items : {type: [Object], required:true},
     coupons: {type: [String], required:true},
@@ -14,6 +15,7 @@ const ordersSchema = new mongoose.Schema({
     },
     sub_total: {type: String, required:true},
     vat: {type: String, required:true},
+    shipping: {type: Object, required:true},
     grand_total: {type: String, required:true},
     payment_intent: {type: Object},
     order_status: {type: String, required:true},

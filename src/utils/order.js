@@ -81,9 +81,7 @@ export const CreateCustomer = async (obj) => {
 
   const findUser = await User.findOne({email:obj.email})
   if(findUser){
-    return { firstName: findUser.firstName,lastName: findUser.lastName,
-        country: findUser.country,phone: findUser.phone,email: findUser.email
-    }
+    return findUser._id
   }else{
     const hash = await bcrypt.hash(obj.password, 10);
 
@@ -97,7 +95,7 @@ export const CreateCustomer = async (obj) => {
     })
     if(newUser){
       //Todo : send password rest link to customer email
-      return newUser
+      return newUser._id
     }
     return false;
   }

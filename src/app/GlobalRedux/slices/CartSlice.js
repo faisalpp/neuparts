@@ -1,6 +1,6 @@
 'use client';
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import {AddToCart,RemoveFromCart,DeleteFromCart} from '../api/cart'
+import {AddToCart,RemoveFromCart,DeleteFromCart,GetCart} from '../api/cart'
 
 const initialState = {
   cart:{},
@@ -11,8 +11,22 @@ const initialState = {
   cartCount:0,
   cartSubTotal:0.00,
   cartVat:0.00,
-  cartGrandTotal:0.00
+  cartGrandTotal:0.00,
+  cartLoader:false
 }
+
+export const getCart = createAsyncThunk("cart/get", async (data) => {
+    try{
+      const response = await GetCart(data); // Call your login API with the provided 
+      if(response.success){
+        return response; // Assuming your API response contains the user data
+      }else{
+        return response
+      }
+    }catch(error){
+      return { payload: error.response, error: true };
+    }
+});
 
 // Create an async thunk for the Add To Cart
 export const addToCart = createAsyncThunk("cart/add", async (data) => {
@@ -26,7 +40,7 @@ export const addToCart = createAsyncThunk("cart/add", async (data) => {
     }catch(error){
       return { payload: error.response, error: true };
     }
-  });
+});
 
 // Create an async thunk for the Remove from Cart
 export const removeFromCart = createAsyncThunk("cart/remove", async (data) => {
@@ -64,7 +78,6 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
       resetCart: (state, action) => {
         state.cart = {},
         state.items = [],  
-        state.sCart = false,
         state.cartId = null,
         state.cartCount = 0,
         state.cartSubTotal = 0.00,
@@ -76,6 +89,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
       },
       hideCart: (state, action) => {
         state.sCart = false 
+      },
+      setCartLoader: (state,action) => {
+        state.cartLoader = !state.cartLoader
       },
       setShippingStatus: (state,action) => {
         state.shippingMethod = {status:false}
@@ -94,10 +110,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
             state.cartCount = tmpQuantity
             let price = it.is_sale ? it.sale_price : it.regular_price
             let subTotal = state.cartSubTotal + (price * tmpQuantity)
+            state.cartSubTotal = subTotal
             if(method === 'Shipping' && rate != 'N/A'){
              subTotal += parseFloat(rate)
             }
-            state.cartSubTotal = subTotal
             state.cartVat = (subTotal * (10/100))
             state.cartGrandTotal = subTotal + state.cartVat
            })
@@ -108,6 +124,35 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
     },
     extraReducers: (builder) => {
       builder
+       .addCase(getCart.fulfilled,(state,action)=>{
+        const data = action.payload;
+        if(data.success){
+          state.cart = data.cart
+          state.cartId = data.cart._id
+          state.items = data.cart.categories
+          state.cartCount = 0;
+          state.cartSubTotal = 0;
+          if(data.cart.categories.length > 0){
+           data.cart.categories.forEach((cat)=>{
+            if(cat.items.length > 0){
+             cat.items.forEach((it)=>{
+              let tmpQuantity = 0;
+              tmpQuantity += it.quantity 
+              state.cartCount = tmpQuantity
+              let price = it.is_sale ? it.sale_price : it.regular_price
+              let subTotal = state.cartSubTotal + (price * tmpQuantity)
+              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
+                subTotal += parseFloat(rate)
+              }
+              state.cartVat = (subTotal * (10/100))
+              state.cartGrandTotal = subTotal + state.cartVat
+             })
+            }
+           })
+          }
+        } 
+       }) 
        .addCase(addToCart.fulfilled, (state, action) => {
         const {cart,cartRender} = action.payload;
         if(cart){
@@ -127,6 +172,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal + (price * tmpQuantity)
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+             if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
+              subTotal += parseFloat(rate)
+             }
              state.cartVat = (subTotal * (10/100))
              state.cartGrandTotal = subTotal + state.cartVat
             })
@@ -149,6 +197,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal - price
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+             if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
+              subTotal += parseFloat(rate)
+             }
              state.cartVat = (subTotal * (10/100))
              state.cartGrandTotal = subTotal + state.cartVat
             })
@@ -174,6 +225,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal - price
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
+             if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
+              subTotal += parseFloat(rate)
+             }
              state.cartVat = (subTotal * (10/100))
              state.cartGrandTotal = subTotal + state.cartVat
             })
@@ -189,6 +243,6 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
     
   });
   
-  export const { toggleCart,hideCart,resetCart,calcShipping,setShippingStatus } = cartSlice.actions;
+  export const { toggleCart,hideCart,resetCart,calcShipping,setShippingStatus,setCartLoader } = cartSlice.actions;
   
   export default cartSlice.reducer;

@@ -18,7 +18,7 @@ const initialState = {
         state.loader = !state.loader
       },
       setOrderId:(state,action) => {
-
+         state.orderId = action.payload
       }
     },
   });

@@ -76,6 +76,7 @@ const Payment = () => {
       billingAddress: order.billingAddress,
       subTotal: cartSubTotal,
       vat: cartVat,
+      shipping:shipping,
       grandTotal: cartGrandTotal,
       coupons: []
     };
@@ -192,9 +193,11 @@ const Payment = () => {
 
    //Todo: pre payment order save in database with status 
    const isSaved = await PreDataSave();
+
    if(isSaved.success){
     dispatch(setOrderId(isSaved.order_id))
     const isPaid = await HandleStripe()
+    console.log(isPaid)
     if(isPaid?.error){
       toast.error(isPaid.error.message)
       await PostOrder({orderId:orderId,intent:{status:false},paymentStatus:'Declined'})
@@ -202,8 +205,10 @@ const Payment = () => {
       return
     }
     const Intent = isPaid.paymentIntent.client_secret;
-    await PostOrder({orderId:orderId,intent:{data:Intent,status:true},paymentStatus:'Completed'})
+    console.log({orderId:isSaved.order_id,intent:{data:Intent,status:true},paymentStatus:'Completed'})
+    await PostOrder({orderId:isSaved.order_id,intent:{data:Intent,status:true},paymentStatus:'Completed'})
     dispatch(setOrderLoader())
+    toast.success('Order placed successfully!')
    }
 
   }

@@ -62,7 +62,7 @@ const Sidebar = () => {
               <MdRateReview />
               <span className="mx-2 text-sm font-semibold">Reviews</span>
             </Link>
-            <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
+            <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/orders">
               <LuBoxes />
               <span className="mx-2 text-sm font-semibold">Orders</span>
             </Link>
