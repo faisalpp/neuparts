@@ -9,7 +9,6 @@ import Text from '@/components/AdminDashboard/Table/TD/Text';
 import NoData from '@/components/AdminDashboard/Table/NoData';
 import OrderTablet from '@/components/AdminDashboard/Table/TD/OrderTablet';
 import Actions from '@/components/AdminDashboard/Table/TD/Actions';
-import ActionBtns from '@/components/AdminDashboard/ActionBtns';
 import TableNav from '@/components/AdminDashboard/TableNav';
 
 const Orders = () => {

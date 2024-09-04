@@ -9,7 +9,7 @@ import CustomSelect from '@/components/Reusable/CustomSelect';
 import Image from 'next/image';
 import RadioSvg from '@/components/svgs/RadioSvg';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setOrderInfo } from '@/app/GlobalRedux/slices/OrderSlice';
 import {calcShipping} from '@/app/GlobalRedux/slices/CartSlice'
 import { useRouter } from 'next/navigation';
@@ -20,22 +20,25 @@ import { BiLoaderAlt } from "react-icons/bi";
 const Information = () => {
   const dispatch = useDispatch()
   const router = useRouter()
+  const orderInfo = useSelector((state)=>state.order.orderInfo)
+  const ShippingMethod = useSelector((state)=>state.cart.shippingMethod)
 
+  console.log(orderInfo)
   const [zipLoader,setZipLoader] = useState(false)
 
-  const [email,setEmail] = useState('')
-  const [keepUpdates,setKeepUpdates] = useState(false)
-  const [firstName,setFirstName] = useState('')
-  const [lastName,setLastName] = useState('')
-  const [address,setAddress] = useState('')
-  const [appartment,setAppartment] = useState('')
-  const [city,setCity] = useState('')
-  const [country,setCountry] = useState('usa')
-  const [province,setProvince] = useState('alberta')
-  const [postalCode,setPostalCode] = useState('')
-  const [phone,setPhone] = useState('')
-  const [saveAddress,setSaveAddress] = useState(false)
-  const [shippingMethod,setShippingMethod] = useState('Pickup')
+  const [email,setEmail] = useState(orderInfo?.shippingAddress?.email ? orderInfo?.shippingAddress?.email : '')
+  const [keepUpdates,setKeepUpdates] = useState(orderInfo?.shippingAddress?.keepUpdates ? true : false)
+  const [firstName,setFirstName] = useState(orderInfo?.shippingAddress?.firstName ? orderInfo?.shippingAddress?.firstName : '')
+  const [lastName,setLastName] = useState(orderInfo?.shippingAddress?.lastName ? orderInfo?.shippingAddress?.lastName : '')
+  const [address,setAddress] = useState(orderInfo?.shippingAddress?.address ? orderInfo?.shippingAddress?.address : '')
+  const [appartment,setAppartment] = useState(orderInfo?.shippingAddress?.appartment ? orderInfo?.shippingAddress?.appartment : '')
+  const [city,setCity] = useState(orderInfo?.shippingAddress?.city ? orderInfo?.shippingAddress?.city : '')
+  const [country,setCountry] = useState(orderInfo?.shippingAddress?.country ? orderInfo?.shippingAddress?.country : 'usa')
+  const [province,setProvince] = useState(orderInfo?.shippingAddress?.province ? orderInfo?.shippingAddress?.province : 'alberta')
+  const [postalCode,setPostalCode] = useState(orderInfo?.shippingAddress?.postalCode ? orderInfo?.shippingAddress?.postalCode : '')
+  const [phone,setPhone] = useState(orderInfo?.shippingAddress?.phone ? orderInfo?.shippingAddress?.phone : '')
+  const [saveAddress,setSaveAddress] = useState(orderInfo?.shippingAddress?.saveAddress ? true : false)
+  const [shippingMethod,setShippingMethod] = useState(ShippingMethod?.method === 'Shipping' ? 'Shipping' : 'Pickup')
 
   const Countrys = [{name:'US',value:'US'}];
   const Provinces = [{name:'Alberta',value:'Alberta'}];
@@ -151,7 +154,7 @@ const Information = () => {
       <div className="space-y-14px [&>*>*]:text-sm [&>*>*]:!text-b16">
         <h3 className="text-sm font-medium text-b16">Contact information</h3>
         <CustomInput state={email} setState={setEmail} colorStyle="border-b31 placeholder:text-b25" placeholder="Email" type="email" />
-        <Checkbox onChange={e=>handleCheckbox(e)} name="keepUpdates" id="keep-me-update" label="Keep me up to date on news and exclusive offers" className="border-b31 checked:bg-black" ripple={false} />
+        <Checkbox checked={keepUpdates} onChange={e=>handleCheckbox(e)} name="keepUpdates" id="keep-me-update" label="Keep me up to date on news and exclusive offers" className="border-b31 checked:bg-black" ripple={false} />
       </div>
       <div className="my-8 space-y-14px">
         <h3 className="text-sm font-medium text-b16">Delivery method</h3>
@@ -185,7 +188,7 @@ const Information = () => {
               </div>
             </div>
             <div className="[&>*]:text-sm [&>*]:text-b16">
-              <Checkbox onChange={e=>handleCheckbox(e)} name="saveAddress" id="save-information" label="Save this information for next time" className="border-b31 checked:bg-black" ripple={false} />
+              <Checkbox checked={saveAddress} onChange={e=>handleCheckbox(e)} name="saveAddress" id="save-information" label="Save this information for next time" className="border-b31 checked:bg-black" ripple={false} />
             </div>
           </div>
         </div>

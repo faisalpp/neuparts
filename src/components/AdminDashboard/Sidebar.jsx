@@ -13,6 +13,7 @@ import { FaImages } from 'react-icons/fa';
 import { BiSolidVideos } from 'react-icons/bi';
 import { LuBoxes } from 'react-icons/lu';
 import Logout from '@/components/AdminDashboard/Logout';
+import { MdDiscount } from "react-icons/md";
 
 const Sidebar = () => {
   // State to manage collapsibility of each section
@@ -65,6 +66,10 @@ const Sidebar = () => {
             <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/orders">
               <LuBoxes />
               <span className="mx-2 text-sm font-semibold">Orders</span>
+            </Link>
+            <Link className="flex items-center rounded-lg px-5 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/coupons">
+              <MdDiscount />
+              <span className="mx-2 text-sm font-semibold">Coupons</span>
             </Link>
           </div>
 

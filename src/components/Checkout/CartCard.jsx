@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import {formatString} from '@/utils/index'
 
 const CartCard = (prop) => {
   return (
@@ -11,7 +12,7 @@ const CartCard = (prop) => {
       <div className="flex items-center gap-14px">
         <div>
           <h3 className="text-sm font-medium !leading-[150%] tracking-032 line-clamp-1 text-b16">{prop.item.title}</h3>
-          <p className="text-xs text-b25">{prop.item.condition}</p>
+          <p className="text-xs text-b25">{formatString(prop.item.condition)}</p>
         </div>
         {prop.item.is_sale ? 
         <div className="flex justify-between text-sm font-medium text-b3">${prop.item.sale_price * prop.item.quantity}</div>

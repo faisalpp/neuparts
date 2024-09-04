@@ -1,9 +1,10 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import CustomInput from '@/components/Reusable/CustomInput';
 import CartCard from '@/components/Checkout/CartCard';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+
 
 const Cart = () => {
  const router = useRouter()
