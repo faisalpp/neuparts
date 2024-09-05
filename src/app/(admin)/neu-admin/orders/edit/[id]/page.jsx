@@ -365,7 +365,7 @@ const Page = ({params}) => {
           {it.thumbnail ? <div className='px-2 py-1 bg-gray-50 border-2 border-gray-300 rounded-md w-fit' ><Image src={it.thumbnail} height={100} width={100} className='w-10 h-10' /></div> :
          <div className='px-2 py-1 bg-gray-50 border-2 border-gray-300 rounded-md w-fit' ><CiImageOn className='text-4xl' /></div>}
           <div><Link href='/' className='text-sm underline text-gray-400' >{it.title}</Link></div>
-          <div className='flex items-center gap-5 ml-auto mr-3' ><span>${it.is_sale ? it.sale_price : it.regular_price}</span><span>x 1</span><span>$200</span></div>
+          <div className='flex items-center gap-5 ml-auto mr-3' ><span>${it.is_sale ? it.sale_price : it.regular_price}</span><span>x {it.quantity}</span><span>${it.is_sale ? it.sale_price * it.quantity : it.regular_price * it.quantity}</span></div>
          </div>
         )) : null}  
          
@@ -380,13 +380,21 @@ const Page = ({params}) => {
        <div className='flex justify-end gap-5 border-b-2 border-t-2 px-2 py-2' >
         <div className='flex flex-col gap-2' >
          <span className='text-black font-bold' >Items Subtotal</span>
+         <span className='text-black font-bold' >Coupons</span>
          <span>Shipping</span>
          <span>Vat</span>
          <span className='text-black font-bold' >Order Total</span>
         </div>
         <div className='flex flex-col gap-2' >
          <span className='text-black font-bold' >${order.sub_total}</span>
-         <span>${order.shipping?.rate}</span>
+         {!loader && order?.coupons?.length > 0 ?
+           <div>
+          {order?.coupons.map((coupon,i)=>(
+          <span className='bg-orange-500 rounded-md px-2 py-1 text-white text-sm' >{coupon?.code}</span>
+          ))}
+         </div>:'N/A'
+         }
+         <span>{order.shipping?.method === 'Shipping' ? '$' : null}{order.shipping?.method === 'Shipping' ? order.shipping?.rate : 'Pickup'}</span>
          <span>${order.vat}</span>
          <span className='text-black font-bold' >${order.grand_total}</span>
         </div>

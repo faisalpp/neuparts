@@ -1,6 +1,7 @@
 'use client';
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import {AddToCart,RemoveFromCart,DeleteFromCart,GetCart} from '../api/cart'
+import {ApplyCoupon} from '../api/coupon'
 
 const initialState = {
   cart:{},
@@ -8,12 +9,27 @@ const initialState = {
   sCart:false,
   cartId:null,
   shippingMethod:{method:'Pickup',rate:'Free'},
+  coupon:{status:false},
   cartCount:0,
   cartSubTotal:0.00,
   cartVat:0.00,
   cartGrandTotal:0.00,
   cartLoader:false
 }
+
+export const applyCoupon = createAsyncThunk("cart/coupon", async (data) => {
+    try{
+      const response = await ApplyCoupon(data); // Call your login API with the provided 
+      if(response.success){
+        return response; // Assuming your API response contains the user data
+      }else{
+        return response
+      }
+    }catch(error){
+      return { payload: error.response, error: true };
+    }
+});
+
 
 export const getCart = createAsyncThunk("cart/get", async (data) => {
     try{
@@ -82,7 +98,8 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
         state.cartCount = 0,
         state.cartSubTotal = 0.00,
         state.cartVat = 0.00,
-        state.cartGrandTotal = 0.00
+        state.cartGrandTotal = 0.00,
+        state.coupon = {status:false}
       },
       toggleCart: (state, action) => {
         state.sCart = !state.sCart 
@@ -120,10 +137,70 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
           }
          })
         }
+      },
+      removeCoupon:(state,action)=>{
+        state.cartCount = 0;
+        state.cartSubTotal= 0;
+        if(state.items.length > 0){
+         state.items.forEach((cat)=>{
+          if(cat.items.length > 0){
+           cat.items.forEach((it)=>{
+            let tmpQuantity = 0;
+            tmpQuantity += it.quantity 
+            state.cartCount = tmpQuantity
+            let price = it.is_sale ? it.sale_price : it.regular_price
+            let subTotal = state.cartSubTotal + (price * tmpQuantity)
+            state.cartSubTotal = subTotal
+            if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
+             subTotal += parseFloat(state.shippingMethod.rate)
+            }
+            state.cartVat = (subTotal * (10/100))
+            state.cartGrandTotal = subTotal + state.cartVat
+           })
+          }
+         })
+        }
+        state.coupon = {status:false}
       }
     },
     extraReducers: (builder) => {
       builder
+       .addCase(applyCoupon.fulfilled,(state,action)=>{
+        const data = action.payload
+        if(data.success){
+         state.coupon = {...data.coupon,status:true}
+         state.cartCount = 0;
+         state.cartSubTotal= 0;
+         if(state.items.length > 0){
+          state.items.forEach((cat)=>{
+           if(cat.items.length > 0){
+            cat.items.forEach((it)=>{
+             let tmpQuantity = 0;
+             tmpQuantity += it.quantity 
+             state.cartCount = tmpQuantity
+             let price = it.is_sale ? it.sale_price : it.regular_price
+             let subTotal = state.cartSubTotal + (price * tmpQuantity)
+             // Coupon Calculation
+             if(data.coupon.type === 'Flat'){
+              subTotal -= parseFloat(data.coupon.value) 
+             }
+             if(data.coupon.type === 'Percentage'){
+               const calc = (subTotal * (parseFloat(data.coupon.value)/100))
+               subTotal -= calc
+             }
+             // Coupon Calculation
+             state.cartSubTotal = subTotal
+             if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
+              subTotal += parseFloat(state.shippingMethod.rate)
+             }
+             state.cartVat = (subTotal * (10/100))
+             state.cartGrandTotal = subTotal + state.cartVat
+            })
+           }
+          })
+         }
+        }
+       })
        .addCase(getCart.fulfilled,(state,action)=>{
         const data = action.payload;
         if(data.success){
@@ -141,6 +218,15 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
               state.cartCount = tmpQuantity
               let price = it.is_sale ? it.sale_price : it.regular_price
               let subTotal = state.cartSubTotal + (price * tmpQuantity)
+              // Coupon Calculation
+             if(state.coupon?.type === 'Flat'){
+              subTotal -= parseFloat(data.value) 
+             }
+             if(state.coupon?.type === 'Percentage'){
+               const calc = (subTotal * (parseFloat(state.coupon?.value)/100))
+               subTotal -= calc
+             }
+             // Coupon Calculation
               state.cartSubTotal = parseFloat(subTotal.toFixed(2))
               if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
                 subTotal += parseFloat(state.shippingMethod.rate)
@@ -171,6 +257,15 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              state.cartCount = tmpQuantity
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal + (price * tmpQuantity)
+             // Coupon Calculation
+             if(state.coupon?.type === 'Flat'){
+               subTotal -= parseFloat(data.value) 
+              }
+              if(state.coupon?.type === 'Percentage'){
+                const calc = (subTotal * (parseFloat(state.coupon?.value)/100))
+                subTotal -= calc
+              }
+              // Coupon Calculation
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
              if(state.shippingMethod?.method === 'Shipping' && state.shippingMethod?.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
@@ -196,6 +291,15 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              state.cartCount -= 1
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal - price
+             // Coupon Calculation
+             if(state.coupon?.type === 'Flat'){
+              subTotal -= parseFloat(data.value) 
+             }
+             if(state.coupon?.type === 'Percentage'){
+               const calc = (subTotal * (parseFloat(state.coupon?.value)/100))
+               subTotal -= calc
+             }
+             // Coupon Calculation
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
@@ -208,6 +312,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
          }else{
           state.cartCount = 0;
           state.cartSubTotal = 0.00;
+          state.coupon = {status:false}
+          state.cartVat = 0.00
+          state.cartGrandTotal = 0.00
          }
         }
       })
@@ -224,6 +331,15 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              state.cartCount -= it.quantity
              let price = it.is_sale ? it.sale_price : it.regular_price
              let subTotal = state.cartSubTotal - price
+             // Coupon Calculation
+             if(state.coupon?.type === 'Flat'){
+              subTotal -= parseFloat(data.value) 
+             }
+             if(state.coupon?.type === 'Percentage'){
+               const calc = (subTotal * (parseFloat(state.coupon?.value)/100))
+               subTotal -= calc
+             }
+             // Coupon Calculation
              state.cartSubTotal = parseFloat(subTotal.toFixed(2))
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
@@ -235,7 +351,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
           })
          }else{
           state.cartCount = 0;
-          state.cartSubTotal = 0;
+          state.cartSubTotal = 0.00;
+          state.coupon = {status:false}
+          state.cartVat = 0.00
+          state.cartGrandTotal = 0.00
          }
         }
       })
@@ -243,6 +362,6 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
     
   });
   
-  export const { toggleCart,hideCart,resetCart,calcShipping,setShippingStatus,setCartLoader } = cartSlice.actions;
+  export const { toggleCart,hideCart,resetCart,calcShipping,setShippingStatus,setCartLoader,removeCoupon } = cartSlice.actions;
   
   export default cartSlice.reducer;

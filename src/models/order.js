@@ -5,7 +5,7 @@ const ordersSchema = new mongoose.Schema({
     user : {type: String},
     order_no : {type: String, required:true},
     items : {type: [Object], required:true},
-    coupons: {type: [String], required:true},
+    coupons: {type: [Object], required:true},
     billing_address: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Address',

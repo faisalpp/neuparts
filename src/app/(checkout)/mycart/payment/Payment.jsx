@@ -42,6 +42,7 @@ const Payment = () => {
   const shipping = useSelector((state)=>state.cart.shippingMethod)
   const cartItems = useSelector((state)=>state.cart.items)
   const cartSubTotal = useSelector((state)=>state.cart.cartSubTotal)
+  const Coupon = useSelector((state)=>state.cart.coupon)
   const cartVat = useSelector((state)=>state.cart.cartVat)
   const cartGrandTotal = useSelector((state)=>state.cart.cartGrandTotal)
 
@@ -78,7 +79,7 @@ const Payment = () => {
       vat: cartVat,
       shipping:shipping,
       grandTotal: cartGrandTotal,
-      coupons: []
+      coupons: Coupon.status ? [Coupon] : []
     };
   
     try {
