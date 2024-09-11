@@ -8,11 +8,13 @@ import thunk from 'redux-thunk';
 import CartSlice from '@/app/GlobalRedux/slices/CartSlice'
 import OrderSlice from '@/app/GlobalRedux/slices/OrderSlice'
 import AuthSlice from '@/app/GlobalRedux/slices/AuthSlice'
+import Favorite from '@/app/GlobalRedux/slices/Favorite'
 
 const reducers = combineReducers({
   cart: CartSlice,
   order:OrderSlice,
-  auth:AuthSlice
+  auth:AuthSlice,
+  favorite:Favorite
 });
 
 const persistConfig = {

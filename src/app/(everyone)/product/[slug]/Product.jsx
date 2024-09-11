@@ -28,6 +28,9 @@ import { MinusIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/react/24
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/app/GlobalRedux/slices/CartSlice';
 import { useRouter } from 'next/navigation';
+import {addToFavoriteUser,removeFromFavoriteUser} from '@/app/GlobalRedux/slices/Favorite'
+import {toast} from 'react-toastify'
+
 
 const Product = ({ slug }) => {
   const dispatch = useDispatch();
@@ -97,7 +100,7 @@ const Product = ({ slug }) => {
   const [buyingOptions, setBuyingOptions] = useState([]);
 
   const FetchProduct = async () => {
-    await fetch(`/api/front/product/single?slug=${slug}`)
+    fetch(`/api/front/product/single?slug=${slug}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -143,7 +146,6 @@ const Product = ({ slug }) => {
     data: '/popular-parts.webp',
     preview: '/popular-parts.webp',
   });
-  const [isFav, setIsFav] = useState(false);
 
   const [showNavbar, setShowNavbar] = useState(false);
 
@@ -160,15 +162,45 @@ const Product = ({ slug }) => {
 
   const [imgModal, setImgModal] = useState(false);
 
+  const UserId = useSelector((state)=>state.auth.id)
+  const Favorites = useSelector((state)=>state.favorite.items)
+
   const [favLoad, setFavLoad] = useState(false);
   const [activeCondition, setActiveCondition] = useState({});
 
   const handleFavorites = async (e) => {
     e.preventDefault();
+    setFavLoad(true)
+    if(UserId){
+      const resp = await dispatch(addToFavoriteUser({userId:UserId,productId:product._id}))
+      if(resp.payload.success){
+        toast.success('Product added into favorites!')
+      }else{
+        toast.error('Adding to favorite failed!')
+      }
+      setFavLoad(false)
+    }else{
+      toast.info('Login required!')
+      setFavLoad(false)    
+    }
   };
 
-  const removeFavorite = async (e) => {
+  const RemoveFavorite = async (e) => {
     e.preventDefault();
+    setFavLoad(true)
+    if(UserId){
+      const getFav = Favorites.find((fav)=> fav.favId === product._id)
+      const resp = await dispatch(removeFromFavoriteUser({_id:getFav._id}))
+      if(resp.payload.success){
+        toast.success('Product removed from favorites!')
+      }else{
+        toast.error('Removing favorite failed!')
+      }
+      setFavLoad(false) 
+    }else{
+      toast.info('Login required!')
+      setFavLoad(false)    
+    }
   };
 
   // Match condition
@@ -184,6 +216,7 @@ const Product = ({ slug }) => {
       setActiveCondition(ConditionData(cond));
     }
   };
+
 
   return (
     <>
@@ -218,9 +251,9 @@ const Product = ({ slug }) => {
           {/* Bread Crumbs End */}
           <div id="product-information" className="maincontainer mb-10 grid grid-cols-1 items-center gap-6 sm:gap-10 lg:grid-cols-12 lg:items-start">
             <div className="lg:sticky lg:top-44 lg:col-span-5">
-              {isFav ? (
-                <button onClick={(e) => removeFavorite(e)} className="my-2 flex w-full items-center justify-end text-b3 hover:underline md:hidden">
-                  <AiFillHeart className={`h-6 w-6 ${favLoad ? 'animate-bounce' : null}`} />
+              {Favorites.some((fav)=> fav.favId === product._id) ? (
+                <button onClick={(e) => RemoveFavorite(e)} className="my-2 flex w-full items-center justify-end text-b3 hover:underline md:hidden">
+                  <AiFillHeart className={`h-6 w-6 ${favLoad ? 'animate-bounce text-red-500' : null}`} />
                 </button>
               ) : (
                 <button type="button" onClick={(e) => handleFavorites(e)} className="my-2 flex w-full items-center justify-end text-b3 hover:underline lg:hidden">
@@ -279,10 +312,10 @@ const Product = ({ slug }) => {
                 </div>
                 <div className="flex items-center gap-5 sm:w-full sm:justify-between lg:flex-wrap">
                   {product.sale_price ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-xs font-semibold text-black">${product.regular_price - product.sale_price} Savings</span> : null}
-                  {isFav ? (
-                    <button onClick={(e) => removeFavorite(e)} className="hidden items-center justify-end text-b3 hover:underline md:flex">
-                      <AiFillHeart className={`${favLoad ? 'animate-bounce' : null}`} />
-                      <span>Favorite</span>
+                  {Favorites.some((fav)=> fav.favId === product._id) ? (
+                    <button onClick={(e) => RemoveFavorite(e)} className="hidden items-center justify-end text-b3 hover:underline md:flex">
+                      <AiFillHeart className={`${favLoad ? 'animate-bounce text-red-500' : null}`} />
+                      <span>My Favorite</span>
                     </button>
                   ) : (
                     <button type="button" onClick={(e) => handleFavorites(e)} className="hidden items-center justify-end text-b3 hover:underline md:flex">

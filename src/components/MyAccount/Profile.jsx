@@ -34,7 +34,6 @@ const ProfileData = () => {
 
   const GetProfile = async () => {
     setLoading(true)
-    const getToastId = toast.loading('Loading profile...')
     fetch(`/api/user/profile/?email=${Email}`)
      .then((res) => res.json())
      .then((data) => {
@@ -45,15 +44,19 @@ const ProfileData = () => {
        setPhone(data.profile.phone);
        setCountry(data.profile.country);
        setLoading(false)
-       toast.update(getToastId, { render: 'Profile loaded!', type: 'success', autoClose: 1000, isLoading: false });
      } else {
       setLoading(false) 
-      toast.update(getToastId, { render: 'Profile loading failed!', type: 'error', autoClose: 1000, isLoading: false });
      }
     }).catch((error)=>{
-      toast.update(getToastId, { render: 'Something went wrong!', type: 'error', autoClose: 1000, isLoading: false });
+      toast.error('Something went wrong!')
     })
   };
+
+  useEffect(() => {
+   if(!loading){
+     GetProfile();
+    }
+  }, []);
 
   const UpdateProfile = async (e) => {
     e.preventDefault();
@@ -69,10 +72,6 @@ const ProfileData = () => {
       toast.update(getToastId, { render: 'Something went wrong!', type: 'error', autoClose: 1000, isLoading: false });
     })
   };
-
-  useEffect(() => {
-    GetProfile();
-  }, []);
 
 
   return (

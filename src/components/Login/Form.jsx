@@ -1,16 +1,19 @@
 'use client';
 import React from 'react';
+import {authCookieUser} from '@/app/GlobalRedux/slices/AuthSlice'
 import { BsArrowRightShort } from 'react-icons/bs';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {toast} from 'react-toastify'
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
+import {toast} from 'react-toastify'
+import { useDispatch } from 'react-redux';
 
 const Form = () => {
 
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,6 +22,22 @@ const Form = () => {
     email: Yup.string().email().required('Email is required!'),
     password: Yup.string().required('Password is required!')
   });
+
+
+  const getCookie = async () => {
+    const secretKey = process.env.NEXT_PUBLIC_ENCRYPT_SALT;
+    const key = new TextEncoder().encode(secretKey);
+
+    const cookieStr = document.cookie;
+    const cookies = cookieStr.split('; ');
+    for (let cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split('=');
+      if(cookieName === 'neu-user'){
+       const res = await dispatch(authCookieUser({cookieValue:cookieValue,key:key}))
+       router.push('/my-account/profile');
+      }
+    }
+  }
 
 
   const Login = async (e) => {
@@ -37,14 +56,13 @@ const Form = () => {
  
    const crtToastId = toast.loading("Signing in...")
    
- 
    fetch('/api/user/auth/login', {method: 'POST',
      headers: { 'Content-Type': 'application/json' },body: JSON.stringify({email,password}),
    }).then((res) => res.json())
     .then((resp) => {
      if(resp.success){
+       getCookie()
        toast.update(crtToastId,{render:'Signin Successfull!',type:'success',autoClose:1000,isLoading: false})
-       router.push('/my-account/profile');
       }else{
        toast.update(crtToastId,{render:'Invalid Credentials',type:'error',autoClose:1000,isLoading: false})
       }
@@ -52,7 +70,6 @@ const Form = () => {
      .catch((error) => {
        toast.update(crtToastId,{render:'Something went wrong!',type:'error',autoClose:1000,isLoading: false})
      });
- 
    }
 
 

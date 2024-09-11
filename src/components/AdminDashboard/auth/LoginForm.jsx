@@ -7,15 +7,33 @@ import Link from 'next/link';
 import {toast} from 'react-toastify'
 import * as Yup from "yup";
 import { useRouter } from 'next/navigation'
+import { useDispatch } from 'react-redux';
+import {authCookieUser} from '@/app/GlobalRedux/slices/AuthSlice'
 
 const Form = () => {
 
   const [formData,setFormData] = useState({email:'',password:''});
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const HandleChange = (e) => {
     const {value,name} = e.target;
     setFormData({...formData,[name]:value})
+  }
+
+  const getCookie = async () => {
+    const secretKey = process.env.NEXT_PUBLIC_ENCRYPT_SALT;
+    const key = new TextEncoder().encode(secretKey);
+
+    const cookieStr = document.cookie;
+    const cookies = cookieStr.split('; ');
+    for (let cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split('=');
+      if(cookieName === 'neu-admin'){
+       const res = await dispatch(authCookieUser({cookieValue:cookieValue,key:key}))
+       router.push('/neu-admin');
+      }
+    }
   }
 
   const Login = async (e) => {
@@ -37,7 +55,6 @@ const Form = () => {
   }
 
   const crtToastId = toast.loading("Please wait...")
-  
 
   fetch('/api/admin/auth/login', {method: 'POST',
     headers: { 'Content-Type': 'application/json' },body: JSON.stringify(formData),
@@ -45,8 +62,8 @@ const Form = () => {
    .then((resp) => {
     if(resp.success){
       setFormData({email:'',password:''});
+      getCookie()
       toast.update(crtToastId,{render:'Login Successfull!',type:'success',autoClose:1000,isLoading: false})
-      router.push('/neu-admin');
      }else{
       toast.update(crtToastId,{render:'Invalid User Credentials',type:'error',autoClose:1000,isLoading: false})
      }
