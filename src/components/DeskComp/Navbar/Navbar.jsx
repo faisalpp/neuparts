@@ -15,9 +15,14 @@ import { FiPhone } from 'react-icons/fi';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
 import { toggleCart } from '@/app/GlobalRedux/slices/CartSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation'
+import {setEmail,setLogin,setId} from '@/app/GlobalRedux/slices/AuthSlice'
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const router = useRouter()
+
   const [megMenu, setMegMenu] = useState(false);
   const [searchMenu, setSearchMenu] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -31,20 +36,48 @@ const Navbar = () => {
   useClickOutside([searchButtonRef, searchRef], () => setSearchMenu(false));
   useClickOutside([MenuButonRef, MegaMenuRef], () => setMegMenu(false));
 
-  const isUser = '';
-  const isAdmin = '';
-  const UserfirstName = '';
-  const AdminfirstName = '';
-
   const cartCount = useSelector((state) => state.cart.cartCount);
+  const User = useSelector((state)=>state.auth.user)
 
-  const handleAdminLogout = async (e) => {
-    e.preventDefault();
+  const handleAdminLogout = async () => {
+    const logoutToast = toast.loading('Signing you out...')
+    fetch('/api/admin/auth/logout',{method:'GET',headers:{'Content-Type':'application/json'}})
+    .then((res)=>res.json())
+    .then((data)=>{
+      if(data.success){
+       toast.update(logoutToast,{render:'Signout successfull!',type:'success',autoClose:1000,isLoading: false})
+       dispatch(setEmail(''))
+       dispatch(setLogin(''))
+       dispatch(setId(null))
+       router.push('/')
+      }
+    })
+    .catch((error)=>{
+      toast.update(logoutToast,{render:'Something went wrong!',type:'error',autoClose:1000,isLoading: false})
+    })
   };
 
   const handleLogout = async (e) => {
     e.preventDefault();
+
+    const crtToastId = toast.loading('Signing you out...');
+
+    fetch('/api/user/auth/logout', { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+      .then((res) => res.json())
+      .then((resp) => {
+        if (resp.success) {
+          toast.update(crtToastId, { render: 'Signout Successfull!', type: 'success', autoClose: 1000, isLoading: false });
+          dispatch(setEmail(''))
+          dispatch(setLogin(''))
+          dispatch(setId(null))
+          router.push('/');
+        }
+      })
+      .catch((error) => {
+        toast.update(crtToastId, { render: 'Something went wrong!', type: 'error', autoClose: 1000, isLoading: false });
+      });
   };
+
 
   const getCategories = async () => {
     const res = await fetch('/api/front/navbar');
@@ -85,27 +118,22 @@ const Navbar = () => {
               <span className="ml-2 h-4 w-4 rounded-full bg-b3 text-center text-xs">{cartCount}</span>
             </div>
 
-            {isAdmin ? (
+            {User === 'admin' ? (
               <Menu as="div" className="relative">
                 <Menu.Button className="top__menu_button">
                   <BiUserCircle className="text-lg" />
-                  <span className="ml-1 text-xs font-medium capitalize">Hello {AdminfirstName}</span>
+                  <span className="ml-1 text-xs font-medium capitalize">My Account</span>
                   <RiArrowDropDownLine className="text-xl" />
                 </Menu.Button>
                 {/* Mark this component as `static` */}
                 <Menu.Items as="div" className="absolute -right-24 top-12 z-[100] h-auto w-56 rounded-sm bg-white py-5 text-black shadow-lg">
                   <Menu.Item as="div" className="px-4">
-                    <Link href="/admin/dashboard" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
+                    <Link href="/neu-admin" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
                       Dashboard
                     </Link>
                   </Menu.Item>
                   <Menu.Item as="div" className="px-4">
-                    <Link href="" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
-                      Orders
-                    </Link>
-                  </Menu.Item>
-                  <Menu.Item as="div" className="px-4">
-                    <Link href="" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
+                    <Link href="#" className={`${({ isActive }) => (isActive ? 'bg-b5' : '')} top__menu_item`}>
                       Change Password
                     </Link>
                   </Menu.Item>
@@ -117,11 +145,11 @@ const Navbar = () => {
                 </Menu.Items>
               </Menu>
             ) : null}
-            {isUser ? (
+            {User === 'user' ? (
               <Menu as="div" className="relative">
                 <Menu.Button className="top__menu_button">
                   <BiUserCircle className="text-lg" />
-                  <span className="ml-1 text-xs font-medium capitalize">Hello {UserfirstName}</span>
+                  <span className="ml-1 text-xs font-medium capitalize">My Account</span>
                   <RiArrowDropDownLine className="text-xl" />
                 </Menu.Button>
                 {/* Mark this component as `static` */}
@@ -149,12 +177,12 @@ const Navbar = () => {
                 </Menu.Items>
               </Menu>
             ) : null}
-            {isAdmin || isUser ? null : (
+            {User === '' ? (
               <Link href="/login" className="flex h-10 cursor-pointer items-center justify-center rounded-md bg-b2 px-4 text-white">
                 <BiUserCircle />
                 <span className="ml-1 text-xs font-medium">My Account</span>
               </Link>
-            )}
+            ):null}
 
             {/* {isAuth ? <Link href="/my-account/profile" ><div className='flex items-center justify-center bg-b2 h-10 px-4 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link> : <Link href="/login" ><div className='flex items-center px-2 bg-b2 h-10 px-4 cursor-pointer rounded-md text-white' ><BiUserCircle /><span className='ml-2 font-reg font-normal text-sm' >My Account</span></div></Link>} */}
             <button ref={MenuButonRef} type="button" onClick={() => setMegMenu(!megMenu)} className="flex h-10 w-max cursor-pointer items-center rounded-md bg-b2 px-4 text-white">

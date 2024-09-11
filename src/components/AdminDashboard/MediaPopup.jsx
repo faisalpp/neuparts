@@ -17,11 +17,6 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
   const [delId, setDelId] = useState(null);
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    console.log(media)
-  }, [state])
-  
-
   const HandleMediaDone = () => {
     setFiles(tmpFiles);
     setMediaPopup(false);
@@ -82,7 +77,6 @@ const MediaPopup = ({ state, setState, files,setFiles, isMultiple }) => {
     fetch('/api/media', { method: 'GET' })
     .then((res)=>res.json())
     .then((data)=>{
-      console.log(data)
       setMedia(data.media);
       setLoading(false);
     })

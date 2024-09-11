@@ -14,7 +14,7 @@ export async function POST(request) {
       });
 
       const {orderId,type,status} = await request.json()
-      console.log({orderId,type,status})
+      
       await ValStatus.validate({orderId,type,status}, { abortEarly: false });
 
       let data = {};

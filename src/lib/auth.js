@@ -40,5 +40,5 @@ export async function checkSession(request,sessionType){
   const session = request.cookies.get(sessionType)?.value;
   if(!session) return false;
   const parsed = await decrypt(session);
-  return parsed.email;
+  return parsed;
 }

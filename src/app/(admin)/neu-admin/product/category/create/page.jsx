@@ -74,9 +74,15 @@ const Page = () => {
       <form action={CreateCategory} className="mt-4 grid grid-cols-2 gap-4">
         <div>
           <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Title
+            Name
           </label>
           <input name="title" value={formData.title} onChange={HandleChange} type="text" className="custom-input" />
+        </div>
+        <div>
+          <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+            Title
+          </label>
+          <input name="description" value={formData.description} onChange={HandleChange} type="text" className="custom-input" />
         </div>
         <div>
           <label htmlFor="model_no" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
@@ -84,12 +90,12 @@ const Page = () => {
           </label>
           <input name="model_no" value={formData.model_no} onChange={HandleChange} type="text" className="custom-input" />
         </div>
-        <div className="col-span-2">
+        {/* <div className="col-span-2">
           <label htmlFor="description" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
             Description
           </label>
           <textarea name="description" value={formData.description} onChange={HandleChange} type="text" id="description" className="custom-input"></textarea>
-        </div>
+        </div> */}
         <div>
           <label htmlFor="thumbnail" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
             Thumbnail

@@ -64,7 +64,6 @@ function Context({ children }) {
         }
       }
       setSearchLoading(false);
-      // console.log(data);
     } catch (error) {
       console.error('Failed to fetch model numbers:', error);
     }

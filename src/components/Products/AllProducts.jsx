@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ProductCard3 from '@/components/ProductCard3';
 import ProductFilter from '@/components/Product/FIlter';
 import FilterSvg from '@/components/svgs/FilterSvg';
 import { RiArrowDropRightLine } from 'react-icons/ri';
@@ -137,7 +136,7 @@ const AllProducts = ({ searchParams }) => {
         <div className="flex justify-center gap-12 xl:gap-x-60px">
           <ProductFilter loading={loading} query={searchParams} onClose={() => setIsFilter(false)} isFilter={isFilter} />
 
-          <div className={`grid ${isGrid ? 'grid-cols-2 gap-x-2 xl:grid-cols-3' : 'grid-cols-1'} mb-10 w-full items-start gap-y-5`}>
+          <div className={`grid ${isGrid ? 'grid-cols-2 gap-x-2 xl:grid-cols-3' : 'grid-cols-1'} mb-10 mt-5 w-full items-start gap-y-5`}>
             {loading ? (
               <div className="mt-5 flex w-full items-center justify-center md:mt-10">
                 <Image width={80} height={80} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" unoptimized />

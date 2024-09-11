@@ -25,8 +25,8 @@ const SideCartCard = (props) => {
       <div className="flex w-full flex-col justify-center gap-2">
         <div className="flex w-full justify-between gap-3">
           <h3 className="line-clamp-2 text-sm font-semibold">{props.item.title}</h3>
-          <button type="button" onClick={()=>DeleteFromCart()} className="grid h-6 w-6 place-items-center rounded-full bg-b3/10 maxlg:absolute maxlg:right-0 maxlg:top-0">
-            {delLoading ? <RiDeleteBin6Line className="animate-bounce text-sm text-red-500" /> : <RiDeleteBin6Line className="text-sm text-b3" />}
+          <button type="button" onClick={()=>DeleteFromCart()} className="grid h-7 w-7 px-2 place-items-center rounded-full bg-b3/10 maxlg:absolute maxlg:right-0 maxlg:top-0">
+            {delLoading ? <RiDeleteBin6Line className="animate-pulse text-sm text-red-500" /> : <RiDeleteBin6Line className="text-sm text-b3" />}
           </button>
         </div>
         <div className="space-y-2">

@@ -41,17 +41,17 @@ const Page = ({params}) => {
   const paymentStatus = ['Pending','Declined','Completed'];
 
   const [addressPopup,setAddressPopup] = useState(false)
-  const [addressData,setAddressData] = useState({first_name:'',last_name:'',address:'',appartment:'',city:'',province:'',country:'',postal_code:'',phone:'',email:''});
+  const [addressData,setAddressData] = useState({first_name:'',last_name:'',address:'',apartment:'',city:'',province:'',country:'',postal_code:'',phone:'',email:''});
 
   const SaveAddress = async (type) => {
    if(type === 'Shipping'){
     setAddressData({
-      id:order.shipping_address._id,
+      id:order._id,
       type:type,
       first_name:order.shipping_address.first_name,
       last_name:order.shipping_address.last_name,
       address:order.shipping_address.address,
-      appartment:order.shipping_address.appartment,
+      apartment:order.shipping_address.apartment,
       city:order.shipping_address.city,
       province:order.shipping_address.province,
       country:order.shipping_address.country,
@@ -61,12 +61,12 @@ const Page = ({params}) => {
     })
    }else if(type === 'Billing'){
     setAddressData({
-      id:order.billing_address._id,
+      id:order._id,
       type:type,
       first_name:order.billing_address.first_name,
       last_name:order.billing_address.last_name,
       address:order.billing_address.address,
-      appartment:order.billing_address.appartment,
+      apartment:order.billing_address.apartment,
       city:order.billing_address.city,
       province:order.shipping_address.province,
       country:order.billing_address.country,
@@ -90,7 +90,7 @@ const Page = ({params}) => {
     first_name: Yup.string().required('First Name is required!'),
     last_name: Yup.string().required('Last Name is required!'),
     address: Yup.string().required('Review is required!'),
-    appartment: Yup.string(),
+    apartment: Yup.string(),
     city: Yup.string().required('City is required!'),
     province: Yup.string().required('Province is required!'),
     country: Yup.string().required('Country is required!'),
@@ -117,7 +117,7 @@ const Page = ({params}) => {
         if (resp.success) {
           toast.update(crtToastId, {render:'Address updated!' ,type: 'success', autoClose: 1000, isLoading: false });
           setAddressPopup(false)
-          setAddressData({first_name:'',last_name:'',address:'',appartment:'',city:'',province:'',country:'',postal_code:'',phone:'',email:''});
+          setAddressData({first_name:'',last_name:'',address:'',apartment:'',city:'',province:'',country:'',postal_code:'',phone:'',email:''});
           GetOrder()
         } else {
           toast.update(crtToastId, { render:'Something went wrong!',type: 'error', autoClose: 1000, isLoading: false });
@@ -194,8 +194,8 @@ const Page = ({params}) => {
               <textarea name="address" value={addressData.address} onChange={HandleChange} className="mt-1  block w-full rounded-lg border border-gray-400 bg-white px-5 py-2 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:border-blue-300" />
            </div>
            <div>
-              <label htmlFor="username" className="block text-sm font-semibold text-gray-800 dark:text-gray-300">Appartment / Suit</label>
-              <input name="appartment" value={addressData.appartment} onChange={HandleChange} type="text" className="mt-1  block w-full rounded-lg border border-gray-400 bg-white px-5 py-2 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:border-blue-300" />
+              <label htmlFor="username" className="block text-sm font-semibold text-gray-800 dark:text-gray-300">Apartment / Suit</label>
+              <input name="apartment" value={addressData.apartment} onChange={HandleChange} type="text" className="mt-1  block w-full rounded-lg border border-gray-400 bg-white px-5 py-2 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:border-blue-300" />
             </div>
             <div>
               <label htmlFor="username" className="block text-sm font-semibold text-gray-800 dark:text-gray-300">City</label>
@@ -309,7 +309,7 @@ const Page = ({params}) => {
         <div className='flex flex-col text-sm text-gray-600 mt-2 gap-1' >
          <span>{loader ? 'N/A' : order.billing_address.first_name} {loader ? 'N/A' : order.billing_address.last_name}</span>
          <p>{loader ? 'N/A' : order.billing_address.address}</p>
-         <span>{loader ? 'N/A' : order.billing_address.appartment}</span>
+         <span>{loader ? 'N/A' : order.billing_address.apartment}</span>
          <span>{loader ? 'N/A' : order.billing_address.city}</span>
          <span>{loader ? 'N/A' : order.billing_address.province}, {loader ? 'N/A' : order.billing_address.country}</span>
          <span>{loader ? 'N/A' : order.billing_address.postal_code}</span>
@@ -325,7 +325,7 @@ const Page = ({params}) => {
        <div className='flex flex-col text-sm text-gray-600 mt-2 gap-1' >
          <span>{loader ? 'N/A' : order.shipping_address.first_name} {loader ? 'N/A' : order.shipping_address.last_name}</span>
          <p>{loader ? 'N/A' : order.shipping_address.address}</p>
-         <span>{loader ? 'N/A' : order.shipping_address.appartment}</span>
+         <span>{loader ? 'N/A' : order.shipping_address.apartment}</span>
          <span>{loader ? 'N/A' : order.shipping_address.city}</span>
          <span>{loader ? 'N/A' : order.shipping_address.province}, {loader ? 'N/A' : order.shipping_address.country}</span>
          <span>{loader ? 'N/A' : order.shipping_address.postal_code}</span>

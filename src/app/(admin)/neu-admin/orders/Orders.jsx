@@ -24,7 +24,6 @@ const Orders = () => {
     fetch(`/api/admin/order/?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         if (data.orders.length > 0) {
           toast.update(getToastId, { render: 'Orders loaded successfully!', type: 'success', autoClose: 1000, isLoading: false });
           setPageCount(data.pagination.pageCount);

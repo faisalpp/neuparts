@@ -6,9 +6,13 @@ import AccountItems from '@/components/MyAccount/AccountItems';
 import { FiLogOut } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import {setEmail,setLogin,setId} from '@/app/GlobalRedux/slices/AuthSlice'
+import { useDispatch } from 'react-redux';
 
 const MyAccountLayout = ({ children }) => {
   const [isItems, setIsItems] = useState(false);
+
+  const dispatch = useDispatch()
 
   const handleCloseItems = () => {
     setIsItems(false);
@@ -26,6 +30,9 @@ const MyAccountLayout = ({ children }) => {
       .then((resp) => {
         if (resp.success) {
           toast.update(crtToastId, { render: 'Logout Successfull!', type: 'success', autoClose: 1000, isLoading: false });
+          dispatch(setEmail(''))
+          dispatch(setLogin(''))
+          dispatch(setId(null))
           router.push('/');
         }
       })

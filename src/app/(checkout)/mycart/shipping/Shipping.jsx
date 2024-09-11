@@ -11,7 +11,7 @@ const Shipping = () => {
 
   const order = useSelector((state)=>state.order.orderInfo)
  
-  const detail = `${order.shippingAddress.address} ${order.shippingAddress.appartment}, ${order.shippingAddress.city} ${order.shippingAddress.province}, ${order.shippingAddress.country}`
+  const detail = `${order.shippingAddress.address} ${order.shippingAddress.apartment}, ${order.shippingAddress.city} ${order.shippingAddress.province}, ${order.shippingAddress.country}`
 
   return (
     <>

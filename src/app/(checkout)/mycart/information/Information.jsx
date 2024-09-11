@@ -23,7 +23,6 @@ const Information = () => {
   const orderInfo = useSelector((state)=>state.order.orderInfo)
   const ShippingMethod = useSelector((state)=>state.cart.shippingMethod)
 
-  console.log(orderInfo)
   const [zipLoader,setZipLoader] = useState(false)
 
   const [email,setEmail] = useState(orderInfo?.shippingAddress?.email ? orderInfo?.shippingAddress?.email : '')
@@ -31,7 +30,7 @@ const Information = () => {
   const [firstName,setFirstName] = useState(orderInfo?.shippingAddress?.firstName ? orderInfo?.shippingAddress?.firstName : '')
   const [lastName,setLastName] = useState(orderInfo?.shippingAddress?.lastName ? orderInfo?.shippingAddress?.lastName : '')
   const [address,setAddress] = useState(orderInfo?.shippingAddress?.address ? orderInfo?.shippingAddress?.address : '')
-  const [appartment,setAppartment] = useState(orderInfo?.shippingAddress?.appartment ? orderInfo?.shippingAddress?.appartment : '')
+  const [apartment,setApartment] = useState(orderInfo?.shippingAddress?.apartment ? orderInfo?.shippingAddress?.apartment : '')
   const [city,setCity] = useState(orderInfo?.shippingAddress?.city ? orderInfo?.shippingAddress?.city : '')
   const [country,setCountry] = useState(orderInfo?.shippingAddress?.country ? orderInfo?.shippingAddress?.country : 'usa')
   const [province,setProvince] = useState(orderInfo?.shippingAddress?.province ? orderInfo?.shippingAddress?.province : 'alberta')
@@ -57,6 +56,7 @@ const Information = () => {
         setSaveAddress(checked)
     }
    }
+   
 
    const GetShippingFare = async () => {
      setZipLoader(true)
@@ -100,7 +100,7 @@ const Information = () => {
     firstName: Yup.string().nullable(),
     lastName: Yup.string().required('Last Name is Required!'),
     address: Yup.string().required('Address is Required!'),
-    appartment: Yup.string().nullable(),
+    apartment: Yup.string().nullable(),
     city: Yup.string().required('City is Required!'),
     country: Yup.string().required('Country is Required!'),
     province: Yup.string().required('Province is Required!'),
@@ -110,8 +110,8 @@ const Information = () => {
 
    const Submit = async () => {
     try{
-      const shippingAddr = { email:email, keepUpdates:keepUpdates,firstName:firstName,lastName:lastName,address:address,appartment:appartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress,shippingMethod:shippingMethod}
-      const billingAddr = { email:email,firstName:firstName,lastName:lastName,address:address,appartment:appartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress}
+      const shippingAddr = { email:email, keepUpdates:keepUpdates,firstName:firstName,lastName:lastName,address:address,apartment:apartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress,shippingMethod:shippingMethod}
+      const billingAddr = { email:email,firstName:firstName,lastName:lastName,address:address,apartment:apartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:false}
       await orderValidationSchema.validate(shippingAddr, { abortEarly: false }); 
       dispatch(setOrderInfo({shippingAddress:shippingAddr,billingAddress:billingAddr}))
       router.push('/mycart/shipping')
@@ -171,7 +171,7 @@ const Information = () => {
           <CustomInput state={lastName} setState={setLastName} colorStyle="border-b31 placeholder:text-b25" placeholder="Last name" />
           <div className="col-span-2 space-y-3">
             <CustomInput state={address} setState={setAddress} colorStyle="border-b31 placeholder:text-b25" placeholder="Address" />
-            <CustomInput state={appartment} setState={setAppartment} colorStyle="border-b31 placeholder:text-b25" placeholder="Apartment, suite, etc. (optional)" />
+            <CustomInput state={apartment} setState={setApartment} colorStyle="border-b31 placeholder:text-b25" placeholder="Apartment, suite, etc. (optional)" />
             <CustomInput state={city} setState={setCity} colorStyle="border-b31 placeholder:text-b25" placeholder="City" />
             <div className="grid grid-cols-2 gap-14px md:grid-cols-3">
               <CustomSelect setState={setCountry} id="country_region" label="Country / region" Options={Countrys} />

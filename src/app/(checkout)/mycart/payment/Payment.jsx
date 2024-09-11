@@ -27,7 +27,7 @@ const Payment = () => {
   const [firstName,setFirstName] = useState('')
   const [lastName,setLastName] = useState('')
   const [address,setAddress] = useState('')
-  const [appartment,setAppartment] = useState('')
+  const [apartment,setApartment] = useState('')
   const [city,setCity] = useState('')
   const [country,setCountry] = useState('usa')
   const [province,setProvince] = useState('alberta')
@@ -38,7 +38,7 @@ const Payment = () => {
 
   const order = useSelector((state)=>state.order.orderInfo)
   const orderId = useSelector((state)=>state.order.orderId)
-  const detail = `${order.shippingAddress.address} ${order.shippingAddress.appartment}, ${order.shippingAddress.city} ${order.shippingAddress.province}, ${order.shippingAddress.country}`
+  const detail = `${order.shippingAddress.address} ${order.shippingAddress.apartment}, ${order.shippingAddress.city} ${order.shippingAddress.province}, ${order.shippingAddress.country}`
   const shipping = useSelector((state)=>state.cart.shippingMethod)
   const cartItems = useSelector((state)=>state.cart.items)
   const cartSubTotal = useSelector((state)=>state.cart.cartSubTotal)
@@ -62,7 +62,7 @@ const Payment = () => {
     firstName: Yup.string().nullable(),
     lastName: Yup.string().required('Last Name is Required!'),
     address: Yup.string().required('Address is Required!'),
-    appartment: Yup.string().nullable(),
+    apartment: Yup.string().nullable(),
     city: Yup.string().required('City is Required!'),
     country: Yup.string().required('Country is Required!'),
     province: Yup.string().required('Province is Required!'),
@@ -180,7 +180,7 @@ const Payment = () => {
 
    if(billingSwitch === 'billing_address'){
     try{
-      const billingAddr = { email:email,firstName:firstName,lastName:lastName,address:address,appartment:appartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress}
+      const billingAddr = { email:email,firstName:firstName,lastName:lastName,address:address,apartment:apartment,city:city,country:country,province:province,postalCode:postalCode,phone:phone,saveAddress:saveAddress}
       await billingValidationSchema.validate(billingAddr, { abortEarly: false }); 
       dispatch(setOrderInfo({...order,billingAddress:billingAddr}))
     }catch(error){
@@ -198,7 +198,6 @@ const Payment = () => {
    if(isSaved.success){
     dispatch(setOrderId(isSaved.order_id))
     const isPaid = await HandleStripe()
-    console.log(isPaid)
     if(isPaid?.error){
       toast.error(isPaid.error.message)
       await PostOrder({orderId:orderId,intent:{status:false},paymentStatus:'Declined'})
@@ -206,7 +205,6 @@ const Payment = () => {
       return
     }
     const Intent = isPaid.paymentIntent.client_secret;
-    console.log({orderId:isSaved.order_id,intent:{data:Intent,status:true},paymentStatus:'Completed'})
     await PostOrder({orderId:isSaved.order_id,intent:{data:Intent,status:true},paymentStatus:'Completed'})
     dispatch(setOrderLoader())
     toast.success('Order placed successfully!')
@@ -249,8 +247,8 @@ const Payment = () => {
         setLastName={setLastName}
         address={address}
         setAddress={setAddress}
-        appartment={appartment}
-        setAppartment={setAppartment}
+        apartment={apartment}
+        setApartment={setApartment}
         city={city}
         setCity={setCity}
         country={country}

@@ -12,7 +12,6 @@ const VideoSection = ({type}) => {
     fetch(`/api/front/static-video?type=${type}`,{method:'GET'})
     .then((res)=>res.json())
     .then((data)=>{
-      console.log(data)
       if(data.success){
        setVideo(data.video.url)  
       }

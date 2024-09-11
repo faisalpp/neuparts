@@ -6,7 +6,7 @@ const usersSchema = new mongoose.Schema({
     country: {type: String, required:true},
     phone: {type: String, required:true},
     email: {type: String, required:true},
-    password: {type: String, required:true},
+    password: {type: String, required:true}
 },{timestamps: true});
 
 const User = mongoose.models.Users || mongoose.model('Users',usersSchema,'users');

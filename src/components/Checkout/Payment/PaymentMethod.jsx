@@ -108,7 +108,7 @@ const PaymentMethod = (prop) => {
           <CustomInput state={prop.lastName} setState={prop.setLastName} colorStyle="border-b31 placeholder:text-b25" placeholder="Last name" />
           <div className="col-span-2 space-y-3">
             <CustomInput state={prop.address} setState={prop.setAddress} colorStyle="border-b31 placeholder:text-b25" placeholder="Address" />
-            <CustomInput state={prop.appartment} setState={prop.setAppartment} colorStyle="border-b31 placeholder:text-b25" placeholder="Apartment, suite, etc. (optional)" />
+            <CustomInput state={prop.apartment} setState={prop.setApartment} colorStyle="border-b31 placeholder:text-b25" placeholder="Apartment, suite, etc. (optional)" />
             <CustomInput state={prop.city} setState={prop.setCity} colorStyle="border-b31 placeholder:text-b25" placeholder="City" />
             <div className="grid grid-cols-2 gap-14px md:grid-cols-3">
               <CustomSelect setState={prop.setCountry} id="country_region" label="Country / region" Options={Countrys} />

@@ -8,7 +8,9 @@ import { FaQuoteRight } from 'react-icons/fa';
 import { GiAutoRepair, GiWashingMachine } from 'react-icons/gi';
 import { FaBlogger } from 'react-icons/fa';
 import { MdTipsAndUpdates, MdLiveHelp } from 'react-icons/md';
-import { BiCategory } from 'react-icons/bi';
+import { BiSolidCategory } from "react-icons/bi";
+import { BiSolidCategoryAlt } from "react-icons/bi";
+import { MdCategory } from "react-icons/md";
 import { FaImages } from 'react-icons/fa';
 import { BiSolidVideos } from 'react-icons/bi';
 import { LuBoxes } from 'react-icons/lu';
@@ -32,8 +34,8 @@ const Sidebar = () => {
 
   return (
     <aside className="hidden h-screen w-2/12 flex-col overflow-y-auto border-r bg-b1 py-8 pl-1 pr-5 dark:border-gray-700 dark:bg-gray-900 lg:flex rtl:border-l rtl:border-r-0">
-      <Link href="/">
-        <Image width={70} height={70} quality={100} className="col-start-1 col-end-3 h-auto w-full" src="/neu.webp" alt="logo" />
+      <Link href="/" className='flex justify-center'>
+        <Image width={70} height={70} quality={100} className="col-start-1 col-end-3 h-auto w-10/12" src="/neu.webp" alt="logo" />
       </Link>
 
       <div className="mt-16 flex flex-1 flex-col justify-between">
@@ -91,15 +93,15 @@ const Sidebar = () => {
                   <span className="mx-2 text-sm font-semibold">Manage Products</span>
                 </Link>
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/category">
-                  <BiCategory />
+                  <BiSolidCategory />
                   <span className="mx-2 text-sm font-semibold">Manage Categories</span>
                 </Link>
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/sub-category">
-                  <BiCategory />
+                  <BiSolidCategoryAlt className='text-xl' />
                   <span className="mx-2 text-sm font-semibold">Manage Sub Categories</span>
                 </Link>
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/parttype">
-                  <BiCategory />
+                  <MdCategory />
                   <span className="mx-2 text-sm font-semibold">Manage Part Type</span>
                 </Link>
               </div>

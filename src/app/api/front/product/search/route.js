@@ -8,7 +8,6 @@ export async function POST(req) {
   await connect();
 
   const { model_no, part_number } = await req.json();
-  console.log(model_no);
 
   let modelCategory = '';
   let product = '';

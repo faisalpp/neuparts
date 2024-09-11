@@ -7,10 +7,12 @@ import { persistReducer} from 'redux-persist';
 import thunk from 'redux-thunk';
 import CartSlice from '@/app/GlobalRedux/slices/CartSlice'
 import OrderSlice from '@/app/GlobalRedux/slices/OrderSlice'
+import AuthSlice from '@/app/GlobalRedux/slices/AuthSlice'
 
 const reducers = combineReducers({
   cart: CartSlice,
-  order:OrderSlice
+  order:OrderSlice,
+  auth:AuthSlice
 });
 
 const persistConfig = {

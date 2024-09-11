@@ -2,9 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import MyAccount from '@/components/MyAccount/MyAccountLayout';
 import TextInput from '@/components/TextInput/TextInput';
-import SelectInput from '@/components/TextInput/SelectInput';
+import CustomSelect from '@/components/Reusable/CustomSelect';
 import * as Yup from 'yup';
 import BtnLoader from '@/components/Loader/BtnLoader';
+import { useSelector } from 'react-redux';
+import { BiLoaderAlt } from "react-icons/bi";
+import {toast} from 'react-toastify'
 
 const BillingInformation = () => {
   return (
@@ -20,94 +23,100 @@ const BillingInformation = () => {
 export default BillingInformation;
 
 const BillingInformationData = () => {
-  const userId = '';
 
-  const [id, setId] = useState('');
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [address, setAddress] = useState('');
-  const [country, setCountry] = useState('usa');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('alabama');
-  const [postalCode, setPostalCode] = useState('');
-  const [phone, setPhone] = useState('');
+  const UserId = useSelector((state)=>state.auth.id)
+ 
+  const [loading, setLoading] = useState(false);
+  const [formData,setFormData] = useState({id:'',email:'',first_name:'',last_name:'',address:'',apartment:'',city:'',country:'usa',province:'alberta',postal_code:'',phone:''})
+  const Countrys = [{ name: 'USA', value: 'usa' }];
+  const Provinces = [
+    { name: 'Alberta', value: 'alberta' },
+  ];
 
   const getBillingAddress = async () => {
-    //   const res = await GetBillingAddress({_id:userId})
-    //   if(res.status === 200 && res.data.billingAddress){
-    //     setId(res.data.billingAddress._id)
-    //     setEmail(res.data.billingAddress.email)
-    //     setFirstName(res.data.billingAddress.firstName)
-    //     setLastName(res.data.billingAddress.lastName)
-    //     setAddress(res.data.billingAddress.address)
-    //     setCountry(res.data.billingAddress.country)
-    //     setCity(res.data.billingAddress.city)
-    //     setState(res.data.billingAddress.state)
-    //     setPostalCode(res.data.billingAddress.postalCode)
-    //     setPhone(res.data.billingAddress.phone)
-    //   }
+    setLoading(true);
+    fetch(`/api/user/profile/billing-address/?userId=${UserId}`)
+     .then((res) => res.json())
+     .then((data) => {
+     if (data.success) {
+       setFormData(data.address)
+       setLoading(false)
+     } else {
+      setLoading(false) 
+     }
+    }).catch((error)=>{
+      setLoading(false)
+    })
   };
 
   useEffect(() => {
     getBillingAddress();
   }, []);
 
-  const createShippingSchema = Yup.object().shape({
+  const handleChange = (e) => {
+    const {name,value} = e.target
+    setFormData({...formData,[name]:value})
+  }
+
+
+  const updateShippingSchema = Yup.object().shape({
     userId: Yup.string().required('User Id is Required!'),
     email: Yup.string().required('Email is Required!'),
-    firstName: Yup.string().nullable(),
-    lastName: Yup.string().required('Last Name is Required!'),
+    first_name: Yup.string().nullable(),
+    last_name: Yup.string().required('Last Name is Required!'),
     address: Yup.string().required('Address is Required!'),
     city: Yup.string().required('City is Required!'),
     country: Yup.string().required('Country is Required!'),
-    state: Yup.string().required('State is Required!'),
-    postalCode: Yup.string().required('Postal Code is Required!'),
+    province: Yup.string().required('Province is Required!'),
+    postal_code: Yup.string().required('Postal Code is Required!'),
     phone: Yup.string().required('Phone is Required!'),
   });
 
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState([]);
 
-  const HandleBillingAddress = async (e) => {
-    //  e.preventDefault()
-    //  setLoading(true)
-    //  try{
-    //    const data = {userId,email,firstName,lastName,address,city,country,state,postalCode,phone}
-    //    await createShippingSchema.validate(data, { abortEarly: false });
-    //    const res = await updateBillingAddress({...data,id:id})
-    //    if(res.status === 200){
-    //     setLoading(false)
-    //     Toast(res.data.msg,'success',1000)
-    //     getBillingAddress()
-    //    }else{
-    //     setLoading(false)
-    //     Toast(res.data.message,'error',1000)
-    //    }
-    //   }catch(error){
-    //     setLoading(false)
-    //     if (error) {
-    //      let errors = error.errors;
-    //      setErrors(errors)
-    //      errors.forEach((item)=>{Toast(item,'error',1000)})
-    //     } else {
-    //      setErrors([])
-    //     }
-    //    }
+  const SaveBillingAddress = async (e) => {
+    e.preventDefault()
+    
+    try {
+      await updateShippingSchema.validate({userId:UserId,...formData}, { abortEarly: false });
+    } catch (error) {
+      error?.inner?.forEach((err) => {
+        toast.error(err.message);
+      });
+      return;
+    }
+
+    const getToastId = toast.loading('Updating billing address...')
+    fetch('/api/user/profile/billing-address', {method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },body: JSON.stringify({userId:UserId,...formData}),
+    }).then((res) => res.json())
+    .then((data) => {
+      getBillingAddress()
+      toast.update(getToastId, { render: 'Billing address updated!', type: 'success', autoClose: 1000, isLoading: false });
+     }).catch((error) => {
+      setFormData({id:'',email:'',first_name:'',last_name:'',address:'',apartment:'',city:'',country:'usa',province:'alberta',postal_code:'',phone:''})
+      toast.update(getToastId, { render: 'Something went wrong!', type: 'error', autoClose: 1000, isLoading: false });
+    });
   };
 
   return (
     <>
-      <form onSubmit={HandleBillingAddress} className="flex w-full flex-col gap-6 lg:max-w-[432px]">
-        <TextInput title="Email" width="full" value={email} onChange={(e) => setEmail(e.target.value)} error={errors && errors.includes('Email is Required!') ? true : false} errormessage="Email is Required!" placeholder="Email" />
-        <TextInput title="First Name" width="full" value={firstName} onChange={(e) => setFirstName(e.target.value)} error={errors && errors.includes('First Name is Required!') ? true : false} errormessage="First Name is Required!" placeholder="First Name" />
-        <TextInput title="Last Name" width="full" value={lastName} onChange={(e) => setLastName(e.target.value)} error={errors && errors.includes('Last Name is Required!') ? true : false} errormessage="Last Name is Required!" placeholder="Last Name" />
-        <TextInput title="Address" width="full" value={address} onChange={(e) => setAddress(e.target.value)} error={errors && errors.includes('Address is Required!') ? true : false} errormessage="Address is Required!" placeholder="Address" />
-        <SelectInput title="Country" widthFull="true" options={[{ title: 'United States', slug: 'usa' }]} onChange={(e) => setCountry(e.target.value)} />
-        <SelectInput title="State" widthFull="true" options={['Alabama']} onChange={(e) => setState(e.target.value)} />
-        <TextInput title="City" width="full" value={city} onChange={(e) => setCity(e.target.value)} error={errors && errors.includes('City is Required!') ? true : false} errormessage="City is Required!" placeholder="City" />
-        <TextInput title="Post Code" width="full" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} error={errors && errors.includes('Postal Code is Required!') ? true : false} errormessage="Postal Code is Required!" placeholder="Postal Code" />
-        <TextInput title="Phone" width="full" value={phone} onChange={(e) => setPhone(e.target.value)} error={errors && errors.includes('Phone is Required!') ? true : false} errormessage="Phone is Required!" placeholder="Phone" />
+    <form onSubmit={SaveBillingAddress} className="relative flex w-full flex-col gap-6 lg:max-w-[432px]">
+    {loading ? 
+      <div className="absolute z-10 flex h-full w-full items-center justify-center bg-white/50">
+        <BiLoaderAlt className='text-2xl animate-spin' />
+      </div>
+      :null}
+        <TextInput name="email" title="Email" width="full" value={formData.email} onChange={handleChange} placeholder="Email" />
+        <TextInput name="first_name" title="First Name" width="full" value={formData.first_name} onChange={handleChange} placeholder="First Name" />
+        <TextInput name="last_name" title="Last Name" width="full" value={formData.last_name} onChange={handleChange} placeholder="Last Name" />
+        <TextInput name="address" title="Address" width="full" value={formData.address} onChange={handleChange} placeholder="Address" />
+        <div className="grid grid-cols-2 gap-5">
+         <CustomSelect fieldName='country' setState={handleChange} id="country_region" label="Country / region" Options={Countrys} />
+         <CustomSelect fieldName='province' setState={handleChange} id="province" label="State / Province" Options={Provinces} />
+        </div>
+        <TextInput name="city" title="City" width="full" value={formData.city} onChange={handleChange} placeholder="City" />
+        <TextInput name="postal_code" title="Post Code" width="full" value={formData.postal_code} onChange={handleChange} placeholder="Postal Code" />
+        <TextInput name="phone" title="Phone" width="full" value={formData.phone} onChange={handleChange} placeholder="Phone" />
         <button type="submit" className="flex w-full items-center justify-center rounded-lg bg-b3 py-3 text-xs font-medium text-white">
           {loading ? <BtnLoader style="w-4" /> : 'Save Changes'}
         </button>
