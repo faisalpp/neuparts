@@ -20,13 +20,13 @@ export async function POST(request) {
    const token = await encryptResetToken({email:email})
    
    //3. store token in user db
-   await User.findByIdAndUpdate(isUser._id,{forget_token:token,name:NAME})
+   await User.findByIdAndUpdate(isUser._id,{forget_token:token})
 
    //4. password reset link
    const ResetUrl = process.env.NEXT_BASE_API + '/reset-password/' + token 
    
    //5. generate mail template
-   const MailTemplate = ForgotPassword({url:ResetUrl})
+   const MailTemplate = ForgotPassword({url:ResetUrl,name:NAME})
 
    //6. send password reset email
    await NeuMailer(email,'Forgot Password!',MailTemplate)
