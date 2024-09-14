@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux';
 import {authCookieAdmin} from '@/app/GlobalRedux/slices/AuthSlice'
 
-const Form = () => {
+const Form = ({SecretKey}) => {
 
   const [formData,setFormData] = useState({email:'',password:''});
   const router = useRouter()
@@ -21,8 +21,8 @@ const Form = () => {
     setFormData({...formData,[name]:value})
   }
 
-  const getCookie = async () => {
-    const secretKey = process.env.NEXT_PUBLIC_ENCRYPT_SALT;
+  const getCookie = async (toastId) => {
+    const secretKey = SecretKey;
     const key = new TextEncoder().encode(secretKey);
 
     const cookieStr = document.cookie;
@@ -32,6 +32,7 @@ const Form = () => {
       if(cookieName === 'neu-admin'){
        const res = await dispatch(authCookieAdmin({cookieValue:cookieValue,key:key}))
        router.push('/neu-admin');
+       toast.update(toastId,{render:'Login Successfull!',type:'success',autoClose:1000,isLoading: false})
       }
     }
   }
@@ -62,8 +63,7 @@ const Form = () => {
    .then((resp) => {
     if(resp.success){
       setFormData({email:'',password:''});
-      // getCookie()
-      toast.update(crtToastId,{render:'Login Successfull!',type:'success',autoClose:1000,isLoading: false})
+      getCookie(crtToastId)
      }else{
       toast.update(crtToastId,{render:'Invalid User Credentials',type:'error',autoClose:1000,isLoading: false})
      }

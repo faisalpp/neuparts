@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 import {toast} from 'react-toastify'
 import { useDispatch } from 'react-redux';
 
-const Form = () => {
+const Form = ({SecretKey}) => {
 
   const router = useRouter()
   const dispatch = useDispatch()
@@ -25,7 +25,7 @@ const Form = () => {
 
 
   const getCookie = async (toastId) => {
-    const secretKey = process.env.NEXT_PUBLIC_ENCRYPT_SALT;
+    const secretKey = SecretKey;
     const key = new TextEncoder().encode(secretKey);
 
     const cookieStr = document.cookie;
@@ -34,10 +34,8 @@ const Form = () => {
       const [cookieName, cookieValue] = cookie.split('=');
       if(cookieName === 'neu-user'){
        const res = await dispatch(authCookieUser({cookieValue:cookieValue,key:key}))
-       if(res.payload?.id){
          router.push('/my-account/profile');
          toast.update(toastId,{render:'Signin Successfull!',type:'success',autoClose:1000,isLoading: false})
-       }
       }
     }
   }
