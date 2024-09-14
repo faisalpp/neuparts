@@ -1,7 +1,9 @@
+'use client'
 import React from 'react';
 import { Switch } from '@material-tailwind/react';
+import { BiLoaderCircle,BiLoaderAlt } from "react-icons/bi";
 
-const EmailPreferenceData = ({ title, checked, setState }) => {
+const EmailPreferenceData = ({ id,title, checked, setState,loading,updating }) => {
   return (
     <>
       <div className="flex items-center justify-between gap-3">
@@ -11,8 +13,15 @@ const EmailPreferenceData = ({ title, checked, setState }) => {
         </div>
         <div className="flex items-center gap-10">
           <div className="inline-flex items-center">
-            <div className="relative inline-block h-4 w-8 cursor-pointer rounded-full">
-              <Switch className="peer absolute h-4 w-8 cursor-pointer appearance-none rounded-full  bg-gray-300 transition-colors duration-300 checked:bg-b3 peer-checked:border-b3 peer-checked:before:bg-b3" checked={checked} onChange={setState} />
+            <div className="relative flex items-center gap-2 h-4 w-16 cursor-pointer rounded-full">
+             {loading ? 
+              <BiLoaderAlt className='animate-spin' />
+              :
+              <>
+              <Switch className="peer absolute h-4 w-8 cursor-pointer appearance-none rounded-full  bg-gray-300 transition-colors duration-300 checked:bg-b3 peer-checked:border-b3 peer-checked:before:bg-b3" checked={checked} onChange={(e)=> setState(e)} />
+              {updating === id ? <BiLoaderCircle className='text-red-500 text-xl animate-spin' /> : null}
+              </>
+              }
             </div>
           </div>
         </div>

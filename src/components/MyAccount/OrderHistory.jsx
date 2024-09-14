@@ -19,7 +19,6 @@ const OrderHistory = () => {
     fetch(`/api/user/profile/orders/?userId=${UserId}`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
     if (data.success) {
       setOrders(data.orders)
     }
@@ -40,7 +39,10 @@ const OrderHistory = () => {
         <div className='flex justify-center items-center w-full h-full' ><BiLoaderAlt className='text-2xl animate-spin' /></div> : 
         orders.length > 0 ? 
         <OrderHistoryData orders={orders} /> : 
-        <div>No data?</div>}
+        <div className='flex justify-center items-center w-full h-full' >
+         <Image width={400} height={400} quality={100} alt="Not Found" src="/not-found.webp" className="h-auto w-32" />
+        </div>
+        }
       </MyAccount>
     </>
   );

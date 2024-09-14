@@ -11,6 +11,7 @@ import BtnLoader from '@/components/Loader/BtnLoader';
 import { useSelector } from 'react-redux';
 import {toast} from 'react-toastify'
 import { BiLoaderAlt } from "react-icons/bi";
+import Image from 'next/image';
 
 
 const SavedAddress = () => {
@@ -166,7 +167,9 @@ const SavedAddress = () => {
         ) : shippingAddresses?.length > 0 ? (
           shippingAddresses.map((item, index) => <SavedAddressData key={index} upLoading={uLoading} loadUpdateFrom={handleAddrUpdater} refreshData={getShippingAddresses} data={item} />)
         ) : (
-          <NotFound style="w-32" />
+          <div className='flex justify-center items-center w-full h-full' >
+            <Image width={400} height={400} quality={100} alt="Not Found" src="/not-found.webp" className="h-auto w-32" />
+          </div>
         )}
       </MyAccount>
     </>

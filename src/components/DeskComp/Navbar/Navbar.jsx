@@ -257,12 +257,9 @@ const Navbar = () => {
                 icon={<RiArrowDropDownLine className="text-2xl" />}
                 title="Deals"
                 links={[
-                  { name: 'Refrigerators', url: '/' },
-                  { name: 'Washer & Dryer Sets', url: '/' },
-                  { name: 'Dishwashers', url: '/' },
-                  { name: 'Washing Machines', url: '/' },
-                  { name: 'Dryers', url: '/' },
-                  { name: 'Others', url: '/' },
+                  { name: 'Lorem 1', url: '/' },
+                  { name: 'Lorem 2', url: '/' },
+                  { name: 'Lorem 3', url: '/' },
                 ]}
               />
               <div className="nav____item">
@@ -273,12 +270,9 @@ const Navbar = () => {
                 icon={<RiArrowDropDownLine className="text-2xl" />}
                 title="Popular Brands"
                 links={[
-                  { name: 'Refrigerators', url: '/' },
-                  { name: 'Washer & Dryer Sets', url: '/' },
-                  { name: 'Dishwashers', url: '/' },
-                  { name: 'Washing Machines', url: '/' },
-                  { name: 'Dryers', url: '/' },
-                  { name: 'Others', url: '/' },
+                  { name: 'Lorem 1', url: '/' },
+                  { name: 'Lorem 2', url: '/' },
+                  { name: 'Lorem 3', url: '/' },
                 ]}
                 bold={600}
               />

@@ -58,9 +58,9 @@ const Form = () => {
      if(resp.success){
        setFormData({firstName:'',lastName:'',email:'',country:'US',phone:'',password:'',confirmPassword:''});
        toast.update(crtToastId,{render:'Signup Successfull!',type:'success',autoClose:1000,isLoading: false})
-       router.push('/my-account/profile');
+       router.push('/login');
       }else{
-       toast.update(crtToastId,{render:'Invalid Credentials',type:'error',autoClose:1000,isLoading: false})
+       toast.update(crtToastId,{render: resp.message ,type:'error',autoClose:1000,isLoading: false})
       }
      })
      .catch((error) => {

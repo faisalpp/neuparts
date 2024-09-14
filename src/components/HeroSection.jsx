@@ -86,7 +86,7 @@ const HeroSection = () => {
             {searchBy == 'browse-by' && (
               <>
                 <div className="md:gapgap-2 grid grid-cols-1 gap-3 rounded-lg rounded-tl-none bg-[#EBF8FE] p-4 md:grid-cols-[auto_160px]">
-                  <div className="cc-select relative grid grid-cols-1 justify-start gap-3 md:grid-cols-2 md:gap-2 [&>div]:h-[61px]">
+                  <div className="cc-select relative grid grid-cols-1 justify-start gap-3 md:grid-cols-2 md:gap-2 [&>div]:h-[57px]">
                     <Select
                       label="Select manufacturer"
                       size="md"

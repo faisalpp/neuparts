@@ -1,8 +1,28 @@
 import {SignJWT,jwtVerify} from 'jose'
 import { NextResponse } from "next/server";
 
+
 const secretKey = process.env.NEXT_ENCRYPT_SALT;
 const key = new TextEncoder().encode(secretKey);
+
+
+const secretKey2 = process.env.NEXT_ENCRYPT_RESET_USER;
+const key2 = new TextEncoder().encode(secretKey2);
+
+export async function encryptResetToken(payload){
+  return await new SignJWT(payload)
+    .setProtectedHeader({alg: 'HS256'})
+    .setIssuedAt()
+    .setExpirationTime('2 hours from now')
+    .sign(key2)
+}
+
+export async function decryptResetToken(input){
+  const {payload} = await jwtVerify(input,key2,{
+    algorithms:['HS256']
+  });
+  return payload;
+}
 
 export async function encrypt(payload){
   return await new SignJWT(payload)

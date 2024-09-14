@@ -6,12 +6,12 @@ import { encrypt } from '@/lib/auth';
 import { cookies } from 'next/headers';
 
 export async function POST(request) {
-  await connect();
-
+  
   const { email, password } = await request.json();
-
+  
   let user;
   try {
+    await connect();
     user = await User.findOne({ email: email });
     if (!user) {
       return NextResponse.json({ success: false, msg: 'Ivalid User Credentials!' }, { status: 401 });

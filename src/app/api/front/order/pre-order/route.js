@@ -20,10 +20,7 @@ export async function POST(request) {
 
     // Todo: newsletter subscribe
     if(shippingAddress.keepUpdates){
-      const isSubscribed = await SubscribeNewsLetter(shippingAddress.email)
-      if(!isSubscribed){
-        return NextResponse.json({ message: 'Newsletter not subscribed!', success: false });    
-      }
+      await SubscribeNewsLetter(shippingAddress.email)
     }
 
     // Todo: create user if not loggedIn
