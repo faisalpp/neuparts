@@ -24,7 +24,7 @@ const Form = () => {
   });
 
 
-  const getCookie = async () => {
+  const getCookie = async (toastId) => {
     const secretKey = process.env.NEXT_PUBLIC_ENCRYPT_SALT;
     const key = new TextEncoder().encode(secretKey);
 
@@ -34,7 +34,10 @@ const Form = () => {
       const [cookieName, cookieValue] = cookie.split('=');
       if(cookieName === 'neu-user'){
        const res = await dispatch(authCookieUser({cookieValue:cookieValue,key:key}))
-       router.push('/my-account/profile');
+       if(res.payload?.id){
+         router.push('/my-account/profile');
+         toast.update(toastId,{render:'Signin Successfull!',type:'success',autoClose:1000,isLoading: false})
+       }
       }
     }
   }
@@ -61,8 +64,7 @@ const Form = () => {
    }).then((res) => res.json())
     .then((resp) => {
      if(resp.success){
-       getCookie()
-       toast.update(crtToastId,{render:'Signin Successfull!',type:'success',autoClose:1000,isLoading: false})
+       getCookie(crtToastId)
       }else{
        toast.update(crtToastId,{render:'Invalid Credentials',type:'error',autoClose:1000,isLoading: false})
       }
