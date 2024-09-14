@@ -4,6 +4,7 @@ import React from 'react'
 import './globals.css'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { StoreProvider } from '@/app/GlobalRedux/StoreProvider';
 
 const layout = ({children}) => {
   return (
@@ -23,7 +24,9 @@ const layout = ({children}) => {
         /> 
       {/* Wrapper Start */}
       <div className="flex w-full h-screen overflow-y-scroll" >
+      <StoreProvider>
         {children}
+      </StoreProvider>
       </div> 
     {/* Wrapper End */}
    </body>

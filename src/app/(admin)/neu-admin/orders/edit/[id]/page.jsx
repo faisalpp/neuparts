@@ -390,7 +390,7 @@ const Page = ({params}) => {
          {!loader && order?.coupons?.length > 0 ?
            <div>
           {order?.coupons.map((coupon,i)=>(
-          <span className='bg-orange-500 rounded-md px-2 py-1 text-white text-sm' >{coupon?.code}</span>
+          <span key={i} className='bg-orange-500 rounded-md px-2 py-1 text-white text-sm' >{coupon?.code}</span>
           ))}
          </div>:'N/A'
          }

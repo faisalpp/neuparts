@@ -3,7 +3,7 @@ import connect from '@/lib/db';
 import Post from '@/models/posts';
 import * as Yup from 'yup';
 import { generateSlug } from '@/utils/index';
-//
+
 export async function GET(request) {
   try {
     await connect();
@@ -29,6 +29,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  try {
   await connect();
 
   const ValBlog = Yup.object({
@@ -37,7 +38,6 @@ export async function POST(request) {
     thumbnail: Yup.string().required('Thumbnail is required!'),
   });
 
-  try {
     const { title, content, thumbnail } = await request.json();
     await ValBlog.validate({ title, content, thumbnail }, { abortEarly: false });
 
@@ -104,13 +104,14 @@ export async function PUT(request) {
 
 export async function DELETE(request) {
   try {
+    await connect();
+
     const { id } = await request.json();
 
     if (id === '') {
       return NextResponse.json({ message: 'Blog ID required!', success: false });
     }
 
-    await connect();
 
     await Post.findByIdAndDelete(id);
 

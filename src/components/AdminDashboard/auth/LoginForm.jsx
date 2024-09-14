@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React,{useState} from 'react';
 import { BsArrowRightShort } from 'react-icons/bs';
@@ -8,7 +8,7 @@ import {toast} from 'react-toastify'
 import * as Yup from "yup";
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux';
-import {authCookieUser} from '@/app/GlobalRedux/slices/AuthSlice'
+import {authCookieAdmin} from '@/app/GlobalRedux/slices/AuthSlice'
 
 const Form = () => {
 
@@ -30,7 +30,7 @@ const Form = () => {
     for (let cookie of cookies) {
       const [cookieName, cookieValue] = cookie.split('=');
       if(cookieName === 'neu-admin'){
-       const res = await dispatch(authCookieUser({cookieValue:cookieValue,key:key}))
+       const res = await dispatch(authCookieAdmin({cookieValue:cookieValue,key:key}))
        router.push('/neu-admin');
       }
     }
@@ -62,7 +62,7 @@ const Form = () => {
    .then((resp) => {
     if(resp.success){
       setFormData({email:'',password:''});
-      getCookie()
+      // getCookie()
       toast.update(crtToastId,{render:'Login Successfull!',type:'success',autoClose:1000,isLoading: false})
      }else{
       toast.update(crtToastId,{render:'Invalid User Credentials',type:'error',autoClose:1000,isLoading: false})
