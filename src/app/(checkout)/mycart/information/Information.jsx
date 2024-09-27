@@ -16,8 +16,10 @@ import { useRouter } from 'next/navigation';
 import * as Yup from 'yup'
 import { toast } from 'react-toastify';
 import { BiLoaderAlt } from "react-icons/bi";
+import {ExpressCheckoutElement,useElements,useStripe} from '@stripe/react-stripe-js'
+import Stripe from 'stripe'
 
-const Information = () => {
+const Information = ({PRIVATE_KEY}) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const orderInfo = useSelector((state)=>state.order.orderInfo)
@@ -125,6 +127,35 @@ const Information = () => {
    }
    }
 
+  //  const elements = useElements()
+   const stripe = useStripe()
+  //  const StripeMain = Stripe(PRIVATE_KEY)
+
+   const [isExpressAvailable,setExpressAvailable] = useState(false)
+
+   useEffect(() => {
+    if (!stripe) return; // Make sure Stripe is loaded
+
+    const paymentRequest = stripe.paymentRequest({
+      country: 'US', // Replace with your country
+      currency: 'usd', // Replace with your currency
+      total: {
+        label: 'Total',
+        amount: 5000, // Replace with the total amount in smallest unit (e.g., 5000 = $50.00)
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
+
+    // Check if the device supports express checkout methods
+    paymentRequest.canMakePayment().then((result) => {
+      if (result) {
+        setExpressAvailable(true); // Express checkout is available on this device
+      } else {
+        setExpressAvailable(false); // Express checkout is not available
+      }
+    });
+  }, [stripe]);
 
   return (
     <>
@@ -133,8 +164,8 @@ const Information = () => {
       {/* Bread Crumbs Start */}
       <BreadCrumb />
       {/* Bread Crumbs End */}
-
-      <fieldset className="rounded-md border border-b31 px-5 pb-5 pt-2">
+      {isExpressAvailable ?  <><ExpressCheckoutElement  /><div className="text_between_line my-8">OR</div></> : null}
+      {/* <fieldset className="rounded-md border border-b31 px-5 pb-5 pt-2">
         <legend className="mx-auto px-3 text-sm font-medium text-b16">Express checkout</legend>
         <div className="grid grid-cols-3 gap-2">
           <button className="flex justify-center rounded bg-[#5A31F4] p-3 text-white">
@@ -147,9 +178,9 @@ const Information = () => {
             <Image width={200} height={200} quality={100} src="/payment/pay.webp" alt="shoppay" className="h-[23px] object-contain" />
           </button>
         </div>
-      </fieldset>
+      </fieldset> */}
       {/* Bread Crumbs End */}
-      <div className="text_between_line my-8">OR</div>
+      
       {/* Conatct Information */}
       <div className="space-y-14px [&>*>*]:text-sm [&>*>*]:!text-b16">
         <h3 className="text-sm font-medium text-b16">Contact information</h3>

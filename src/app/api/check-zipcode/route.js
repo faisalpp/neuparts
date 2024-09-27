@@ -23,7 +23,7 @@ export async function GET(req, res) {
     });
     
     if (!response.ok) {
-      throw new Error(`No delivery location found for ${zip}`);
+      return NextResponse.json({ message: `No delivery location found for ${zip}` }, { status: 404 });
     }
 
     const data = await response.json();
@@ -61,5 +61,7 @@ export async function GET(req, res) {
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
       }
     }
+  }else{
+    return NextResponse.json({ message: `No delivery location found for ${zip}` }, { status: 404 });
   }
 }

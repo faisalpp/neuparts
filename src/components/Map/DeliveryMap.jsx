@@ -5,7 +5,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import MapForm from '../MapForm';
 import { RiLoader4Line } from 'react-icons/ri';
 
-const DeliveryMap = ({ customStyle }) => {
+const DeliveryMap = ({ customStyle,secret }) => {
   const [zip, setZip] = useState(78602);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -21,7 +21,7 @@ const DeliveryMap = ({ customStyle }) => {
   }
   const loadMap = async (result, zipZoom) => {
     const loader = new Loader({
-      apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY, // Replace with your own API key
+      apiKey: secret, // Replace with your own API key
       version: 'weekly', // or specify a specific version (e.g., 'weekly', 'weekly.next', 'beta')
     });
 
@@ -30,8 +30,9 @@ const DeliveryMap = ({ customStyle }) => {
     // Mid of cords
     var dataArray = result;
     var midIndex = Math.floor(dataArray.length / 2);
+    
     var midObject = dataArray[midIndex];
-
+    
     var midLat = midObject.lat;
     var midLng = midObject.lng;
 
@@ -69,15 +70,18 @@ const DeliveryMap = ({ customStyle }) => {
     setLoader(true);
     try {
       const response = await fetch(`/api/check-zipcode?zip=${zip}`);
+      console.log(response)
       if (!response.ok) {
         setSuccess(false);
         setError(true);
+      }else{
+        const data = await response.json();
+        console.log(data)
+        const cords = data.cords;
+        loadMap(cords, data.zoom);
+        setSuccess(true);
+        setError(false);
       }
-      const data = await response.json();
-      const cords = data.cords;
-      loadMap(cords, data.zoom);
-      setSuccess(true);
-      setError(false);
     } catch (error) {
       setSuccess(false);
       setError(true);

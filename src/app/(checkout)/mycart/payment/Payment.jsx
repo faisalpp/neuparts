@@ -12,14 +12,14 @@ import * as Yup from 'yup'
 import {CardNumberElement,CardExpiryElement,CardCvcElement,useElements,useStripe} from '@stripe/react-stripe-js'
 import Stripe from 'stripe'
 import { toast } from 'react-toastify';
+//
 
 
-
-const Payment = () => {
+const Payment = ({PRIVATE_KEY}) => {
   const dispatch = useDispatch()
   const elements = useElements()
   const stripe = useStripe()
-  const StripeMain = Stripe(process.env.NEXT_PUBLIC_STRIPE_PRIVATE_KEY)
+  const StripeMain = Stripe(PRIVATE_KEY)
 
   const [billingSwitch,setBillingSwitch] = useState('')
 

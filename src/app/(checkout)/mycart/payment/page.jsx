@@ -3,9 +3,12 @@ import Payment from './Payment';
 import StripeProvider from './StripeProvider'
 
 const Page = async () => {
+
+  const private_key = process.env.NEXT_STRIPE_PRIVATE_KEY
+
   return (
    <StripeProvider>
-    <Payment />
+    <Payment PRIVATE_KEY={private_key} />
    </StripeProvider>
   )
 };

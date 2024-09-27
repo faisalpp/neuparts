@@ -24,7 +24,7 @@ const getHome = async () => {
 
 const Page = async () => {
   const productsData = await getHome();
-
+  const Secret = process.env.NEXT_GOOGLE_API_KEY
   return (
     <>
       <HeroSection />
@@ -34,7 +34,7 @@ const Page = async () => {
       <PupularParts />
       <ChooseUs />
       {productsData ? <GallerySection data={productsData.homeGallery} /> : null}
-      <MapSection />
+      <MapSection secret={Secret} />
       <SatisfiedSection page="home-page" title="Join Thousands of our Satisfied Customers." />
       <NewsLetterSection backimage="/hero-bg.webp" />
     </>

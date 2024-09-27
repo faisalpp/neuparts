@@ -108,7 +108,7 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
         state.sCart = false 
       },
       setCartLoader: (state,action) => {
-        state.cartLoader = !state.cartLoader
+        state.cartLoader = action.payload
       },
       setShippingStatus: (state,action) => {
         state.shippingMethod = {status:false}

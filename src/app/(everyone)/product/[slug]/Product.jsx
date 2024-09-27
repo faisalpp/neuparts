@@ -132,6 +132,17 @@ const Product = ({ slug }) => {
     }
   };
 
+  const BuyNow = async () => {
+    setBuyLoading(true);
+    const res = await dispatch(addToCart({ productId: product._id, cartId: cartId, quantity: quantity, cartRender: false }));
+    if (res.payload.success) {
+      setBuyLoading(false);
+      router.push('/mycart/information')
+    } else {
+      setBuyLoading(false);
+    }
+  };
+
   const [deliveryPoints, setDeliveryPoints] = useState([
     { title: 'NeuShield <br /> 30-Day Warranty', image: '/svgs/shield-security.webp' },
     { title: 'Same Day Shipping on orders received before 1pm CST', image: '/svgs/local_shipping2.webp' },
@@ -400,7 +411,7 @@ const Product = ({ slug }) => {
                     <AiOutlineShoppingCart className="text-lg" />
                     <span className="ml-2 flex items-center font-medium">Add To Cart {cartLoading ? <BiLoaderAlt className="absolute right-16 animate-spin text-2xl" /> : null}</span>
                   </button>
-                  <button type="button" disabled={product.stock === 0 || buyLoading ? true : false} onClick={AddToCart} className="relative flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-medium text-white hover:bg-[#071822]/90">
+                  <button type="button" disabled={product.stock === 0 || buyLoading ? true : false} onClick={BuyNow} className="relative flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-medium text-white hover:bg-[#071822]/90">
                     <Image width={100} height={100} className="h-6 w-5 object-contain" alt="Sell" src="/svgs/sell.webp" />
                     <span className="ml-2 flex items-center font-medium">Buy Now {buyLoading ? <BiLoaderAlt className="absolute right-16 animate-spin text-2xl" /> : null}</span>
                   </button>

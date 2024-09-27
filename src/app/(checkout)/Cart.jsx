@@ -51,12 +51,12 @@ const Cart = () => {
  }
 
  const GetCart = async () => {
-   dispatch(setCartLoader())
+   dispatch(setCartLoader(true))
    const res = await dispatch(getCart({cartId:cartId}))
    if(!res.payload.success){
     dispatch(resetCart())
    }
-   dispatch(setCartLoader())
+   dispatch(setCartLoader(false))
  }
 
  useEffect(()=>{

@@ -33,18 +33,39 @@ export const ZipTransform = async (zipCode) => {
     return false;
   }
 
-  // Swap the elements in each inner array
-  for (const innerArray of data) {
-    [innerArray[0], innerArray[1]] = [innerArray[1], innerArray[0]];
-  }
-
   // Initialize an empty array for transformed data
   const transformedData = [];
 
-  // Transform the data into the desired format
-  for (const pair of data) {
-    transformedData.push({ lat: pair[0], lng: pair[1] });
+  // Function to check if an element is a coordinate pair
+const isCoordinatePair = (arr) => Array.isArray(arr) && arr.length === 2 && typeof arr[0] === 'number' && typeof arr[1] === 'number';
+
+// Loop through the data and check the structure
+for (const element of data) {
+  if (isCoordinatePair(element)) {
+    // If it's a coordinate pair, swap and push directly
+    transformedData.push({ lat: element[1], lng: element[0] });
+  } else if (Array.isArray(element)) {
+    // If it's nested, loop through the inner arrays
+    for (const pair of element) {
+      if (isCoordinatePair(pair)) {
+        transformedData.push({ lat: pair[1], lng: pair[0] });
+      }
+    }
   }
+}
+
+  // // Swap the elements in each inner array
+  // for (const innerArray of data) {
+  //   [innerArray[0], innerArray[1]] = [innerArray[1], innerArray[0]];
+  // }
+
+  // // Initialize an empty array for transformed data
+  // const transformedData = [];
+
+  // // Transform the data into the desired format
+  // for (const pair of data) {
+  //   transformedData.push({ lat: pair[0], lng: pair[1] });
+  // }
 
   // The transformed data is now stored in the transformedData array
   return { cords: transformedData, raw: raw, country: country, city: city, state: state };
