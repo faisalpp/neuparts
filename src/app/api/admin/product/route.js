@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import Product from '@/models/product';
+import ProductCat from '@/models/productcategory';
 import { generateSlug } from '@/utils/index';
-//
 
 export async function POST(request) {
   await connect();
