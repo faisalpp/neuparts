@@ -2,12 +2,10 @@
 import FourStar from '@/components/svgs/FourStar';
 import React, { useState } from 'react';
 import { BsGrid } from 'react-icons/bs';
-import { FaBars, FaRegHeart } from 'react-icons/fa';
-import FilterSvg from '@/components/svgs/FilterSvg';
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { FaBars } from 'react-icons/fa';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
-import Tag from '@/components/svgs/Tag';
 import ToolTip from '@/components/ToolTip';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 

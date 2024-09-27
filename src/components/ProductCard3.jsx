@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiOutlineQuestionCircle, AiFillStar } from 'react-icons/ai';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaRegHeart } from 'react-icons/fa';

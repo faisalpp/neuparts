@@ -6,7 +6,6 @@ import { IoBagCheckOutline, IoCloseOutline, IoSettingsOutline } from 'react-icon
 import { BiLoaderAlt } from 'react-icons/bi';
 import { useState } from 'react';
 import FaqAccordion from '@/components/FaqAccordion';
-import ToolTip from '@/components/ToolTip';
 import MoreImagesModal from '@/components/MoreImagesModal';
 import StickyNavbar from '@/components/DeskComp/Navbar/StickyNavbar';
 import Loader from '@/components/Loader/Loader';

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import RatingProductSectionXl from "./Sections/RatingProductSections/RatingProductSectionXl";
 import RatingProductSectionLg from "./Sections/RatingProductSections/RatingProductSectionLg";
 import RatingProductSectionSm from "./Sections/RatingProductSections/RatingProductSectionSm";
-// import { getSliderAppliances } from '../api/frontEnd'
 
 const RatingProductSection = () => {
   const [threeStar, setThreeStar] = useState([

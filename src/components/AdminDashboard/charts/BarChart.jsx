@@ -91,7 +91,7 @@ const BarChartComponent = () => {
         <Tooltip content={<CustomTooltip />} />
         {/* <Legend /> */}
         {/* <Bar dataKey="revenue" fill="#2563eb" /> */}
-        <Bar dataKey="profit" fill="#8b5cf6" />
+        <Bar dataKey="profit" fill="#8b5cf6"  />
       </BarChart>
     </ResponsiveContainer>
   );

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import { Loader } from '@googlemaps/js-api-loader';
 import MapForm from '../MapForm';
-import axios from 'axios';
 import { RiLoader4Line } from 'react-icons/ri';
 
 const DeliveryMap = ({ customStyle }) => {
@@ -69,18 +68,24 @@ const DeliveryMap = ({ customStyle }) => {
   const Submit = async () => {
     setLoader(true);
     try {
-      const res = await axios.get(`/api/check-zipcode?zip=${zip}`);
-      const cords = res.data.cords;
-      loadMap(cords, res.data.zoom);
+      const response = await fetch(`/api/check-zipcode?zip=${zip}`);
+      if (!response.ok) {
+        setSuccess(false);
+        setError(true);
+      }
+      const data = await response.json();
+      const cords = data.cords;
+      loadMap(cords, data.zoom);
       setSuccess(true);
       setError(false);
-      setLoader(false);
     } catch (error) {
       setSuccess(false);
       setError(true);
+    } finally {
       setLoader(false);
     }
   };
+  
 
   useEffect(() => {
     Submit();

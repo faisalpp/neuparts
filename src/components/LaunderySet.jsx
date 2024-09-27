@@ -2,7 +2,6 @@ import React from 'react';
 import WasherCard from './WasherCard';
 import { FaPlus } from 'react-icons/fa';
 import EmptyDryerCard from './EmptyDryerCard';
-// import EmptyDryerCard from './EmptyDryerCard';
 
 const LaunderySet = () => {
   return (

@@ -1,4 +1,3 @@
-
 export const ForgotPassword = (data) => {
   
   const template = 

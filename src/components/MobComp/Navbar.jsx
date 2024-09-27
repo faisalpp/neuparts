@@ -2,15 +2,14 @@
 import { useRef, useState } from 'react';
 import { AiOutlineShoppingCart, AiOutlineSearch } from 'react-icons/ai';
 import { IoMenu, IoCloseOutline } from 'react-icons/io5';
-import { BiSearch, BiUserCircle } from 'react-icons/bi';
+import { BiUserCircle } from 'react-icons/bi';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import useClickOutside from '@/hooks/useClickOutside';
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import NavSearchMenu from '../NavSearchMenu';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { toggleCart } from '@/app/GlobalRedux/slices/CartSlice';
 
 const Navbar = () => {

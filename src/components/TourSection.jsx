@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { BsArrowRightShort } from 'react-icons/bs'
 import Iframe from '../components/Reusable/Ifram'
 import IframeSkelton from '../components/Reusable/IframeSkelton'
@@ -7,20 +7,6 @@ import IframeSkelton from '../components/Reusable/IframeSkelton'
 const TourSection = () => {
 
   const [loopVideo, setLoopVideo] = useState([])
-
-  // useEffect(() => {
-  //   const GetSingleVideoMedia = async () => {
-  //     const data = { section: 'home-page-tour-section' }
-  //     const res = await getSingleVideoMedia(data);
-
-  //     if (res.status === 200) {
-  //       setLoopVideo(res.data.media[0])
-  //     }else{
-  //       setLoopVideo([])
-  //     }
-  //   }
-  //   GetSingleVideoMedia()
-  // }, []);
 
   return (
     <div id="tour">

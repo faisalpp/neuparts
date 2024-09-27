@@ -2,9 +2,9 @@
 
 import React from 'react';
 
-const Table = ({ children, header }) => {
+const Table = ({ children, header,height }) => {
   return (
-    <div className="w-full overflow-x-hidden overflow-y-scroll rounded-lg border border-gray-200 shadow-md" style={{ minHeight: 'calc(100vh - 300px)' }}>
+    <div className={`w-full ${height ? 'overflow-none' : 'overflow-x-hidden overflow-y-scroll'} rounded-lg border border-gray-200 shadow-md`} style={{ minHeight: height ? 'auto' :'calc(100vh - 300px)' }}>
       <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
         <thead className="bg-gray-50">
           {header?.length > 0 ? (

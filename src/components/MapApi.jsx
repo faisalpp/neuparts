@@ -1,8 +1,7 @@
 import React,{useContext, useEffect} from 'react'
 import { Loader } from "@googlemaps/js-api-loader"
 import {cords} from '../components/cords';
-import MapForm from './MapForm';
-import MobMapForm from './MobMapForm';
+
 
 const MapApi = () => {
   const states = useContext(AppContext)

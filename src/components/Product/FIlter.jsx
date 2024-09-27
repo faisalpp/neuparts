@@ -6,8 +6,6 @@ import RatingFilter from '@/components/DeskComp/Filter/RatingFilter';
 import SaleFilter from '@/components/DeskComp/Filter/SaleFilter';
 import MultiRangeSlider from './MultiRangeSlider/MultiRangeSlider';
 import Image from 'next/image';
-import HeaderFilter from '@/components/DeskComp/Filter/HeaderFilter';
-import { RiArrowDropRightLine } from 'react-icons/ri';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter, useSearchParams } from 'next/navigation';
 

@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 export default function Page() {
@@ -17,10 +16,6 @@ export default function Page() {
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
     handleFilterparams('category', event.target.value);
-    // router.push({
-    //   pathname: '/test',
-    //   query: { category: event.target.value },
-    // });
   };
 
   let queryParams;
@@ -51,10 +46,6 @@ export default function Page() {
   const handlePriceRangeChange = (event) => {
     setPriceRange([event.target.min, event.target.max]);
     handleFilterparams('priceRange', `${event.target.min},${event.target.max}`);
-    // router.push({
-    //   pathname: '/test',
-    //   query: { priceRange: `${event.target.min},${event.target.max}` },
-    // });
   };
 
   const handleOnsaleChange = (event) => {
@@ -64,10 +55,6 @@ export default function Page() {
     } else {
       handleFilterparams('onsale', 'false');
     }
-    // router.push({
-    //   pathname: '/test',
-    //   query: { onsale: event.target.checked ? 'true' : 'false' },
-    // });
   };
 
   useEffect(() => {
@@ -78,14 +65,7 @@ export default function Page() {
       if (typeof window !== 'undefined') {
         queryParams = new URLSearchParams(window.location.search);
       }
-
       (queryParams.toString());
-
-      // const response = await axios.get(url);
-      // const data = response.data;
-      // (data);
-
-      //   setProducts(data);
       setLoading(false);
     };
 
