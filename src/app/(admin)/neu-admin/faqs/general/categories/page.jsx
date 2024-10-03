@@ -43,7 +43,6 @@ const Page = () => {
     try {
       await ValFaq.validate(formData, { abortEarly: false });
     } catch (error) {
-      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -99,7 +98,6 @@ const Page = () => {
     try {
       await UpValFaqCat.validate(formData, { abortEarly: false });
     } catch (error) {
-      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });

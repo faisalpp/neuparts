@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import MediaPopup from '@/components/AdminDashboard/MediaPopup';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
   const [mediaPopup, setMediaPopup] = useState(false);
   const [formData, setFormData] = useState({ title: '', thumbnail: '' });
   const [files, setFiles] = useState([]);
+
+  const router = useRouter()
 
   useEffect(() => {
     if (files.length > 0) {
@@ -29,7 +32,6 @@ const Page = () => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
-      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -52,7 +54,6 @@ const Page = () => {
     fetch('/api/admin/product/parttype', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        resp;
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
           router.push('/neu-admin/product/parttype');

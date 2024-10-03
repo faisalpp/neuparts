@@ -15,10 +15,20 @@ import TableNav from '@/components/AdminDashboard/TableNav';
 const Page = () => {
   const [products, setProducts] = useState([]);
   const [rowLoader, setRowLoader] = useState(true);
-  const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [limit, setLimit] = useState(10);
+
+  const FetchBlogs = async () => {
+    setRowLoader(true);
+    fetch(`/api/admin/product?page=${page}&limit=${limit}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setPageCount(data.pagination.pageCount);
+        setProducts(data.products);
+        setRowLoader(false);
+      });
+  };
 
   const DeleteProduct = async (id) => {
     if (!id) {
@@ -48,7 +58,6 @@ const Page = () => {
       .then((resp) => {
         if (resp.success) {
           ManagePageCount(id);
-          setReRender(true);
           FetchBlogs();
           toast.update(delToastId, { render: resp.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
         } else {
@@ -60,29 +69,12 @@ const Page = () => {
       });
   };
 
-  const FetchBlogs = async () => {
-    setRowLoader(true);
-    fetch(`/api/admin/product?page=${page}&limit=${limit}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        setPageCount(data.pagination.pageCount);
-        setProducts(data.products);
-        setRowLoader(false);
-      });
-  };
+
 
   // get team members data
   useEffect(() => {
     FetchBlogs();
   }, [page]);
-
-  useEffect(() => {
-    if (reRender) {
-      FetchBlogs();
-      setReRender(false);
-    }
-  }, [reRender]);
 
   return (
     <>

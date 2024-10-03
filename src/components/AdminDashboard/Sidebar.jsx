@@ -10,7 +10,8 @@ import { FaBlogger } from 'react-icons/fa';
 import { MdTipsAndUpdates, MdLiveHelp } from 'react-icons/md';
 import { BiSolidCategory } from "react-icons/bi";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-import { MdCategory } from "react-icons/md";
+import { MdCategory,MdFactory } from "react-icons/md";
+import { PiWashingMachineFill } from "react-icons/pi";
 import { FaImages } from 'react-icons/fa';
 import { BiSolidVideos } from 'react-icons/bi';
 import { LuBoxes } from 'react-icons/lu';
@@ -103,6 +104,14 @@ const Sidebar = () => {
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/parttype">
                   <MdCategory />
                   <span className="mx-2 text-sm font-semibold">Manage Part Type</span>
+                </Link>
+                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/modelno">
+                  <PiWashingMachineFill className='text-xl' />
+                  <span className="mx-2 text-sm font-semibold">Manage Model Nos</span>
+                </Link>
+                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
+                <MdFactory className='text-xl'/>
+                  <span className="mx-2 text-sm font-semibold">Manage Manufacturers</span>
                 </Link>
               </div>
             </div>

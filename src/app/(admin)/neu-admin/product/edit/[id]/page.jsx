@@ -122,7 +122,6 @@ const Page = ({ params }) => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
-      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -224,7 +223,7 @@ const Page = ({ params }) => {
           <div className="flex gap-5">
             <div className="w-6/12">
               <label htmlFor="type" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-                Part
+                Type
               </label>
               <select name="type" value={formData.type} onChange={HandleChange} className="custom-input !py-3">
                 <option value="">Select Type</option>

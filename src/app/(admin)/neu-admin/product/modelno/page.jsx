@@ -13,14 +13,14 @@ import ActionBtns from '@/components/AdminDashboard/ActionBtns';
 import TableNav from '@/components/AdminDashboard/TableNav';
 
 const Page = () => {
-  const [categories, setCategories] = useState([]);
+  const [data, setData] = useState([]);
   const [rowLoader, setRowLoader] = useState(true);
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [limit, setLimit] = useState(5);
 
-  const DeleteCategory = async (id) => {
+  const DeleteModel = async (id) => {
     if (!id) {
       toast.error('Sub Category id required!');
       return;
@@ -33,9 +33,9 @@ const Page = () => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Deleting Part Type...', // Show pending message
-        success: 'Part type deleted successfully!', // Show success message
-        error: 'Failed to delete part type', // Show error message
+        pending: 'Deleting ModelNo...', // Show pending message
+        success: 'ModelNo deleted successfully!', // Show success message
+        error: 'Failed to delete modelno', // Show error message
         closeOnClick: false,
         closeOnEscape: false,
       }
@@ -43,7 +43,7 @@ const Page = () => {
 
     toast.update(delToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
 
-    await fetch('/api/admin/product/parttype', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
+    await fetch('/api/admin/product/modelno', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
@@ -59,17 +59,17 @@ const Page = () => {
       });
   };
 
-  const FetchCategory = async () => {
+  const FetchData = async () => {
     setRowLoader(true);
 
-    await fetch(`/api/admin/product/parttype?page=${page}&limit=${limit}`)
+    await fetch(`/api/admin/product/modelno?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
           setPageCount(data.pagination.pageCount);
-          setCategories(data.producttypes);
+          setData(data.producttypes);
         } else {
-          setCategories([]);
+          setData([]);
         }
         setRowLoader(false);
       });
@@ -77,12 +77,12 @@ const Page = () => {
 
   // get team members data
   useEffect(() => {
-    FetchCategory();
+    FetchData();
   }, [page]);
 
   // useEffect(() => {
   //   if (reRender) {
-  //     FetchCategory();
+  //     FetchData();
   //     setReRender(false);
   //   }
   // }, [reRender]);
@@ -90,23 +90,22 @@ const Page = () => {
   return (
     <>
       <div className="mx-10 flex flex-col">
-        <ActionBtns buttons={[{ type: 'link', text: 'Add Part Type', link: '/neu-admin/product/parttype/create' }]} />
+        <ActionBtns buttons={[{ type: 'link', text: 'Add Model No', link: '/neu-admin/product/modelno/create' }]} />
         <div className="flex h-full w-full flex-col items-center">
-          <Table header={['Thumbnail', 'Product Title', 'Slug', 'Actions']}>
-            {/* hello pengea/dnd */}
+          <Table header={['Thumbnail', 'Title', 'Model #', 'Actions']}>
             {rowLoader ? (
               <RowLoader count={5} />
-            ) : categories?.length > 0 ? (
-              categories.map((category, i) => (
+            ) : data?.length > 0 ? (
+              data.map((model, i) => (
                 <Row Key={i}>
-                  <TdImage src={category.thumbnail} css="w-20 h-14 object-fit rounded" />
-                  <Text text={category.title} />
-                  <Text text={category.slug} />
-                  <Actions id={category._id} handleDelete={DeleteCategory} data={category} isEditLink={true} editLink={`/neu-admin/product/parttype/edit/${category._id}`} />
+                  <TdImage src={model.thumbnail} css="w-20 h-14 object-fit rounded" />
+                  <Text text={model.title} />
+                  <Text text={model.model_no} />
+                  <Actions id={model._id} handleDelete={DeleteModel} data={model} isEditLink={true} editLink={`/neu-admin/product/modelno/edit/${model._id}`} />
                 </Row>
               ))
             ) : (
-              <NoData colspan={5} alert="No Product Found!" />
+              <NoData colspan={5} alert="No Model # Found!" />
             )}
           </Table>
           {pageCount > 1 ? <TableNav page={page} setPage={setPage} pageCount={pageCount} /> : null}

@@ -38,8 +38,6 @@ export async function GET(request) {
     });
     return NextResponse.json({ product: product, partproducts, buyingOptions, partCount, success: true });
   } catch (error) {
-    error;
-
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
 }

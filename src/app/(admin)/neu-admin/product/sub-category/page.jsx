@@ -93,21 +93,20 @@ const Page = () => {
       <div className="mx-10 flex flex-col">
         <ActionBtns buttons={[{ type: 'link', text: 'Add Sub Category', link: '/neu-admin/product/sub-category/create' }]} />
         <div className="flex h-full w-full flex-col items-center">
-          <Table header={['Thumbnail', 'Product Title', 'Slug', 'Actions']}>
+          <Table header={['Product Title', 'Slug', 'Actions']}>
             {/* hello pengea/dnd */}
             {rowLoader ? (
               <RowLoader count={5} />
             ) : categories?.length > 0 ? (
               categories.map((category, i) => (
                 <Row Key={i}>
-                  <TdImage src={category.thumbnail} css="w-20 h-14 object-fit rounded" />
                   <Text text={category.title} />
                   <Text text={category.slug} />
                   <Actions id={category._id} handleDelete={DeleteCategory} data={category} isEditLink={true} editLink={`/neu-admin/product/sub-category/edit/${category._id}`} />
                 </Row>
               ))
             ) : (
-              <NoData colspan={5} alert="No Product Found!" />
+              <NoData colspan={5} alert="No Sub Categories Found!" />
             )}
           </Table>
           {pageCount > 1 ? <TableNav page={page} setPage={setPage} pageCount={pageCount} /> : null}

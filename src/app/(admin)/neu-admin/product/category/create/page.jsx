@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react';
 import MediaPopup from '@/components/AdminDashboard/MediaPopup';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
   const [mediaPopup, setMediaPopup] = useState(false);
-  const [formData, setFormData] = useState({ title: '', model_no: '', thumbnail: '', description: '', isvisible: 1 });
+  const [formData, setFormData] = useState({ title: '', thumbnail: '', isvisible: 1 });
   const [files, setFiles] = useState([]);
+
+  const router = useRouter()
 
   useEffect(() => {
     if (files.length > 0) {
@@ -17,7 +20,6 @@ const Page = () => {
 
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
-    model_no: Yup.string().required('Model No. is required!'),
     thumbnail: Yup.string().required('Thumbnail is required!'),
     isvisible: Yup.number().required('Visibility is required!'),
   });
@@ -31,7 +33,6 @@ const Page = () => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
-      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -43,7 +44,7 @@ const Page = () => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Create Category...', // Show pending message
+        pending: 'Creating Category...', // Show pending message
         success: 'Category created successfully!', // Show success message
         error: 'Failed to create category', // Show error message
         closeOnClick: false,
@@ -57,7 +58,7 @@ const Page = () => {
         resp;
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
-          router.push('/neu-admin/blogs/general');
+          router.push('/neu-admin/product/category');
         } else {
           toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
         }
@@ -74,28 +75,10 @@ const Page = () => {
       <form action={CreateCategory} className="mt-4 grid grid-cols-2 gap-4">
         <div>
           <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Name
+            Title
           </label>
           <input name="title" value={formData.title} onChange={HandleChange} type="text" className="custom-input" />
         </div>
-        <div>
-          <label htmlFor="title" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Title
-          </label>
-          <input name="description" value={formData.description} onChange={HandleChange} type="text" className="custom-input" />
-        </div>
-        <div>
-          <label htmlFor="model_no" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Model No
-          </label>
-          <input name="model_no" value={formData.model_no} onChange={HandleChange} type="text" className="custom-input" />
-        </div>
-        {/* <div className="col-span-2">
-          <label htmlFor="description" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Description
-          </label>
-          <textarea name="description" value={formData.description} onChange={HandleChange} type="text" id="description" className="custom-input"></textarea>
-        </div> */}
         <div>
           <label htmlFor="thumbnail" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
             Thumbnail

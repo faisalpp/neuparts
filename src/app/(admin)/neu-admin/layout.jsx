@@ -2,14 +2,15 @@
 import React from 'react';
 import '../globals.css';
 import Sidebar from '@/components/AdminDashboard/Sidebar';
-import Navbar from '@/components/AdminDashboard/Navbar';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { StoreProvider } from '@/app/GlobalRedux/StoreProvider';
 
 const layout = ({ children }) => {
   return (
     <html lang="en">
       <body>
+       <StoreProvider>
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" animation="bounce" />
         {/* Wrapper Start */}
         <div className="flex h-screen w-full">
@@ -26,6 +27,7 @@ const layout = ({ children }) => {
             {/* Main Content Start */}
           </div>
         </div>
+        </StoreProvider>
         {/* Wrapper End */}
       </body>
     </html>

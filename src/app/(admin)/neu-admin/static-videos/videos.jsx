@@ -45,7 +45,6 @@ const Videos = () => {
     try {
       await ValReview.validate(formData, { abortEarly: false });
     } catch (error) {
-      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });

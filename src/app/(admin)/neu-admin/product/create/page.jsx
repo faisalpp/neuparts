@@ -14,7 +14,7 @@ const Page = () => {
   const [categories, setCategories] = useState([]);
   const [parttypes, setPartTypes] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
-  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '', condition: '', type: '', category: '', parttype: '', subcategory: '', stock: 0, images: [], thumbnail: '', threesixty: '', description: '', specification: '', delivery: '' });
+  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '',model_no:'',menufacturer:'', condition: '', type: '', category: '', parttype: '', subcategory: '', stock: 0, images: [], thumbnail: '', threesixty: '', description: '', specification: '', delivery: '' });
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState('');
 
@@ -50,6 +50,8 @@ const Page = () => {
     regular_price: Yup.number().required('Regular Price is required!'),
     sale_price: Yup.number().required('Sale Price is required!'),
     part_number: Yup.string().required('Part Number is required!'),
+    model_no: Yup.string().required('Model # is required!'),
+    menufacturer: Yup.string().required('Menufacturer is required!'),
     condition: Yup.string().required('Condition is required!'),
     type: Yup.string().required('Type is required!'),
     category: Yup.string().required('Category is required!'),
@@ -194,6 +196,27 @@ const Page = () => {
             </div>
             <div className="w-6/12">
               <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+                Model No
+              </label>
+              <select name="model_no" value={formData.model_no} onChange={HandleChange} className="custom-input !py-3">
+                <option value="">Select Model #</option>
+              </select>
+            </div>
+          </div>
+          {/* part # & model no end */}
+
+          {/* part # & model no start */}
+          <div className="flex gap-5">
+            <div className="w-6/12">
+              <label htmlFor="part_number" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+                Menufacturer
+              </label>
+              <select name="menufacturer" value={formData.menufacturer} onChange={HandleChange} className="custom-input !py-3">
+                <option value="">Select Menufacturer</option>
+              </select>
+            </div>
+            <div className="w-6/12">
+              <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
                 Condition
               </label>
               <select name="condition" value={formData.condition} onChange={HandleChange} className="custom-input !py-3">
@@ -214,7 +237,7 @@ const Page = () => {
           <div className="flex gap-5">
             <div className="w-6/12">
               <label htmlFor="type" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-                Part
+                Type
               </label>
               <select name="type" value={formData.type} onChange={HandleChange} className="custom-input !py-3">
                 <option value="">Select Type</option>

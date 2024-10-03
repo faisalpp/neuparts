@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const ProductTyoeSchema = new mongoose.Schema(
+const ProductTypeSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
@@ -9,4 +9,4 @@ const ProductTyoeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.ProductTyoe || mongoose.model('ProductTyoe', ProductTyoeSchema, 'productTypes');
+export default mongoose.models.ProductType || mongoose.model('ProductType', ProductTypeSchema, 'productTypes');

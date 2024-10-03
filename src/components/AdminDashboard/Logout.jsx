@@ -3,10 +3,13 @@ import React from 'react'
 import { BiSolidLogOutCircle } from "react-icons/bi";
 import {useRouter} from 'next/navigation'
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import {setEmail,setLogin,setId} from '../../app/GlobalRedux/slices/AuthSlice'
 
 const Logout = () => {
 
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const Logout = async () => {
     const logoutToast = toast.loading('Signing out...')
@@ -15,6 +18,9 @@ const Logout = () => {
     .then((data)=>{
       if(data.success){
        toast.update(logoutToast,{render:'Signout successfull!',type:'success',autoClose:1000,isLoading: false})
+       dispatch(setEmail(''))
+       dispatch(setLogin(''))
+       dispatch(setId(null))
        router.push('/')
       }
     })

@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 const Page = ({ params }) => {
   const { id } = params;
   const [mediaPopup, setMediaPopup] = useState(false);
-  const [formData, setFormData] = useState({ title: '', model_no: '', thumbnail: '', description: '', isvisible: 1 });
+  const [formData, setFormData] = useState({ title: '', thumbnail: '', isvisible: 1 });
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
@@ -18,7 +18,6 @@ const Page = ({ params }) => {
 
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
-    model_no: Yup.string().required('Model No. is required!'),
     thumbnail: Yup.string().required('Thumbnail is required!'),
     isvisible: Yup.number().required('Visibility is required!'),
   });
@@ -42,7 +41,6 @@ const Page = ({ params }) => {
     try {
       await ValProduct.validate(formData, { abortEarly: false });
     } catch (error) {
-      error;
       error?.inner?.forEach((err) => {
         toast.error(err.message);
       });
@@ -54,7 +52,7 @@ const Page = ({ params }) => {
         setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
       }),
       {
-        pending: 'Update Category...', // Show pending message
+        pending: 'Updating Category...', // Show pending message
         success: 'Category update successfully!', // Show success message
         error: 'Failed to update category', // Show error message
         closeOnClick: false,
@@ -86,18 +84,6 @@ const Page = ({ params }) => {
             Title
           </label>
           <input name="title" value={formData.title} onChange={HandleChange} type="text" className="custom-input" />
-        </div>
-        <div>
-          <label htmlFor="model_no" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Model No
-          </label>
-          <input name="model_no" value={formData.model_no} onChange={HandleChange} type="text" className="custom-input" />
-        </div>
-        <div className="col-span-2">
-          <label htmlFor="description" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-            Description
-          </label>
-          <textarea name="description" value={formData.description} onChange={HandleChange} type="text" id="description" className="custom-input"></textarea>
         </div>
         <div>
           <label htmlFor="thumbnail" className="block text-base font-semibold text-gray-800 dark:text-gray-300">

@@ -3,14 +3,13 @@ import connect from '@/lib/db';
 import SubCategory from '@/models/subcategory';
 
 export async function GET(request) {
-  await connect();
   try {
+    await connect();
     const searchParams = request.nextUrl.searchParams;
     const id = searchParams.get('id');
     const subcategory = await SubCategory.findById(id);
     return NextResponse.json(subcategory);
   } catch (error) {
-    error;
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
 }

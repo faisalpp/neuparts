@@ -4,9 +4,9 @@ import SubCategory from '@/models/subcategory';
 import { generateSlug } from '@/utils/index';
 
 export async function POST(request) {
-  await connect();
-
+  
   try {
+    await connect();
     const res = await request.json();
 
     let slug = generateSlug(res.title);
@@ -30,15 +30,13 @@ export async function POST(request) {
     }
     return NextResponse.json({ message: 'Something Went Wrong!', success: false });
   } catch (error) {
-    error;
-
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
 }
 
 export async function GET(request) {
-  await connect();
   try {
+    await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
 
@@ -62,8 +60,8 @@ export async function GET(request) {
 }
 
 export async function DELETE(request) {
-  await connect();
   try {
+    await connect();
     const res = await request.json();
     const id = res.id;
     if (!id) {
@@ -81,8 +79,8 @@ export async function DELETE(request) {
 }
 
 export async function PUT(request) {
-  await connect();
   try {
+    await connect();
     const res = await request.json();
     const id = res._id;
     if (!id) {

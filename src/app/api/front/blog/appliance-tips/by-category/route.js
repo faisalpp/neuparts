@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import Post from '@/models/posts';
-import PostCategories from '@/models/postCategories';
 import ApplianceCategories from '@/models/applianceCategories';
 
 export async function GET(request) {

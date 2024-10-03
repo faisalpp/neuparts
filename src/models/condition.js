@@ -8,4 +8,4 @@ const ConditionsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.Conditions || mongoose.model('Conditions', ConditionsSchema, 'productConditions');
+export default mongoose.models.ProductConditions || mongoose.model('ProductConditions', ConditionsSchema, 'productConditions');

@@ -107,7 +107,7 @@ const Page = () => {
                 </Row>
               ))
             ) : (
-              <NoData colspan={5} alert="No Product Found!" />
+              <NoData colspan={5} alert="No Categories Found!" />
             )}
           </Table>
           {pageCount > 1 ? <TableNav page={page} setPage={setPage} pageCount={pageCount} /> : null}
