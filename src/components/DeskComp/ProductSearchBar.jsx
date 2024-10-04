@@ -53,8 +53,8 @@ const ProductSearchBar = () => {
                 {showSuggestions && modelNo && (
                   <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black">
                     {filteredModels.map((model, index) => (
-                      <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
-                        {model}
+                      <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model.model_no)}>
+                        {model.model_no}
                       </li>
                     ))}
                   </ul>

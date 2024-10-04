@@ -7,7 +7,6 @@ import Image from 'next/image';
 import { BiLoaderAlt } from 'react-icons/bi';
 import { IoCloseCircle } from 'react-icons/io5';
 import Accordion from '@/components/AdminDashboard/Accordion';
-import subcategory from '@/models/subcategory';
 
 const Page = ({ params }) => {
   const { id } = params;
@@ -163,7 +162,7 @@ const Page = ({ params }) => {
     <div className="p-5">
       <MediaPopup state={mediaPopup} setState={setMediaPopup} files={files} setFiles={setFiles} isMultiple={true} />
       <MediaPopup state={mediaPopup2} setState={setMediaPopup2} files={files2} setFiles={setFiles2} isMultiple={false} />
-      <h2 className="text-center text-3xl font-semibold">Create Product</h2>
+      <h2 className="text-center text-3xl font-semibold">Edit Product</h2>
       <form action={UpdateProduct} className="mt-4 grid grid-cols-2 rounded-xl border-2 shadow-lg">
         {/* Left Section Start */}
         <div className="flex flex-col gap-5 border-l-2 px-5 py-5">
@@ -207,6 +206,39 @@ const Page = ({ params }) => {
             </div>
             <div className="w-6/12">
               <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+                Model No
+              </label>
+              <select name="model_no" value={formData.model_no} onChange={HandleChange} className="custom-input !py-3">
+                <option value="">Select Model #</option>
+                {modelNos.length > 0 &&
+                  modelNos.map((item, index) => (
+                    <option value={item.model_no} key={index}>
+                      {item.model_no}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          </div>
+          {/* part # & model no end */}
+
+          {/* part # & model no start */}
+          <div className="flex gap-5">
+          <div className="w-6/12">
+              <label htmlFor="part_number" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+                Menufacturer
+              </label>
+              <select name="menufacturer" value={formData.menufacturer} onChange={HandleChange} className="custom-input !py-3">
+                <option value="">Select Menufacturer</option>
+                {menufacturers.length > 0 &&
+                  menufacturers.map((item, index) => (
+                    <option value={item._id} key={index}>
+                      {item.title}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div className="w-6/12">
+              <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
                 Condition
               </label>
               <select name="condition" value={formData.condition} onChange={HandleChange} className="custom-input !py-3">
@@ -232,7 +264,7 @@ const Page = ({ params }) => {
               <select name="type" value={formData.type} onChange={HandleChange} className="custom-input !py-3">
                 <option value="">Select Type</option>
                 <option value="Genuine OEM Part">Genuine OEM Part</option>
-                <option value="Genuine OEM Part">Aftermarket Replacement Part</option>
+                <option value="Aftermarket Replacement Part">Aftermarket Replacement Part</option>
               </select>
             </div>
             <div className="w-6/12">

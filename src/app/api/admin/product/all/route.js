@@ -15,7 +15,7 @@ export async function GET(request) {
     const modelnos = await ModelNo.find().sort({ createdAt: -1 });
     const menufacturers = await Menufacturer.find().sort({ createdAt: -1 });
 
-    return NextResponse.json({ categories, parttypes, subcategories,modelnos,menufacturers, success: true });
+    return NextResponse.json({ categories,subcategories, parttypes,modelnos,menufacturers, success: true });
   } catch (error) {
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }

@@ -17,12 +17,12 @@ function Context({ children }) {
 
   const router = useRouter();
 
-  // Fetch model numbers when the component mounts
+  // Fetch model numbers when the component mounts/
   const fetchModelNumbers = async () => {
     try {
       const response = await fetch('/api/front/product/models');
       const data = await response.json();
-
+      
       setModelSuggestions(data.modelNos);
     } catch (error) {
       console.error('Failed to fetch model numbers:', error);
@@ -40,8 +40,8 @@ function Context({ children }) {
     setShowSuggestions(false); // Hide suggestions when a suggestion is clicked
     setError(''); // Clear any previous error
   };
-  const filteredModels = modelSuggestions.filter((model) => model?.toLowerCase().includes(modelNo?.toLowerCase()));
-
+  const filteredModels = modelSuggestions.filter((model) => model.model_no.includes(modelNo));
+  
   const SearchResult = async () => {
     try {
       setSearchLoading(true);
@@ -70,7 +70,9 @@ function Context({ children }) {
   };
 
   const handleSearchClick = async () => {
-    if (modelNo && !modelSuggestions.includes(modelNo)) {
+    const isModel = !!modelSuggestions.find((model)=>model.model_no === modelNo)
+    
+    if (modelNo && !isModel) {
       setError('Invalid model number.');
     } else {
       // Navigate to the search page
