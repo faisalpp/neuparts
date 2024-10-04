@@ -7,7 +7,7 @@ import { generateSlug } from '@/utils/index';
 export async function POST(request) {
   await connect();
 
-  try {
+  // try {
     const res = await request.json();
 
     const is_sale = res.sale_price != 0 ? true : false;
@@ -32,9 +32,9 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Product Created!', success: true });
     }
     return NextResponse.json({ message: 'Something Went Wrong!', success: false });
-  } catch (error) {
-    return NextResponse.json({ error: error.message, success: false }, { status: 500 });
-  }
+  // } catch (error) {
+  //   return NextResponse.json({ error: error.message, success: false }, { status: 500 });
+  // }
 }
 
 export async function GET(request) {

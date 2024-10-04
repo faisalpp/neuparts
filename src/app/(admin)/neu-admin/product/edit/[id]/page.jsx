@@ -16,7 +16,9 @@ const Page = ({ params }) => {
   const [categories, setCategories] = useState([]);
   const [parttypes, setPartTypes] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
-  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '', condition: '', type: '', category: '', parttype: '', subcategory: '', stock: 0, images: [], thumbnail: '', threesixty: '', description: '', specification: '', delivery: '' });
+  const [menufacturers, setMenufacturers] = useState([]);
+  const [modelNos, setModelNos] = useState([]);
+  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '',model_no:'',menufacturer:'', condition: '', type: '', category: '', parttype: '', subcategory: '', stock: 0, images: [], thumbnail: '', threesixty: '', description: '', specification: '', delivery: '' });
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState([]);
 
@@ -98,8 +100,10 @@ const Page = ({ params }) => {
       .then((data) => {
         if (data.success) {
           setCategories(data.categories);
-          setPartTypes(data.parttyoes);
+          setPartTypes(data.parttypes);
           setSubCategories(data.subcategories);
+          setModelNos(data.modelnos);
+          setMenufacturers(data.menufacturers);
         }
       });
   };

@@ -7,13 +7,17 @@ import { BiLoaderAlt } from 'react-icons/bi';
 import { IoCloseCircle } from 'react-icons/io5';
 import Image from 'next/image';
 import Accordion from '@/components/AdminDashboard/Accordion';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
+  const router = useRouter()
   const [mediaPopup, setMediaPopup] = useState(false);
   const [mediaPopup2, setMediaPopup2] = useState(false);
   const [categories, setCategories] = useState([]);
   const [parttypes, setPartTypes] = useState([]);
+  const [modelNos, setModelNos] = useState([]);
   const [subcategories, setSubCategories] = useState([]);
+  const [menufacturers, setMenufacturers] = useState([]); 
   const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '',model_no:'',menufacturer:'', condition: '', type: '', category: '', parttype: '', subcategory: '', stock: 0, images: [], thumbnail: '', threesixty: '', description: '', specification: '', delivery: '' });
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState('');
@@ -79,6 +83,8 @@ const Page = () => {
           setCategories(data.categories);
           setPartTypes(data.parttypes);
           setSubCategories(data.subcategories);
+          setModelNos(data.modelnos);
+          setMenufacturers(data.menufacturers);
         }
       });
   };
@@ -117,7 +123,7 @@ const Page = () => {
       .then((resp) => {
         if (resp.success) {
           toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
-          router.push('/neu-admin/blogs/general');
+          router.push('/neu-admin/product');
         } else {
           toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
         }
@@ -200,6 +206,12 @@ const Page = () => {
               </label>
               <select name="model_no" value={formData.model_no} onChange={HandleChange} className="custom-input !py-3">
                 <option value="">Select Model #</option>
+                {modelNos.length > 0 &&
+                  modelNos.map((item, index) => (
+                    <option value={item.model_no} key={index}>
+                      {item.model_no}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>
@@ -213,6 +225,12 @@ const Page = () => {
               </label>
               <select name="menufacturer" value={formData.menufacturer} onChange={HandleChange} className="custom-input !py-3">
                 <option value="">Select Menufacturer</option>
+                {menufacturers.length > 0 &&
+                  menufacturers.map((item, index) => (
+                    <option value={item._id} key={index}>
+                      {item.title}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="w-6/12">

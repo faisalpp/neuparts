@@ -3,20 +3,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { RiTeamFill } from 'react-icons/ri';
-import { MdPermMedia, MdDashboard, MdRateReview } from 'react-icons/md';
-import { FaQuoteRight } from 'react-icons/fa';
+import { MdPermMedia, MdDashboard, MdRateReview,MdTipsAndUpdates, MdLiveHelp,MdCategory,MdFactory,MdDiscount } from 'react-icons/md';
+import { FaBlogger,FaImages,FaQuoteRight } from 'react-icons/fa';
 import { GiAutoRepair, GiWashingMachine } from 'react-icons/gi';
-import { FaBlogger } from 'react-icons/fa';
-import { MdTipsAndUpdates, MdLiveHelp } from 'react-icons/md';
-import { BiSolidCategory } from "react-icons/bi";
-import { BiSolidCategoryAlt } from "react-icons/bi";
-import { MdCategory,MdFactory } from "react-icons/md";
+import { BiSolidVideos,BiSolidCategoryAlt,BiSolidCategory } from "react-icons/bi";
 import { PiWashingMachineFill } from "react-icons/pi";
-import { FaImages } from 'react-icons/fa';
-import { BiSolidVideos } from 'react-icons/bi';
 import { LuBoxes } from 'react-icons/lu';
 import Logout from '@/components/AdminDashboard/Logout';
-import { MdDiscount } from "react-icons/md";
 
 const Sidebar = () => {
   // State to manage collapsibility of each section
@@ -109,8 +102,8 @@ const Sidebar = () => {
                   <PiWashingMachineFill className='text-xl' />
                   <span className="mx-2 text-sm font-semibold">Manage Model Nos</span>
                 </Link>
-                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="#">
-                <MdFactory className='text-xl'/>
+                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/menufacturer">
+                  <MdFactory className='text-xl' />
                   <span className="mx-2 text-sm font-semibold">Manage Manufacturers</span>
                 </Link>
               </div>

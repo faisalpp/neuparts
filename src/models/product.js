@@ -7,7 +7,10 @@ const ProductSchema = new mongoose.Schema(
     sale_price: { type: Number, required: true },
     part_number: { type: String, required: true },
     model_no: { type: String, required: true },
-    menufacturer: { type: String, required: true },
+    menufacturer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'ProductMenufacturer',
+    },
     is_sale: { type: Boolean, required: true },
     condition: { type: String, required: true },
     type: { type: String, required: true },
@@ -17,11 +20,11 @@ const ProductSchema = new mongoose.Schema(
     },
     parttype: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'ProductTyoe',
+      ref: 'ProductType',
     },
     subcategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'SubCategpry',
+      ref: 'SubCategory',
     },
     stock: { type: Number, required: true },
     images: { type: Array },

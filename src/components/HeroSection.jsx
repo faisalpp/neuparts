@@ -1,30 +1,35 @@
 'use client';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState,useEffect } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { Select, Option } from '@material-tailwind/react';
 import { StoreData } from '@/provider';
 import { useContext } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import Spinner from '@/components/svgs/Spinner';
 
 const HeroSection = () => {
   const { partNo, modelNo, filteredModels, setPartNo, showSuggestions, modelSuggestions, error, searchLoading, SearchResult, handleModelNoChange, handleSuggestionClick, setError, handleSearchClick } = useContext(StoreData);
 
   const [searchBy, setSearchBy] = useState('tab');
+  const [categories, setCategories] = useState([]);
+  const [menufacturers, setMenufacturers] = useState([]);
 
-  const router = useRouter();
+  const GetCategories = async () => {
+    await fetch(`/api/front/hero-section`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        setCategories(data.categories);
+        setMenufacturers(data.menufacturers);
+      }
+    });
+  }
 
-  // const handleSearchClick = async () => {
-  //   if (modelNo && !modelSuggestions.includes(modelNo)) {
-  //     setError('Invalid model number.');
-  //   } else {
-  //     // Navigate to the search page
-  //     await SearchResult();
-  //     router.push(`/products?modelno=${modelNo}&partno=${partNo}`);
-  //   }
-  // };
+  useEffect(() => {
+    GetCategories()
+  }, [])
+  
 
   return (
     <>
@@ -96,9 +101,9 @@ const HeroSection = () => {
                         unmount: { y: 25 },
                       }}
                     >
-                      {[1, 2, 3, 4].map((item, index) => (
-                        <Option key={index} className="text-left">
-                          Manufacturer {item}
+                      {menufacturers.map((item, index) => (
+                        <Option value={item.slug} key={index} className="text-left">
+                          {item.title}
                         </Option>
                       ))}
                     </Select>
@@ -111,9 +116,9 @@ const HeroSection = () => {
                         unmount: { y: 25 },
                       }}
                     >
-                      {[1, 2, 3, 4].map((item, index) => (
-                        <Option key={index} className="text-left">
-                          Category {item}
+                      {categories.map((item, index) => (
+                        <Option value={item.slug} key={index} className="text-left">
+                          {item.title}
                         </Option>
                       ))}
                     </Select>

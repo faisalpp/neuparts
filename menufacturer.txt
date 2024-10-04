@@ -1,0 +1,10 @@
+<option value="LG" >LG</option>
+<option value="Samsung" >Samsung</option>
+<option value="Whirlpool" >Whirlpool</option>
+<option value="Midea" >Midea</option>
+<option value="Amana" >Amana</option>
+<option value="Maytag" >Maytag</option>
+<option value="Frigidaire" >Frigidaire</option>
+<option value="Haier" >Haier</option>
+<option value="Hisense" >Hisense</option>
+<option value="Kenmore" >Kenmore</option>

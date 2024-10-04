@@ -93,7 +93,7 @@ const Page = () => {
       <div className="mx-10 flex flex-col">
         <ActionBtns buttons={[{ type: 'link', text: 'Add Sub Category', link: '/neu-admin/product/sub-category/create' }]} />
         <div className="flex h-full w-full flex-col items-center">
-          <Table header={['Product Title', 'Slug', 'Actions']}>
+          <Table header={['Subcategory', 'Slug', 'Actions']}>
             {/* hello pengea/dnd */}
             {rowLoader ? (
               <RowLoader count={5} />
