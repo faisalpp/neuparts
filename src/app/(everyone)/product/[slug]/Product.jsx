@@ -29,7 +29,7 @@ import { addToCart } from '@/app/GlobalRedux/slices/CartSlice';
 import { useRouter } from 'next/navigation';
 import {addToFavoriteUser,removeFromFavoriteUser} from '@/app/GlobalRedux/slices/Favorite'
 import {toast} from 'react-toastify'
-
+import { generateSlug } from '@/utils';
 
 const Product = ({ slug }) => {
   const dispatch = useDispatch();
@@ -44,43 +44,43 @@ const Product = ({ slug }) => {
       lists: ['This appliance replacement part is brand new.', 'We partner with manufacturers and distributor to offer our customers the best price possible for our appliance parts.', 'We stock many new parts for many appliance manufacturers including: Samsung, Whirlpool, Electrolux, Maytag, Roper, Amana, Ge, Frigidaire, LG, Haier, Kenmore, Viking, Hisense and many more!'],
     },
     {
-      title: 'New / Open Box',
-      slug: 'new-open-box',
+      title: 'Like New / Open Box',
+      slug: 'like-new-open-box',
       class: 'bg-dark-light-cyan',
       description: 'Like New / Open Box appliance parts may not arrive in their original packaging. COSMETICALLY  these parts are similar to a new parts however, some very minor Cosmetic damage may exist from their “Open Box” state.  Any moderate or major COSMETIC damage would be indicated and represented in a lower condition grade. All Like New / Open Box parts are MECHANICALLY  inspected and tested to verify their functionality is 100% within manufacturer specifications. Like New / Open Box parts are a great way to save money, we liquidate these parts at big discounts compared to new parts. Expect to have a similar condition to a new part at a larger discount. ',
       lists: ['Like New / Open Box appliance replacement parts may not arrive in their original packaging', '<b>COSMETICALLY</b>  these parts are similar to a new parts however, some very minor Cosmetic damage may exist from their “Open Box” state.', 'Any moderate or major <b>COSMETIC</b> damage would be indicated and represented in a lower condition grade.', 'All Like New / Open Box parts are <b>MECHANICALLY</b> inspected and tested to verify their functionality is 100% within manufacturer specifications.', 'Like New / Open Box parts are a great way to save money, we liquidate these parts at big discounts compared to new parts.', 'Expect to have a similar condition to a new part at a larger discount.'],
     },
     {
       title: 'Certified Refurbished',
-      slug: 'certified',
+      slug: 'certified-refurbished',
       class: 'bg-dark-cyan',
       description: 'Certified Refurbished appliance parts are typically previously used parts that have been inspected refurbished to manufacturer specifications if needed. COSMETICALLY  these parts may show signs of wear or use.  These parts will not include major COSMETIC damage.  All Certified Refurbished parts are MECHANICALLY inspected and tested to verify their functionality is 100% within manufacturer specifications. Certified Refurbished appliance parts are a great way to save money, we liquidate these parts at big discounts compared to new parts. Expect to have a similar condition to a new part at a larger discount. ',
       lists: ['Certified Refurbished appliance parts are typically previously used parts that have been inspected refurbished to manufacturer specifications if needed.', '<b>COSMETICALLY</b> these parts may show signs of wear or use.', 'These parts will not include major <b>COSMETIC</b> damage.', 'All Certified Refurbished parts are MECHANICALLY inspected and tested to verify their functionality is 100% within manufacturer specifications.', 'Certified Refurbished appliance parts are a great way to save money, we liquidate these parts at big discounts compared to new parts.', 'Expect to have a similar condition to a new part at a larger discount.'],
     },
     {
       title: 'Used • Grade A',
-      slug: 'used-grade-a',
+      slug: 'used-part-a-condition-grade',
       class: 'bg-[#FF9A3E]',
       description: 'Our A Grade Used parts are the bargain shopper’s best friend. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A, B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade, the bigger the discount! All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications. Our grading system is based on their COSMETIC appearance (how they look) not on their functionality. Each Used part comes with its own set of pictures so you can see any signs of use or imperfections. Expect to see very little to no signs of use or other Cosmetic imperfections. Although they may show signs of cosmetic wear, they will function like new.',
       lists: ['Our A Grade Used parts are the bargain shopper’s best friend.', 'We grade the COSMETIC appearance of each used part A, B, C, or D.', 'The lower the grade, the bigger the discount!', 'All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications.', 'Our grading system is based on their COSMETIC appearance (how they look) not on their functionality.', 'Each Used part comes with its own set of pictures so you can see any signs of use or imperfections.', 'Expect to see very little to no signs of use or other Cosmetic imperfections.', 'Although they may show signs of cosmetic wear, they will function like new.'],
     },
     {
       title: 'Used • Grade B',
-      slug: 'used-grade-b',
+      slug: 'used-part-b-condition-grade',
       class: 'bg-[#FF9A3E]',
       description: 'Used B Grade Parts are an incredible value and one of the core reasons why our customers love what we do. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A, B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade, the bigger the discount! All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications. Our grading system is based on their COSMETIC appearance (how they look) not on their functionality. Each Used part comes with its own set of pictures so you can see any signs of use or imperfections. Expect to see very little to medium signs of use or other Cosmetic imperfections. Although they may show signs of cosmetic wear, they will function like new.',
       lists: ['Used B Grade Parts are an incredible value and one of the core reasons why our customers love what we do.', 'We grade the COSMETIC appearance of each used part A, B, C, or D.', 'The lower the grade, the bigger the discount!', 'All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications.', 'Our grading system is based on their COSMETIC appearance (how they look) not on their functionality.', 'Each Used part comes with its own set of pictures so you can see any signs of use or imperfections.', 'Expect to see very little to medium signs of use or other Cosmetic imperfections.', 'Although they may show signs of cosmetic wear, they will function like new.'],
     },
     {
       title: 'Used • Grade C',
-      slug: 'used-grade-c',
+      slug: 'used-part-c-condition-grade',
       class: 'bg-[#FF9A3E]',
       description: 'If you’re looking to save money, Used C grade appliance parts are a great tool to do so. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A, B, C, or D. A being the best cosmetic rating and D being the worst. The lower the grade, the bigger the discount! All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications. Our grading system is based on their COSMETIC appearance (how they look) not on their functionality. All Used parts are verified to work as intended based on Manufacturer specifications. Each Used part comes with its own set of pictures so you can see any signs of use or imperfections. Expect to see Medium to Heavy signs of use or other Cosmetic imperfections. Although they may show signs of cosmetic wear, they will function like new.',
       lists: ['Used C grade appliance parts are a great tool to save money.', 'We grade the COSMETIC appearance of each used part A, B, C, or D.', 'The lower the grade, the bigger the discount!', 'All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications.', 'Our grading system is based on their COSMETIC appearance (how they look) not on their functionality.', 'All Used parts are verified to work as intended based on Manufacturer specifications.', 'Each Used part comes with its own set of pictures so you can see any signs of use or imperfections.', 'Expect to see Medium to Heavy signs of use or other Cosmetic imperfections.', 'Although they may show signs of cosmetic wear, they will function like new.'],
     },
     {
       title: 'Used • Grade D',
-      slug: 'used-grade-d',
+      slug: 'used-part-d-condition-grade',
       class: 'bg-[#FF9A3E]',
       description: 'These parts include the deepest discounts we have available. We save our customer big bucks with our used Parts. We grade the COSMETIC appearance of each used part A, B, C, or D. A being the best cosmetic rating and D being the lowest. The lower the grade, the bigger the discount! All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications. Our grading system is based on their COSMETIC appearance (how they look) not on their functionality. All Used parts are verified to work as intended based on Manufacturer specifications. Each Used part comes with its own set of pictures so you can see any signs of use or imperfections. Expect to see Heavy signs of use or other Cosmetic imperfections. Although they may show signs of cosmetic wear, they will function like new.',
       lists: ['These parts include the deepest discounts we have available.', 'We grade the COSMETIC appearance of each used part A, B, C, or D.', 'The lower the grade, the bigger the discount!', 'All used parts are inspected, tested, and ensured to operate 100% to Manufacturer Specifications.', 'Our grading system is based on their COSMETIC appearance (how they look) not on their functionality.', 'All Used parts are verified to work as intended based on Manufacturer specifications.', 'Each Used part comes with its own set of pictures so you can see any signs of use or imperfections.', 'Expect to see Heavy signs of use or other Cosmetic imperfections.', 'Although they may show signs of cosmetic wear, they will function like new.'],
@@ -236,7 +236,7 @@ const Product = ({ slug }) => {
         <>
           {/* StickyNavabr */}
           <div className="hidden lg:block">
-            <StickyNavbar addCart={AddToCart} product={product} state={showNavbar} condition={ConditionData} />
+           <StickyNavbar addCart={AddToCart} product={product} state={showNavbar} condition={ConditionData} />
           </div>
 
           <MoreImagesModal medias={product.images} state={imgModal} setState={setImgModal} />
@@ -275,7 +275,7 @@ const Product = ({ slug }) => {
                   {product.images
                     ? product.images.slice(0, 4).map((image, index) => (
                         <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setMediaViewer({ file: image, data: image, thumbnail: image })}>
-                          <Image width={200} height={200} quality={100} src={image} className="w-10 2xl:w-20" alt="product" />
+                          <Image width={200} height={200} quality={100} src={image.url} className="w-10 2xl:w-20" alt="product" />
                         </div>
                       ))
                     : null}
@@ -284,15 +284,16 @@ const Product = ({ slug }) => {
                       <div onClick={() => setImgModal(true)} className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-b3/70 font-semibold text-white">
                         +4
                       </div>
-                      <Image width={200} height={200} quality={100} src={product.images[4]} className="h-full w-full object-contain" alt="product" />
+                      <Image width={200} height={200} quality={100} src={product.images.length > 4 ? product.images[4].url : '/no-image.webp'} className="h-full w-full object-contain" alt="product" />
                     </div>
                   ) : null}
                 </div>
                 <div className="relative flex w-full items-center justify-center rounded-lg border-gray-300 px-2 py-10 lg:h-96 lg:border 2xl:h-auto 2xl:py-14 maxmd:order-1">
-                  {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={product.thumbnail ? product.thumbnail : ''} alt={product.title} className="h-auto w-48" /> : null}
+                  <Image width={200} height={200} quality={100} src={product?.thumbnail ? product.thumbnail : '/no-image.webp'} alt={product.title} className="h-auto w-48" />
+                  {/* {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={product.thumbnail ? product.thumbnail : ''} alt={product.title} className="h-auto w-48" /> : null} */}
 
                   {/* Compatible Badge */}
-                  <Image width={400} height={400} quality={100} src="/compatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" />
+                  {/* <Image width={400} height={400} quality={100} src="/compatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" /> */}
 
                   {/* NonCompatible Badge */}
                   {/* <Image width={400} height={400} quality={100} src="/noncompatible-badge.png" alt="Compatible Badge" className="absolute -left-[0.4rem] -top-[0.35rem] z-10 h-auto w-1/3" /> */}
@@ -321,7 +322,7 @@ const Product = ({ slug }) => {
                   {product.sale_price ? <strike className="text-lg">${product.regular_price}</strike> : null}
                 </div>
                 <div className="flex items-center gap-5 sm:w-full sm:justify-between lg:flex-wrap">
-                  {product.sale_price ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-xs font-semibold text-black">${product.regular_price - product.sale_price} Savings</span> : null}
+                  {product.sale_price ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-xs font-semibold text-black">${(product.regular_price - product.sale_price).toFixed(2)} Savings</span> : null}
                   {Favorites.some((fav)=> fav.favId === product._id) ? (
                     <button onClick={(e) => RemoveFavorite(e)} className="hidden items-center justify-end text-b3 hover:underline md:flex">
                       <AiFillHeart className={`${favLoad ? 'animate-bounce text-red-500' : null}`} />
@@ -360,7 +361,7 @@ const Product = ({ slug }) => {
                   <h4 className="w-max pr-3 text-base font-semibold text-b16/50">Type</h4>
                   <AiOutlineTag className="ml-2 h-5 w-5 text-b3" />
                 </div>
-                <span className="text-base font-semibold text-b1">{product.type}</span>
+                <span className="text-base font-semibold text-b1">Genuine OEM Part</span>
               </div>
               {product.sale_price ? (
                 <div className="mt-2 flex items-center gap-4">
@@ -372,7 +373,7 @@ const Product = ({ slug }) => {
                     <span className="flex h-3 w-2/4 rounded-lg bg-gradient-to-r from-b4 to-b7" style={{ width: `${((product.regular_price - product.sale_price) / product.regular_price) * 100}%` }}></span>
                   </div>
                   <div className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-b7 px-3 py-1.5 text-white md:px-5 md:py-2 maxmd:text-sm">
-                    <GasSvg /> {(((product.regular_price - product.sale_price) / product.regular_price) * 100).toFixed(1)}% Off
+                    <GasSvg /> {(((product.regular_price - product.sale_price) / product.regular_price) * 100).toFixed(2)}% Off
                   </div>
                 </div>
               ) : null}
@@ -407,11 +408,11 @@ const Product = ({ slug }) => {
 
                 {/* Buttons */}
                 <div className="grid grid-cols-2 gap-2">
-                  <button type="button" disabled={product.stock === 0 || cartLoading ? true : false} onClick={AddToCart} className="button-hover relative flex h-full w-full items-center justify-center rounded-lg py-4 font-medium text-white">
+                  <button type="button" disabled={product.stock === 0 || cartLoading ? true : false} onClick={AddToCart} className={` ${product.stock === 0 || buyLoading ? 'bg-b3/60' : 'button-hover'} relative flex h-full w-full items-center justify-center rounded-lg py-4 font-medium text-white`}>
                     <AiOutlineShoppingCart className="text-lg" />
                     <span className="ml-2 flex items-center font-medium">Add To Cart {cartLoading ? <BiLoaderAlt className="absolute right-16 animate-spin text-2xl" /> : null}</span>
                   </button>
-                  <button type="button" disabled={product.stock === 0 || buyLoading ? true : false} onClick={BuyNow} className="relative flex h-full w-full items-center justify-center rounded-lg bg-[#071822] py-4 font-medium text-white hover:bg-[#071822]/90">
+                  <button type="button" disabled={product.stock === 0 || buyLoading ? true : false} onClick={BuyNow} className={`relative flex h-full w-full items-center justify-center rounded-lg ${product.stock === 0 || buyLoading ? 'bg-[#071822]/60' : 'bg-[#071822]'} py-4 font-medium text-white hover:bg-[#071822]/90`}>
                     <Image width={100} height={100} className="h-6 w-5 object-contain" alt="Sell" src="/svgs/sell.webp" />
                     <span className="ml-2 flex items-center font-medium">Buy Now {buyLoading ? <BiLoaderAlt className="absolute right-16 animate-spin text-2xl" /> : null}</span>
                   </button>
@@ -442,7 +443,7 @@ const Product = ({ slug }) => {
           </div>
 
           {/* 360 Degree Product Section */}
-          <Rotate360Product product={product} condition={ConditionData} />
+          {/* <Rotate360Product product={product} condition={ConditionData} /> */}
 
           {/* More Parts */}
           {partproducts.length > 0 && <MoreParts data={partproducts} />}

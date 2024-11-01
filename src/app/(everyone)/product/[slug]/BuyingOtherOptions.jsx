@@ -3,19 +3,18 @@ import React from 'react';
 import OtherProductCard from '@/components/OtherProductCard';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import Link from 'next/link';
-
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
 
 const BuyingOtherOptions = ({ slug, otherProducts, condition, handleCondition, defaultProduct }) => {
-  const conditions = ['new', 'new-open-box', 'certified', 'used-grade-a', 'used-grade-b', 'used-grade-c', 'used-grade-d'];
+  const conditions = ['new', 'like-new-open-box', 'certified-refurbished', 'used-part-a-condition-grade', 'used-part-b-condition-grade', 'used-part-c-condition-grade', 'used-part-d-condition-grade'];
 
   const filteredProducts = conditions.map((cond) => {
     // Filter products by current condition
     const productsByCondition = otherProducts.filter((product) => product.condition === cond);
-
+    
     // If products exist for the condition, find the one with maximum stock
     if (productsByCondition.length > 0) {
       return productsByCondition.reduce((maxStockProduct, product) => (product.stock > maxStockProduct.stock ? product : maxStockProduct));

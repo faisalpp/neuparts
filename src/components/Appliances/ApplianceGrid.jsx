@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaRegHeart } from 'react-icons/fa';
@@ -6,6 +6,7 @@ import Tag from '@/components/svgs/Tag';
 import ProductCard from '@/components/Product/ProductCard';
 
 const ApplianceGrid = ({ isGrid, product }) => {
+  const [thumbnail,setThumbnail] = useState(product?.thumbnail ? product.thumbnail : '/no-image.webp')
   return (
     <>
       {isGrid ? (
@@ -13,7 +14,7 @@ const ApplianceGrid = ({ isGrid, product }) => {
       ) : (
         <Link className="flex w-full cursor-pointer items-center space-x-2 rounded-2xl border-[1px] border-gray-200 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10" href={`/product/${product.slug}`}>
           {/* <div className="relative w-44 coxs:w-52"> */}
-          <Image width={400} height={400} quality={100} src={product.thumbnail} alt={product.title} className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
+          <Image width={400} height={400} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} alt={product.title} className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px]" />
           {/* </div> */}
 
           <div className="flex w-[60%] flex-col gap-3 px-1 lg:px-5 3xl:w-[55%]">

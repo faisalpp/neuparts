@@ -17,7 +17,7 @@ export async function GET(req) {
   const resPerPage = 10;
   const currentPage = Number(paramsObj.page) || 1;
 
-  let filteredProducts = Product.find();
+  let filteredProducts = Product.find({is_variant:true});
 
   // If model_no is provided, filter products by category that matches the model_no
   if (paramsObj.model_no) {
@@ -38,7 +38,7 @@ export async function GET(req) {
   // Manually filter out products with null categories or parttypes
   products = products.filter((product) => product.category !== null && product.parttype !== null);
 
-  const productCount = await Product.countDocuments();
+  const productCount = await Product.countDocuments({is_variant:true});
   const filteredProductsCount = products.length;
 
   // Apply pagination manually

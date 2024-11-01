@@ -8,8 +8,8 @@ export async function GET(request) {
     const searchParams = request.nextUrl.searchParams;
     const slug = searchParams.get('slug');
 
-    const product = await Product.findOne({ slug: slug });
-    const partproducts = await Product.find({ part_number: product.part_number, _id: { $ne: product._id } }).sort({ createdAt: -1 });
+    const product = await Product.findOne({ slug: slug,is_variant:true });
+    const partproducts = await Product.find({ is_variant:true,part_number: product.part_number, _id: { $ne: product._id } }).sort({ createdAt: -1 });
 
     return NextResponse.json({ product, partproducts, success: true });
   } catch (error) {

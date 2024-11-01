@@ -16,6 +16,7 @@ const MoreImagesModal = ({ state, setState, medias }) => {
         </span>
         <div className="flex w-full flex-col rounded-xl bg-white py-8">
           <div className="flex w-full justify-center py-8">
+            {image.url ? <Image width={400} height={400} quality={100} src={image?.url ? image.url : '/no-image.webp'} alt="" className="h-auto w-48" /> : null}
             {image.file === 'image' ? <Image width={400} height={400} quality={100} src={image.data} alt="" className="h-auto w-48" /> : null}
             {image.file === 'video' && image.type === 'url' ? <Iframe style="w-6/12" src={image.data} title="Modal Video" icon="text-5xl" frameId={`video-frame-modal-${(Math.random() * 100) / 5}`} divId={`video-frame-modal-wrapper-${(Math.random() * 100) / 5}`} thumbnail={image.thumbnail} /> : null}
             {image.file === 'video' && image.type === 'upload' ? <video className="w-6/12 rounded-2xl" controls src={image.data} /> : null}

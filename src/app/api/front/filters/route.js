@@ -6,9 +6,9 @@ import ProductConditions from '@/models/condition';
 import Product from '@/models/product';
 
 export async function GET(req) {
-  await connect();
-  const searchParams = req.nextUrl.searchParams;
   try {
+    await connect();
+    const searchParams = req.nextUrl.searchParams;
     // const { model_no, part_number } = searchParams.get('model_no');
     const model_no = searchParams.get('model_no');
 
@@ -22,8 +22,19 @@ export async function GET(req) {
         {
           $lookup: {
             from: 'products',
-            localField: '_id',
-            foreignField: 'category',
+            let: { categoryId: '$_id' },
+            pipeline: [
+              {
+                $match: {
+                  $expr: { 
+                    $and: [
+                      { $eq: ['$category', '$$categoryId'] },
+                      { $eq: ['$is_variant', true] }
+                    ]
+                  }
+                }
+              }
+            ],
             as: 'products',
           },
         },
@@ -40,21 +51,20 @@ export async function GET(req) {
         {
           $sort: { createdAt: -1 },
         },
-      ]);
+      ]);      
     }
 
     const parttypes = await ProductTypes.aggregate([
       {
         $lookup: {
           from: 'products',
-          localField: '_id',
-          foreignField: 'parttype',
+          let: { productTypeId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $and: [ { $eq: ['$parttype', '$$productTypeId'] }, { $eq: ['$is_variant', true] } ] } } },
+            ...(category ? [{ $match: { category: category._id } }] : []),
+          ],
           as: 'products',
         },
-      },
-      // Step 3: Conditional filtering based on the presence of model_no and the related category
-      {
-        $match: category ? { 'products.category': category._id } : {},
       },
       {
         $addFields: {
@@ -70,6 +80,7 @@ export async function GET(req) {
         $sort: { createdAt: -1 },
       },
     ]);
+    
 
     const conditions = await ProductConditions.aggregate([
       {

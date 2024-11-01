@@ -86,7 +86,7 @@ const CartCard = (props) => {
               <h4 className="font-semibold text-b3 md:text-xl">${props.item.is_sale ? props.item.sale_price : props.item.regular_price}</h4>
               {props.item.is_sale ? <strike className="text-sm md:text-lg">${props.item.regular_price}</strike> : null}
             </div>
-            {props.item.is_sale ? <span className="flex w-fit rounded-2xl bg-b4 px-2 py-1 text-10px font-semibold text-black sm:text-xs md:px-3 md:py-2 md:text-sm">-{(((props.item.regular_price - props.item.sale_price) / props.item.regular_price) * 100).toFixed(1)}%</span> : null}
+            {props.item.is_sale ? <span className="flex w-fit rounded-2xl bg-b4 px-2 py-1 text-10px font-semibold text-black sm:text-xs md:px-3 md:py-2 md:text-sm">-{(((props.item.regular_price - props.item.sale_price) / props.item.regular_price) * 100).toFixed(2)}%</span> : null}
           </div>
           <div className="flex items-center gap-2 maxmd:w-full maxmd:justify-between">
             <div className="flex items-center gap-1">

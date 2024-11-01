@@ -52,7 +52,7 @@ const StickyNavbar = ({ state, product, addCart, condition }) => {
           <div className="maincontainer items-center justify-center py-6 lg:flex">
             <div className="max-w-6/12 flex w-6/12 items-center space-x-5">
               <div className="w-full max-w-28 rounded-lg border-[1px] border-gray-200 px-2 py-1">
-                <Image width={400} height={400} quality={100} src={product ? product.thumbnail : ''} className="h-auto w-28" alt={product.title} />
+                <Image width={400} height={400} quality={100} src={product?.thumbnail ? product?.thumbnail : '/no-image.webp'} className="h-auto w-28" alt={product.title} />
               </div>
               <div>
                 <div className={`mb-2.5 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + condition().class}>
@@ -69,7 +69,7 @@ const StickyNavbar = ({ state, product, addCart, condition }) => {
                 {product.sale_price ? (
                   <div className="flex items-center space-x-5">
                     <strike>${product.regular_price}</strike>
-                    <span className="flex rounded-2xl bg-b4 px-3 py-2 text-[10px] font-semibold text-black lg:text-xs">Save ${product.regular_price - product.sale_price}</span>
+                    <span className="flex rounded-2xl bg-b4 px-3 py-2 text-[10px] font-semibold text-black lg:text-xs">Save ${(product.regular_price - product.sale_price).toFixed(2)}</span>
                   </div>
                 ) : null}
               </div>

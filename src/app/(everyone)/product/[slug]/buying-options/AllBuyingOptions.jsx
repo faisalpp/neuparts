@@ -4,6 +4,7 @@ import BuyingHero from './BuyingHero';
 import BuyingOptions from './BuyingOptions';
 
 const AllBuyingOptions = ({ data }) => {
+  
   return (
     <div className="maincontainer">
       {/* Bread Crumb */}

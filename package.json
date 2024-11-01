@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "cron": "node src/lib/cron.js",
     "lint": "next lint",
     "cruise": "depcheck ."
   },

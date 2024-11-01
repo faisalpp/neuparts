@@ -81,8 +81,6 @@ const AllProducts = ({ searchParams }) => {
 
         {/* Bread Crumbs End */}
 
-        {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
-
         {/* Product Search Details */}
 
         {!searchLoading && result ? (
@@ -129,7 +127,7 @@ const AllProducts = ({ searchParams }) => {
             ) : null}
           </div>
         ) : (
-          ''
+          null
         )}
         {/* Product Filters */}
 

@@ -52,7 +52,7 @@ export async function POST(request) {
     }
 
     const exactMatch = await Post.countDocuments({ postType: postType, slug: slug });
-    if (exactMatch) {
+    if (exactMatch > 0) {
       slug = slug + `-1`;
     }
 

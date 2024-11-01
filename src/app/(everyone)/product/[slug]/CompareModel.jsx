@@ -9,7 +9,7 @@ import { BsArrowRightShort } from 'react-icons/bs';
 
 
 const CompareModel = ({ products, condition, defaultProduct, slug }) => {
-  const conditions = ['new', 'new-open-box', 'certified', 'used-grade-a', 'used-grade-b', 'used-grade-c', 'used-grade-d'];
+  const conditions = ['new', 'like-new-open-box', 'certified-refurbished', 'used-part-a-condition-grade', 'used-part-b-condition-grade', 'used-part-c-condition-grade', 'used-part-d-condition-grade'];
 
   const filteredProducts = conditions.map((cond) => {
     // Filter products by current condition
@@ -51,6 +51,9 @@ const CompareModel = ({ products, condition, defaultProduct, slug }) => {
                   Condition
                 </th>
                 <th scope="col" className="py-6">
+                  Stock
+                </th>
+                <th scope="col" className="py-6">
                   Discount
                 </th>
                 <th scope="col" className="py-6">
@@ -64,12 +67,20 @@ const CompareModel = ({ products, condition, defaultProduct, slug }) => {
                 filteredProducts.map((item, index) => (
                   <tr key={index} className={`border-b border-b-black/10 bg-white ` + (item.stock ? '' : 'pointer-events-none select-none grayscale')}>
                     <th scope="row" className="flex items-center gap-2 whitespace-nowrap py-6 pr-2 font-semibold text-b1">
-                      <Image width={60} height={60} className="h-10 w-10 object-contain" src="/popular-parts.webp" alt={item.title} /> {item.title}
+                      <Image width={60} height={60} className="h-10 w-10 object-contain" src="/popular-parts.webp" alt={item.title} />
+                      <span className='truncate w-52' >{item.title}</span>
                     </th>
                     <td className="py-6 pr-2">
-                      <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + condition(item.condition).class}>
-                        {item.condtion == 'new' && <FourStar />}
-                        {condition(item.condition).title}
+                      <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + condition(item.condition)?.class}>
+                        {item.condtion == 'New' && <FourStar />}
+                        {condition(item.condition)?.title}
+                      </div>
+                    </td>
+                    <td className="py-6 pr-2">
+                      <div className="inline-flex items-center justify-center gap-1 whitespace-nowrap py-1 text-xs font-semibold">
+                        {item.stock > 1 ? 'Multiple' : null}
+                        {item.stock === 1 ? 'Qty 1' : null}
+                        {item.stock === 0 ? 'Out of Stock' : null}
                       </div>
                     </td>
                     <td className="py-6 pr-2">

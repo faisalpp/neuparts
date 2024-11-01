@@ -10,6 +10,7 @@ import ToolTip from '@/components/ToolTip';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 const BuyingOptions = ({ data }) => {
+  console.log(data)
   // Button configuration array
   const filterButtons = [
     {
@@ -22,35 +23,35 @@ const BuyingOptions = ({ data }) => {
     },
     {
       title: 'Like New / Open Box',
-      slug: 'new-open-box',
+      slug: 'like-new-open-box',
       borderColor: 'border-dark-light-cyan',
       activeClass: 'bg-transparent text-dark-light-cyan',
       defaultClass: 'bg-dark-light-cyan text-white',
     },
     {
       title: 'Used • Grade A',
-      slug: 'used-grade-a',
+      slug: 'used-part-a-condition-grade',
       borderColor: 'border-c-orange',
       activeClass: 'bg-transparent text-c-orange',
       defaultClass: 'bg-c-orange text-white',
     },
     {
       title: 'Used • Grade B',
-      slug: 'used-grade-b',
+      slug: 'used-part-b-condition-grade',
       borderColor: 'border-c-orange',
       activeClass: 'bg-transparent text-c-orange',
       defaultClass: 'bg-c-orange text-white',
     },
     {
       title: 'Used • Grade C',
-      slug: 'used-grade-c',
+      slug: 'used-part-c-condition-grade',
       borderColor: 'border-c-orange',
       activeClass: 'bg-transparent text-c-orange',
       defaultClass: 'bg-c-orange text-white',
     },
     {
       title: 'Used • Grade D',
-      slug: 'used-grade-d',
+      slug: 'used-part-d-condition-grade',
       borderColor: 'border-c-orange',
       activeClass: 'bg-transparent text-c-orange',
       defaultClass: 'bg-c-orange text-white',
@@ -116,7 +117,7 @@ export const BuyingCards = ({ isGrid, product }) => {
       <span className={`absolute ${isGrid ? '' : 'hidden'} right-0 top-0 z-20 mr-1 mt-2 rounded-2xl bg-b4 px-1.5 py-0.5 text-xs font-bold sm:px-4 maxsm:text-[9.32px]`}>{(100 - (product?.sale_price / product?.regular_price) * 100).toFixed(0)}% Off</span>
       <div className={`relative flex ${isGrid ? '' : 'items-center xl:min-w-[300px]'} justify-center px-3 pt-4 lg:px-5 xl:px-5`}>
         {/* Product Image */}
-        <Image src={product?.thumbnail ? product?.thumbnail : '/popular-parts.webp'} width={400} height={400} quality={100} className={`xl:w-54 w-full object-contain sm:h-32 md:h-60 lg:w-52 ${isGrid ? 'h-32 maxsm:p-3' : 'h-20 sm:h-32'}`} alt="refrigrator" />
+        <Image src={product?.thumbnail ? product.thumbnail : '/no-image.webp'} width={400} height={400} quality={100} className={`xl:w-54 w-full object-contain sm:h-32 md:h-60 lg:w-52 ${isGrid ? 'h-32 maxsm:p-3' : 'h-20 sm:h-32'}`} alt="refrigrator" />
         <div className={`pointer-events-none absolute bottom-0 left-0 right-0 top-0 flex scale-0 items-center justify-center bg-b3/50 opacity-0 duration-300 ${isGrid ? '' : 'hidden'} group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100`}>
           <Link href={`/product/${product?.slug}`} className="rounded-lg bg-white px-1 py-2 font-semibold text-black duration-300 sm:px-5 maxsm:text-xs">
             View Details
@@ -132,7 +133,7 @@ export const BuyingCards = ({ isGrid, product }) => {
           {product?.is_sale ? (
             <div className="flex w-full items-center justify-end space-x-2">
               <strike className="text-[rgba(17,16,16,0.64)]">${product?.regular_price}</strike>
-              <span className="rounded-xl bg-b4 px-2 py-1 text-xs font-semibold">{(100 - (product?.sale_price / product?.regular_price) * 100).toFixed(0)}%</span>
+              <span className="rounded-xl bg-b4 px-2 py-1 text-xs font-semibold">{(100 - (product?.sale_price / product?.regular_price) * 100).toFixed(2)}%</span>
             </div>
           ) : null}
         </div>
@@ -154,12 +155,12 @@ export const BuyingCards = ({ isGrid, product }) => {
               New
             </div>
           )}
-          {product.condition == 'certified' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Certified Refurbished</div>}
-          {product.condition == 'new-open-box' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">New / Open Box</div>}
-          {product.condition == 'used-grade-a' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade B</div>}
-          {product.condition == 'used-grade-b' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade B</div>}
-          {product.condition == 'used-grade-c' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade C</div>}
-          {product.condition == 'used-grade-d' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade D</div>}
+          {product.condition == 'certified-refurbished' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Certified Refurbished</div>}
+          {product.condition == 'like-new-open-box' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">New / Open Box</div>}
+          {product.condition == 'used-part-a-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade B</div>}
+          {product.condition == 'used-part-b-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade B</div>}
+          {product.condition == 'used-part-c-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade C</div>}
+          {product.condition == 'used-part-d-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade D</div>}
         </div>
         {product.sale_price ? (
           <div className="flex items-center gap-2 sm:gap-3">
@@ -172,7 +173,7 @@ export const BuyingCards = ({ isGrid, product }) => {
             </div>
           </div>
         ) : (
-          ''
+          null
         )}
         <Link href={`/product/${product?.slug}`} className="flex w-full items-center justify-center rounded-lg bg-b3 px-2 py-2 text-xs font-semibold text-white duration-300 sm:py-3">
           View Appliance <ArrowRightIcon className="h-3 w-3" />

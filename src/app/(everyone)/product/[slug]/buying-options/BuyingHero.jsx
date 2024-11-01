@@ -13,33 +13,33 @@ const BuyingHero = ({ data }) => {
       class: 'bg-dark-light-cyan',
     },
     {
-      title: 'New / Open Box',
-      slug: 'new-open-box',
+      title: 'Like New / Open Box',
+      slug: 'like-new-open-box',
       class: 'bg-dark-light-cyan',
     },
     {
       title: 'Certified Refurbished',
-      slug: 'certified',
+      slug: 'certified-refurbished',
       class: 'bg-dark-cyan',
     },
     {
       title: 'Used • Grade A',
-      slug: 'used-grade-a',
+      slug: 'used-part-a-condition-grade',
       class: 'bg-[#FF9A3E]',
     },
     {
       title: 'Used • Grade B',
-      slug: 'used-grade-b',
+      slug: 'used-part-b-condition-grade',
       class: 'bg-[#FF9A3E]',
     },
     {
       title: 'Used • Grade C',
-      slug: 'used-grade-c',
+      slug: 'used-part-c-condition-grade',
       class: 'bg-[#FF9A3E]',
     },
     {
       title: 'Used • Grade D',
-      slug: 'used-grade-d',
+      slug: 'used-part-d-condition-grade',
       class: 'bg-[#FF9A3E]',
     },
   ];
@@ -73,7 +73,7 @@ const BuyingHero = ({ data }) => {
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-[360px_auto] xl:grid-cols-[530px_auto] ">
       <div className="grid place-items-center">
-        <Image width={200} height={200} quality={100} src={data.product.thumbnail} priority={1} alt="Product" className="h-auto w-2/3 object-contain" />
+        <Image width={200} height={200} quality={100} src={data.product?.thumbnail ? data.product?.thumbnail : '/no-image.webp'} priority={1} alt="Product" className="h-auto w-2/3 object-contain" />
       </div>
       <div>
         <h1 className="mb-6 line-clamp-2 text-2xl font-bold text-b18">{data.product.title}</h1>
@@ -106,7 +106,7 @@ const BuyingHero = ({ data }) => {
                         <span className="flex h-2 rounded-lg bg-gradient-to-r from-b4 to-b7" style={{ width: `${((product.regular_price - product.sale_price) / product.regular_price) * 100}%` }}></span>
                       </div>
                       <div className="flex w-fit items-center justify-center gap-1 whitespace-nowrap rounded-full bg-b4 px-3 py-1 text-xs font-semibold text-b18 [&>svg]:h-3 maxsm:[&>svg]:w-3">
-                        <GasSvg /> {(((product.regular_price - product.sale_price) / product.regular_price) * 100).toFixed(1)}% Off
+                        <GasSvg /> {(((product.regular_price - product.sale_price) / product.regular_price) * 100).toFixed(2)}% Off
                       </div>
                     </div>
                   )}
