@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 
 const ProductSchema = new mongoose.Schema(
   {
+    id: { type: Number},
+    parent_id: { type: Number},
     is_variant: { type: Boolean, required: true },
     parent: {
       type: mongoose.Schema.Types.ObjectId,
@@ -13,7 +15,7 @@ const ProductSchema = new mongoose.Schema(
     sku: { type: String, required: true },
     part_number: { type: String, required: true },
     model_no: { type: [String], required: true },
-    menufacturer: {
+    manufacturer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'ProductMenufacturer',
     },

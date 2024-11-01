@@ -26,6 +26,7 @@ const Navbar = () => {
   const [megMenu, setMegMenu] = useState(false);
   const [searchMenu, setSearchMenu] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [manufacturers, setManufacturers] = useState([]);
 
   const searchButtonRef = useRef(null);
   const searchRef = useRef(null);
@@ -86,7 +87,12 @@ const Navbar = () => {
       name: category.title,
       url: `/products?category=${category.slug}`,
     }));
+    const transformedManufacturers = data.manufacturers.map((manufacturer) => ({
+      name: manufacturer.title,
+      url: `/products?manufacturer=${manufacturer.slug}`,
+    }));
     setCategories(transformedCategories);
+    setManufacturers(transformedManufacturers);
   };
 
   useEffect(() => {
@@ -262,20 +268,12 @@ const Navbar = () => {
                   { name: 'Lorem 3', url: '/' },
                 ]}
               />
+              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} />
               <div className="nav____item">
                 <span>Shop&nbsp;Now</span>
               </div>
               <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} />
-              <NavDropDown
-                icon={<RiArrowDropDownLine className="text-2xl" />}
-                title="Popular Brands"
-                links={[
-                  { name: 'Lorem 1', url: '/' },
-                  { name: 'Lorem 2', url: '/' },
-                  { name: 'Lorem 3', url: '/' },
-                ]}
-                bold={600}
-              />
+              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Manufacturers" links={manufacturers} bold={600} />
               <div className="nav____item">
                 <Link href="/financing">Financing</Link>
               </div>

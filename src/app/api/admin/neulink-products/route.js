@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import Neulink from '@/models/neulink';
-import { LoginAndUpdateToken, LoginAndCreateToken, GetProductCategoryId, GetProductSlug, CreateGetPartType, GetParent, CreateOrUpdateProduct } from '@/lib/neulink-auth';
+import { LoginAndUpdateToken, LoginAndCreateToken, GetProductCategoryId, GetProductSlug, CreateGetPartType, GetParent, CreateOrUpdateProduct,GetManufacturer } from '@/lib/neulink-auth';
 import {generateSlug} from '@/utils/index'
+import CronRec from '@/models/cron'
 
-export async function GET() {
-  await connect();
-  
+export async function GET() {  
+  try{
+    await connect();
+
   const email = process.env.NEULINK_CMS_EMAIL;
   const password = process.env.NEULINK_CMS_PASSWORD;
   let TOKEN;
@@ -24,7 +26,10 @@ export async function GET() {
       UPDATED_AFTER = authToken.updated_after;
     } else {
       const getToken = await LoginAndUpdateToken(email, password, authToken._id);
-      if (!getToken.status) return NextResponse.json({ error: 'Login failed!' }, { status: 500 });
+      if (!getToken.status){
+        await CronRec.create({msg:'Login failed!',body:JSON.stringify(error),status:false})
+        return NextResponse.json({ error: 'Login failed!' }, { status: 500 });
+      } 
       
       TOKEN = `Bearer ${getToken.token}`;
       ID = getToken.id;
@@ -32,33 +37,37 @@ export async function GET() {
     }
   } else {
     const getToken2 = await LoginAndCreateToken(email, password);
-    if (!getToken2.status) return NextResponse.json({ error: 'Login failed!' }, { status: 500 });
+    if (!getToken2.status){
+      await CronRec.create({msg:'Login failed!',body:JSON.stringify(error),status:false})
+      NextResponse.json({ error: 'Login failed!' }, { status: 500 });
+    } 
     
     TOKEN = `Bearer ${getToken2.token}`;
     ID = getToken2.id;
   }
 
-  const perPage = 10;
-  let page = 1;
-  let url;
-  let totalPages=1;
+  const PER_PAGE = 100;
+  let PAGE = 1;
+  let LOGIN_URL;
+  let TOTAL_PAGES;
 
   while (true) {
-    url = UPDATED_AFTER 
-      ? `https://neulinkapi.neuappliances.com/api/parts?per_page=${perPage}&page=${page}&updated_after=${UPDATED_AFTER}` 
-      : `https://neulinkapi.neuappliances.com/api/parts?per_page=${perPage}&page=${page}`;
+    LOGIN_URL = UPDATED_AFTER 
+      ? `https://neulinkapi.neuappliances.com/api/parts?per_page=${PER_PAGE}&page=${PAGE}&updated_after=${UPDATED_AFTER}` 
+      : `https://neulinkapi.neuappliances.com/api/parts?per_page=${PER_PAGE}&page=${PAGE}`;
     
-    const getProducts = await fetch(url, {
+    const getProducts = await fetch(LOGIN_URL, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', 'Authorization': TOKEN },
     });
     
     if (getProducts.status !== 200) {
+      await CronRec.create({msg:'Neulink api failed!',body:'n/a',status:false})
       return NextResponse.json({ error: 'Product syncing failed!' }, { status: 500 });
     }
     
     const RES = await getProducts.json();
-    if (!totalPages) totalPages = RES.meta.last_page;
+    if (!TOTAL_PAGES) TOTAL_PAGES = RES.meta.last_page;
 
     for (const prod of RES.data) {
       let data;
@@ -68,8 +77,11 @@ export async function GET() {
           const catId = await GetProductCategoryId(prod.category);
           const slug = await GetProductSlug(prod.title);
           const partType = await CreateGetPartType(prod.type);
+          const manufacturer = await GetManufacturer(prod.manufacturer);
           const parent = await GetParent(prod.sku);
           data = {
+            id: prod.id,
+            parent_id: prod.main_product_id,
             is_variant: true,
             parent_sku: parent._id,
             title: prod.title,
@@ -79,6 +91,7 @@ export async function GET() {
             part_number: prod.part_number,
             is_sale: prod.sale_price !== '0.00',
             condition: CONDITION,
+            manufacturer:manufacturer,
             description: parent.description,
             category: catId,
             parttype: partType,
@@ -93,6 +106,7 @@ export async function GET() {
           const partType2 = await CreateGetPartType(prod.type);
 
           data = {
+            id: prod.id,
             is_variant: false,
             parent_sku: null,
             title: prod.title,
@@ -112,20 +126,27 @@ export async function GET() {
             thumbnail: prod.images.length > 0 ? prod.images[0].thumbnail : null,
           };
         }
-        
+
         await CreateOrUpdateProduct(data);
       } catch (error) {
         return NextResponse.json({ message: `Error processing product with SKU: ${prod.sku}` }, { status: 500 });
       }
     }
 
-    page++;
-    if (page > totalPages) break;
+    PAGE++;
+    if (PAGE > TOTAL_PAGES) break;
   }
 
   const currentDate = new Date();
   const serverTime = currentDate.toISOString().slice(0, 19).replace('T', ' ');
   await Neulink.findByIdAndUpdate(ID, { updated_after: serverTime });
 
+  await CronRec.create({msg:'Product syncing completed!',body:`Product syncing completed with total ${TOTAL_PAGES} pages and ${TOTAL_PAGES*PER_PAGE} products`,status:true})
   return NextResponse.json({ message: 'Product syncing completed!' }, { status: 200 });
+
+ }catch(error){
+   await CronRec.create({msg:'Something went wrong!',body:JSON.stringify(error),status:false})
+   return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+ }
+
 }

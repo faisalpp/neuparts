@@ -118,7 +118,7 @@ const AllProducts = ({ searchParams }) => {
                 </div>
 
                 {/* Model Categoris */}
-                {result.partTypes.length ? <ModelCategories data={result} /> : null}
+                {result.partTypes.length > 0 ? <ModelCategories data={result} /> : null}
 
                 <h2 className="mb-10 mt-10 text-2xl font-semibold text-b1 md:mb-20">
                   Compatible Parts for Model <span className="text-dark-red">{result.modelCategory.model_no}</span>

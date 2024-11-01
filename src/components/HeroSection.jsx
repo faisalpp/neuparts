@@ -13,7 +13,7 @@ const HeroSection = () => {
 
   const [searchBy, setSearchBy] = useState('tab');
   const [categories, setCategories] = useState([]);
-  const [menufacturers, setMenufacturers] = useState([]);
+  const [manufacturers, setManufacturers] = useState([]);
 
   const GetCategories = async () => {
     await fetch(`/api/front/hero-section`)
@@ -21,7 +21,7 @@ const HeroSection = () => {
     .then((data) => {
       if (data.success) {
         setCategories(data.categories);
-        setMenufacturers(data.menufacturers);
+        setManufacturers(data.manufacturers);
       }
     });
   }
@@ -101,7 +101,7 @@ const HeroSection = () => {
                         unmount: { y: 25 },
                       }}
                     >
-                      {menufacturers.map((item, index) => (
+                      {manufacturers.map((item, index) => (
                         <Option value={item.slug} key={index} className="text-left">
                           {item.title}
                         </Option>

@@ -88,7 +88,7 @@ const Page = () => {
             ) : products?.length > 0 ? (
               products.map((product, i) => (
                 <Row Key={i}>
-                  <TdImage src={product.thumbnail} css="w-20 h-14 object-fit rounded" />
+                  <TdImage src={product?.thumbnail ? product?.thumbnail : false} css="w-20 h-14 object-fit rounded" />
                   <Text text={product.title} />
                   <Text text={product.slug} />
                   <Text text={product.category?.title} />

@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import Category from '@/models/productcategory';
-import Menufacturer from '@/models/productMenufacturer';
+import Manufacturer from '@/models/productManufacturer';
 
 export async function GET() {
-  // try {
+  try {
     await connect();
     const categories = await Category.aggregate([
       {
@@ -35,12 +35,12 @@ export async function GET() {
       },
     ]);
 
-    const menufacturers = await Menufacturer.aggregate([
+    const manufacturers = await Manufacturer.aggregate([
       {
         $lookup: {
           from: 'products',
           localField: '_id',
-          foreignField: 'menufacturer',
+          foreignField: 'manufacturer',
           as: 'products',
         },
       },
@@ -64,8 +64,8 @@ export async function GET() {
       },
     ]);
 
-    return NextResponse.json({ categories,menufacturers, success: true });
-  // } catch (error) {
-  //   return NextResponse.json({ error: error.message, success: false }, { status: 500 });
-  // }
+    return NextResponse.json({ categories,manufacturers, success: true });
+  } catch (error) {
+    return NextResponse.json({ error: error.message, success: false }, { status: 500 });
+  }
 }

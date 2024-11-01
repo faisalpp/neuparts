@@ -1,14 +1,14 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 import { BsArrowRightShort } from 'react-icons/bs';
 
 const ModelCategories = ({ data }) => {
   return (
     <div className="pb-10 md:pb-20">
       <h2 className="mb-10 text-2xl font-semibold text-b1">
-        Model <span className="text-dark-red">{data.modelCategory.model_no}</span> Appliance Part Categories
+        Model <span className="text-dark-red">{data?.modelCategory.model_no}</span> Appliance Part Categories
       </h2>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {data.partTypes.map((item, index) => (
