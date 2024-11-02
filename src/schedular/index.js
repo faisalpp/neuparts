@@ -1,13 +1,13 @@
-import { NextResponse } from 'next/server';
-import connect from '@/lib/db';
-import Neulink from '@/models/neulink';
-import { LoginAndUpdateToken, LoginAndCreateToken, GetProductCategoryId, GetProductSlug, CreateGetPartType, GetParent, CreateOrUpdateProduct,GetManufacturer } from '@/lib/neulink-auth';
-import {generateSlug} from '@/utils/index'
-import CronRec from '@/models/cron'
+require('dotenv').config();
+const connect = require('./db');
+const Neulink = require('./models/neulink');
+const { generateSlug,LoginAndUpdateToken, LoginAndCreateToken, GetProductCategoryId, GetProductSlug, CreateGetPartType, GetParent, CreateOrUpdateProduct,GetManufacturer } = require('./functions');
+const CronRec = require('./models/cron')
 
-export async function GET() {  
+
+async function SyncProducts() {  
   try{
-    await connect();
+   await connect();
 
   const email = process.env.NEULINK_CMS_EMAIL;
   const password = process.env.NEULINK_CMS_PASSWORD;
@@ -28,7 +28,8 @@ export async function GET() {
       const getToken = await LoginAndUpdateToken(email, password, authToken._id);
       if (!getToken.status){
         await CronRec.create({msg:'Login failed!',body:JSON.stringify(error),status:false})
-        return NextResponse.json({ error: 'Login failed!' }, { status: 500 });
+        console.log({ error: 'Something went wrong!',status: 500 });
+        process.exit(1)
       } 
       
       TOKEN = `Bearer ${getToken.token}`;
@@ -39,17 +40,18 @@ export async function GET() {
     const getToken2 = await LoginAndCreateToken(email, password);
     if (!getToken2.status){
       await CronRec.create({msg:'Login failed!',body:JSON.stringify(error),status:false})
-      NextResponse.json({ error: 'Login failed!' }, { status: 500 });
+      console.log({ error: 'Login failed!',status: 500 });
+      process.exit(1)
     } 
     
     TOKEN = `Bearer ${getToken2.token}`;
     ID = getToken2.id;
   }
 
-  const PER_PAGE = 100;
+  const PER_PAGE = 10;
   let PAGE = 1;
   let LOGIN_URL;
-  let TOTAL_PAGES;
+  let TOTAL_PAGES=1;
 
   while (true) {
     LOGIN_URL = UPDATED_AFTER 
@@ -63,7 +65,8 @@ export async function GET() {
     
     if (getProducts.status !== 200) {
       await CronRec.create({msg:'Neulink api failed!',body:'n/a',status:false})
-      return NextResponse.json({ error: 'Product syncing failed!' }, { status: 500 });
+      console.log({ error: 'Product syncing failed!',status: 500 });
+      process.exit(1)
     }
     
     const RES = await getProducts.json();
@@ -129,7 +132,9 @@ export async function GET() {
 
         await CreateOrUpdateProduct(data);
       } catch (error) {
-        return NextResponse.json({ message: `Error processing product with SKU: ${prod.sku}` }, { status: 500 });
+        await CronRec.create({msg:'Neulink api failed!',body:`Error processing product with SKU: ${prod.sku}`,status:false})
+        console.log({ error: 'Something went wrong!',status: 500 });
+        process.exit(1)
       }
     }
 
@@ -142,11 +147,16 @@ export async function GET() {
   await Neulink.findByIdAndUpdate(ID, { updated_after: serverTime });
 
   await CronRec.create({msg:'Product syncing completed!',body:`Product syncing completed with total ${TOTAL_PAGES} pages and ${TOTAL_PAGES*PER_PAGE} products`,status:true})
-  return NextResponse.json({ message: 'Product syncing completed!' }, { status: 200 });
-
+  console.log({ message: 'Product syncing completed!',status: 200 });
+  process.exit(0)
  }catch(error){
    await CronRec.create({msg:'Something went wrong!',body:JSON.stringify(error),status:false})
-   return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+   console.log({ error: 'Something went wrong!',status: 500 });
+   process.exit(1)
  }
 
 }
+
+
+
+SyncProducts()

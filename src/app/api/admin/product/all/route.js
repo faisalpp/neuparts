@@ -4,7 +4,7 @@ import Category from '@/models/productcategory';
 import ProductTyoe from '@/models/producttype';
 import SubCategory from '@/models/subcategory';
 import ModelNo from '@/models/modelno'
-import Menufacturer from '@/models/productMenufacturer'
+import Menufacturer from '@/models/productManufacturer'
 
 export async function GET(request) {
   try {

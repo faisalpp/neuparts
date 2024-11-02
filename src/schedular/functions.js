@@ -1,14 +1,24 @@
-import { NextResponse } from 'next/server';
-import Neulink from '@/models/neulink'
-import { generateSlug } from '@/utils/index';
-import ProductCategory from '@/models/productcategory'
-import Product from '@/models/product'
-import PartType from '@/models/producttype'
-import Manufacturer from '@/models/productManufacturer'
-import connect from '@/lib/db';
-import CronRec from '@/models/cron'
+require('dotenv').config();
+const Neulink = require('./models/neulink')
+const ProductCategory = require('./models/productcategory')
+const Product = require('./models/product')
+const PartType = require('./models/producttype')
+const Manufacturer = require('./models/productManufacturer')
+const connect = require('./db')
+const CronRec = require('./models/cron')
 
-export async function LoginAndUpdateToken(email,password,id){
+function generateSlug(title) {
+  return title
+      .toLowerCase() // Convert to lowercase
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+      .trim() // Remove leading/trailing spaces
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Remove consecutive hyphens
+      .replace(/^-+|-+$/g, ''); // Trim leading/trailing hyphens
+}
+
+
+async function LoginAndUpdateToken(email,password,id){
  try{
  await connect()
  const loginUrl = 'https://neulinkapi.neuappliances.com/api/login'
@@ -27,12 +37,13 @@ export async function LoginAndUpdateToken(email,password,id){
  return {id:newLogin._id,token:newLogin.token,updatedAfter:newLogin.updated_after,status:true}
  }catch(error){
   await CronRec.create({msg:'Login and token update failed!',body:JSON.stringify(error),status:false})
-  return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+  console.log({ error: 'Something went wrong!',status: 500 });
+  process.exit(1)
  }
 }
 
 
-export async function LoginAndCreateToken(email,password){
+async function LoginAndCreateToken(email,password){
 try{
   await connect()
  const loginUrl = 'https://neulinkapi.neuappliances.com/api/login'
@@ -51,13 +62,12 @@ try{
  return {id:newLogin2._id,token:loginRes.token,status:true}
  }catch(error){
   await CronRec.create({msg:'Login and retrive token failed!',body:JSON.stringify(error),status:false})
-  return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+  console.log({ error: 'Something went wrong!',status: 500 });
+  process.exit(1)
  }
 }
 
-
-
-export async function GetProductCategoryId(title){
+async function GetProductCategoryId(title){
  try{
   await connect()
   let slug = generateSlug(title);
@@ -71,12 +81,13 @@ export async function GetProductCategoryId(title){
   }
  }catch(error){
   await CronRec.create({msg:'Retriving product category failed!',body:JSON.stringify(error),status:false})
-  return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+  console.log({ error: 'Something went wrong!',status: 500 });
+  process.exit(1)
  }
 }
 
 
-export async function GetProductSlug(title) {
+async function GetProductSlug(title) {
 try{
   await connect()
   let slug = generateSlug(title);
@@ -96,12 +107,13 @@ try{
   return slug;
  }catch(error){
   await CronRec.create({msg:'Creating product slug failed!',body:JSON.stringify(error),status:false})
-  return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+  console.log({ error: 'Something went wrong!',status: 500 });
+  process.exit(1)
  }
 }
 
 
-export async function CreateGetPartType(title){
+async function CreateGetPartType(title){
  try{
   await connect()
   let slug = generateSlug(title);
@@ -115,11 +127,12 @@ export async function CreateGetPartType(title){
   }
  }catch(error){
   await CronRec.create({msg:'Retriving or creating part type failed!',body:error,status:false})
-  return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+  console.log({ error: 'Something went wrong!',status: 500 });
+  process.exit(1)
  }
 }
 
-export async function GetParent(SKU){
+async function GetParent(SKU){
 try{
   await connect()
   const sku = SKU.split('-')[0]
@@ -130,13 +143,15 @@ try{
   return {sku:'n/a',description:''}
  }catch(error){
   await CronRec.create({msg:'Retriving parent id failed!',body:error,status:false})
-  return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+  console.log({ error: 'Something went wrong!',status: 500 });
+  process.exit(1)
  }
 }
 
 
-export async function CreateOrUpdateProduct(data){
-try{
+async function CreateOrUpdateProduct(data){
+ try{
+  await connect()
   const isFind = await Product.findOne({id:data.id});
   if(isFind){
     await Product.findOneAndUpdate(isFind._id,data)
@@ -145,12 +160,15 @@ try{
   }
 }catch(error){
   await CronRec.create({msg:'Creating or updating product failed!',body:error,status:false})
-  return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+  console.log({ error: 'Something went wrong!',status: 500 });
+  process.exit(1)
  }
 }
 
-export async function GetManufacturer(title){
+
+async function GetManufacturer(title){
 try{
+  await connect()
   let slug = generateSlug(title);
   const isFind = await Manufacturer.findOne({slug:slug});
   if(isFind){
@@ -160,6 +178,10 @@ try{
   return isCreated._id
 }catch(error){
   await CronRec.create({msg:'Creating manufacturer failed!',body:error,status:false})
-  return NextResponse.json({ error: 'Something went wrong!' }, { status: 500 });
+  console.log({ error: 'Something went wrong!',status: 500 });
+  process.exit(1)
  }
 }
+
+
+module.exports = {CreateOrUpdateProduct,GetParent,CreateGetPartType,GetProductSlug,LoginAndUpdateToken,LoginAndCreateToken,GetProductCategoryId,GetManufacturer,generateSlug}

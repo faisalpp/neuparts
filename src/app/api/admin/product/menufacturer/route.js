@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
-import Menufacturer from '@/models/productMenufacturer';
+import Menufacturer from '@/models/productManufacturer';
 import { generateSlug } from '@/utils/index';
 
 export async function POST(request) {
