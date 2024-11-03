@@ -3,9 +3,10 @@ import connect from '@/lib/db';
 import Product from '@/models/product';
 
 export async function GET(req) {
-  await connect();
   try {
-    const productsparts = await Product.aggregate([{ $sample: { size: 6 } }]);
+    await connect();
+    const productsparts = await Product.find({is_variant:true}).limit(6)
+    // aggregate([{ $sample: { size: 6 } }]);
 
     return NextResponse.json({ products: productsparts, success: true });
   } catch (error) {

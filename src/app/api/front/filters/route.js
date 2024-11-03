@@ -109,7 +109,7 @@ export async function GET(req) {
       },
     ]);
 
-    const isSale = await Product.countDocuments({ is_sale: true });
+    const isSale = await Product.countDocuments({ is_variant:true,is_sale: true });
 
     return NextResponse.json({ success: true, categories: categories, parttypes: parttypes, conditions: conditions, isSale: isSale });
   } catch (error) {

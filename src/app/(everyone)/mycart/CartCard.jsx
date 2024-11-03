@@ -44,9 +44,11 @@ const CartCard = (props) => {
     }
    }
 
+   const [thumbnail,setThumbnail] = useState(props.items?.thumbnail ? props.item.thumbnail : '/no-image.webp')
+
   return (
     <div className="relative mt-3 flex w-full justify-start gap-3 p-5 shadow-[0px_4px_20px_rgba(9,67,89,0.08)] md:p-6 maxsm:flex-col">
-      <Image width={400} height={400} quality={100} src={props.item.thumbnail} className="mx-auto h-auto w-40 object-contain p-4" alt={props.item.title} />
+      <Image width={400} height={400} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="mx-auto h-auto w-40 object-contain p-4" alt={props.item.title} />
       <div className="flex w-full flex-col justify-center gap-4">
         <div className="flex w-full justify-between gap-3">
           <h3 className="line-clamp-2 text-sm font-semibold md:text-base lg:text-xl">{props.item.title}</h3>

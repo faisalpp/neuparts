@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TfiHeadphoneAlt } from 'react-icons/tfi';
 import { FiPhone } from 'react-icons/fi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
@@ -45,6 +45,8 @@ const StickyNavbar = ({ state, product, addCart, condition }) => {
     };
   }, []);
 
+  const [thumbnail,setThumbnail] = useState('/no-image.webp')
+
   return (
     <>
       <div className={`fixed top-0 z-[100] ${state ? 'hidden lg:flex' : 'hidden'} w-full flex-col bg-white shadow-lg`}>
@@ -52,7 +54,7 @@ const StickyNavbar = ({ state, product, addCart, condition }) => {
           <div className="maincontainer items-center justify-center py-6 lg:flex">
             <div className="max-w-6/12 flex w-6/12 items-center space-x-5">
               <div className="w-full max-w-28 rounded-lg border-[1px] border-gray-200 px-2 py-1">
-                <Image width={400} height={400} quality={100} src={product?.thumbnail ? product?.thumbnail : '/no-image.webp'} className="h-auto w-28" alt={product.title} />
+                <Image width={400} height={400} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-auto w-28" alt={product.title} />
               </div>
               <div>
                 <div className={`mb-2.5 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + condition().class}>

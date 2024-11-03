@@ -15,8 +15,8 @@ import HomeGallery from '@/models/homeGallery';
 const getHome = async () => {
   await connect();
 
-  const categories = await Category.find().sort({ createdAt: -1 });
-  const parttypes = await ProductType.find().sort({ createdAt: -1 });
+  const categories = await Category.find().sort({ createdAt: -1 }).limit(6);
+  const parttypes = await ProductType.find().sort({ createdAt: -1 }).limit(6);
   const homeGallery = await HomeGallery.find().sort({ createdAt: -1 });
 
   return { categories: categories, parttypes: parttypes, homeGallery: homeGallery };

@@ -1,12 +1,13 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import {formatString} from '@/utils/index'
 
 const CartCard = (prop) => {
+  const [thumbnail,setThumbnail] = useState(prop.item?.thumbnail ? prop.item.thumbnail : '/no-image.webp')
   return (
     <div key={prop.Key} className="mt-3 flex justify-start gap-14px">
       <div className="relative w-full max-w-[64px]">
-        <Image width={200} height={200} quality={100} src={prop.item.thumbnail} className="h-16 w-16 object-contain" alt="p1" />
+        <Image width={200} height={200} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-16 w-16 object-contain" alt="p1" />
         <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-b3 text-xs font-medium text-white">{prop.item.quantity}</span>
       </div>
       <div className="flex items-center gap-14px">

@@ -131,8 +131,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
             if(method === 'Shipping' && rate != 'N/A'){
              subTotal += parseFloat(rate)
             }
-            state.cartVat = (subTotal * (10/100))
-            state.cartGrandTotal = subTotal + state.cartVat
+            const Vat = (subTotal * (10/100)).toFixed(2)
+            state.cartVat = Vat
+            const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
+            state.cartGrandTotal = GrandTotal.toFixed(2)
            })
           }
          })
@@ -154,8 +156,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
             if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
              subTotal += parseFloat(state.shippingMethod.rate)
             }
-            state.cartVat = (subTotal * (10/100))
-            state.cartGrandTotal = subTotal + state.cartVat
+            const Vat = (subTotal * (10/100)).toFixed(2)
+            state.cartVat = Vat
+            const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
+            state.cartGrandTotal = GrandTotal.toFixed(2)
            })
           }
          })
@@ -193,8 +197,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
              }
-             state.cartVat = (subTotal * (10/100))
-             state.cartGrandTotal = subTotal + state.cartVat
+             const Vat = (subTotal * (10/100)).toFixed(2)
+             state.cartVat = Vat
+             const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
+             state.cartGrandTotal = GrandTotal.toFixed(2)
             })
            }
           })
@@ -231,8 +237,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
               if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
                 subTotal += parseFloat(state.shippingMethod.rate)
               }
-              state.cartVat = (subTotal * (10/100))
-              state.cartGrandTotal = subTotal + state.cartVat
+              const Vat = (subTotal * (10/100)).toFixed(2)
+              state.cartVat = Vat
+              const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
+              state.cartGrandTotal = GrandTotal.toFixed(2)
              })
             }
            })
@@ -270,8 +278,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              if(state.shippingMethod?.method === 'Shipping' && state.shippingMethod?.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
              }
-             state.cartVat = (subTotal * (10/100))
-             state.cartGrandTotal = subTotal + state.cartVat
+             const Vat = (subTotal * (10/100)).toFixed(2)
+             state.cartVat = Vat
+             const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
+             state.cartGrandTotal = GrandTotal.toFixed(2)
             })
            }
           })
@@ -304,8 +314,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
              }
-             state.cartVat = (subTotal * (10/100))
-             state.cartGrandTotal = subTotal + state.cartVat
+             const Vat = (subTotal * (10/100)).toFixed(2)
+             state.cartVat = Vat
+             const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
+             state.cartGrandTotal = GrandTotal.toFixed(2)
             })
            }
           })
@@ -344,8 +356,10 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
              }
-             state.cartVat = (subTotal * (10/100))
-             state.cartGrandTotal = subTotal + state.cartVat
+             const Vat = (subTotal * (10/100)).toFixed(2)
+             state.cartVat = Vat
+             const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
+             state.cartGrandTotal = GrandTotal.toFixed(2)
             })
            }
           })

@@ -95,18 +95,18 @@ const Sidebar = () => {
                   <BiSolidCategory />
                   <span className="mx-2 text-sm font-semibold">Manage Categories</span>
                 </Link>
-                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/sub-category">
+                {/* <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/sub-category">
                   <BiSolidCategoryAlt className='text-xl' />
                   <span className="mx-2 text-sm font-semibold">Manage Sub Categories</span>
-                </Link>
+                </Link> */}
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/parttype">
                   <MdCategory />
                   <span className="mx-2 text-sm font-semibold">Manage Part Type</span>
                 </Link>
-                <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/modelno">
+                {/* <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/modelno">
                   <PiWashingMachineFill className='text-xl' />
                   <span className="mx-2 text-sm font-semibold">Manage Model Nos</span>
-                </Link>
+                </Link> */}
                 <Link className="flex items-center rounded-lg px-3 py-2 text-gray-600 transition-colors duration-300 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-200" href="/neu-admin/product/menufacturer">
                   <MdFactory className='text-xl' />
                   <span className="mx-2 text-sm font-semibold">Manage Manufacturers</span>

@@ -227,6 +227,15 @@ const Product = ({ slug }) => {
     }
   };
 
+  const [thumbnail,setThumbnail] = useState('/no-image.webp')
+  
+  const ImageAlt = ({src}) => {
+    const [thumbnail,setThumbnail] = useState(src)
+    return (
+      <Image width={200} height={200} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-full w-full object-contain" alt="product" />
+    )
+  }
+ 
 
   return (
     <>
@@ -275,21 +284,21 @@ const Product = ({ slug }) => {
                   {product.images
                     ? product.images.slice(0, 4).map((image, index) => (
                         <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setMediaViewer({ file: image, data: image, thumbnail: image })}>
-                          <Image width={200} height={200} quality={100} src={image.url} className="w-10 2xl:w-20" alt="product" />
+                          <ImageAlt src={image.url}/>
                         </div>
                       ))
                     : null}
                   {product.images?.length > 4 ? (
                     <div className="relative h-[70px] w-[70px] cursor-pointer rounded-lg border-[1px] border-blue-400 px-2 py-1 2xl:h-100px 2xl:w-100px">
                       <div onClick={() => setImgModal(true)} className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center rounded-lg bg-b3/70 font-semibold text-white">
-                        +4
+                        +{product.images.length - 4}
                       </div>
                       <Image width={200} height={200} quality={100} src={product.images.length > 4 ? product.images[4].url : '/no-image.webp'} className="h-full w-full object-contain" alt="product" />
                     </div>
                   ) : null}
                 </div>
                 <div className="relative flex w-full items-center justify-center rounded-lg border-gray-300 px-2 py-10 lg:h-96 lg:border 2xl:h-auto 2xl:py-14 maxmd:order-1">
-                  <Image width={200} height={200} quality={100} src={product?.thumbnail ? product.thumbnail : '/no-image.webp'} alt={product.title} className="h-auto w-48" />
+                  <Image width={200} height={200} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} alt={product.title} className="h-auto w-48" />
                   {/* {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={product.thumbnail ? product.thumbnail : ''} alt={product.title} className="h-auto w-48" /> : null} */}
 
                   {/* Compatible Badge */}

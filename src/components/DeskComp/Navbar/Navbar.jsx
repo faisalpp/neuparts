@@ -27,6 +27,7 @@ const Navbar = () => {
   const [searchMenu, setSearchMenu] = useState(false);
   const [categories, setCategories] = useState([]);
   const [manufacturers, setManufacturers] = useState([]);
+  const [types, setTypes] = useState([]);
 
   const searchButtonRef = useRef(null);
   const searchRef = useRef(null);
@@ -79,7 +80,7 @@ const Navbar = () => {
       });
   };
 
-
+//
   const getCategories = async () => {
     const res = await fetch('/api/front/navbar');
     const data = await res.json();
@@ -91,8 +92,13 @@ const Navbar = () => {
       name: manufacturer.title,
       url: `/products?manufacturer=${manufacturer.slug}`,
     }));
+    const transformedTypes = data.types.map((type) => ({
+      name: type.title,
+      url: `/products?type=${type.slug}`,
+    }));
     setCategories(transformedCategories);
     setManufacturers(transformedManufacturers);
+    setTypes(transformedTypes);
   };
 
   useEffect(() => {
@@ -268,20 +274,15 @@ const Navbar = () => {
                   { name: 'Lorem 3', url: '/' },
                 ]}
               />
-              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} />
+              {/* <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} /> */}
               <div className="nav____item">
-                <span>Shop&nbsp;Now</span>
+                <Link href="/products" >Shop&nbsp;Now</Link>
               </div>
-              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} />
-              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Manufacturers" links={manufacturers} bold={600} />
+              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Appliance Category" links={categories} bold={600} />
+              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Part Category" links={types} bold={600} />
+              <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Popular Brands" links={manufacturers} bold={600} />
               <div className="nav____item">
                 <Link href="/financing">Financing</Link>
-              </div>
-              <div className="nav____item">
-                <span>Testimonials</span>
-              </div>
-              <div className="nav____item">
-                <span>Pricing</span>
               </div>
             </div>
             <div className="col-start-10 col-end-13 flex items-center justify-end space-x-10">

@@ -4,9 +4,10 @@ import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import { Loader } from '@googlemaps/js-api-loader';
 import MapForm from '../MapForm';
 import { RiLoader4Line } from 'react-icons/ri';
+import Cords from '@/lib/cords'
 
 const DeliveryMap = ({ customStyle,secret }) => {
-  const [zip, setZip] = useState(78602);
+  const [zip, setZip] = useState(null);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
@@ -19,6 +20,7 @@ const DeliveryMap = ({ customStyle,secret }) => {
       }
     });
   }
+
   const loadMap = async (result, zipZoom) => {
     const loader = new Loader({
       apiKey: secret, // Replace with your own API key
@@ -45,14 +47,14 @@ const DeliveryMap = ({ customStyle,secret }) => {
 
     // Define the polygon coordinates
     const polygonCoordinates = result;
-
+    
     // Create the polygon
     const polygon = new window.google.maps.Polygon({
       paths: polygonCoordinates,
-      strokeColor: '#4e41da',
+      strokeColor: '#00ADEE',
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: '#4e41da80',
+      fillColor: '#00ADEE',
       fillOpacity: 0.35,
     });
     var geocoder = new window.google.maps.Geocoder();
@@ -64,19 +66,61 @@ const DeliveryMap = ({ customStyle,secret }) => {
     zipZoom ? map.setZoom(zipZoom) : map.setZoom(10);
   };
 
+  const loadMap2 = async () => {
+    const loader = new Loader({
+      apiKey: secret, // Replace with your own API key
+      version: 'weekly', // or specify a specific version (e.g., 'weekly', 'weekly.next', 'beta')
+    });
+
+    await loader.load();
+
+    // Mid of cords
+    var dataArray = Cords[35];
+    var midIndex = Math.floor(dataArray.length / 2);
+    
+    var midObject = dataArray[midIndex];
+    
+    var midLat = midObject.lat;
+    var midLng = midObject.lng;
+
+    // Initialize the map
+    const map = new window.google.maps.Map(document.getElementById('map'), {
+      center: { lat: midLat, lng: midLng },
+      zoom: 9,
+      disableDefaultUI: true,
+    });
+
+    // Define the polygon coordinates
+    const polygonCoordinates = Cords;
+    
+    // Create the polygon
+    polygonCoordinates.forEach((poly)=>{  
+      const polygon = new window.google.maps.Polygon({
+      paths: poly,
+      strokeColor: '#00ADEE',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#00ADEE',
+      fillOpacity: 0.35,
+    });
+    
+    polygon.setMap(map);
+  })
+
+    map.setZoom(9);
+  };
+  
   const [loader, setLoader] = useState(false);
 
   const Submit = async () => {
     setLoader(true);
     try {
       const response = await fetch(`/api/check-zipcode?zip=${zip}`);
-      console.log(response)
       if (!response.ok) {
         setSuccess(false);
         setError(true);
       }else{
         const data = await response.json();
-        console.log(data)
         const cords = data.cords;
         loadMap(cords, data.zoom);
         setSuccess(true);
@@ -92,8 +136,14 @@ const DeliveryMap = ({ customStyle,secret }) => {
   
 
   useEffect(() => {
-    Submit();
+     if(!zip){
+       loadMap2()
+      }else{
+        Submit();
+      }
   }, []);
+
+
   return (
     <div className={customStyle}>
       <div className={`absolute bottom-20 lg:left-24 ${success ? 'flex' : 'hidden'} z-20 h-52 w-11/12 items-center justify-center bg-transparent lg:right-0 lg:ml-6`}>

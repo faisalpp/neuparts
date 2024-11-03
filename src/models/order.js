@@ -26,7 +26,8 @@ const ordersSchema = new mongoose.Schema({
     grand_total: {type: String, required:true},
     payment_intent: {type: Object},
     order_status: {type: String, required:true},
-    payment_status: {type: String, required:true}
+    payment_status: {type: String, required:true},
+    is_synced: {type: Boolean, default:false}
 },{timestamps: true});
 
 const Order = mongoose.models.Orders || mongoose.model('Orders',ordersSchema,'orders');
