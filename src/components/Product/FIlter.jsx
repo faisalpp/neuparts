@@ -30,8 +30,9 @@ const Filter = ({ onClose, isFilter }) => {
     modelNo = searchParams.get('modelno') || 'all';
     partNo = searchParams.get('partno');
 
-    const res = await fetch('/api/front/filters?model_no=' + modelNo);
+    const res = await fetch('/api/front/filters');
     const data = await res.json();
+    console.log(data)
     if (data.success) {
       setCategories(data.categories);
       setPartTypes(data.parttypes);

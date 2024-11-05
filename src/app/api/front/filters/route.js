@@ -5,19 +5,13 @@ import ProductTypes from '@/models/producttype';
 import ProductConditions from '@/models/condition';
 import Product from '@/models/product';
 
-export async function GET(req) {
+export async function GET() {
   try {
     await connect();
-    const searchParams = req.nextUrl.searchParams;
-    // const { model_no, part_number } = searchParams.get('model_no');
-    const model_no = searchParams.get('model_no');
 
     let categories = [];
     let category = null;
 
-    if (model_no != 'all') {
-      category = await Categories.findOne({ model_no: model_no });
-    } else {
       categories = await Categories.aggregate([
         {
           $lookup: {
@@ -52,7 +46,6 @@ export async function GET(req) {
           $sort: { createdAt: -1 },
         },
       ]);      
-    }
 
     const parttypes = await ProductTypes.aggregate([
       {
@@ -113,6 +106,6 @@ export async function GET(req) {
 
     return NextResponse.json({ success: true, categories: categories, parttypes: parttypes, conditions: conditions, isSale: isSale });
   } catch (error) {
-    return NextResponse.json({ success: false, message: 'Error retrieving attributes' });
+    return NextResponse.json({ success: false, message: 'Error retrieving attributes',error });
   }
 }
