@@ -6,7 +6,7 @@ import FourStar from './svgs/FourStar';
 
 const ProductCard2 = ({ sliderstyle, stars, product }) => {
 
-  const [thumbnail,setThumbnail] = useState(product.thumbnail ? product.thumbnail : '/no-image.png')
+  const [thumbnail,setThumbnail] = useState(product.thumbnail ? product.thumbnail : '/no-image.webp')
 
   return (
     <>

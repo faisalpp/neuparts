@@ -14,7 +14,8 @@ export async function POST(req) {
   let partTypes = [];
 
   if (model_no) {
-    modelCategory = await ProductCategory.findOne({ model_no: model_no }).lean();
+   const getCategory = await Product.findOne({is_variant:false ,model_no: model_no }).populate('category');
+   modelCategory = getCategory.category
   }
 
   if (part_number) {

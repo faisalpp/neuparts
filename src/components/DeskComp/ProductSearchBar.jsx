@@ -9,13 +9,14 @@ import { RxCross2 } from 'react-icons/rx';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { StoreData } from '@/provider';
 import Spinner from '../svgs/Spinner';
-import Link from 'next/link';
 
 const ProductSearchBar = () => {
   const { modelNo, partNo, filteredModels, showSuggestions, error, setPartNo, step, handleSearchClick, handleSuggestionClick, searchLoading, result, handleModelNoChange } = useContext(StoreData);
-
+  
   const [searchBar, setSearchBar] = useState(false);
 
+  const [thumbnail,setThumbnail] = useState(result.modelCategory?.thumbnail ? result.modelCategory.thumbnail : '/no-image.webp')
+  
   return (
     <div id="product-search-bar" className={`${step == 0 ? 'bg-white' : 'bg-[#14313D]'} sticky top-[68px] z-40 lg:top-[136px] lg:z-50 lg:bg-[#14313D] maxlg:shadow-[0px_4px_20px_rgba(0,0,0,0.08)]`}>
       {/* Mobile Search Bar */}
@@ -51,10 +52,10 @@ const ProductSearchBar = () => {
               <div className="relative w-full lg:max-w-40">
                 <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797]" placeholder="Enter model number" />
                 {showSuggestions && modelNo && (
-                  <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black">
+                  <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black max:h-32 overflow-y-scroll">
                     {filteredModels.map((model, index) => (
                       <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model.model_no)}>
-                        {model.model_no}
+                        {model}
                       </li>
                     ))}
                   </ul>
@@ -88,7 +89,7 @@ const ProductSearchBar = () => {
             <div className="relative w-full max-w-96">
               <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797]" placeholder="Enter your Model Number" />
               {showSuggestions && modelNo && (
-                <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black">
+                <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black max:h-32 overflow-y-scroll">
                   {filteredModels.map((model, index) => (
                     <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
                       {model}
@@ -118,36 +119,35 @@ const ProductSearchBar = () => {
               <IoExtensionPuzzleOutline className="h-6 w-6" />
               Compatibility Check
             </button>
-            <div className="flex w-full items-center gap-2.5 lg:w-1/3">
-              {result.product.thumbnail ? (
-                <div className="grid h-8 min-w-8 place-items-center rounded bg-white">
-                  <Image width={100} height={100} quality={100} src={result.product.thumbnail} className="h-6 w-6 object-contain" alt={result.product.title} />
+            <div className="flex items-center gap-2.5">
+              {result.modelCategory.thumbnail ? 
+                <div className="grid h-10 min-w-10 place-items-center rounded bg-white">
+                  <Image width={120} height={100} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-6 w-6 object-contain" alt={result.product.title} />
                 </div>
-              ) : null}
-              {result.product.title ? (
-                <Link href={'/product/' + result.product.slug}>
-                  <h3 className="line-clamp-2 text-sm font-semibold">{result.product.title}</h3>
-                </Link>
-              ) : null}
+               :null }
+                <div>
+                  <h3 className="line-clamp-2 text-sm font-semibold">{result.modelCategory?.description ? result.modelCategory.description : 'Title not available'}</h3>
+                </div>
             </div>
             <button type="button" className="flex h-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-[#3F4C54] bg-b2 p-3 text-xs font-semibold lg:p-2 lg:text-sm maxlg:my-4 maxlg:w-full">
               <Rotate className="h-6 w-6" />
-              Model Number: {result.product.category.model_no}
+              Model Number: {modelNo}
             </button>
+
             {/* Parts Show Are Comaptible With Model */}
-            {partNo === '' && modelNo === result.product.category.model_no && (
+            {result.modelCategory && result.product && (
               <div className="flex items-start gap-1 rounded-lg bg-[#00EE34] px-2.5 py-1.5">
                 <div className="grid h-6 min-w-6 place-items-center rounded-full bg-black text-[#00EE34]">
                   <FiCheck />
                 </div>
                 <div>
                   <span className="block text-xs font-extrabold leading-3 text-b1">MATCH</span>
-                  <span className="block text-xs leading-3 text-b1">Parts Shown are compatible with model</span>
+                  <span className="block text-xs font-semibold leading-3 text-b1">Parts Shown are compatible with model</span>
                 </div>
               </div>
             )}
             {/* Parts Show Are Not Comaptible With Model */}
-            {partNo != result.product.part_number && modelNo === result.product.category.model_no && modelNo != '' && partNo != '' && (
+            {!result.modelCategory && result.product && modelNo != '' && partNo != '' && (
               <div className="flex items-start gap-1 rounded-lg bg-dark-red px-2.5 py-1.5">
                 <div className="grid h-6 min-w-6 place-items-center rounded-full bg-white text-dark-red">
                   <RxCross2 />
@@ -159,17 +159,17 @@ const ProductSearchBar = () => {
               </div>
             )}
             {/* Model and Part Cpmpatible */}
-            {modelNo === result.product.category.model_no && partNo === result.product.part_number && (
+            {/* {result.modelCategory && result.product && (
               <div className="flex h-full items-center gap-1 rounded-lg bg-[#00EE34] px-2.5 py-1.5">
                 <div className="grid h-6 min-w-6 place-items-center rounded-full bg-black text-[#00EE34]">
                   <FiCheck />
                 </div>
                 <span className="block text-xs font-extrabold text-b1">Compatible Part</span>
               </div>
-            )}
+            )} */}
 
             {/* Model and Part NotCpmpatible */}
-            {modelNo != result.product.category.model_no && partNo != result.product.part_number && modelNo != '' && partNo != '' && (
+            {!result.modelCategory && !result.product && modelNo != '' && partNo != '' && (
               <div className="flex items-center gap-1 rounded-lg bg-dark-red px-2.5 py-1.5">
                 <div className="grid h-6 min-w-6 place-items-center rounded-full bg-white text-dark-red">
                   <RxCross2 />

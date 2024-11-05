@@ -2,7 +2,6 @@ import Order from '@/models/order';
 import Address from '@/models/address'
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
-import CmsOrder from '@/lib/neu-order';
 import {checkSession} from '@/lib/auth'
 import {GetOrderNo,SubscribeNewsLetter,generateRandomPassword,CreateCustomer} from '@/utils/order'
 
@@ -100,21 +99,6 @@ export async function POST(request) {
     });
 
     if(isOrdered){
-
-      //Send order to neulink CMS
-      const isSent = await CmsOrder({
-        user:isOrdered.user,order_no:isOrdered.order_no,items:isOrdered.items,
-        coupons:isOrdered.coupons,billing_address:isOrdered.billing_address,
-        shipping_address:isOrdered.shipping_address,sub_total:isOrdered.sub_total,
-        vat:isOrdered.vat,shipping:isOrdered.shipping,
-        grand_total:isOrdered.grand_total,order_status:isOrdered.order_status,
-        payment_status:isOrdered.payment_status,
-      });
-      
-      if(isSent){
-        await Order.findOneAndUpdate(isOrdered._id,{is_synced:true})
-      }
-
       return NextResponse.json({order_id: isOrdered._id,success: true });
     }
     return NextResponse.json({ message: 'Processing order failed!', success: false });

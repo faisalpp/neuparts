@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import Tag from '@/components/svgs/Tag';
 
+
 const ProductCard = ({ product }) => {
   const [thumbnail,setThumbnail] = useState(product?.thumbnail ? product.thumbnail : '/no-image.webp')
   return (

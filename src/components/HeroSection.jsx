@@ -61,10 +61,10 @@ const HeroSection = () => {
                     <div className="relative w-full">
                       <input type="text" value={modelNo} onChange={(e) => handleModelNoChange(e.target.value)} className="w-full rounded-lg border border-b3 px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none placeholder:text-dark-gray maxmd:text-lg" placeholder="Enter model number" />
                       {showSuggestions && modelNo && (
-                        <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white shadow-lg">
+                        <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white shadow-lg max:h-32 overflow-y-scroll">
                           {filteredModels.map((model, index) => (
-                            <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model.model_no)}>
-                              {model.model_no}
+                            <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
+                              {model}
                             </li>
                           ))}
                         </ul>

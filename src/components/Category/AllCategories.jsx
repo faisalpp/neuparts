@@ -16,7 +16,7 @@ import ApplianceGrid from '../Appliances/ApplianceGrid';
 import { StoreData } from '@/provider';
 import { useContext } from 'react';
 
-const AllProducts = ({ searchParams }) => {
+const AllProducts = () => {
   const { searchLoading, result,modelNo } = useContext(StoreData);
 
   const [searchModelNo, setSearchModelNo] = useState('');
@@ -24,41 +24,6 @@ const AllProducts = ({ searchParams }) => {
   const [data, setData] = useState(null);
   const [isGrid, setIsGrid] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-
-  const getProducts = async () => {
-    setLoading(true);
-    const urlParams = {
-      category: searchParams.category,
-      parttype: searchParams.type,
-      condition: searchParams.condition,
-      'regular_price[gte]': searchParams.min,
-      'regular_price[lte]': searchParams.max,
-      is_sale: searchParams.sale,
-      page: searchParams.page,
-      model_no: searchParams.modelno,
-      part_number: searchParams.partno,
-    };
-
-    const searchQuery = queryString.stringify(urlParams);
-
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-
-    const res = await fetch(`/api/front/product?${searchQuery}`, requestOptions);
-    const allData = await res.json();
-    setData(allData);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, [searchParams]);
-
-  function calculateTotalPages(totalProducts, productsPerPage) {
-    return Math.ceil(totalProducts / productsPerPage);
-  }
 
   const [thumbnail,setThumbnail] = useState(result.modelCategory?.thumbnail ? result.modelCategory.thumbnail : '/no-image.webp')
 
@@ -134,7 +99,7 @@ const AllProducts = ({ searchParams }) => {
         {/* Product Filters */}
 
         <div className="flex justify-center gap-12 xl:gap-x-60px">
-          <ProductFilter loading={loading} query={searchParams} onClose={() => setIsFilter(false)} isFilter={isFilter} />
+          {/* <ProductFilter loading={loading} query={searchParams} onClose={() => setIsFilter(false)} isFilter={isFilter} /> */}
 
           <div className={`grid ${isGrid ? 'grid-cols-2 gap-x-2 xl:grid-cols-3' : 'grid-cols-1'} mb-10 mt-5 w-full items-start gap-y-5`}>
             {loading ? (

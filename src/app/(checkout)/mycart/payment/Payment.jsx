@@ -7,16 +7,18 @@ import LeftArrowSvg from '@/components/svgs/LeftArrowSvg';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOrderInfo,setOrderLoader,setOrderId } from '@/app/GlobalRedux/slices/OrderSlice';
+import { setOrderInfo,setOrderLoader,setOrderId,resetOrder } from '@/app/GlobalRedux/slices/OrderSlice';
+import { resetCart } from '@/app/GlobalRedux/slices/CartSlice';
 import * as Yup from 'yup'
 import {CardNumberElement,CardExpiryElement,CardCvcElement,useElements,useStripe} from '@stripe/react-stripe-js'
 import Stripe from 'stripe'
 import { toast } from 'react-toastify';
-//
+import { useRouter } from 'next/navigation';
 
 
 const Payment = ({PRIVATE_KEY}) => {
   const dispatch = useDispatch()
+  const router = useRouter()
   const elements = useElements()
   const stripe = useStripe()
   const StripeMain = Stripe(PRIVATE_KEY)
@@ -38,7 +40,7 @@ const Payment = ({PRIVATE_KEY}) => {
 
   const order = useSelector((state)=>state.order.orderInfo)
   const orderId = useSelector((state)=>state.order.orderId)
-  const detail = `${order.shippingAddress.address} ${order.shippingAddress.apartment}, ${order.shippingAddress.city} ${order.shippingAddress.province}, ${order.shippingAddress.country}`
+  const detail = `${order.shippingAddress?.address} ${order.shippingAddress?.apartment}, ${order.shippingAddress?.city} ${order.shippingAddress?.province}, ${order.shippingAddress?.country}`
   const shipping = useSelector((state)=>state.cart.shippingMethod)
   const cartItems = useSelector((state)=>state.cart.items)
   const cartSubTotal = useSelector((state)=>state.cart.cartSubTotal)
@@ -207,7 +209,10 @@ const Payment = ({PRIVATE_KEY}) => {
     const Intent = isPaid.paymentIntent.client_secret;
     await PostOrder({orderId:isSaved.order_id,intent:{data:Intent,status:true},paymentStatus:'Completed'})
     dispatch(setOrderLoader())
+    dispatch(resetCart())
+    dispatch(resetOrder())
     toast.success('Order placed successfully!')
+    router.push('/')
    }
 
   }

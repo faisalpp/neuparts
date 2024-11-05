@@ -99,7 +99,8 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
         state.cartSubTotal = 0.00,
         state.cartVat = 0.00,
         state.cartGrandTotal = 0.00,
-        state.coupon = {status:false}
+        state.coupon = {status:false},
+        state.shippingMethod = {method:'Pickup',rate:'Free'}
       },
       toggleCart: (state, action) => {
         state.sCart = !state.sCart 

@@ -5,7 +5,7 @@ import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
 const page = () => {
   return (
     <>
-      <ProductSearchBar />
+      {/* <ProductSearchBar /> */}
       <Products />
     </>
   );
