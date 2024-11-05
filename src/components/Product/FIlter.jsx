@@ -14,6 +14,7 @@ const Filter = ({ onClose, isFilter }) => {
   const [Categories, setCategories] = useState([]);
   const [PartTypes, setPartTypes] = useState([]);
   const [Conditions, setConditions] = useState([]);
+  const [Manufacturers, setManufacturers] = useState([]);
   const [countSale, setCountSale] = useState(0);
   const [onsale, setOnSale] = useState(false);
   const router = useRouter();
@@ -32,11 +33,11 @@ const Filter = ({ onClose, isFilter }) => {
 
     const res = await fetch('/api/front/filters');
     const data = await res.json();
-    console.log(data)
     if (data.success) {
       setCategories(data.categories);
       setPartTypes(data.parttypes);
       setConditions(data.conditions);
+      setManufacturers(data.manufacturers);
       setCountSale(data.isSale);
       setLoading(false);
     }
@@ -82,6 +83,7 @@ const Filter = ({ onClose, isFilter }) => {
             <div className="pb-5 lg:pb-10 maxlg:px-[5%]">
               {!modelNo && Categories.length > 0 && <TypeFilter type="category" title="Appliance Type" filters={Categories} />}
               {PartTypes.length > 0 && <TypeFilter type="type" title="Part Type" filters={PartTypes} />}
+              {Manufacturers.length > 0 && <TypeFilter type="manufacturer" title="Brand" filters={Manufacturers} />}
 
               {Conditions.length > 0 && <RatingFilter filters={Conditions} />}
               {/* {filterheader != false && <HeaderFilter />} */}

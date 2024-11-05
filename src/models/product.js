@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import ProductManufacturer from './productManufacturer';
 
 const ProductSchema = new mongoose.Schema(
   {
@@ -17,7 +18,7 @@ const ProductSchema = new mongoose.Schema(
     model_no: { type: [String], required: true },
     manufacturer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'ProductMenufacturer',
+      ref: 'ProductManufacturer',
     },
     is_sale: { type: Boolean, required: true },
     condition: { type: String },

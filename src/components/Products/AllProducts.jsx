@@ -37,6 +37,7 @@ const AllProducts = ({ searchParams }) => {
       page: searchParams.page,
       model_no: searchParams.modelno,
       part_number: searchParams.partno,
+      manufacturer: searchParams.manufacturer,
     };
 
     const searchQuery = queryString.stringify(urlParams);

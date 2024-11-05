@@ -21,7 +21,8 @@ class APIFilters {
     const queryCopy = { ...this.queryStr };
     const category = queryCopy?.category;
     const parttype = queryCopy?.parttype;
-    const removeFields = ['keyword', 'category', 'parttype', 'limit', 'page', 'model_no', 'part_number'];
+    const brand = queryCopy?.manufacturer;
+    const removeFields = ['keyword', 'category', 'parttype', 'limit', 'page', 'model_no', 'part_number','manufacturer'];
     removeFields.forEach((key) => delete queryCopy[key]);
 
     let output = {};
@@ -44,13 +45,17 @@ class APIFilters {
     this.query = this.query
       .find(output)
       .populate({
+        path: 'manufacturer',
+        match: { slug: brand || { $exists: true } },
+      })
+      .populate({
         path: 'category',
         match: { slug: category || { $exists: true } },
       })
       .populate({
         path: 'parttype',
         match: { slug: parttype || { $exists: true } },
-      });
+      })
 
     return this;
   }

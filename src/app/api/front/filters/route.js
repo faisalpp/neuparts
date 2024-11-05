@@ -3,6 +3,7 @@ import connect from '@/lib/db';
 import Categories from '@/models/productcategory';
 import ProductTypes from '@/models/producttype';
 import ProductConditions from '@/models/condition';
+import ProductManufacturer from '@/models/productManufacturer';
 import Product from '@/models/product';
 
 export async function GET() {
@@ -102,9 +103,36 @@ export async function GET() {
       },
     ]);
 
+    const manufacturers = await ProductManufacturer.aggregate([
+      {
+        $lookup: {
+          from: 'products',
+          let: { productTypeId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $and: [ { $eq: ['$manufacturer', '$$productTypeId'] }, { $eq: ['$is_variant', true] } ] } } },
+            ...(category ? [{ $match: { category: category._id } }] : []),
+          ],
+          as: 'products',
+        },
+      },
+      {
+        $addFields: {
+          productCount: { $size: '$products' },
+        },
+      },
+      {
+        $project: {
+          products: 0,
+        },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+    ]);
+
     const isSale = await Product.countDocuments({ is_variant:true,is_sale: true });
 
-    return NextResponse.json({ success: true, categories: categories, parttypes: parttypes, conditions: conditions, isSale: isSale });
+    return NextResponse.json({ success: true, categories: categories, parttypes: parttypes, conditions: conditions, isSale: isSale,manufacturers:manufacturers });
   } catch (error) {
     return NextResponse.json({ success: false, message: 'Error retrieving attributes',error });
   }

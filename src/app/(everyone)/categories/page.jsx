@@ -1,12 +1,12 @@
 import ProductSearchBar from '@/components/DeskComp/ProductSearchBar';
-import AllProducts from '@/components/Category/AllCategories';
+import AllCategories from '@/components/Category/AllCategories';
 import React from 'react';
 
-const Page = () => {
+const Page = ({ searchParams }) => {
   return (
     <>
-      {/* <ProductSearchBar /> */}
-      {/* <AllProducts /> */}
+      <ProductSearchBar />
+      <AllCategories searchParams={searchParams} />
     </>
   );
 };

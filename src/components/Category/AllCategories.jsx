@@ -1,31 +1,50 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import ProductFilter from '@/components/Product/FIlter';
-import FilterSvg from '@/components/svgs/FilterSvg';
 import { RiArrowDropRightLine } from 'react-icons/ri';
-import { FaBars } from 'react-icons/fa';
-import { BsGrid } from 'react-icons/bs';
 import { CiSearch } from 'react-icons/ci';
 import Pagination from '@/components/Pagination/Pagination2';
 import Image from 'next/image';
-import queryString from 'query-string';
-import ModelCategories from '../Appliances/ModelCategories';
 import { BiSearch } from 'react-icons/bi';
-import ApplianceGrid from '../Appliances/ApplianceGrid';
+import CategoryCard from '@/components/Category/CategoryCard';
 import { StoreData } from '@/provider';
 import { useContext } from 'react';
+import queryString from 'query-string';
 
-const AllProducts = () => {
+const AllCategories = ({ searchParams }) => {
   const { searchLoading, result,modelNo } = useContext(StoreData);
 
   const [searchModelNo, setSearchModelNo] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);  
   const [data, setData] = useState(null);
-  const [isGrid, setIsGrid] = useState(false);
-  const [isFilter, setIsFilter] = useState(false);
+  const [count,setCount] = useState(0)
 
   const [thumbnail,setThumbnail] = useState(result.modelCategory?.thumbnail ? result.modelCategory.thumbnail : '/no-image.webp')
+
+  function calculateTotalPages(totalProducts, productsPerPage) {
+    return Math.ceil(totalProducts / productsPerPage);
+  }
+
+  const urlParams = {
+    page: searchParams.page,
+  };
+
+  const searchQuery = queryString.stringify(urlParams);
+
+  const GetPartTypes = async () => {
+    const res = await fetch(`/api/front/parttype?${searchQuery}`)
+    const data = await res.json()
+    console.log(data)
+    if(data.success){
+      setCount(data.count)
+      setData(data.types)
+      setLoading(false)
+    }
+  }
+
+  useEffect(()=>{
+    GetPartTypes()
+  },[searchParams])
 
   return (
     <>
@@ -34,17 +53,9 @@ const AllProducts = () => {
           <div className="flex items-center">
             <h5 className="text-xs text-b3">Home</h5>
             <RiArrowDropRightLine className="text-xl text-gray-500" />
-            <h5 className="whitespace-nowrap text-xs text-b1">All Products</h5>
-          </div>
-          <div className="flex w-full items-center justify-end space-x-5">
-            <BsGrid className={`cursor-pointer ${isGrid && 'text-b3'}`} onClick={() => setIsGrid(true)} />
-            <FaBars className={`cursor-pointer ${!isGrid && 'text-b3'}`} onClick={() => setIsGrid(false)} />
+            <h5 className="whitespace-nowrap text-xs text-b1">Part Types</h5>
           </div>
         </div>
-        <button type="button" className="my-5 flex w-full items-center justify-center gap-2 rounded-md border border-b3 px-4 py-3 text-xs font-semibold text-b3 lg:hidden" onClick={() => setIsFilter(true)}>
-          <FilterSvg />
-          Filters
-        </button>
 
         {/* Bread Crumbs End */}
 
@@ -71,7 +82,9 @@ const AllProducts = () => {
 
                 {/* Part Number to search */}
                 <div className="my-10 md:my-20 2xl:my-100px">
-                  <h2 className="mt-4 text-2xl font-bold text-b1 lg:text-[30px]">Model Number: {modelNo}</h2>
+                  <h2 className="mt-4 text-xl font-bold text-b1 lg:text-[26px]">
+                    Model <span className="text-dark-red">{modelNo}</span> Appliance Parts Categories
+                  </h2>
                   <div className="mt-8 flex max-w-[910px] items-center gap-2 maxsm:flex-col">
                     <div className="relative w-full">
                       <CiSearch className="absolute left-4 top-3.5 h-7 w-7 text-b1/30" />
@@ -84,12 +97,6 @@ const AllProducts = () => {
                   </div>
                 </div>
 
-                {/* Model Categoris */}
-                {result.partTypes.length > 0 ? <ModelCategories data={result} modelNo={modelNo} /> : null}
-
-                <h2 className="mb-10 mt-10 text-2xl font-semibold text-b1 md:mb-20">
-                  Compatible Parts for Model <span className="text-dark-red">{modelNo}</span>
-                </h2>
               </>
             ) : null}
           </div>
@@ -99,32 +106,30 @@ const AllProducts = () => {
         {/* Product Filters */}
 
         <div className="flex justify-center gap-12 xl:gap-x-60px">
-          {/* <ProductFilter loading={loading} query={searchParams} onClose={() => setIsFilter(false)} isFilter={isFilter} /> */}
 
-          <div className={`grid ${isGrid ? 'grid-cols-2 gap-x-2 xl:grid-cols-3' : 'grid-cols-1'} mb-10 mt-5 w-full items-start gap-y-5`}>
-            {loading ? (
-              <div className="mt-5 flex w-full items-center justify-center md:mt-10">
-                <Image width={80} height={80} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" unoptimized />
-              </div>
-            ) : data?.products?.length > 0 ? (
-              <>
-                {data.products.map((product, index) => (
-                  <ApplianceGrid key={index} product={product} isGrid={isGrid} />
-                ))}
-                <div className={isGrid ? 'col-span-2 xl:col-span-3' : ''}>
-                  <Pagination totalPages={calculateTotalPages(data.productCount, 10)} />
-                </div>
-              </>
+         {loading ? (
+          <div className="mt-5 flex w-full items-center justify-center md:mt-10">
+            <Image width={80} height={80} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" unoptimized />
+          </div>
+         ) :     
+         data.length > 0 ? (
+          <div className={`grid grid-cols-3 gap-x-3 xl:grid-cols-3 mb-10 mt-5 w-full items-start gap-y-5`}>
+              {data.map((product, index) => (
+                <CategoryCard key={index} product={product} />
+              ))} 
+             <div className='col-span-2 xl:col-span-3'>
+              {data.length > 12 ? <Pagination totalPages={calculateTotalPages(count, 10)} /> : null}
+             </div>
+          </div>
             ) : (
-              <div className="flex w-full items-center justify-center">
+              <div className="flex w-full items-center justify-center h-screen">
                 <Image width={400} height={400} quality={100} alt="Not Found" src="/not-found.webp" className="h-40 w-40" />
               </div>
             )}
-          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default AllProducts;
+export default AllCategories;
