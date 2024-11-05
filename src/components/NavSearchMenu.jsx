@@ -36,7 +36,7 @@ const NavSearchMenu = ({ searchMenu, setSearchMenu }) => {
         Part No.
       </label>
       <input onChange={(e) => setPartNo(e.target.value)} type="text" value={partNo} id="part_no" className="w-full rounded-lg border border-b3 bg-white p-3 text-xs font-medium text-black outline-none placeholder:font-semibold placeholder:text-[#979797] lg:mt-2" placeholder="Part Number" />
-      <button type="button" onClick={() => handleSearchClick()} className="button-hover mt-4 flex h-10 w-full cursor-pointer items-center justify-center rounded-md px-4 text-white lg:mt-2">
+      <button type="button" onClick={() => handleSearchClick('search-by')} className="button-hover mt-4 flex h-10 w-full cursor-pointer items-center justify-center rounded-md px-4 text-white lg:mt-2">
         {searchLoading ? (
           <Spinner />
         ) : (

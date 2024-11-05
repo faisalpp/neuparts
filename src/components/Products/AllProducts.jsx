@@ -17,7 +17,7 @@ import { StoreData } from '@/provider';
 import { useContext } from 'react';
 
 const AllProducts = ({ searchParams }) => {
-  const { searchLoading, result,modelNo } = useContext(StoreData);
+  const { searchLoading, result, modelNo, setModelNo, setPartNo, setResult } = useContext(StoreData);
 
   const [searchModelNo, setSearchModelNo] = useState('');
   const [loading, setLoading] = useState(true);
@@ -26,6 +26,12 @@ const AllProducts = ({ searchParams }) => {
   const [isFilter, setIsFilter] = useState(false);
 
   const getProducts = async () => {
+    // if (onlyCategoryPresent) {
+    //   setModelNo('');
+    //   setPartNo('');
+    //   setResult('');
+    // }
+
     setLoading(true);
     const urlParams = {
       category: searchParams.category,
@@ -61,7 +67,7 @@ const AllProducts = ({ searchParams }) => {
     return Math.ceil(totalProducts / productsPerPage);
   }
 
-  const [thumbnail,setThumbnail] = useState(result.modelCategory?.thumbnail ? result.modelCategory.thumbnail : '/no-image.webp')
+  const [thumbnail, setThumbnail] = useState(result.modelCategory?.thumbnail ? result.modelCategory.thumbnail : '/no-image.webp');
 
   return (
     <>
@@ -86,7 +92,7 @@ const AllProducts = ({ searchParams }) => {
 
         {/* Product Search Details */}
 
-        {!searchLoading && result ? (
+        {!searchLoading && searchParams.tab !== 'all' && searchParams.tab && result ? (
           <div className="product-search-details">
             {/* Product Model Details */}
             {result.modelCategory ? (
@@ -94,7 +100,7 @@ const AllProducts = ({ searchParams }) => {
                 <div className="mt-6 grid grid-cols-1 items-center gap-10 rounded-lg border border-b3 bg-b3/10 p-6 md:mt-8 md:grid-cols-[220px_auto] md:p-8">
                   {result.modelCategory.thumbnail ? (
                     <div className="grid place-items-center rounded-lg bg-white py-7">
-                      <Image onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-40 w-40 object-contain" alt="Dish Water" width={600} height={600} quality={100} />
+                      <Image onErrorCapture={() => setThumbnail('/no-image.webp')} src={thumbnail} className="h-40 w-40 object-contain" alt="Dish Water" width={600} height={600} quality={100} />
                     </div>
                   ) : null}
                   <div>
@@ -129,9 +135,7 @@ const AllProducts = ({ searchParams }) => {
               </>
             ) : null}
           </div>
-        ) : (
-          null
-        )}
+        ) : null}
         {/* Product Filters */}
 
         <div className="flex justify-center gap-12 xl:gap-x-60px">

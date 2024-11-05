@@ -43,7 +43,7 @@ class APIFilters {
     }
 
     this.query = this.query
-      .find(output)
+      .find(output).where('is_variant').equals(true)
       .populate({
         path: 'manufacturer',
         match: { slug: brand || { $exists: true } },

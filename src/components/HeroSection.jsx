@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { MdSearch } from 'react-icons/md';
 import { Select, Option } from '@material-tailwind/react';
 import { StoreData } from '@/provider';
@@ -9,7 +9,7 @@ import Link from 'next/link';
 import Spinner from '@/components/svgs/Spinner';
 
 const HeroSection = () => {
-  const { partNo, modelNo, filteredModels, setPartNo, showSuggestions, modelSuggestions, error, searchLoading, SearchResult, handleModelNoChange, handleSuggestionClick, setError, handleSearchClick } = useContext(StoreData);
+  const { partNo, modelNo, manufacturer, selectedCategory, setManufacturer, setSelectedCategory, filteredModels, setPartNo, showSuggestions, error, searchLoading, handleModelNoChange, handleSuggestionClick, handleSearchClick } = useContext(StoreData);
 
   const [searchBy, setSearchBy] = useState('tab');
   const [categories, setCategories] = useState([]);
@@ -17,19 +17,18 @@ const HeroSection = () => {
 
   const GetCategories = async () => {
     await fetch(`/api/front/hero-section`)
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.success) {
-        setCategories(data.categories);
-        setManufacturers(data.manufacturers);
-      }
-    });
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setCategories(data.categories);
+          setManufacturers(data.manufacturers);
+        }
+      });
+  };
 
   useEffect(() => {
-    GetCategories()
-  }, [])
-  
+    GetCategories();
+  }, []);
 
   return (
     <>
@@ -61,7 +60,7 @@ const HeroSection = () => {
                     <div className="relative w-full">
                       <input type="text" value={modelNo} onChange={(e) => handleModelNoChange(e.target.value)} className="w-full rounded-lg border border-b3 px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none placeholder:text-dark-gray maxmd:text-lg" placeholder="Enter model number" />
                       {showSuggestions && modelNo && (
-                        <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white shadow-lg max:h-32 overflow-y-scroll">
+                        <ul className="max:h-32 absolute top-full z-20 mt-2 w-full overflow-y-scroll rounded-lg bg-white shadow-lg">
                           {filteredModels.map((model, index) => (
                             <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
                               {model}
@@ -73,7 +72,7 @@ const HeroSection = () => {
                     <input type="text" value={partNo} onChange={(e) => setPartNo(e.target.value)} className="w-full rounded-lg border border-b3 px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)] outline-none placeholder:text-dark-gray maxmd:text-lg" placeholder="Enter part number" />
                     <Image width={400} height={400} quality={100} src="/best-result.webp" alt="Best Results" className="absolute -bottom-[3.8rem] left-0 right-0 z-10 mx-auto h-auto w-72 maxmd:hidden" />
                   </div>
-                  <button type="button" onClick={() => handleSearchClick()} className="button-hover flex h-full w-full items-center justify-center rounded-lg py-3 font-bold text-white md:max-w-40 maxmd:text-lg">
+                  <button type="button" onClick={() => handleSearchClick('search-by')} className="button-hover flex h-full w-full items-center justify-center rounded-lg py-3 font-bold text-white md:max-w-40 maxmd:text-lg">
                     {searchLoading ? (
                       <Spinner />
                     ) : (
@@ -92,30 +91,14 @@ const HeroSection = () => {
               <>
                 <div className="md:gapgap-2 grid grid-cols-1 gap-3 rounded-lg rounded-tl-none bg-[#EBF8FE] p-4 md:grid-cols-[auto_160px]">
                   <div className="cc-select relative grid grid-cols-1 justify-start gap-3 md:grid-cols-2 md:gap-2 [&>div]:h-[57px]">
-                    <Select
-                      label="Select manufacturer"
-                      size="md"
-                      className="bg-white px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)]"
-                      animate={{
-                        mount: { y: 0 },
-                        unmount: { y: 25 },
-                      }}
-                    >
+                    <Select label="Select manufacturer" size="md" className="bg-white px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)]" animate={{ mount: { y: 0 }, unmount: { y: 25 } }} onChange={(val) => setManufacturer(val)}>
                       {manufacturers.map((item, index) => (
                         <Option value={item.slug} key={index} className="text-left">
                           {item.title}
                         </Option>
                       ))}
                     </Select>
-                    <Select
-                      label="Select category"
-                      size="md"
-                      className="bg-white px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)]"
-                      animate={{
-                        mount: { y: 0 },
-                        unmount: { y: 25 },
-                      }}
-                    >
+                    <Select label="Select category" size="md" onChange={(val) => setSelectedCategory(val)} className="bg-white px-6 py-4 text-dark-gray shadow-[0px_0px_16px_rgba(0,0,0,0.08)]" animate={{ mount: { y: 0 }, unmount: { y: 25 } }}>
                       {categories.map((item, index) => (
                         <Option value={item.slug} key={index} className="text-left">
                           {item.title}
@@ -124,10 +107,20 @@ const HeroSection = () => {
                     </Select>
                     <Image width={400} height={400} quality={100} src="/best-result.webp" alt="Best Results" className="absolute -bottom-[3.8rem] left-0 right-0 z-10 mx-auto h-auto w-72 maxmd:hidden" />
                   </div>
-                  <Link href="/appliances-search" className="button-hover flex h-full w-full items-center justify-center rounded-lg py-3 font-bold text-white md:max-w-40 maxmd:text-lg">
+                  <button type="button" onClick={() => handleSearchClick('browse-by')} className="button-hover flex h-full w-full items-center justify-center rounded-lg py-3 font-bold text-white md:max-w-40 maxmd:text-lg">
+                    {searchLoading ? (
+                      <Spinner />
+                    ) : (
+                      <>
+                        <MdSearch className="mr-2 text-2xl" />
+                        Search
+                      </>
+                    )}
+                  </button>
+                  {/* <Link href="/appliances-search" className="button-hover flex h-full w-full items-center justify-center rounded-lg py-3 font-bold text-white md:max-w-40 maxmd:text-lg">
                     <MdSearch className="mr-2 text-2xl" />
                     Search
-                  </Link>
+                  </Link> */}
                 </div>
                 <Image width={400} height={400} quality={100} src="/best-result.webp" alt="Best Results" className="mx-auto mt-2 h-auto w-72 md:hidden" />
               </>

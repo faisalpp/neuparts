@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { Checkbox } from '@material-tailwind/react';
 import FourStar from '@/components/svgs/FourStar';
@@ -35,6 +35,10 @@ const TypeFilter = ({ filters }) => {
   const conditionClass = (condition) => {
     return condition == 'new' ? 'bg-dark-light-cyan' : condition == 'new-open-box' ? 'bg-dark-light-cyan' : condition == 'certified' ? 'bg-dark-cyan' : 'bg-[#FF9A3E]';
   };
+
+  useEffect(() => {
+    setFilterActive(searchParams.get('condition') || '');
+  }, [searchParams.get('condition')]);
 
   return (
     <>

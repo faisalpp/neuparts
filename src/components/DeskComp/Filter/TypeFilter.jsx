@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -27,6 +27,10 @@ const TypeFilter = ({ type, title, filters }) => {
     const parth = window.location.pathname + '?' + queryParams.toString();
     router.push(parth);
   };
+
+  useEffect(() => {
+    setFilterActive(searchParams.get(type) || 'all');
+  }, [searchParams.get(type)]);
 
   return (
     <>

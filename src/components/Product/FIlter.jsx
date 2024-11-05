@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const Filter = ({ onClose, isFilter }) => {
+const Filter = ({ onClose, isFilter, query }) => {
   const [loading, setLoading] = useState(true);
   const [Categories, setCategories] = useState([]);
   const [PartTypes, setPartTypes] = useState([]);
@@ -83,7 +83,8 @@ const Filter = ({ onClose, isFilter }) => {
             <div className="pb-5 lg:pb-10 maxlg:px-[5%]">
               {!modelNo && Categories.length > 0 && <TypeFilter type="category" title="Appliance Type" filters={Categories} />}
               {PartTypes.length > 0 && <TypeFilter type="type" title="Part Type" filters={PartTypes} />}
-              {Manufacturers.length > 0 && <TypeFilter type="manufacturer" title="Brand" filters={Manufacturers} />}
+
+              {query.tab == 'browse-by' && Manufacturers.length > 0 && <TypeFilter type="manufacturer" title="Brand" filters={Manufacturers} />}
 
               {Conditions.length > 0 && <RatingFilter filters={Conditions} />}
               {/* {filterheader != false && <HeaderFilter />} */}

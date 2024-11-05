@@ -8,6 +8,8 @@ function Context({ children }) {
   const searchParams = useSearchParams();
   const [partNo, setPartNo] = useState(searchParams.get('partno') ? searchParams.get('partno') : '');
   const [modelNo, setModelNo] = useState(searchParams.get('modelno') ? searchParams.get('modelno') : '');
+  const [manufacturer, setManufacturer] = useState(searchParams.get('manufacturer') ? searchParams.get('manufacturer') : '');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('selectedCategory') ? searchParams.get('selectedCategory') : '');
   const [modelSuggestions, setModelSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [error, setError] = useState('');
@@ -17,12 +19,12 @@ function Context({ children }) {
 
   const router = useRouter();
 
-  // Fetch model numbers when the component mounts/
+  // Fetch model numbers when the component mounts
   const fetchModelNumbers = async () => {
     try {
       const response = await fetch('/api/front/product/models');
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       setModelSuggestions(data.modelNos);
     } catch (error) {
       console.error('Failed to fetch model numbers:', error);
@@ -40,51 +42,69 @@ function Context({ children }) {
     setShowSuggestions(false); // Hide suggestions when a suggestion is clicked
     setError(''); // Clear any previous error
   };
-  const filteredModels = modelSuggestions.filter((model) => model.includes(modelNo));
-  
-  const SearchResult = async () => {
+
+  const filteredModels = modelSuggestions.filter((model) => 
+    model.toLowerCase().includes(modelNo.toLowerCase())
+  );  
+
+  const SearchResult = async (tab = 'all') => {
     try {
       setSearchLoading(true);
-      if (modelNo || partNo) {
-        const response = await fetch('/api/front/product/search/test', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ model_no: modelNo, part_number: partNo }),
-        });
-        const data = await response.json();
-        setResult(data);
-        if (partNo != '' && modelNo === '') {
-          setStep(1);
-        } else if (modelNo != '') {
-          setStep(2);
-        } else {
-          setStep(0);
-        }
+
+      const searchData = tab === 'browse-by' ? { manufacturer, selectedCategory } : { model_no: modelNo, part_number: partNo };
+
+      const response = await fetch('/api/front/product/search/test', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(searchData),
+      });
+
+      const data = await response.json();
+
+      console.log(data);
+      
+
+      // For tab = 'browse-by', set modelNo and partNo from the first card
+      if (tab === 'browse-by' && data.firstCard) {
+        setModelNo(data.firstCard.model_no);
+        setPartNo(data.firstCard.part_no);
       }
+
+      setResult(data);
+
+      setStep(modelNo ? 2 : partNo ? 1 : 0);
+
       setSearchLoading(false);
     } catch (error) {
       console.error('Failed to fetch model numbers:', error);
     }
   };
 
-  const handleSearchClick = async () => {
-    const isModel = !!modelSuggestions.find((model)=>model === modelNo)
-    
-    if (modelNo && !isModel) {
+  const handleSearchClick = async (tab = 'all') => {
+    const isModel = modelSuggestions.includes(modelNo);
+
+    // Validate modelNo only for non-'browse-by' tabs
+    if (modelNo && !isModel && tab !== 'browse-by') {
       setError('Invalid model number.');
     } else {
-      // Navigate to the search page
-      await SearchResult();
-      if (partNo != '' && modelNo === '') {
-        setStep(1);
-      } else if (modelNo != '') {
-        setStep(2);
+      await SearchResult(tab); // Pass the tab to SearchResult
+
+      // Conditionally build the URL based on the tab type
+      const queryParams = new URLSearchParams();
+
+      if (tab === 'browse-by') {
+        if (manufacturer) queryParams.append('manufacturer', manufacturer);
+        if (selectedCategory) queryParams.append('category', selectedCategory);
       } else {
-        setStep(0);
+        if (modelNo) queryParams.append('modelno', modelNo);
+        if (partNo) queryParams.append('partno', partNo);
       }
-      router.push(`/products?modelno=${modelNo}&partno=${partNo}`);
+
+      // Append the tab parameter to URL
+      queryParams.append('tab', tab);
+
+      // Navigate to the URL with only relevant query parameters
+      router.push(`/products?${queryParams.toString()}`);
     }
   };
 
@@ -93,7 +113,35 @@ function Context({ children }) {
     SearchResult();
   }, []);
 
-  return <StoreData.Provider value={{ partNo, modelNo, filteredModels, showSuggestions, modelSuggestions, error, searchLoading, result, step, setError, setModelSuggestions, setPartNo, setModelNo, handleModelNoChange, handleSuggestionClick, SearchResult, SearchResult, SearchResult, handleSearchClick }}>{children}</StoreData.Provider>;
+  return (
+    <StoreData.Provider
+      value={{
+        partNo,
+        modelNo,
+        manufacturer,
+        selectedCategory,
+        filteredModels,
+        showSuggestions,
+        modelSuggestions,
+        error,
+        searchLoading,
+        result,
+        step,
+        setError,
+        setModelSuggestions,
+        setPartNo,
+        setModelNo,
+        setManufacturer,
+        setSelectedCategory,
+        handleModelNoChange,
+        handleSuggestionClick,
+        SearchResult,
+        handleSearchClick,
+      }}
+    >
+      {children}
+    </StoreData.Provider>
+  );
 }
 
 export default Context;
