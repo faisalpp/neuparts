@@ -96,7 +96,7 @@ const ApplianceGrid = ({ isGrid, product }) => {
               </div>
             </div>
             <Link href={`/product/${product.slug}/buying-options`} className="flex items-center font-semibold text-b3 underline maxsm:text-sm">
-              15 Buying Options →
+              {product.partCount} Buying Options →
             </Link>
           </div>
         </Link>

@@ -45,5 +45,19 @@ export async function GET(req) {
   const startIndex = (currentPage - 1) * resPerPage;
   const paginatedProducts = products.slice(startIndex, startIndex + resPerPage);
 
-  return NextResponse.json({ success: true, productCount, filteredProductsCount, products: paginatedProducts });
+  const finalProducts = await Promise.all(
+    paginatedProducts.map(async (product) => {
+      const partCount = await Product.countDocuments({
+        part_number: product.part_number,
+        _id: { $ne: product._id },
+        is_variant: true,
+      });
+      return {
+        ...product._doc,
+        partCount: partCount,
+      };
+    })
+  );
+  
+  return NextResponse.json({ success: true, productCount, filteredProductsCount, products: finalProducts });
 }
