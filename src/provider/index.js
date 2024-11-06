@@ -24,7 +24,6 @@ function Context({ children }) {
     try {
       const response = await fetch('/api/front/product/models');
       const data = await response.json();
-      console.log(data);
       setModelSuggestions(data.modelNos);
     } catch (error) {
       console.error('Failed to fetch model numbers:', error);
@@ -60,8 +59,6 @@ function Context({ children }) {
       });
 
       const data = await response.json();
-
-      console.log(data);
       
 
       // For tab = 'browse-by', set modelNo and partNo from the first card

@@ -26,7 +26,6 @@ export async function POST(request) {
       const {id,type,email,first_name,last_name,address,apartment,city,province,country,postal_code,phone} = await request.json();
       await ValAddress.validate({id,type,email,first_name,last_name,address,apartment,city,province,country,postal_code,phone}, { abortEarly: false });
       const Address = {type,email,first_name,last_name,address,apartment,city,province,country,postal_code,phone}
-       console.log(type)
       let isUpdated=false;
       if(type === 'Shipping') {
         isUpdated = await Order.findByIdAndUpdate(id,{

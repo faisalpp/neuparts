@@ -6,7 +6,17 @@ import Image from 'next/image';
 
 const MoreImagesModal = ({ state, setState, medias }) => {
   const frstImg = medias ? medias.find((item) => item.type === 'webp') : null;
-  const [image, setImage] = useState(frstImg ? { file: frstImg.url, data: frstImg.url } : {});
+  const [image, setImage] = useState(frstImg ? { file: frstImg.url, data: frstImg.url } : { file: '/no-image.webp', data: '/no-image.webp' });
+  
+  const ImageW = ({url,thumb,setImage}) => {
+    const [thumbnail,setThumbnail] = useState(thumb ? thumb : '/no-image.webp')
+   return (
+   <>
+    <div onClick={() => setImage({ file: null, type: null, data: url, thumbnail: thumb})} className="absolute h-full w-12 bg-transparent"></div>
+    <Image width={400} height={400} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} alt="" className="h-[50px] w-[60px] object-contain" />
+   </>
+   )
+  }
 
   return (
     <div className={`fixed ${state ? 'flex' : 'hidden'} top-0 z-[120] h-screen w-full items-center justify-center bg-black/50`}>
@@ -16,6 +26,7 @@ const MoreImagesModal = ({ state, setState, medias }) => {
         </span>
         <div className="flex w-full flex-col rounded-xl bg-white py-8">
           <div className="flex w-full justify-center py-8">
+            <Image width={400} height={400} quality={100} onErrorCapture={()=>setImage({data:'/no-image.webp'})} src={image.data} alt="" className="h-auto w-48" />
             {image.url ? <Image width={400} height={400} quality={100} src={image?.url ? image.url : '/no-image.webp'} alt="" className="h-auto w-48" /> : null}
             {image.file === 'image' ? <Image width={400} height={400} quality={100} src={image.data} alt="" className="h-auto w-48" /> : null}
             {image.file === 'video' && image.type === 'url' ? <Iframe style="w-6/12" src={image.data} title="Modal Video" icon="text-5xl" frameId={`video-frame-modal-${(Math.random() * 100) / 5}`} divId={`video-frame-modal-wrapper-${(Math.random() * 100) / 5}`} thumbnail={image.thumbnail} /> : null}
@@ -25,6 +36,7 @@ const MoreImagesModal = ({ state, setState, medias }) => {
             {medias &&
               medias.map((img, indx) => (
                 <div key={indx} className="relative flex cursor-pointer items-center justify-center rounded-md border-[1px] border-b3 px-1 py-1">
+                  <ImageW url={img.url} thumb={img.thumbnail} setImage={setImage} />
                   {img.file === 'webp' ? (
                     <>
                       <div onClick={() => setImage({ file: img.url, type: img.type, data: img.url, thumbnail: img.url ? img.url : '' })} className="absolute h-full w-12 bg-transparent"></div>

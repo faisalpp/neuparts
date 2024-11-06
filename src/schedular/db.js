@@ -22,7 +22,6 @@ const connect = async () => {
     console.log('Connection Successfully');
     return cachedConnection;
   } catch (error) {
-    console.log(error)
     throw new Error('Error Connecting Mongoose');
   }
 };

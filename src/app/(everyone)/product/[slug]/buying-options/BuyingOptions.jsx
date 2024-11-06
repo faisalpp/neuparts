@@ -10,7 +10,6 @@ import ToolTip from '@/components/ToolTip';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 const BuyingOptions = ({ data }) => {
-  console.log(data)
   // Button configuration array
   const filterButtons = [
     {
@@ -112,12 +111,13 @@ const BuyingOptions = ({ data }) => {
 export default BuyingOptions;
 
 export const BuyingCards = ({ isGrid, product }) => {
+  const [thumbnail,setThumbnail] = useState(product?.thumbnail ? product.thumbnail : '/no-image.webp')
   return (
     <div className={`group relative flex ${isGrid ? 'flex-col' : ''} overflow-hidden rounded-2xl border-2 border-gray-100 bg-white`}>
       <span className={`absolute ${isGrid ? '' : 'hidden'} right-0 top-0 z-20 mr-1 mt-2 rounded-2xl bg-b4 px-1.5 py-0.5 text-xs font-bold sm:px-4 maxsm:text-[9.32px]`}>{(100 - (product?.sale_price / product?.regular_price) * 100).toFixed(0)}% Off</span>
       <div className={`relative flex ${isGrid ? '' : 'items-center xl:min-w-[300px]'} justify-center px-3 pt-4 lg:px-5 xl:px-5`}>
         {/* Product Image */}
-        <Image src={product?.thumbnail ? product.thumbnail : '/no-image.webp'} width={400} height={400} quality={100} className={`xl:w-54 w-full object-contain sm:h-32 md:h-60 lg:w-52 ${isGrid ? 'h-32 maxsm:p-3' : 'h-20 sm:h-32'}`} alt="refrigrator" />
+        <Image src={thumbnail} onErrorCapture={()=>setThumbnail('/no-image.webp')} width={400} height={400} quality={100} className={`xl:w-54 w-full object-contain sm:h-32 md:h-60 lg:w-52 ${isGrid ? 'h-32 maxsm:p-3' : 'h-20 sm:h-32'}`} alt="refrigrator" />
         <div className={`pointer-events-none absolute bottom-0 left-0 right-0 top-0 flex scale-0 items-center justify-center bg-b3/50 opacity-0 duration-300 ${isGrid ? '' : 'hidden'} group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100`}>
           <Link href={`/product/${product?.slug}`} className="rounded-lg bg-white px-1 py-2 font-semibold text-black duration-300 sm:px-5 maxsm:text-xs">
             View Details
@@ -156,7 +156,7 @@ export const BuyingCards = ({ isGrid, product }) => {
             </div>
           )}
           {product.condition == 'certified-refurbished' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Certified Refurbished</div>}
-          {product.condition == 'like-new-open-box' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">New / Open Box</div>}
+          {product.condition == 'like-new-open-box' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Like New / Open Box</div>}
           {product.condition == 'used-part-a-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade B</div>}
           {product.condition == 'used-part-b-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade B</div>}
           {product.condition == 'used-part-c-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade C</div>}

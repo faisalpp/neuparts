@@ -19,7 +19,6 @@ const MyFavourite = () => {
       body: JSON.stringify({userId:UserId}),
     }).then((res)=> res.json())
     .then((data)=>{
-      console.log(data.favorites)
       setFavorites(data.favorites)
       setFavLoader(false)
     }).catch((error)=>{

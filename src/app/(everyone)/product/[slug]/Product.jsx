@@ -283,8 +283,8 @@ const Product = ({ slug }) => {
                 <div className="flex h-full min-w-[70px] flex-col gap-2 2xl:min-w-100px maxmd:order-2 maxmd:flex-row">
                   {product.images
                     ? product.images.slice(0, 4).map((image, index) => (
-                        <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setMediaViewer({ file: image, data: image, thumbnail: image })}>
-                          <ImageAlt src={image.url}/>
+                        <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setThumbnail(image.thumbnail)}>
+                          <ImageAlt src={image.thumbnail}/>
                         </div>
                       ))
                     : null}

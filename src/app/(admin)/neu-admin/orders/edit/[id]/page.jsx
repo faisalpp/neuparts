@@ -24,7 +24,6 @@ const Page = ({params}) => {
     setLoader(true)
    const res = await fetch(`/api/admin/order/single?id=${params.id}`,{method:'GET'})
    const data = await res.json()
-   console.log(data)
    if(data.success){
     setOrder(data.order)
     setUser(data.user)

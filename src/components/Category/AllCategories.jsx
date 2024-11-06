@@ -34,7 +34,6 @@ const AllCategories = ({ searchParams }) => {
   const GetPartTypes = async () => {
     const res = await fetch(`/api/front/parttype?${searchQuery}`)
     const data = await res.json()
-    console.log(data)
     if(data.success){
       setCount(data.count)
       setData(data.types)

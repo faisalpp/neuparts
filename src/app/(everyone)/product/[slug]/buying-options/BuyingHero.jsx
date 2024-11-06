@@ -1,11 +1,12 @@
 'use client';
 import FourStar from '@/components/svgs/FourStar';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { IoSettingsOutline } from 'react-icons/io5';
 import GasSvg from '@/components/svgs/GasSvg';
 
 const BuyingHero = ({ data }) => {
+  console.log(data)
   const conditions = [
     {
       title: 'New',
@@ -70,10 +71,12 @@ const BuyingHero = ({ data }) => {
 
   const productConditions = Object.keys(aggregatedProducts);
 
+  const [thumbnail,setThumbnail] = useState(data.product?.thumbnail ? data.product.thumbnail : '/no-image.webp')
+
   return (
     <div className="grid grid-cols-1 gap-5 lg:grid-cols-[360px_auto] xl:grid-cols-[530px_auto] ">
       <div className="grid place-items-center">
-        <Image width={200} height={200} quality={100} src={data.product?.thumbnail ? data.product?.thumbnail : '/no-image.webp'} priority={1} alt="Product" className="h-auto w-2/3 object-contain" />
+        <Image width={200} height={200} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} priority={1} alt="Product" className="h-auto w-2/3 object-contain" />
       </div>
       <div>
         <h1 className="mb-6 line-clamp-2 text-2xl font-bold text-b18">{data.product.title}</h1>
@@ -90,14 +93,14 @@ const BuyingHero = ({ data }) => {
             productConditions.map((condition, index) => {
               const product = aggregatedProducts[condition];
               return (
-                <div className={`grid grid-cols-2 gap-x-2 gap-y-4 rounded-[20px] bg-b3/5 p-4 sm:grid-cols-6 sm:gap-4 md:p-5 ${product.stock ? '' : 'pointer-events-none select-none grayscale'}`} key={index}>
+                <div className={`grid grid-cols-2 gap-x-2 gap-y-4 rounded-[20px] bg-b3/5 p-4 sm:grid-cols-6 sm:gap-4 md:p-5 ${product.stock > 0 ? '' : 'pointer-events-none select-none grayscale'}`} key={index}>
                   <div className="col-span-2 flex items-center justify-between gap-2 sm:col-span-3">
                     <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + conditionData(product.condition).class}>
                       {product.condition === 'new' && <FourStar />}
                       {conditionData(product.condition).title}
                     </div>
                     <span className="text-sm text-black">
-                      <strong>{product.count}</strong> buying options
+                      <strong>{product.stock}</strong> buying options
                     </span>
                   </div>
                   {product.sale_price && (
