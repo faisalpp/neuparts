@@ -10,8 +10,7 @@ const AllBuyingOptions = ({ data }) => {
       {/* Bread Crumb */}
       <div className="flex items-center py-10">
         <div className="flex flex-wrap items-center">
-          <h5 className="text-xs text-b3y
-          ">Product</h5>
+          <h5 className="text-xs text-b3y">Product</h5>
           <RiArrowDropRightLine className="text-xl text-gray-500" />
           <h5 className="text-xs text-b3">{data.product.title}</h5>
           <RiArrowDropRightLine className="text-xl text-gray-500" />

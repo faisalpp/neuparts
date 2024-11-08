@@ -51,9 +51,9 @@ const BuyingHero = ({ data }) => {
 
   // Aggregate products by condition and check for existence
   const aggregatedProducts = conditions.reduce((acc, condition) => {
-    const matchingProducts = data.partproducts.filter((product) => product.condition === condition.slug);
+    const matchingProducts = data.partproducts?.filter((product) => product.condition === condition.slug);
 
-    if (matchingProducts.length > 0) {
+    if (matchingProducts?.length > 0) {
       const productWithMaxStock = matchingProducts.reduce((maxProduct, currentProduct) => (currentProduct.stock > maxProduct.stock ? currentProduct : maxProduct), matchingProducts[0]);
 
       acc[condition.slug] = { ...productWithMaxStock, count: matchingProducts.length };
@@ -93,14 +93,14 @@ const BuyingHero = ({ data }) => {
             productConditions.map((condition, index) => {
               const product = aggregatedProducts[condition];
               return (
-                <div className={`grid grid-cols-2 gap-x-2 gap-y-4 rounded-[20px] bg-b3/5 p-4 sm:grid-cols-6 sm:gap-4 md:p-5 ${product.stock > 0 ? '' : 'pointer-events-none select-none grayscale'}`} key={index}>
+                <div className={`grid grid-cols-2 gap-x-2 gap-y-4 rounded-[20px] bg-b3/5 p-4 sm:grid-cols-6 sm:gap-4 md:p-5 ${product.stock ? '' : 'pointer-events-none select-none grayscale'}`} key={index}>
                   <div className="col-span-2 flex items-center justify-between gap-2 sm:col-span-3">
                     <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + conditionData(product.condition).class}>
                       {product.condition === 'new' && <FourStar />}
                       {conditionData(product.condition).title}
                     </div>
                     <span className="text-sm text-black">
-                      <strong>{product.stock}</strong> buying options
+                      <strong>{product.count}</strong> buying options
                     </span>
                   </div>
                   {product.sale_price && (
