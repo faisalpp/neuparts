@@ -16,6 +16,9 @@ function Context({ children }) {
   const [searchLoading, setSearchLoading] = useState(false);
   const [result, setResult] = useState('');
   const [step, setStep] = useState(0);
+  // Product Filters Default Values
+  const defaultMinPrice = 200;
+  const defaultMaxPrice = 8000;
 
   const router = useRouter();
 
@@ -42,11 +45,15 @@ function Context({ children }) {
     setError(''); // Clear any previous error
   };
 
-  const filteredModels = modelSuggestions.filter((model) => 
-    model.toLowerCase().includes(modelNo.toLowerCase())
-  );  
+  const filteredModels = modelSuggestions.filter((model) => model.toLowerCase().includes(modelNo.toLowerCase()));
 
   const SearchResult = async (tab = 'all') => {
+    if (tab === 'browse-by' && (!manufacturer || !selectedCategory)) {
+      return; // Exit early if required browse-by fields are not provided
+    } else if (tab !== 'browse-by' && !modelNo && !partNo) {
+      return; // Exit early if required model or part number fields are not provided
+    }
+
     try {
       setSearchLoading(true);
 
@@ -59,7 +66,6 @@ function Context({ children }) {
       });
 
       const data = await response.json();
-      
 
       // For tab = 'browse-by', set modelNo and partNo from the first card
       if (tab === 'browse-by' && data.firstCard) {
@@ -124,6 +130,8 @@ function Context({ children }) {
         searchLoading,
         result,
         step,
+        defaultMinPrice,
+        defaultMaxPrice,
         setError,
         setModelSuggestions,
         setPartNo,

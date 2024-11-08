@@ -23,13 +23,13 @@ import CompatibleAppliance from './CompatibleAppliance';
 import CompareModel from './CompareModel';
 import BuyingOtherOptions from './BuyingOtherOptions';
 import WarantySection from './WarantySection';
+import ProductSlider from './ProductSlider';
 import { MinusIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/app/GlobalRedux/slices/CartSlice';
 import { useRouter } from 'next/navigation';
 import {addToFavoriteUser,removeFromFavoriteUser} from '@/app/GlobalRedux/slices/Favorite'
 import {toast} from 'react-toastify'
-import { generateSlug } from '@/utils';
 
 const Product = ({ slug }) => {
   const dispatch = useDispatch();
@@ -462,7 +462,7 @@ const Product = ({ slug }) => {
           {/* Review */}
           <ConditionReview condition={ConditionData} />
 
-          {/* <ProductSlider /> */}
+          <ProductSlider />
 
           <CompareModel products={buyingOptions} condition={ConditionData} defaultProduct={product} slug={slug} />
 

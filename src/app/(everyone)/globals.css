@@ -328,3 +328,22 @@ input.remove-arrow::-webkit-inner-spin-button {
 input.remove-arrow[type='number'] {
   -moz-appearance: textfield; /* Firefox */
 }
+/* Product Search Bar */
+#productSearchBar{
+  @apply sticky top-[68px] z-40 lg:top-[136px] lg:z-50 lg:bg-[#14313D] maxlg:shadow-[0px_4px_20px_rgba(0,0,0,0.08)];
+}
+.mobileSearcBar{
+  @apply mx-auto max-w-7xl items-center justify-center gap-4 px-[4%] text-white duration-200 sm:px-[6%] lg:flex lg:w-[90%] lg:px-0 2xl:w-[85%] 3xl:max-w-1680px maxlg:absolute maxlg:inset-x-0 maxlg:top-16 maxlg:w-full maxlg:overflow-hidden;
+}
+.searchBar-input{
+  @apply w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797];
+}
+.searchBar-model{
+  @apply flex h-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-[#3F4C54] bg-b2 p-3 text-xs font-semibold lg:p-2 lg:text-sm maxlg:my-4 maxlg:w-full;
+}
+
+/* Condition Slider */
+
+.conditionSlider .slick-slide.slick-current .sliderBox{
+ @apply !border-2 !border-b3;
+}

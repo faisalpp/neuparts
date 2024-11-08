@@ -18,7 +18,7 @@ export async function GET(request) {
     // }).populate('category');
     let partproducts = await Product.find({
       _id: { $ne: product._id },
-      is_variant:true
+      is_variant: true,
     }).populate({
       path: 'category',
       match: { slug: product.category.slug },
@@ -27,15 +27,14 @@ export async function GET(request) {
     partproducts = partproducts.filter((product) => product.category !== null);
 
     const buyingOptions = await Product.find({
-      part_number: product.part_number,
-      is_variant:true,
+      parent_id: product.parent_id,
+      is_variant: true,
       _id: { $ne: product._id },
     });
 
     const partCount = await Product.countDocuments({
-      part_number: product.part_number,
-      _id: { $ne: product._id },
-      is_variant:true
+      parent_id: product.parent_id,
+      is_variant: true,
     });
     return NextResponse.json({ product: product, partproducts, buyingOptions, partCount, success: true });
   } catch (error) {

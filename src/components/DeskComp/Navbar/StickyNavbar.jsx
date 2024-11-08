@@ -26,7 +26,7 @@ const StickyNavbar = ({ state, product, addCart, condition }) => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.innerWidth >= 992) {
-        const element = document.getElementById('product-search-bar');
+        const element = document.getElementById('productSearchBar');
 
         if (window.scrollY > 100) {
           element.classList.add('opacity-0');

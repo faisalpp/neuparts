@@ -1,19 +1,22 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+'use client';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import './multiRangeSlider.css';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { useRouter } from 'next/navigation';
+import { StoreData } from '@/provider';
 
 const MultiRangeSlider = ({ min, max }) => {
+  const { defaultMinPrice, defaultMaxPrice } = useContext(StoreData);
+
   const router = useRouter();
-  const defaultMinval = 200;
-  const defaultMaxval = 8000;
-  const [minVal, setMinVal] = useState(defaultMinval);
-  const [maxVal, setMaxVal] = useState(defaultMaxval);
+  const [minVal, setMinVal] = useState(defaultMinPrice);
+  const [maxVal, setMaxVal] = useState(defaultMaxPrice);
   const minValRef = useRef(null);
   const maxValRef = useRef(null);
   const range = useRef(null);
+  const isFirstRender = useRef(true); // Track the initial render
 
   let queryParams;
   const handleButtonCLick = () => {
@@ -40,9 +43,12 @@ const MultiRangeSlider = ({ min, max }) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false; // Set to false after the first render
+    } else {
+      // Only run after the initial render
       handleButtonCLick();
-    }, 1500);
+    }
   }, [minVal, maxVal]);
 
   return (
@@ -51,7 +57,7 @@ const MultiRangeSlider = ({ min, max }) => {
         <div className="mb-5 flex w-full items-center gap-2">
           <input
             type="number"
-            value={minVal}
+            defaultValue={minVal}
             onKeyDown={(event) => {
               const value = Math.min(Math.max(+event.target.value, min), max);
               setMinVal(value);
@@ -61,7 +67,7 @@ const MultiRangeSlider = ({ min, max }) => {
           <span>-</span>
           <input
             type="number"
-            value={maxVal}
+            defaultValue={maxVal}
             onKeyDown={(event) => {
               const value = Math.min(Math.max(+event.target.value, min), max);
               setMaxVal(value);
@@ -75,7 +81,7 @@ const MultiRangeSlider = ({ min, max }) => {
             min={min}
             max={max}
             step={10}
-            value={minVal}
+            defaultValue={minVal}
             ref={minValRef}
             onChange={(event) => {
               const value = Math.min(+event.target.value, maxVal - 1);
@@ -90,7 +96,7 @@ const MultiRangeSlider = ({ min, max }) => {
             type="range"
             min={min}
             max={max}
-            value={maxVal}
+            defaultValue={maxVal}
             ref={maxValRef}
             onChange={(event) => {
               const value = Math.max(+event.target.value, minVal + 1);

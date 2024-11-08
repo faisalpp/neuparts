@@ -8,9 +8,9 @@ export async function GET(request) {
     const searchParams = request.nextUrl.searchParams;
     const slug = searchParams.get('slug');
 
-    const product = await Product.findOne({ slug: slug,is_variant:true });
-    
-    const partproducts = await Product.find({ is_variant:true, _id: { $ne: product._id } }).sort({ createdAt: -1 });
+    const product = await Product.findOne({ slug: slug, is_variant: true });
+
+    const partproducts = await Product.find({ is_variant: true, parent_id: product.parent_id }).sort({ createdAt: -1 });
 
     return NextResponse.json({ product, partproducts, success: true });
   } catch (error) {

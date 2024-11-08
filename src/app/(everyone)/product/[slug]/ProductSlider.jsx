@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -6,17 +7,20 @@ import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import Image from 'next/image';
 
 const ProductSlider = () => {
-  const ImageSLider = useState(['/cooktops.webp', '/cooktops.webp', '/cooktops.webp', '/cooktops.webp', '/cooktops.webp', '/cooktops.webp', '/cooktops.webp', '/cooktops.webp']);
+  // Corrected initialization of ImageSLider
+  const imageSlider = ['/cooktops.webp', '/dish-water.webp', '/microwaves.webp', '/ranges.webp', '/cooktops.webp', '/dish-water.webp', '/microwaves.webp', '/ranges.webp'];
+
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   let sliderRef1 = useRef(null);
   let sliderRef2 = useRef(null);
+
   const settings = {
     dots: false,
     infinite: false,
     arrows: true,
     autoplaySpeed: 2000,
-    slidesToShow: ImageSLider.length < 10 ? ImageSLider.length : 7,
+    slidesToShow: imageSlider.length < 10 ? imageSlider.length : 7,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
@@ -29,7 +33,7 @@ const ProductSlider = () => {
       {
         breakpoint: 992,
         settings: {
-          slidesToShow: ImageSLider.length < 8 ? ImageSLider.length : 8,
+          slidesToShow: imageSlider.length < 8 ? imageSlider.length : 8,
         },
       },
     ],
@@ -55,22 +59,35 @@ const ProductSlider = () => {
     setNav1(sliderRef1);
     setNav2(sliderRef2);
   }, []);
+
   return (
-    <div>
+    <div className="maincontainer">
       <h2 className="mb-4 text-center text-2xl font-bold">Condition Photos</h2>
       <div className="slider-container">
-        <div className="mx-auto w-full max-w-2xl">
+        <div className="mx-auto w-full max-w-3xl">
           <Slider asNavFor={nav2} prevArrow={<PrevButton />} nextArrow={<NextButton />} ref={(slider) => (sliderRef1 = slider)}>
-            {ImageSLider.map((item, index) => (
-              <Image key={index} src={item} className="h-[422px] w-[465px] object-contain" width={600} height={600} quality={100} alt="Product" />
+            {imageSlider.map((item, index) => (
+              <div>
+                <Image key={index} src={item} className="mx-auto h-[422px] py-10 w-[465px] object-contain" width={600} height={600} quality={100} alt="Product" />
+                <div className="gap-3 rounded-2xl bg-b3/10 p-6">
+                  <h3 className="font-bold">Condition Notes</h3>
+                  <p className="text-sm text-[#9E9E9E] font-semibold mt-2 line-clamp-5">Lorem ipsum dolor sit amet consectetur. Facilisi adipiscing laoreet at amet ut lorem bibendum turpis. Massa est turpis nunc scelerisque. Eu in duis gravida consectetur ut mauris. Posuere sapien massa hac eu. Nullam in lectus neque tellus. Sodales massa posuere urna tempor nisi turpis est non adipiscing. Nibh proin tellus in nisl sed. Lectus.</p>
+                </div>
+              </div>
             ))}
           </Slider>
         </div>
-        <Slider ref={(slider) => (sliderRef2 = slider)} {...settings} swipeToSlide={true} focusOnSelect={true}>
-          {ImageSLider.map((item, index) => (
-            <Image src={item} key={index} className="h-16 w-16 object-contain" width={600} height={600} quality={100} alt="Product" />
-          ))}
-        </Slider>
+        <div className="conditionSlider mt-10">
+          <Slider asNavFor={nav1} ref={(slider) => (sliderRef2 = slider)} {...settings} swipeToSlide={true} focusOnSelect={true}>
+            {imageSlider.map((item, index) => (
+              <div className="px-1">
+                <div className="sliderBox flex h-24 cursor-pointer justify-center rounded-xl border border-b16/10 p-3">
+                  <Image src={item} key={index} className="h-full w-auto object-contain" width={600} height={600} quality={100} alt="Product" />
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </div>
       </div>
     </div>
   );

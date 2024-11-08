@@ -2,15 +2,16 @@
 import React, { useState } from 'react';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
 import { Checkbox } from '@material-tailwind/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const SaleFilter = ({ countSale }) => {
-  const [filterActive, setFilterActive] = useState(false);
+  const searchParams = useSearchParams();
+  const [filterActive, setFilterActive] = useState(searchParams.get('sale') || false);
 
   const router = useRouter();
 
   let queryParams;
-  function handleClick(key, value) {
+  const handleClick = (key, value) => {
     if (typeof window !== 'undefined') {
       queryParams = new URLSearchParams(window.location.search);
     }
@@ -35,7 +36,7 @@ const SaleFilter = ({ countSale }) => {
           {/* Item Start */}
           <div className="flex cursor-pointer items-center">
             <div className="label-p-0 flex items-center gap-2">
-              <Checkbox name="sale" ripple={false} onClick={(e) => handleClick('sale', !filterActive)} checked={filterActive} className="checked:bg-b3 checked:text-white" label={<span className="ml-2 flex">Yes</span>} />
+              <Checkbox name="sale" ripple={false} onClick={(e) => handleClick('sale', !filterActive)} defaultChecked={filterActive} className="checked:bg-b3 checked:text-white" label={<span className="ml-2 flex">Yes</span>} />
             </div>
             <div className="flex w-full justify-end text-xs">
               <span>({countSale})</span>

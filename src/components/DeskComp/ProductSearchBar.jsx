@@ -12,13 +12,13 @@ import Spinner from '../svgs/Spinner';
 
 const ProductSearchBar = () => {
   const { modelNo, partNo, filteredModels, showSuggestions, error, setPartNo, step, handleSearchClick, handleSuggestionClick, searchLoading, result, handleModelNoChange } = useContext(StoreData);
-  
+
   const [searchBar, setSearchBar] = useState(false);
 
-  const [thumbnail,setThumbnail] = useState(result.modelCategory?.thumbnail ? result.modelCategory.thumbnail : '/no-image.webp')
-  
+  const [thumbnail, setThumbnail] = useState(result.modelCategory?.thumbnail ? result.modelCategory.thumbnail : '/no-image.webp');
+
   return (
-    <div id="product-search-bar" className={`${step == 0 ? 'bg-white' : 'bg-[#14313D]'} sticky top-[68px] z-40 lg:top-[136px] lg:z-50 lg:bg-[#14313D] maxlg:shadow-[0px_4px_20px_rgba(0,0,0,0.08)]`}>
+    <div className={`${step == 0 ? 'bg-white' : 'bg-[#14313D]'}`} id="productSearchBar">
       {/* Mobile Search Bar */}
       <div onClick={() => setSearchBar(!searchBar)} className="maincontainer flex cursor-pointer items-center justify-between gap-2 py-3 lg:hidden">
         {step == 0 && (
@@ -43,18 +43,18 @@ const ProductSearchBar = () => {
       </div>
       {/* End Mobile Search Bar */}
 
-      <div className={`${searchBar ? 'py-5 maxlg:shadow-[0_75px_69px_-62px_rgb(0,0,0,0.25)]' : 'lg:py-5 maxlg:max-h-0'} ${step == 0 ? 'maxlg:bg-white' : 'bg-[#14313D]'} mx-auto max-w-7xl items-center justify-center gap-4 px-[4%] text-white duration-200 sm:px-[6%] lg:flex lg:w-[90%] lg:px-0 2xl:w-[85%] 3xl:max-w-1680px maxlg:absolute maxlg:inset-x-0 maxlg:top-16 maxlg:w-full maxlg:overflow-hidden`}>
+      <div className={`${searchBar ? 'py-5 maxlg:shadow-[0_75px_69px_-62px_rgb(0,0,0,0.25)]' : 'lg:py-5 maxlg:max-h-0'} ${step == 0 ? 'maxlg:bg-white' : 'bg-[#14313D]'} mobileSearcBar`}>
         {step == 0 && (
           <>
             <h3 className="mr-6 text-base lg:text-sm maxlg:font-semibold maxlg:text-b18">Search By</h3>
             <div className="flex gap-1 lg:items-center lg:gap-2 maxlg:mt-2 maxlg:flex-col">
               <label className="text-sm font-semibold lg:text-xs maxlg:text-b18">Model No.</label>
               <div className="relative w-full lg:max-w-40">
-                <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797]" placeholder="Enter model number" />
+                <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="searchBar-input" placeholder="Enter model number" />
                 {showSuggestions && modelNo && (
-                  <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black max:h-32 overflow-y-scroll">
+                  <ul className="max:h-32 absolute top-full z-20 mt-2 w-full overflow-y-scroll rounded-lg bg-white text-black">
                     {filteredModels.map((model, index) => (
-                      <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model.model_no)}>
+                      <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
                         {model}
                       </li>
                     ))}
@@ -65,7 +65,7 @@ const ProductSearchBar = () => {
             </div>
             <div className="flex gap-1 lg:items-center lg:gap-2 maxlg:mt-2 maxlg:flex-col">
               <label className="text-sm font-semibold lg:text-xs maxlg:text-b18">Port No.</label>
-              <input onChange={(e) => setPartNo(e.target.value)} type="text" value={partNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797] lg:max-w-40" placeholder="Enter part number" />
+              <input onChange={(e) => setPartNo(e.target.value)} type="text" value={partNo} className="searchBar-input lg:max-w-40" placeholder="Enter part number" />
             </div>
             <button type="button" onClick={() => handleSearchClick()} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-3 maxlg:w-full">
               {searchLoading ? (
@@ -87,9 +87,9 @@ const ProductSearchBar = () => {
               Compatibility Check
             </button>
             <div className="relative w-full max-w-96">
-              <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="w-full rounded-lg border border-b3 bg-white px-4 py-3 text-xs text-b18 outline-none placeholder:text-[#979797]" placeholder="Enter your Model Number" />
+              <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="searchBar-input" placeholder="Enter your Model Number" />
               {showSuggestions && modelNo && (
-                <ul className="absolute top-full z-20 mt-2 w-full rounded-lg bg-white text-black max:h-32 overflow-y-scroll">
+                <ul className="max:h-32 absolute top-full z-20 mt-2 w-full overflow-y-scroll rounded-lg bg-white text-black">
                   {filteredModels.map((model, index) => (
                     <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
                       {model}
@@ -120,16 +120,16 @@ const ProductSearchBar = () => {
               Compatibility Check
             </button>
             <div className="flex items-center gap-2.5">
-              {result.modelCategory.thumbnail ? 
+              {result.modelCategory.thumbnail ? (
                 <div className="grid h-10 min-w-10 place-items-center rounded bg-white">
-                  <Image width={120} height={100} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-6 w-6 object-contain" alt={result.product.title} />
+                  <Image width={120} height={100} quality={100} onErrorCapture={() => setThumbnail('/no-image.webp')} src={thumbnail} className="h-6 w-6 object-contain" alt={result.product.title} />
                 </div>
-               :null }
-                <div>
-                  <h3 className="line-clamp-2 text-sm font-semibold">{result.modelCategory?.description ? result.modelCategory.description : 'Title not available'}</h3>
-                </div>
+              ) : null}
+              <div>
+                <h3 className="line-clamp-2 text-sm font-semibold">{result.modelCategory?.description ? result.modelCategory.description : 'Title not available'}</h3>
+              </div>
             </div>
-            <button type="button" className="flex h-full items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-[#3F4C54] bg-b2 p-3 text-xs font-semibold lg:p-2 lg:text-sm maxlg:my-4 maxlg:w-full">
+            <button type="button" className="searchBar-model">
               <Rotate className="h-6 w-6" />
               Model Number: {modelNo}
             </button>

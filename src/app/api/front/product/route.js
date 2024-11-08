@@ -48,10 +48,10 @@ export async function GET(req) {
   const finalProducts = await Promise.all(
     paginatedProducts.map(async (product) => {
       const partCount = await Product.countDocuments({
-        part_number: product.part_number,
-        _id: { $ne: product._id },
+        parent_id: product.parent_id,
         is_variant: true,
       });
+      
       return {
         ...product._doc,
         partCount: partCount,

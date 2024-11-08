@@ -111,7 +111,7 @@ const Navbar = () => {
         {/* Navbar Start */}
         <div className="maincontainer items-center justify-between py-5 lg:flex">
           <Link href="/" className="h-auto w-32">
-            <Image width={200} height={30} quality={100} className="h-auto w-32" src="/neu.webp" alt="logo" />
+            <Image width={200} height={30} quality={100} className="h-auto w-32" src="/neu.webp" priority={true} alt="logo" />
           </Link>
 
           <div className="flex w-full justify-end space-x-2">

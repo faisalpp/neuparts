@@ -17,7 +17,7 @@ import { StoreData } from '@/provider';
 import { useContext } from 'react';
 
 const AllProducts = ({ searchParams }) => {
-  const { searchLoading, result, modelNo, setModelNo, setPartNo, setResult } = useContext(StoreData);
+  const { searchLoading, result, modelNo,defaultMinPrice, defaultMaxPrice } = useContext(StoreData);
 
   const [searchModelNo, setSearchModelNo] = useState('');
   const [loading, setLoading] = useState(true);
@@ -37,8 +37,8 @@ const AllProducts = ({ searchParams }) => {
       category: searchParams.category,
       parttype: searchParams.type,
       condition: searchParams.condition,
-      'regular_price[gte]': searchParams.min,
-      'regular_price[lte]': searchParams.max,
+      'regular_price[gte]': searchParams.min || defaultMinPrice,
+      'regular_price[lte]': searchParams.max || defaultMaxPrice,
       is_sale: searchParams.sale,
       page: searchParams.page,
       model_no: searchParams.modelno,
