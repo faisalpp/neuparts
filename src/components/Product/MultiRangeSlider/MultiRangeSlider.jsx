@@ -4,22 +4,26 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import './multiRangeSlider.css';
 import DropDown from '@/components/DeskComp/Filter/DropDown';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { StoreData } from '@/provider';
 
 const MultiRangeSlider = ({ min, max }) => {
+  const searchParams = useSearchParams();
+
   const { defaultMinPrice, defaultMaxPrice } = useContext(StoreData);
 
   const router = useRouter();
-  const [minVal, setMinVal] = useState(defaultMinPrice);
-  const [maxVal, setMaxVal] = useState(defaultMaxPrice);
+  const [minVal, setMinVal] = useState(searchParams.get('min') || defaultMinPrice);
+  const [maxVal, setMaxVal] = useState(searchParams.get('max') || defaultMaxPrice);
   const minValRef = useRef(null);
   const maxValRef = useRef(null);
   const range = useRef(null);
-  const isFirstRender = useRef(true); // Track the initial render
+  const isInitialLoad = useRef(true); // Track initial render
+  const hasUserInteracted = useRef(false); // Track if user changed the range
 
   let queryParams;
-  const handleButtonCLick = () => {
+
+  const handleButtonClick = () => {
     if (typeof window !== 'undefined') {
       queryParams = new URLSearchParams(window.location.search);
       queryParams = getPriceQueryParams(queryParams, 'min', minVal);
@@ -43,13 +47,23 @@ const MultiRangeSlider = ({ min, max }) => {
   };
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false; // Set to false after the first render
+    if (!isInitialLoad.current && hasUserInteracted.current) {
+      // Only run if the component has mounted and user has interacted
+      handleButtonClick();
     } else {
-      // Only run after the initial render
-      handleButtonCLick();
+      isInitialLoad.current = false; // Set to false after the first render
     }
   }, [minVal, maxVal]);
+
+  const handleChangeMin = (value) => {
+    hasUserInteracted.current = true; // Mark interaction
+    setMinVal(value);
+  };
+
+  const handleChangeMax = (value) => {
+    hasUserInteracted.current = true; // Mark interaction
+    setMaxVal(value);
+  };
 
   return (
     <DropDown title="Price">
@@ -58,9 +72,10 @@ const MultiRangeSlider = ({ min, max }) => {
           <input
             type="number"
             defaultValue={minVal}
+            value={minVal}
             onKeyDown={(event) => {
               const value = Math.min(Math.max(+event.target.value, min), max);
-              setMinVal(value);
+              handleChangeMin(value);
             }}
             className="m-0 w-[45%] rounded-md border border-[#C9C9C9] px-4 py-2 text-b16 outline-none"
           />
@@ -68,9 +83,10 @@ const MultiRangeSlider = ({ min, max }) => {
           <input
             type="number"
             defaultValue={maxVal}
+            value={maxVal}
             onKeyDown={(event) => {
               const value = Math.min(Math.max(+event.target.value, min), max);
-              setMaxVal(value);
+              handleChangeMax(value);
             }}
             className="m-0 w-[45%] rounded-md border border-[#C9C9C9] px-4 py-2 text-b16 outline-none"
           />
@@ -85,7 +101,7 @@ const MultiRangeSlider = ({ min, max }) => {
             ref={minValRef}
             onChange={(event) => {
               const value = Math.min(+event.target.value, maxVal - 1);
-              setMinVal(value);
+              handleChangeMin(value);
               event.target.value = value.toString();
             }}
             className={classnames('thumb thumb--zindex-3', {
@@ -100,7 +116,7 @@ const MultiRangeSlider = ({ min, max }) => {
             ref={maxValRef}
             onChange={(event) => {
               const value = Math.max(+event.target.value, minVal + 1);
-              setMaxVal(value);
+              handleChangeMax(value);
               event.target.value = value.toString();
             }}
             className="thumb thumb--zindex-4"

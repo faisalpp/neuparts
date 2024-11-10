@@ -40,7 +40,7 @@ const ProductSlider = () => {
   };
 
   const PrevButton = ({ onClick }) => (
-    <button onClick={onClick} className="prev-button pointer-events-none absolute -left-3 top-0 z-40 hidden h-full sm:block">
+    <button onClick={onClick} className="prev-button pointer-events-none absolute left-0 sm:-left-3 top-0 z-40 h-full block">
       <div className="carousel__prev group pointer-events-auto flex cursor-pointer rounded-full bg-b1/50 px-2 py-2 text-white hover:bg-cyan-500">
         <BsArrowLeftShort className="text-xl" />
       </div>
@@ -48,7 +48,7 @@ const ProductSlider = () => {
   );
 
   const NextButton = ({ onClick }) => (
-    <button onClick={onClick} className="next-button pointer-events-none absolute -right-3 top-0 z-40 hidden h-full sm:block">
+    <button onClick={onClick} className="next-button pointer-events-none absolute right-0 sm:-right-3 top-0 z-40 h-full block">
       <div className="carousel__next group pointer-events-auto flex cursor-pointer rounded-full bg-b1/50 px-2 py-2 text-white hover:bg-cyan-500">
         <BsArrowRightShort className="text-xl" />
       </div>
@@ -68,7 +68,7 @@ const ProductSlider = () => {
           <Slider asNavFor={nav2} prevArrow={<PrevButton />} nextArrow={<NextButton />} ref={(slider) => (sliderRef1 = slider)}>
             {imageSlider.map((item, index) => (
               <div key={index} >
-                <Image key={index} src={item} className="mx-auto h-[422px] py-10 w-[465px] object-contain" width={600} height={600} quality={100} alt="Product" />
+                <Image key={index} src={item} className="mx-auto w-[400px] h-[400px] md:h-[422px] py-10 md:w-[465px] object-contain" width={465} height={465} quality={100} alt="Product" />
                 <div className="gap-3 rounded-2xl bg-b3/10 p-6">
                   <h3 className="font-bold">Condition Notes</h3>
                   <p className="text-sm text-[#9E9E9E] font-semibold mt-2 line-clamp-5">Lorem ipsum dolor sit amet consectetur. Facilisi adipiscing laoreet at amet ut lorem bibendum turpis. Massa est turpis nunc scelerisque. Eu in duis gravida consectetur ut mauris. Posuere sapien massa hac eu. Nullam in lectus neque tellus. Sodales massa posuere urna tempor nisi turpis est non adipiscing. Nibh proin tellus in nisl sed. Lectus.</p>
