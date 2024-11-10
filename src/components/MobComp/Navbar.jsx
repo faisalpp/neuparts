@@ -15,17 +15,18 @@ const Navbar = () => {
   const [mobMenu, setMobMenu] = useState(false);
   const [searchMenu, setSearchMenu] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const cartCount = useSelector((state) => state.cart.cartCount);
-  const User = useSelector((state)=>state.auth.user)
+  const User = useSelector((state) => state.auth.user);
 
   const searchButtonRef = useRef(null);
   const searchRef = useRef(null);
 
   useClickOutside([searchButtonRef, searchRef], () => setSearchMenu(false));
 
-  const [categories,setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
+  const [manufacturers, setManufacturers] = useState([]);
 
   const getCategories = async () => {
     const res = await fetch('/api/front/navbar');
@@ -34,7 +35,12 @@ const Navbar = () => {
       name: category.title,
       url: `/products?category=${category.slug}`,
     }));
+    const transformedManufacturers = data.manufacturers.map((manufacturer) => ({
+      name: manufacturer.title,
+      url: `/products?manufacturer=${manufacturer.slug}&tab=browse-by`,
+    }));
     setCategories(transformedCategories);
+    setManufacturers(transformedManufacturers);
   };
 
   useEffect(() => {
@@ -77,16 +83,18 @@ const Navbar = () => {
             <Link href="/neu-admin" className="flex h-6 w-6 items-center rounded-full bg-b2 text-white">
               <BiUserCircle className="h-6 w-6" />
             </Link>
-          ):<Link href="/login" className="flex h-6 w-6 items-center rounded-full bg-b2 text-white">
-          <BiUserCircle className="h-6 w-6" />
-        </Link>}
+          ) : (
+            <Link href="/login" className="flex h-6 w-6 items-center rounded-full bg-b2 text-white">
+              <BiUserCircle className="h-6 w-6" />
+            </Link>
+          )}
         </div>
       </div>
 
       <div className={`${mobMenu ? 'fixed' : 'hidden'} bottom-0 left-0 right-0 top-16 z-50 w-full overflow-y-auto bg-white py-5 lg:hidden`}>
         <div className="mt-2 flex flex-col gap-6 px-5">
           <DropDown title="Deals" titleClass="!text-base text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
-          <div className="mt-2 space-y-6">
+            <div className="mt-2 space-y-6">
               <Link href="/" className="block text-sm font-medium text-b1/65">
                 Lorem 1
               </Link>
@@ -98,34 +106,40 @@ const Navbar = () => {
               </Link>
             </div>
           </DropDown>
-          <Link href="/" className="block text-base font-semibold text-b1/65">
+          <Link href="/products" className="block text-base font-semibold text-b1/65">
             Shop Now
           </Link>
           <DropDown title="Products" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
             <div className="mt-2 space-y-6">
-             {categories.length > 0 ?  
-              categories.map((cat,i)=>(
-                <Link key={i} href={cat.url} className="block text-sm font-medium text-b1/65">{cat.name}</Link>
-              ))
-              :
-              <Link href="/" className="block text-sm font-medium text-b1/65">No Product Found!</Link>
-              }
+              {categories.length > 0 ? (
+                categories.map((cat, i) => (
+                  <Link key={i} href={cat.url} className="block text-sm font-medium text-b1/65">
+                    {cat.name}
+                  </Link>
+                ))
+              ) : (
+                <Link href="/" className="block text-sm font-medium text-b1/65">
+                  No Product Found!
+                </Link>
+              )}
             </div>
           </DropDown>
           <DropDown title="Popular Brands" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>
             <div className="mt-2 space-y-6">
-              <Link href="/" className="block text-sm font-medium text-b1/65">
-                Lorem 1
-              </Link>
-              <Link href="/" className="block text-sm font-medium text-b1/65">
-                Lorem 2
-              </Link>
-              <Link href="/" className="block text-sm font-medium text-b1/65">
-                Lorem 3
-              </Link>
+              {manufacturers.length > 0 ? (
+                manufacturers.map((manu, i) => (
+                  <Link key={i} href={manu.url} className="block text-sm font-medium text-b1/65">
+                    {manu.name}
+                  </Link>
+                ))
+              ) : (
+                <Link href="/" className="block text-sm font-medium text-b1/65">
+                  No Product Found!
+                </Link>
+              )}
             </div>
           </DropDown>
-          <Link href="/" className="block text-base font-semibold text-b1/65">
+          <Link href="/financing" className="block text-base font-semibold text-b1/65">
             Financing
           </Link>
           <Link href="/" className="block text-base font-semibold text-b1/65">

@@ -90,7 +90,7 @@ const Navbar = () => {
     }));
     const transformedManufacturers = data.manufacturers.map((manufacturer) => ({
       name: manufacturer.title,
-      url: `/products?manufacturer=${manufacturer.slug}`,
+      url: `/products?manufacturer=${manufacturer.slug}&tab=browse-by`,
     }));
     const transformedTypes = data.types.map((type) => ({
       name: type.title,
