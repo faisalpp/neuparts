@@ -33,11 +33,11 @@ const CompareModel = ({ products, condition, defaultProduct, slug }) => {
     <div id="inspections" className="maincontainer flex flex-col justify-center py-10 lg:py-16 xl:py-20 2xl:py-120px">
       <div className="flex items-center justify-between gap-2 maxlg:flex-col">
         <h2 className="mb-4 text-left text-2xl font-bold lg:text-28px xl:text-32px">Compare buying option for this model</h2>
-        <div className="flex items-center justify-end gap-1">
+        {/* <div className="flex items-center justify-end gap-1">
           {filters.map((filter, index) => (
             <MenuCheckbox key={index} data={filter} />
           ))}
-        </div>
+        </div> */}
       </div>
       <div className="mt-10">
         <div className="relative overflow-x-auto whitespace-nowrap">

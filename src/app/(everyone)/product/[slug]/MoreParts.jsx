@@ -8,7 +8,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
 import Image from 'next/image';
 
-const MoreParts = ({ data }) => {
+const MoreParts = ({ partNo, data }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -56,9 +56,9 @@ const MoreParts = ({ data }) => {
   );
 
   return (
-    <div className="bg-b3/5" id="testimonials-view">
+    <div className="bg-b3/[0.08]" id="testimonials-view">
       <div className="maincontainer flex flex-col justify-center py-10 lg:py-16 xl:py-20 2xl:py-120px">
-        <h2 className="text-center text-2xl font-bold md:mb-4 lg:text-3xl xl:text-4xl">More Parts for Your Model</h2>
+        <h2 className="text-center text-2xl font-bold md:mb-4 lg:text-32px">Other Compatible Parts for Model <span className='text-dark-red'>{partNo}</span></h2>
         <div className="mt-10">
           {/* {data.length > 0 ? ( */}
           <Slider {...settings} prevArrow={<PrevButton />} nextArrow={<NextButton />} className="relative maxmd:mb-10">

@@ -8,7 +8,7 @@ const WarantySection = () => {
     { icon: 'dollar.webp', title: 'Financing Option Available', description: 'Facilisis sodales sollicitudin mi porttitor tellus non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet sodales sollicitudin mi porttitor tellus. Nunc volutpat non ornare pellentesque in nam sem. Elementum porttitor nunc bibendum laoreet.' },
   ]);
   return (
-    <div id="compare" className="bg-b3/10">
+    <div id="compare" className="bg-b3/[0.08]">
       <div className="maincontainer py-10 lg:py-16 xl:py-20 2xl:py-120px">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
           {products.map((item, index) => (

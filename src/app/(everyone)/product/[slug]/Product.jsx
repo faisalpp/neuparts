@@ -28,8 +28,8 @@ import { MinusIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/react/24
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '@/app/GlobalRedux/slices/CartSlice';
 import { useRouter } from 'next/navigation';
-import {addToFavoriteUser,removeFromFavoriteUser} from '@/app/GlobalRedux/slices/Favorite'
-import {toast} from 'react-toastify'
+import { addToFavoriteUser, removeFromFavoriteUser } from '@/app/GlobalRedux/slices/Favorite';
+import { toast } from 'react-toastify';
 
 const Product = ({ slug }) => {
   const dispatch = useDispatch();
@@ -99,7 +99,7 @@ const Product = ({ slug }) => {
   const [buyingOptions, setBuyingOptions] = useState([]);
 
   const FetchProduct = async () => {
-    fetch(`/api/front/product/single?slug=${slug}`)
+    await fetch(`/api/front/product/single?slug=${slug}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -137,7 +137,7 @@ const Product = ({ slug }) => {
     const res = await dispatch(addToCart({ productId: product._id, cartId: cartId, quantity: quantity, cartRender: false }));
     if (res.payload.success) {
       setBuyLoading(false);
-      router.push('/mycart/information')
+      router.push('/mycart/information');
     } else {
       setBuyLoading(false);
     }
@@ -172,44 +172,44 @@ const Product = ({ slug }) => {
 
   const [imgModal, setImgModal] = useState(false);
 
-  const UserId = useSelector((state)=>state.auth.id)
-  const Favorites = useSelector((state)=>state.favorite.items)
+  const UserId = useSelector((state) => state.auth.id);
+  const Favorites = useSelector((state) => state.favorite.items);
 
   const [favLoad, setFavLoad] = useState(false);
   const [activeCondition, setActiveCondition] = useState({});
 
   const handleFavorites = async (e) => {
     e.preventDefault();
-    setFavLoad(true)
-    if(UserId){
-      const resp = await dispatch(addToFavoriteUser({userId:UserId,productId:product._id}))
-      if(resp.payload.success){
-        toast.success('Product added into favorites!')
-      }else{
-        toast.error('Adding to favorite failed!')
+    setFavLoad(true);
+    if (UserId) {
+      const resp = await dispatch(addToFavoriteUser({ userId: UserId, productId: product._id }));
+      if (resp.payload.success) {
+        toast.success('Product added into favorites!');
+      } else {
+        toast.error('Adding to favorite failed!');
       }
-      setFavLoad(false)
-    }else{
-      toast.info('Login required!')
-      setFavLoad(false)    
+      setFavLoad(false);
+    } else {
+      toast.info('Login required!');
+      setFavLoad(false);
     }
   };
 
   const RemoveFavorite = async (e) => {
     e.preventDefault();
-    setFavLoad(true)
-    if(UserId){
-      const getFav = Favorites.find((fav)=> fav.favId === product._id)
-      const resp = await dispatch(removeFromFavoriteUser({_id:getFav._id}))
-      if(resp.payload.success){
-        toast.success('Product removed from favorites!')
-      }else{
-        toast.error('Removing favorite failed!')
+    setFavLoad(true);
+    if (UserId) {
+      const getFav = Favorites.find((fav) => fav.favId === product._id);
+      const resp = await dispatch(removeFromFavoriteUser({ _id: getFav._id }));
+      if (resp.payload.success) {
+        toast.success('Product removed from favorites!');
+      } else {
+        toast.error('Removing favorite failed!');
       }
-      setFavLoad(false) 
-    }else{
-      toast.info('Login required!')
-      setFavLoad(false)    
+      setFavLoad(false);
+    } else {
+      toast.info('Login required!');
+      setFavLoad(false);
     }
   };
 
@@ -227,15 +227,12 @@ const Product = ({ slug }) => {
     }
   };
 
-  const [thumbnail,setThumbnail] = useState('/no-image.webp')
-  
-  const ImageAlt = ({src}) => {
-    const [thumbnail,setThumbnail] = useState(src)
-    return (
-      <Image width={200} height={200} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-full w-full object-contain" alt="product" />
-    )
-  }
- 
+  const [thumbnail, setThumbnail] = useState('/no-image.webp');
+
+  const ImageAlt = ({ src }) => {
+    const [thumbnail, setThumbnail] = useState(src);
+    return <Image width={200} height={200} quality={100} onErrorCapture={() => setThumbnail('/no-image.webp')} src={thumbnail} className="h-full w-full object-contain" alt="product" />;
+  };
 
   return (
     <>
@@ -245,7 +242,7 @@ const Product = ({ slug }) => {
         <>
           {/* StickyNavabr */}
           <div className="hidden lg:block">
-           <StickyNavbar addCart={AddToCart} product={product} state={showNavbar} condition={ConditionData} />
+            <StickyNavbar addCart={AddToCart} product={product} state={showNavbar} condition={ConditionData} />
           </div>
 
           <MoreImagesModal medias={product.images} state={imgModal} setState={setImgModal} />
@@ -270,7 +267,7 @@ const Product = ({ slug }) => {
           {/* Bread Crumbs End */}
           <div id="product-information" className="maincontainer mb-10 grid grid-cols-1 items-center gap-6 sm:gap-10 lg:grid-cols-12 lg:items-start">
             <div className="lg:sticky lg:top-44 lg:col-span-5">
-              {Favorites.some((fav)=> fav.favId === product._id) ? (
+              {Favorites.some((fav) => fav.favId === product._id) ? (
                 <button onClick={(e) => RemoveFavorite(e)} className="my-2 flex w-full items-center justify-end text-b3 hover:underline md:hidden">
                   <AiFillHeart className={`h-6 w-6 ${favLoad ? 'animate-bounce text-red-500' : null}`} />
                 </button>
@@ -284,7 +281,7 @@ const Product = ({ slug }) => {
                   {product.images
                     ? product.images.slice(0, 4).map((image, index) => (
                         <div key={index} className="relative grid h-60px w-[70px] cursor-pointer place-items-center rounded-lg border-[1px] border-gray-300 px-2 py-1 2xl:h-100px 2xl:w-100px xs:h-[70px]" onClick={() => setThumbnail(image.thumbnail)}>
-                          <ImageAlt src={image.thumbnail}/>
+                          <ImageAlt src={image.thumbnail} />
                         </div>
                       ))
                     : null}
@@ -298,7 +295,7 @@ const Product = ({ slug }) => {
                   ) : null}
                 </div>
                 <div className="relative flex w-full items-center justify-center rounded-lg border-gray-300 px-2 py-10 lg:h-96 lg:border 2xl:h-auto 2xl:py-14 maxmd:order-1">
-                  <Image width={200} height={200} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} alt={product.title} className="h-auto w-48" />
+                  <Image width={200} height={200} quality={100} onErrorCapture={() => setThumbnail('/no-image.webp')} src={thumbnail} alt={product.title} className="h-auto w-48" />
                   {/* {mediaViewer.file === 'image' ? <Image width={200} height={200} quality={100} src={product.thumbnail ? product.thumbnail : ''} alt={product.title} className="h-auto w-48" /> : null} */}
 
                   {/* Compatible Badge */}
@@ -332,7 +329,7 @@ const Product = ({ slug }) => {
                 </div>
                 <div className="flex items-center gap-5 sm:w-full sm:justify-between lg:flex-wrap">
                   {product.sale_price ? <span className="flex rounded-2xl bg-b4 px-3 py-2 text-xs font-semibold text-black">${(product.regular_price - product.sale_price).toFixed(2)} Savings</span> : null}
-                  {Favorites.some((fav)=> fav.favId === product._id) ? (
+                  {Favorites.some((fav) => fav.favId === product._id) ? (
                     <button onClick={(e) => RemoveFavorite(e)} className="hidden items-center justify-end text-b3 hover:underline md:flex">
                       <AiFillHeart className={`${favLoad ? 'animate-bounce text-red-500' : null}`} />
                       <span>My Favorite</span>
@@ -454,10 +451,7 @@ const Product = ({ slug }) => {
           {/* 360 Degree Product Section */}
           {/* <Rotate360Product product={product} condition={ConditionData} /> */}
 
-          {/* More Parts */}
-          {partproducts.length > 0 && <MoreParts data={partproducts} />}
-
-          <CompatibleAppliance partNo={product.part_number} />
+          <CompatibleAppliance product={product} />
 
           {/* Review */}
           <ConditionReview condition={ConditionData} />
@@ -467,6 +461,9 @@ const Product = ({ slug }) => {
           <CompareModel products={buyingOptions} condition={ConditionData} defaultProduct={product} slug={slug} />
 
           <LoopSection />
+
+          {/* More Parts */}
+          {partproducts.length > 0 && <MoreParts partNo={product.part_number} data={partproducts} />}
 
           <WarantySection />
         </>
