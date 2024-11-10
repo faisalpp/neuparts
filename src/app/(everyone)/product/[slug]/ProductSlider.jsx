@@ -67,7 +67,7 @@ const ProductSlider = () => {
         <div className="mx-auto w-full max-w-3xl">
           <Slider asNavFor={nav2} prevArrow={<PrevButton />} nextArrow={<NextButton />} ref={(slider) => (sliderRef1 = slider)}>
             {imageSlider.map((item, index) => (
-              <div>
+              <div key={index} >
                 <Image key={index} src={item} className="mx-auto h-[422px] py-10 w-[465px] object-contain" width={600} height={600} quality={100} alt="Product" />
                 <div className="gap-3 rounded-2xl bg-b3/10 p-6">
                   <h3 className="font-bold">Condition Notes</h3>
@@ -80,7 +80,7 @@ const ProductSlider = () => {
         <div className="conditionSlider mt-10">
           <Slider asNavFor={nav1} ref={(slider) => (sliderRef2 = slider)} {...settings} swipeToSlide={true} focusOnSelect={true}>
             {imageSlider.map((item, index) => (
-              <div className="px-1">
+              <div className="px-1" key={index}>
                 <div className="sliderBox flex h-24 cursor-pointer justify-center rounded-xl border border-b16/10 p-3">
                   <Image src={item} key={index} className="h-full w-auto object-contain" width={600} height={600} quality={100} alt="Product" />
                 </div>
