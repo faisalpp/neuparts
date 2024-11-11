@@ -74,11 +74,17 @@ async function SyncProducts() {
       try {
         const CONDITION = prod.condition != "" ? generateSlug(prod.condition) : null;
         if (prod.is_variant) {
-          const catId = await GetProductCategoryId(prod.category);
-          // const slug = await GetProductSlug(prod.title);
-          const partType = await CreateGetPartType(prod.type);
+          let catId = "Uncategorized"
+          if(prod.category != ""){
+            catId = await GetProductCategoryId(prod.category);
+          }
+          let partType = "N/A";
+          if(prod.type){
+            partType = await CreateGetPartType(prod.type);
+          }
           const manufacturer = await GetManufacturer(prod.manufacturer);
           const parent = await GetParent(prod.sku);
+
           data = {
             id: prod.id,
             parent_id: prod.main_product_id,
@@ -100,9 +106,14 @@ async function SyncProducts() {
             thumbnail: prod.images.length > 0 ? prod.images[0].thumbnail : null,
           };
         } else {
-          const catId2 = await GetProductCategoryId(prod.category);
-          // const slug2 = await GetProductSlug(prod.title);
-          const partType2 = await CreateGetPartType(prod.type);
+          let catId2 = "Uncategorized"
+          if(prod.category != ""){
+            catId2 = await GetProductCategoryId(prod.category);
+          }
+          let partType2 = "N/A";
+          if(prod.type){
+            partType2 = await CreateGetPartType(prod.type);
+          }
 
           data = {
             id: prod.id,
