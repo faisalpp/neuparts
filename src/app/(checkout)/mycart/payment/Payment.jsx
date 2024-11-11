@@ -128,7 +128,7 @@ const Payment = ({PRIVATE_KEY}) => {
      }
  
      const getPaymentIntent = await StripeMain.paymentIntents.create({
-      amount: cartGrandTotal*100,currency:'usd',description:"Neuappliance Parts Card Transaction",
+      amount: cartGrandTotal * 100,currency:'usd',description:"Neuappliance Parts Card Transaction",
       automatic_payment_methods:{enabled:false},
       payment_method_types:['card']
      });

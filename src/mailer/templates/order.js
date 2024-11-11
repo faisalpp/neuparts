@@ -1,13 +1,4 @@
-export const OrderItem = (order) => {
-    const template = `
-    
-    `;
-
-    return template;
-}
-
-
-
+import moment from "moment";
 
 export const OrderTemplate = (order,host) => {
 

@@ -15,6 +15,7 @@ const Cart = () => {
  const dispatch = useDispatch()
 
  const cartLoader = useSelector((state)=>state.cart.cartLoader)
+ const roundOff = useSelector((state)=>state.cart.roundOff)
  const cartId = useSelector((state)=>state.cart.cartId)
  const cart = useSelector((state)=>state.cart.items)
  const subTotal = useSelector((state)=>state.cart.cartSubTotal)
@@ -92,7 +93,7 @@ const Cart = () => {
             {shipping?.method === 'Shipping' ? <div className="flex justify-between">
               <span className="text-b32">Shipping</span>
               {shipping?.method === 'Shipping' ? 
-               <span className="font-medium text-b16">{shipping?.rate != 'N/A' ? '$' : ''}{shipping?.rate}</span>
+               <span className="font-medium text-b16">{shipping?.rate != 'N/A' && shipping?.rate != 'Free' ? '$' : ''}{shipping?.rate}</span>
                :
                 <span className="font-medium text-b25">*Calculated at next step</span>
               } 
@@ -100,6 +101,10 @@ const Cart = () => {
             <div className="flex justify-between">
               <span className="text-b32">Taxes</span>
               <span className="font-medium text-b16">${Vat}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-b32">Round Off</span>
+              <span className="font-medium text-b16">${roundOff}</span>
             </div>
           </div>
           <hr />

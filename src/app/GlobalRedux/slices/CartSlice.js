@@ -14,7 +14,25 @@ const initialState = {
   cartSubTotal:0.00,
   cartVat:0.00,
   cartGrandTotal:0.00,
+  roundOff:0.00,
   cartLoader:false
+}
+
+
+function adjustAmount(amount) {
+  // Get the decimal part by subtracting the integer part
+  const decimalPart = amount - Math.floor(amount);
+  let adjustAmount = 0.00;
+  // Check if the decimal part is less than 0.5
+  if (decimalPart < 0.5) {
+      // Calculate the difference needed to reach 0.5
+      adjustAmount = 0.5 - decimalPart;
+      const Amount = amount + adjustAmount
+      return [Amount,adjustAmount];
+  }
+  
+  // If already 0.5 or more, return the original amount
+  return [amount,adjustAmount];
 }
 
 export const applyCoupon = createAsyncThunk("cart/coupon", async (data) => {
@@ -99,6 +117,7 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
         state.cartSubTotal = 0.00,
         state.cartVat = 0.00,
         state.cartGrandTotal = 0.00,
+        state.roundOff = 0.00
         state.coupon = {status:false},
         state.shippingMethod = {method:'Pickup',rate:'Free'}
       },
@@ -135,7 +154,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
             const Vat = (subTotal * (10/100)).toFixed(2)
             state.cartVat = Vat
             const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
-            state.cartGrandTotal = GrandTotal.toFixed(2)
+            const MakeIt5 = adjustAmount(GrandTotal)
+            state.cartGrandTotal = MakeIt5[0].toFixed(2)
+            state.roundOff = MakeIt5[1].toFixed(2)
            })
           }
          })
@@ -160,7 +181,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
             const Vat = (subTotal * (10/100)).toFixed(2)
             state.cartVat = Vat
             const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
-            state.cartGrandTotal = GrandTotal.toFixed(2)
+            const MakeIt5 = adjustAmount(GrandTotal)
+            state.cartGrandTotal = MakeIt5[0].toFixed(2)
+            state.roundOff = MakeIt5[1].toFixed(2)
            })
           }
          })
@@ -201,7 +224,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              const Vat = (subTotal * (10/100)).toFixed(2)
              state.cartVat = Vat
              const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
-             state.cartGrandTotal = GrandTotal.toFixed(2)
+             const MakeIt5 = adjustAmount(GrandTotal)
+             state.cartGrandTotal = MakeIt5[0].toFixed(2)
+             state.roundOff = MakeIt5[1].toFixed(2)
             })
            }
           })
@@ -241,7 +266,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
               const Vat = (subTotal * (10/100)).toFixed(2)
               state.cartVat = Vat
               const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
-              state.cartGrandTotal = GrandTotal.toFixed(2)
+              const MakeIt5 = adjustAmount(GrandTotal)
+              state.cartGrandTotal = MakeIt5[0].toFixed(2)
+              state.roundOff = MakeIt5[1].toFixed(2)
              })
             }
            })
@@ -282,7 +309,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              const Vat = (subTotal * (10/100)).toFixed(2)
              state.cartVat = Vat
              const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
-             state.cartGrandTotal = GrandTotal.toFixed(2)
+             const MakeIt5 = adjustAmount(GrandTotal)
+             state.cartGrandTotal = MakeIt5[0].toFixed(2)
+             state.roundOff = MakeIt5[1].toFixed(2)
             })
            }
           })
@@ -318,7 +347,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              const Vat = (subTotal * (10/100)).toFixed(2)
              state.cartVat = Vat
              const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
-             state.cartGrandTotal = GrandTotal.toFixed(2)
+             const MakeIt5 = adjustAmount(GrandTotal)
+             state.cartGrandTotal = MakeIt5[0].toFixed(2)
+             state.roundOff = MakeIt5[1].toFixed(2)
             })
            }
           })
@@ -360,7 +391,9 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
              const Vat = (subTotal * (10/100)).toFixed(2)
              state.cartVat = Vat
              const GrandTotal = parseFloat(subTotal) + parseFloat(state.cartVat)
-             state.cartGrandTotal = GrandTotal.toFixed(2)
+             const MakeIt5 = adjustAmount(GrandTotal)
+             state.cartGrandTotal = MakeIt5[0].toFixed(2)
+             state.roundOff = MakeIt5[1].toFixed(2)
             })
            }
           })
