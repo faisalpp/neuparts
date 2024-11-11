@@ -46,10 +46,10 @@ async function SyncProducts() {
     ID = getToken2.id;
   }
 
-  const PER_PAGE = 10;
+  const PER_PAGE = 100;
   let PAGE = 1;
   let LOGIN_URL;
-  let TOTAL_PAGES=1;
+  let TOTAL_PAGES;
 
   while (true) {
     LOGIN_URL = UPDATED_AFTER 
@@ -75,7 +75,7 @@ async function SyncProducts() {
         const CONDITION = prod.condition != "" ? generateSlug(prod.condition) : null;
         if (prod.is_variant) {
           const catId = await GetProductCategoryId(prod.category);
-          const slug = await GetProductSlug(prod.title);
+          // const slug = await GetProductSlug(prod.title);
           const partType = await CreateGetPartType(prod.type);
           const manufacturer = await GetManufacturer(prod.manufacturer);
           const parent = await GetParent(prod.sku);
@@ -97,12 +97,11 @@ async function SyncProducts() {
             parttype: partType,
             stock: prod.stock,
             images: prod.images,
-            slug: slug,
             thumbnail: prod.images.length > 0 ? prod.images[0].thumbnail : null,
           };
         } else {
           const catId2 = await GetProductCategoryId(prod.category);
-          const slug2 = await GetProductSlug(prod.title);
+          // const slug2 = await GetProductSlug(prod.title);
           const partType2 = await CreateGetPartType(prod.type);
 
           data = {
@@ -122,7 +121,6 @@ async function SyncProducts() {
             parttype: partType2,
             stock: prod.stock,
             images: prod.images,
-            slug: slug2,
             thumbnail: prod.images.length > 0 ? prod.images[0].thumbnail : null,
           };
         }
@@ -135,6 +133,7 @@ async function SyncProducts() {
     }
 
     PAGE++;
+    console.log(`${PAGE} out of ${TOTAL_PAGES}`)
     if (PAGE > TOTAL_PAGES) break;
   }
 

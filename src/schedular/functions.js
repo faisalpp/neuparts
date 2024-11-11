@@ -148,9 +148,10 @@ async function CreateOrUpdateProduct(data){
   await connect()
   const isFind = await Product.findOne({id:data.id});
   if(isFind){
-    await Product.findOneAndUpdate(isFind._id,data)
+    await Product.findOneAndUpdate(isFind._id,{data})
   }else{
-    await Product.create(data)  
+    const slug = await GetProductSlug(data.title)
+    await Product.create({...data,slug:slug})  
   }
 }catch(error){
   await CronRec.create({msg:'Creating or updating product failed!',body:error,status:false})
