@@ -228,7 +228,7 @@ const Payment = ({PRIVATE_KEY}) => {
       {/* Shipping */}
 
       <div className="flex flex-col gap-3 rounded-md border border-b31 p-3">
-        <ReviewDetail title="Contact" detail={order.shippingAddress.email} textStyle="font-medium" />
+        <ReviewDetail title="Contact" detail={order.shippingAddress?.email} textStyle="font-medium" />
         <hr />
         <ReviewDetail title="Ship to" detail={detail} textStyle="font-medium" />
         <hr />

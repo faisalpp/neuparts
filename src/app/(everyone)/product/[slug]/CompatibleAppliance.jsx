@@ -43,6 +43,8 @@ const CompatibleAppliance = ({ product }) => {
     }
   };
 
+  const [thumbnail,setThumbnail] = useState(product.thumbnail ?? '/no-image.webp')
+
   return (
     <div className="bg-b3/5" id="testimonials-view">
       <div className="maincontainer py-10 lg:py-16 xl:py-20 2xl:py-120px">
@@ -74,7 +76,7 @@ const CompatibleAppliance = ({ product }) => {
             </div>
             {result && (
               <div className="mt-14 flex md:w-11/12 mx-auto items-center gap-2 rounded-md bg-white px-4 py-4 md:gap-4 lg:px-8 xl:mt-60px maxlg:flex-wrap">
-                <Image src={product.thumbnail ?? '/no-image.webp'} className="h-14 w-14 object-contain md:h-20 md:w-20" width={80} height={80} quality={100} alt={product.title} />
+                <Image onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-14 w-14 object-contain md:h-20 md:w-20" width={80} height={80} quality={100} alt={product.title} />
                 <h2 className="line-clamp-1 text-lg font-semibold maxlg:flex-1">{product.title}</h2>
 
                 {modelCompatible ? (

@@ -37,7 +37,6 @@ async function LoginAndUpdateToken(email,password,id){
  return {id:newLogin._id,token:newLogin.token,updatedAfter:newLogin.updated_after,status:true}
  }catch(error){
   await CronRec.create({msg:'Login and token update failed!',body:JSON.stringify(error),status:false})
-  console.log({ error: 'Something went wrong!',status: 500 });
   process.exit(1)
  }
 }
@@ -62,7 +61,6 @@ try{
  return {id:newLogin2._id,token:loginRes.token,status:true}
  }catch(error){
   await CronRec.create({msg:'Login and retrive token failed!',body:JSON.stringify(error),status:false})
-  console.log({ error: 'Something went wrong!',status: 500 });
   process.exit(1)
  }
 }
@@ -81,7 +79,6 @@ async function GetProductCategoryId(title){
   }
  }catch(error){
   await CronRec.create({msg:'Retriving product category failed!',body:JSON.stringify(error),status:false})
-  console.log({ error: 'Something went wrong!',status: 500 });
   process.exit(1)
  }
 }
@@ -107,7 +104,6 @@ try{
   return slug;
  }catch(error){
   await CronRec.create({msg:'Creating product slug failed!',body:JSON.stringify(error),status:false})
-  console.log({ error: 'Something went wrong!',status: 500 });
   process.exit(1)
  }
 }
@@ -127,7 +123,6 @@ async function CreateGetPartType(title){
   }
  }catch(error){
   await CronRec.create({msg:'Retriving or creating part type failed!',body:error,status:false})
-  console.log({ error: 'Something went wrong!',status: 500 });
   process.exit(1)
  }
 }
@@ -143,7 +138,6 @@ try{
   return {sku:'n/a',description:''}
  }catch(error){
   await CronRec.create({msg:'Retriving parent id failed!',body:error,status:false})
-  console.log({ error: 'Something went wrong!',status: 500 });
   process.exit(1)
  }
 }
@@ -160,7 +154,6 @@ async function CreateOrUpdateProduct(data){
   }
 }catch(error){
   await CronRec.create({msg:'Creating or updating product failed!',body:error,status:false})
-  console.log({ error: 'Something went wrong!',status: 500 });
   process.exit(1)
  }
 }
@@ -178,7 +171,6 @@ try{
   return isCreated._id
 }catch(error){
   await CronRec.create({msg:'Creating manufacturer failed!',body:error,status:false})
-  console.log({ error: 'Something went wrong!',status: 500 });
   process.exit(1)
  }
 }

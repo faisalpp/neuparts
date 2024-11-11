@@ -6,7 +6,6 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import GasSvg from '@/components/svgs/GasSvg';
 
 const BuyingHero = ({ data }) => {
-  console.log(data)
   const conditions = [
     {
       title: 'New',

@@ -19,9 +19,11 @@ const SideCartCard = (props) => {
    }
   }
 
+  const [thumbnail,setThumbnail] = useState(props.item?.thumbnail ? props.item?.thumbnail : '/no-image.webp')
+
   return (
     <div className="relative mt-3 flex w-full justify-start gap-3 border-b border-b1/10 py-5 maxlg:flex-col">
-      <Image width={400} height={400} quality={100} src={props.item.thumbnail} className="h-auto w-28 object-contain maxlg:mx-auto" alt={props.item.title} />
+      <Image width={400} height={400} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} className="h-auto w-28 object-contain maxlg:mx-auto" alt={props.item.title} />
       <div className="flex w-full flex-col justify-center gap-2">
         <div className="flex w-full justify-between gap-3">
           <h3 className="line-clamp-2 text-sm font-semibold">{props.item.title}</h3>
@@ -45,8 +47,12 @@ const SideCartCard = (props) => {
                   New
                 </div>
               )}
-              {props.item.condition == 'certified' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-3 py-1 text-xs font-semibold text-white">Certified Refurbished</div>}
-              {props.item.condition == 'used' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-c-orange px-3 py-1 text-xs font-semibold text-white">Used • Grade D</div>}
+          {props.item.condition == 'certified-refurbished' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Certified Refurbished</div>}
+          {props.item.condition == 'like-new-open-box' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-dark-light-cyan px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Like New / Open Box</div>}
+          {props.item.condition == 'used-part-a-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade B</div>}
+          {props.item.condition == 'used-part-b-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade B</div>}
+          {props.item.condition == 'used-part-c-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade C</div>}
+          {props.item.condition == 'used-part-d-condition-grade' && <div className="inline-flex items-center justify-center whitespace-nowrap rounded-full bg-[#FF9A3E] px-2 py-1 text-[8px] font-semibold text-white xs:px-3 xs:text-xs">Used • Grade D</div>}
             </div>
           </div>
           <div className="space-x-1">

@@ -28,7 +28,6 @@ async function SyncProducts() {
       const getToken = await LoginAndUpdateToken(email, password, authToken._id);
       if (!getToken.status){
         await CronRec.create({msg:'Login failed!',body:JSON.stringify(error),status:false})
-        console.log({ error: 'Something went wrong!',status: 500 });
         process.exit(1)
       } 
       
@@ -40,7 +39,6 @@ async function SyncProducts() {
     const getToken2 = await LoginAndCreateToken(email, password);
     if (!getToken2.status){
       await CronRec.create({msg:'Login failed!',body:JSON.stringify(error),status:false})
-      console.log({ error: 'Login failed!',status: 500 });
       process.exit(1)
     } 
     
@@ -65,7 +63,6 @@ async function SyncProducts() {
     
     if (getProducts.status !== 200) {
       await CronRec.create({msg:'Neulink api failed!',body:'n/a',status:false})
-      console.log({ error: 'Product syncing failed!',status: 500 });
       process.exit(1)
     }
     
@@ -133,7 +130,6 @@ async function SyncProducts() {
         await CreateOrUpdateProduct(data);
       } catch (error) {
         await CronRec.create({msg:'Neulink api failed!',body:`Error processing product with SKU: ${prod.sku}`,status:false})
-        console.log({ error: 'Something went wrong!',status: 500 });
         process.exit(1)
       }
     }
@@ -147,11 +143,9 @@ async function SyncProducts() {
   await Neulink.findByIdAndUpdate(ID, { updated_after: serverTime });
 
   await CronRec.create({msg:'Product syncing completed!',body:`Product syncing completed with total ${TOTAL_PAGES} pages and ${TOTAL_PAGES*PER_PAGE} products`,status:true})
-  console.log({ message: 'Product syncing completed!',status: 200 });
   process.exit(0)
  }catch(error){
    await CronRec.create({msg:'Something went wrong!',body:JSON.stringify(error),status:false})
-   console.log({ error: 'Something went wrong!',status: 500 });
    process.exit(1)
  }
 

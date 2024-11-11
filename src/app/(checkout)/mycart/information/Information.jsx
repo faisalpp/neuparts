@@ -164,7 +164,7 @@ const Information = ({PRIVATE_KEY}) => {
       {/* Bread Crumbs Start */}
       <BreadCrumb />
       {/* Bread Crumbs End */}
-      {isExpressAvailable ?  <><ExpressCheckoutElement  /><div className="text_between_line my-8">OR</div></> : null}
+      {/* {isExpressAvailable ?  <><ExpressCheckoutElement  /><div className="text_between_line my-8">OR</div></> : null} */}
       {/* <fieldset className="rounded-md border border-b31 px-5 pb-5 pt-2">
         <legend className="mx-auto px-3 text-sm font-medium text-b16">Express checkout</legend>
         <div className="grid grid-cols-3 gap-2">

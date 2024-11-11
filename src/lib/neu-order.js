@@ -96,7 +96,7 @@ export default async function CmsOrder(data) {
     return false
   }
   const order = await cmsOrder.json()
-  console.log(order)
+  
   return true
  }catch(error){
   return false
