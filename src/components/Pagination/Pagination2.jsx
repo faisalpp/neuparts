@@ -28,13 +28,74 @@ const Pagination2 = ({ totalPages }) => {
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
+    
+    // Always show the first 3 pages
+    for (let i = 1; i <= 3 && i <= totalPages; i++) {
       pageNumbers.push(
-        <button type="button" key={i} onClick={() => handlePageChange(i)} className={`flex w-8 cursor-pointer items-center justify-center self-center rounded-md py-1 text-sm ${page == i ? 'text-b6' : 'text-black'} `}>
+        <button 
+          key={i} 
+          onClick={() => handlePageChange(i)} 
+          className={`flex w-8 cursor-pointer items-center justify-center self-center rounded-md py-1 text-sm ${page == i ? 'text-b6' : 'text-black'}`}
+        >
           {i}
         </button>
       );
     }
+
+    // Show ellipsis if needed after first 3 pages and before last 3 pages
+    if (page > 4 && page < totalPages - 3) {
+      pageNumbers.push(<span key="ellipsis1" className="flex items-center justify-center py-1 text-sm">...</span>);
+    }
+
+    // Show current page and its neighbors (e.g., 2, 3, 4 if you're on page 3)
+    if (page > 3 && page < totalPages - 3) {
+      pageNumbers.push(
+        <button 
+          key={page - 1} 
+          onClick={() => handlePageChange(page - 1)} 
+          className={`flex w-8 cursor-pointer items-center justify-center self-center rounded-md py-1 text-sm ${page == page - 1 ? 'text-b6' : 'text-black'}`}
+        >
+          {page - 1}
+        </button>
+      );
+      pageNumbers.push(
+        <button 
+          key={page} 
+          onClick={() => handlePageChange(page)} 
+          className={`flex w-8 cursor-pointer items-center justify-center self-center rounded-md py-1 text-sm ${page == page ? 'text-b6' : 'text-black'}`}
+        >
+          {page}
+        </button>
+      );
+      pageNumbers.push(
+        <button 
+          key={page + 1} 
+          onClick={() => handlePageChange(page + 1)} 
+          className={`flex w-8 cursor-pointer items-center justify-center self-center rounded-md py-1 text-sm ${page == page + 1 ? 'text-b6' : 'text-black'}`}
+        >
+          {page + 1}
+        </button>
+      );
+    }
+
+    // Show ellipsis if needed before last 3 pages
+    if (page < totalPages - 3) {
+      pageNumbers.push(<span key="ellipsis2" className="flex items-center justify-center py-1 text-sm">...</span>);
+    }
+
+    // Always show the last 3 pages
+    for (let i = totalPages - 2; i <= totalPages && i > 3; i++) {
+      pageNumbers.push(
+        <button 
+          key={i} 
+          onClick={() => handlePageChange(i)} 
+          className={`flex w-8 cursor-pointer items-center justify-center self-center rounded-md py-1 text-sm ${page == i ? 'text-b6' : 'text-black'}`}
+        >
+          {i}
+        </button>
+      );
+    }
+
     return pageNumbers;
   };
 

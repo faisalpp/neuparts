@@ -73,6 +73,9 @@ export async function GET() {
       {
         $sort: { createdAt: -1 },
       },
+      {
+        $limit: 10,  // Limit the results to 10
+      }
     ]);
     
 

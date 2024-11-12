@@ -4,7 +4,8 @@ import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import {checkSession} from '@/lib/auth'
 import {GetOrderNo,SubscribeNewsLetter,generateRandomPassword,CreateCustomer} from '@/utils/order'
-
+import {NeuMailer} from '@/mailer/neu-mailer'
+import {User} from '@/mailer/templates/user'
 
 export async function POST(request) {
 
@@ -42,6 +43,10 @@ export async function POST(request) {
     if(!USER){
       return NextResponse.json({ message: 'Creating new user failed!', success: false });    
     }
+    const fullName = shippingAddress.firstName + ' ' + shippingAddress.lastName
+
+    const MailTemplate = User(fullName,shippingAddress.email,newPass)
+    await NeuMailer(shippingAddress.email,'NeupartsOutlet new account details',MailTemplate)
    }
 
     // Billing and Shipping addresses objects;

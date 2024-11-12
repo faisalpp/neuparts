@@ -33,6 +33,9 @@ export async function GET(req) {
           productCount: { $size: '$products' }, // Optionally get the count of products
         },
       },
+      {
+        $limit: 10,  // Limit the results to 10
+      },
     ]);
     
     const manufacturers = await Manufacturer.aggregate([
@@ -57,6 +60,9 @@ export async function GET(req) {
           productCount: { $size: '$products' }, // Optionally get the count of products
         },
       },
+      {
+        $limit: 10,  // Limit the results to 10
+      }
     ]);
 
     const types = await Type.aggregate([
@@ -80,6 +86,9 @@ export async function GET(req) {
           slug: 1,
           productCount: { $size: '$products' }, // Optionally get the count of products
         },
+      },
+      {
+        $limit: 10,  // Limit the results to 10
       },
     ]);
 
