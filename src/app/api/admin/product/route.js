@@ -42,13 +42,23 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
+    const search = searchParams.get('search');
+    const By = searchParams.get('by');
 
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * limit;
 
     let query = {};
+    if(search != ''){
+      query = {$or: [
+        { title: { $regex: search, $options: 'i' } },
+        { model_no: { $regex: search, $options: 'i' } },
+        { part_number: { $regex: search, $options: 'i' } },
+        { sku: { $regex: search, $options: 'i' } },
+      ]}
+    }
 
-    const ReviewCountPromise = Product.estimatedDocumentCount(query);
+    const ReviewCountPromise = Product.countDocuments(query);
     const GetProductsPromise = Product.find(query).populate('category').sort({ createdAt: -1 }).limit(limit).skip(skip);
 
     const [count, products] = await Promise.all([ReviewCountPromise, GetProductsPromise]);

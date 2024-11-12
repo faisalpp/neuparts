@@ -9,11 +9,19 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
+    const search = searchParams.get('search');
+    const By = searchParams.get('by');
 
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * parseInt(limit);
 
     let query = { postType: 'blog' };
+    if(search != ''){
+      query = {$and: [
+        { title: { $regex: search, $options: 'i' } },
+        { postType: 'blog' }
+      ]}
+    }
 
     const PostCountPromise = Post.countDocuments(query);
     const GetPostsPromise = Post.find(query).skip(skip).limit(limit);

@@ -10,18 +10,21 @@ import NoData from '@/components/AdminDashboard/Table/NoData';
 import OrderTablet from '@/components/AdminDashboard/Table/TD/OrderTablet';
 import Actions from '@/components/AdminDashboard/Table/TD/Actions';
 import TableNav from '@/components/AdminDashboard/TableNav';
+import ActionBtns from '@/components/AdminDashboard/ActionBtns';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [rowLoader, setRowLoader] = useState(true);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState('');
+  const [by, setBy] = useState('all');
 
   const FetchOrders = async () => {
     setRowLoader(true);
     const getToastId = toast.loading('Loading orders...')
-    fetch(`/api/admin/order/?page=${page}&limit=${limit}`)
+    fetch(`/api/admin/order/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.orders.length > 0) {
@@ -44,8 +47,8 @@ const Orders = () => {
   return (
     <>
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        {/* <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Review' }]} /> */}
-        <div className="mt-10 flex h-full w-full flex-col items-center">
+        <ActionBtns buttons={[{type:'search',placeholder:'Type here to search order #',options:[{title:'By Order #',value:'order_no'}],field:search,setField:setSearch,search:FetchOrders}]} />
+        <div className="mt-10 flex h-full w-full flex-col items-center">  
           <Table header={['Order #','Customer', 'Payment Status', 'Order Status', 'Actions']}>
             {/* hello pengea/dnd */}
             {rowLoader ? (

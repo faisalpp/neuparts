@@ -18,10 +18,12 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [limit, setLimit] = useState(10);
+  const [search,setSearch] = useState('');
+  const [by,setBy] = useState('all')
 
   const FetchBlogs = async () => {
     setRowLoader(true);
-    fetch(`/api/admin/product?page=${page}&limit=${limit}`)
+    fetch(`/api/admin/product?page=${page}&limit=${limit}&search=${search}&by=${by}`)
       .then((res) => res.json())
       .then((data) => {
         setPageCount(data.pagination.pageCount);
@@ -79,7 +81,7 @@ const Page = () => {
   return (
     <>
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'link', text: 'Add Product', link: '/neu-admin/product/create' }]} />
+        <ActionBtns buttons={[{ type: 'link', text: 'Add Product', link: '/neu-admin/product/create' },{type:'search',placeholder:'Type here to search by title,model # or category',field:search,setField:setSearch,search:FetchBlogs}]} />
         <div className="flex h-full w-full flex-col items-center">
           <Table header={['Thumbnail', 'Product Title', 'Slug', 'Category', 'Actions']}>
             {/* hello pengea/dnd */}
@@ -90,7 +92,6 @@ const Page = () => {
                 <Row Key={i}>
                   <TdImage src={product?.thumbnail ? product?.thumbnail : false} css="w-20 h-14 object-fit rounded" />
                   <Text text={product.title} />
-                  <Text text={product.slug} />
                   <Text text={product.category?.title} />
                   <Actions id={product._id} handleDelete={DeleteProduct} data={product} isEditLink={true} editLink={`/neu-admin/product/edit/${product._id}`} />
                 </Row>

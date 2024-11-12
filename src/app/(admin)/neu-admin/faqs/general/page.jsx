@@ -26,7 +26,10 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState('');
+  const [by, setBy] = useState('all');
+
 
   const [formData, setFormData] = useState({ id: '', title: '', content: '', category: '' });
 
@@ -212,7 +215,7 @@ const Page = () => {
 
     toast.update(getToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
     try {
-      fetch(`/api/admin/faqs/general/?page=${page}&limit=${limit}`)
+      fetch(`/api/admin/faqs/general/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
         .then((res) => res.json())
         .then((data) => {
           data;
@@ -332,6 +335,7 @@ const Page = () => {
           buttons={[
             { type: 'trigger', text: 'Add Faq', trigger: setCreatePopup },
             { type: 'link', text: 'Categories', link: '/neu-admin/faqs/general/categories' },
+            ,{type:'search',placeholder:'Type here to search by title',options:[{title:'By Title',value:'title'}],field:search,setField:setSearch,search:FetchFaqs}
           ]}
         />
         <div className="mt-10 flex h-full w-full flex-col items-center">

@@ -29,7 +29,9 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState('');
+  const [by, setBy] = useState('all');
 
   useEffect(() => {
     if (files.length > 0) {
@@ -221,7 +223,7 @@ const Page = () => {
 
     toast.update(getToastId, { type: 'info', autoClose: 1000, isLoading: true });
     try {
-      fetch(`/api/admin/blog/appliance-tips/category/?page=${page}&limit=${limit}`)
+      fetch(`/api/admin/blog/appliance-tips/category/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.cats?.length > 0) {
@@ -363,7 +365,9 @@ const Page = () => {
 
       <MediaPopup state={mediaPopup} setState={setMediaPopup} setFiles={setFiles} />
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Blog Category' }]} />
+        <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Blog Category' },
+        {type:'search',placeholder:'Type here to search by title',options:[{title:'By Title',value:'title'}],field:search,setField:setSearch,search:FetchCats}
+        ]} />
         <DragDropContext onDragEnd={HandleDragEvent} className="mt-10 flex h-full w-full flex-col items-center">
           <Droppable droppableId="teams">
             {(droppableProvided) => (

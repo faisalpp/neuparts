@@ -1,17 +1,14 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { toast } from 'react-toastify';
 import Table from '@/components/AdminDashboard/Table';
 import Row from '@/components/AdminDashboard/Table/Row';
 import RowLoader from '@/components/AdminDashboard/Table/Loader';
 import Text from '@/components/AdminDashboard/Table/TD/Text';
 import NoData from '@/components/AdminDashboard/Table/NoData';
-import Tablet from '@/components/AdminDashboard/Table/TD/Tablet';
-import TdImage from '@/components/AdminDashboard/Table/TD/TdImage';
 import Actions from '@/components/AdminDashboard/Table/TD/Actions';
 import ActionBtns from '@/components/AdminDashboard/ActionBtns';
-import FileInput from '@/components/AdminDashboard/Inputs/File';
 import TableNav from '@/components/AdminDashboard/TableNav';
 import Popup from '@/components/AdminDashboard/Popup';
 import * as Yup from 'yup';
@@ -26,7 +23,9 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
+  const [search, setSearch] = useState('');
+  const [by, setBy] = useState('all');
 
   const [formData, setFormData] = useState({ id: '', title: '', content: '' });
 
@@ -211,13 +210,11 @@ const Page = () => {
 
     toast.update(getToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
     try {
-      fetch(`/api/admin/faqs/appliance-repair/?page=${page}&limit=${limit}`)
+      fetch(`/api/admin/faqs/appliance-repair/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
         .then((res) => res.json())
         .then((data) => {
-          data;
           if (data.success) {
             if (data.faqs.length > 0) {
-              data;
               toast.update(getToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
               setPageCount(data.pagination.pageCount);
               setFaqs(data.faqs);
@@ -292,7 +289,9 @@ const Page = () => {
       </Popup>
 
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'trigger', text: 'Add Faq', trigger: setCreatePopup }]} />
+        <ActionBtns buttons={[{ type: 'trigger', text: 'Add Faq', trigger: setCreatePopup },
+          ,{type:'search',placeholder:'Type here to search by title',options:[{title:'By Title',value:'title'}],field:search,setField:setSearch,search:FetchFaqs}
+        ]} />
         <div className="mt-10 flex h-full w-full flex-col items-center">
           <Table header={['Title', 'Content', 'Actions']}>
             {/* hello pengea/dnd */}

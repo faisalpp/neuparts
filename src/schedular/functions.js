@@ -68,7 +68,12 @@ try{
 async function GetProductCategoryId(title){
  try{
   await connect()
-  let slug = generateSlug(title);
+  let tit = title 
+  if(tit === ''){
+    tit = 'Uncategorized'
+  }  
+  let slug = generateSlug(tit);
+  
   const isCat = await ProductCategory.findOne({slug:slug})
   if(isCat){
     return isCat._id;
@@ -77,7 +82,8 @@ async function GetProductCategoryId(title){
    const newCat = await ProductCategory.create({title:title,slug:newSlug,isvisible:false,thumbnail:'/no-image.webp'})
    return newCat._id
   }
- }catch(error){
+ 
+}catch(error){
   await CronRec.create({msg:'Retriving product category failed!',body:JSON.stringify(error),status:false})
   process.exit(1)
  }

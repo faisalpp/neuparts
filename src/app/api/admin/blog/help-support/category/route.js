@@ -9,12 +9,21 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') || '';
+    const search = searchParams.get('search');
+    const By = searchParams.get('by');
 
     const page = searchParams.get('page') || '';
     const skip = (page - 1) * limit;
 
-    const PostCountPromise = HelpsCategories.countDocuments();
-    const GetPostsPromise = HelpsCategories.find().sort({ index: 1 }).limit(limit).skip(skip);
+    let query = {}
+    if(search != ''){
+      query = {$or: [
+        { title: { $regex: search, $options: 'i' } }
+      ]}
+    }
+
+    const PostCountPromise = HelpsCategories.countDocuments(query);
+    const GetPostsPromise = HelpsCategories.find(query).sort({ index: 1 }).limit(limit).skip(skip);
 
     const [count, categories] = await Promise.all([PostCountPromise, GetPostsPromise]);
 

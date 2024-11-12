@@ -9,11 +9,19 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
+    const search = searchParams.get('search');
+    const By = searchParams.get('by');
 
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * limit;
 
+
     let query = { postType: 'general-faqs' };
+    if(search != ''){
+      query = {$or: [
+        { title: { $regex: search, $options: 'i' } }
+      ]}
+    }
 
     const PostCountPromise = PostCategories.countDocuments(query);
     const GetPostsPromise = PostCategories.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);

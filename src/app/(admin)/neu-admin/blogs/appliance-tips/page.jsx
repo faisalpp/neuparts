@@ -21,7 +21,9 @@ const Page = () => {
   const [reRender,setReRender] = useState(false)
   const [page,setPage] = useState(1)
   const [pageCount,setPageCount] = useState(0)
-  const [limit,setLimit] = useState(2)
+  const [limit,setLimit] = useState(10)
+  const [search, setSearch] = useState('');
+  const [by, setBy] = useState('all');
 
    //handel empty page request
    const ManagePageCount = (id) => {
@@ -96,7 +98,7 @@ const Page = () => {
 
     toast.update(getToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
 
-  fetch(`/api/admin/blog/appliance-tips/?page=${page}&limit=${limit}`)  
+  fetch(`/api/admin/blog/appliance-tips/?page=${page}&limit=${limit}&search=${search}&by=${by}`)  
    .then((res) => res.json())
    .then((data) => {
     if(data.blogs.length > 0){
@@ -127,7 +129,9 @@ const Page = () => {
   return (
     <>
     <div className='flex flex-col mx-10' style={{height:'calc(100vh - 100px)'}} > 
-     <ActionBtns buttons={[{type:'link',text:'Add Blog',link:'/neu-admin/blogs/appliance-tips/add-blog'},{type:'link',text:'Categories',link:'/neu-admin/blogs/appliance-tips/categories'}]}  />
+     <ActionBtns buttons={[{type:'link',text:'Add Blog',link:'/neu-admin/blogs/appliance-tips/add-blog'},{type:'link',text:'Categories',link:'/neu-admin/blogs/appliance-tips/categories'},
+      {type:'search',placeholder:'Type here to search by title',options:[{title:'By Title',value:'title'}],field:search,setField:setSearch,search:FetchBlogs}
+     ]}  />
      <div className='flex flex-col items-center mt-10 h-full w-full' >
       <Table header={['Thumbnail','Title','Slug','Category','Actions']} >
       {/* hello pengea/dnd */}

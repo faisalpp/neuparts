@@ -9,11 +9,20 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
+    const search = searchParams.get('search');
+    const By = searchParams.get('by');
+
 
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * parseInt(limit);
 
     let query = { postType: 'faq-general' };
+    if(search != ''){
+      query = {$and: [
+        { title: { $regex: search, $options: 'i' } },
+        { postType: 'faq-general' }
+      ]}
+    }
 
     const aggregationPipeline = [
       { $match: query }, // Match documents based on the query conditions
@@ -45,6 +54,7 @@ export async function GET(request) {
 
     //get faq categories
     const cats = await PostCategories.find({ postType: 'general-faqs' });
+    
 
     return NextResponse.json({ faqs: faqs, cats: cats, pagination: { pageCount, count }, success: true });
   } catch (error) {

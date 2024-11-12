@@ -8,13 +8,20 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
+    const By = searchParams.get('by');
+    const search = searchParams.get('search');
 
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * limit;
 
     let query = {};
+    if(search != ''){
+      query = {$or: [
+        { review: { $regex: search, $options: 'i' } }
+      ]}
+    }
 
-    const ReviewCountPromise = Review.estimatedDocumentCount(query);
+    const ReviewCountPromise = Review.countDocuments(query);
     const GetReviewsPromise = Review.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
 
     const [count, reviews] = await Promise.all([ReviewCountPromise, GetReviewsPromise]);

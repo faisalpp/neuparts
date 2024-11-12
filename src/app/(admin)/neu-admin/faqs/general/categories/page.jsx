@@ -7,13 +7,12 @@ import Row from '@/components/AdminDashboard/Table/Row';
 import RowLoader from '@/components/AdminDashboard/Table/Loader';
 import Text from '@/components/AdminDashboard/Table/TD/Text';
 import NoData from '@/components/AdminDashboard/Table/NoData';
-import Tablet from '@/components/AdminDashboard/Table/TD/Tablet';
 import Actions from '@/components/AdminDashboard/Table/TD/Actions';
 import ActionBtns from '@/components/AdminDashboard/ActionBtns';
 import TableNav from '@/components/AdminDashboard/TableNav';
 import Popup from '@/components/AdminDashboard/Popup';
 import * as Yup from 'yup';
-import { limitString } from '@/utils/index';
+
 
 const Page = () => {
   const [createPopup, setCreatePopup] = useState(false);
@@ -25,6 +24,8 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [limit, setLimit] = useState(2);
+  const [search, setSearch] = useState('');
+  const [by, setBy] = useState('all');
 
   const [formData, setFormData] = useState({ id: '', title: '' });
 
@@ -206,7 +207,7 @@ const Page = () => {
 
     toast.update(getToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
     try {
-      fetch(`/api/admin/faqs/general/category/?page=${page}&limit=${limit}`)
+      fetch(`/api/admin/faqs/general/category/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.cats?.length > 0) {
@@ -271,7 +272,9 @@ const Page = () => {
       </Popup>
 
       <div className="mx-10 flex flex-col" style={{ minHeight: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Category' }]} />
+        <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Category' },
+          ,{type:'search',placeholder:'Type here to search by title',options:[{title:'By Title',value:'title'}],field:search,setField:setSearch,search:FetchCats}
+        ]} />
         <div className="mt-10 flex h-full w-full flex-col items-center">
           <Table header={['Title', 'Slug', 'Actions']}>
             {/* hello pengea/dnd */}

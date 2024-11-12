@@ -19,6 +19,8 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [limit, setLimit] = useState(5);
+  const [search,setSearch] = useState('')
+  const [by,setBy] = useState()
 
   const DeleteCategory = async (id) => {
     if (!id) {
@@ -61,8 +63,7 @@ const Page = () => {
 
   const FetchCategory = async () => {
     setRowLoader(true);
-
-    await fetch(`/api/admin/product/category?page=${page}&limit=${limit}`)
+    await fetch(`/api/admin/product/category?page=${page}&limit=${limit}&search=${search}&by=${by}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.categories.length > 0) {
@@ -90,7 +91,7 @@ const Page = () => {
   return (
     <>
       <div className="mx-10 flex flex-col">
-        <ActionBtns buttons={[{ type: 'link', text: 'Add Category', link: '/neu-admin/product/category/create' }]} />
+        <ActionBtns buttons={[{ type: 'link', text: 'Add Category', link: '/neu-admin/product/category/create' },{type:'search',placeholder:'Type here to search by title',field:search,setField:setSearch,search:FetchCategory}]} />
         <div className="flex h-full w-full flex-col items-center">
           <Table header={['Thumbnail','Product Title', 'Slug', 'Menu', 'Actions']}>
             {/* hello pengea/dnd */}

@@ -7,7 +7,6 @@ import Row from '@/components/AdminDashboard/Table/Row';
 import RowLoader from '@/components/AdminDashboard/Table/Loader';
 import Text from '@/components/AdminDashboard/Table/TD/Text';
 import NoData from '@/components/AdminDashboard/Table/NoData';
-import TdImage from '@/components/AdminDashboard/Table/TD/TdImage';
 import Actions from '@/components/AdminDashboard/Table/TD/Actions';
 import ActionBtns from '@/components/AdminDashboard/ActionBtns';
 import TableNav from '@/components/AdminDashboard/TableNav';
@@ -19,6 +18,8 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [limit, setLimit] = useState(3);
+  const [search, setSearch] = useState('');
+  const [by, setBy] = useState('all');
 
   //handel empty page request
   const ManagePageCount = (id) => {
@@ -92,7 +93,7 @@ const Page = () => {
 
     toast.update(getToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
 
-    fetch(`/api/admin/blog/help-support/?page=${page}&limit=${limit}`)
+    fetch(`/api/admin/blog/help-support/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.blogs.length > 0) {
@@ -126,6 +127,7 @@ const Page = () => {
           buttons={[
             { type: 'link', text: 'Add Blog', link: '/neu-admin/blogs/help-support/add-blog' },
             { type: 'link', text: 'Categories', link: '/neu-admin/blogs/help-support/categories' },
+            {type:'search',placeholder:'Type here to search by title',options:[{title:'By Title',value:'title'}],field:search,setField:setSearch,search:FetchBlogs}
           ]}
         />
         <div className="mt-10 flex h-full w-full flex-col items-center">

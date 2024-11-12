@@ -39,13 +39,20 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
+    const By = searchParams.get('by');
+    const search = searchParams.get('search');
 
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * limit;
 
     let query = {};
+    if(search != ''){
+      query = {$or: [
+        { title: { $regex: search, $options: 'i' } }
+      ]}
+    }
 
-    const ReviewCountPromise = Category.estimatedDocumentCount(query);
+    const ReviewCountPromise = Category.countDocuments(query);
     const GetCategoryPromise = Category.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
 
     const [count, categories] = await Promise.all([ReviewCountPromise, GetCategoryPromise]);

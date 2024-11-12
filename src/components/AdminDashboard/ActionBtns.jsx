@@ -42,6 +42,16 @@ const ActionBtns = ({ buttons }) => {
               </div>
               )
             }
+            if(btn.type === 'search'){
+              return (
+             <div className='flex items-center gap-3' >
+              <input value={btn.field} onChange={(e)=>btn.setField(e.target.value)} type="text" className="block w-full rounded-lg border border-gray-400 bg-white px-5 py-2.5 text-gray-700 placeholder-gray-400/70 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:border-blue-300" placeholder={btn.placeholder} />
+              <button onClick={()=>btn.search()} type="button" className="rounded-md bg-b4 px-4 py-1 text-white">
+                Search
+              </button>
+             </div>  
+             )
+            }
           })
         : null}
     </div>

@@ -27,6 +27,8 @@ const Page = () => {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [limit, setLimit] = useState(2);
+  const [search, setSearch] = useState('');
+  const [by, setBy] = useState('all');
 
   const [formData, setFormData] = useState({ id: '', name: '', review: '', rating: '1', pages: [] });
 
@@ -215,7 +217,6 @@ const Page = () => {
 
   const FetchReviews = async () => {
     setRowLoader(true);
-
     // Show pending toast
     const getToastId = toast.promise(
       new Promise((resolve) => {
@@ -233,7 +234,7 @@ const Page = () => {
 
     toast.update(getToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
 
-    fetch(`/api/admin/review/?page=${page}&limit=${limit}`)
+    fetch(`/api/admin/review/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.reviews.length > 0) {
@@ -419,7 +420,7 @@ const Page = () => {
       </Popup>
 
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Review' }]} />
+        <ActionBtns buttons={[{ type: 'trigger', trigger: setCreatePopup, text: 'Add Review' },{type:'search',placeholder:'Type here to search by title',options:[{title:'By Title',value:'title'}],field:search,setField:setSearch,search:FetchReviews}]} />
         <div className="mt-10 flex h-full w-full flex-col items-center">
           <Table header={['Name', 'Review', 'Rating', 'Pages', 'Actions']}>
             {/* hello pengea/dnd */}

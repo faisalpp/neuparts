@@ -9,11 +9,18 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit');
+    const search = searchParams.get('search');
+    const By = searchParams.get('by');
 
     const page = searchParams.get('page') || 1;
     const skip = (page - 1) * parseInt(limit);
 
     const aggregationPipeline = [
+      {
+        $match: {
+          title: { $regex: search, $options: 'i' }
+        },
+      },
       {
         $addFields: {
           categoryId: { $toObjectId: '$category' }, // Convert string to ObjectId
@@ -29,18 +36,15 @@ export async function GET(request) {
       },
       { $unwind: '$joinedCategory' }, // Unwind to destructure the array to object
       { $sort: { createdAt: -1 } }, // sorting by createdAt descending
-      { $limit: parseInt(limit) }, // limit number of results
-      { $skip: parseInt(skip) }, // skip number of results
     ];
 
-    const PostCountPromise = Post.countDocuments();
-    const GetPostsPromise = Post.aggregate(aggregationPipeline);
+    const PostCountPromise = Post.aggregate(aggregationPipeline);
+    const GetPostsPromise = Post.aggregate([...aggregationPipeline,{ $limit: parseInt(limit) },{ $skip: parseInt(skip) }])
 
     const [count, blogs] = await Promise.all([PostCountPromise, GetPostsPromise]);
 
-    const pageCount = Math.ceil(count / limit);
-    blogs;
-    return NextResponse.json({ blogs: blogs, pagination: { pageCount, count }, success: true });
+    const pageCount = Math.ceil(count.length / limit);
+    return NextResponse.json({ blogs: blogs, pagination: { pageCount, count:count.length }, success: true });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

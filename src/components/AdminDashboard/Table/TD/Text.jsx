@@ -11,7 +11,7 @@ const Text = ({ text,isArray=false }) => {
       <span key={i} className='line-clamp-1 '>{ar}, </span>
     ))}
    </td>:
-   <td className="px-6 py-5"><span className='line-clamp-1 '>{text}</span></td>
+   <td className="px-6 py-5"><span className='line-clamp-1'>{text}</span></td>
   }
   </>
  )};
