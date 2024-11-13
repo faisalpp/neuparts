@@ -22,7 +22,7 @@ export async function GET(request) {
 }
 
 export async function PUT(request) {
-  // try {
+  try {
     await connect();
 
     const { email,type,value} = await request.json()
@@ -38,7 +38,7 @@ export async function PUT(request) {
     }
 
     return NextResponse.json({ success: false, message: 'Something went wrong!' }, { status: 500 });
-  // }catch(error){
-  //   return NextResponse.json({ success: false, message: 'Something went wrong!' }, { status: 500 });
-  // }
+  }catch(error){
+    return NextResponse.json({ success: false, message: 'Something went wrong!' }, { status: 500 });
+  }
 }

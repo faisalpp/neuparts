@@ -9,8 +9,8 @@ export async function GET(request) {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') || '';
-    const search = searchParams.get('search');
-    const By = searchParams.get('by');
+    const search = searchParams.get('search') || '';
+    const By = searchParams.get('by') || '';
 
     const page = searchParams.get('page') || '';
     const skip = (page - 1) * limit;

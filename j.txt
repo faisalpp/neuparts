@@ -1,0 +1,34 @@
+Acronyms
+ -> CRUD (Create, Read, Update , Delete data base operations) 
+
+Front End and Backend API's
+ -> Newletter | OK  (store in database) 
+ -> Map (Postman API is attached with this map to show shipping availability) | OK
+ -> Reviews (CRUD can be performed form dashboard - Also attached to entire website pages) | Ok
+ -> Home Gallery Section (CRUD can be performed from dashbaord - Home Gallery)  | OK
+ -> FAQ's (CRUD can be performed from dashboard - FAQs) | OK
+   -> General Faq's | OK
+   -> Appliance Repair Faq's | OK
+ -> Team Memeber Section (on our story page) | OK
+ -> Static Videos (can control videos on entire website pages) | OK
+ -> Blogs (CRUD ) | OK
+   -> Blog | OK
+   -> Appliance Tips | OK
+   -> Help & Support | OK
+ -> Orders | OK
+ -> Coupons | CRUD (OK) | Checkout (OK)
+ -> Filters on products page | OK
+ -> Buying Options | OK
+ -> Cart System | OK
+ -> Checkout Process |  OK
+ -> My Account | OK
+ -> Media Manager | OK
+ -> Order Confirmation Email | OK
+ -> New User Details Email | OK
+ -> Password Reset Email | OK
+
+Neulink API's
+ -> Order API | OK 
+ -> Products Syncing | OK 
+ -> Product Syncing Cron Job | OK 
+ 

@@ -8,27 +8,34 @@ export async function GET(request) {
 
     const cats = await ApplianceCategories.aggregate([
       {
+        $addFields: {
+          _idStr: { $toString: '$_id' }, // convert ObjectId to string
+        },
+      },
+      {
         $lookup: {
-          from: 'posts', // the name of the products collection
-          localField: '_id',
-          foreignField: '_id',
+          from: 'posts', // collection with posts
+          localField: '_idStr', // converted string field
+          foreignField: 'category', // field in posts
           as: 'posts',
         },
       },
       {
         $addFields: {
-          postCount: { $size: '$posts' }, // count the number of products in each product type
+          postCount: { $size: '$posts' }, // count the number of posts in each category
         },
       },
       {
         $project: {
-          products: 0, // optionally exclude the product array if you only want the count
+          posts: 0, // exclude the posts array if only count is needed
+          _idStr: 0, // remove the temporary string field
         },
       },
       {
-        $sort: { index: 1 },
+        $sort: { index: 1 }, // sort by index field
       },
     ]);
+    
 
     return NextResponse.json({ cats, success: true });
   } catch (error) {

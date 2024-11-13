@@ -217,7 +217,7 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
                subTotal -= calc
              }
              // Coupon Calculation
-             state.cartSubTotal = subTotal
+             state.cartSubTotal = subTotal.toFixed(2)
              if(state.shippingMethod.method === 'Shipping' && state.shippingMethod.rate != 'N/A'){
               subTotal += parseFloat(state.shippingMethod.rate)
              }

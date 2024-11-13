@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { Description } from '@headlessui/react';
 
 const Page = () => {
   const editorRef = useRef();
@@ -74,33 +73,20 @@ const Page = () => {
       return;
     }
 
-    const crtToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Creating Blog...', // Show pending message
-        success: 'Blog created successfully!', // Show success message
-        error: 'Failed to create blog', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const crtToastId = toast.loading('Creating Blog...')
 
     fetch('/api/admin/blog/help-support', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
-          toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'success', autoClose: 1000, isLoading: false });
           router.push('/neu-admin/blogs/help-support');
         } else {
-          toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       })
       .catch((error) => {
-        toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+        toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
       });
   };
 

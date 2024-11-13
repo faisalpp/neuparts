@@ -363,7 +363,7 @@ const Page = ({params}) => {
           <div key={i} className='flex gap-5' >
           {it.thumbnail ? <div className='px-2 py-1 bg-gray-50 border-2 border-gray-300 rounded-md w-fit' ><Image src={it.thumbnail} height={100} width={100} className='w-10 h-10' /></div> :
          <div className='px-2 py-1 bg-gray-50 border-2 border-gray-300 rounded-md w-fit' ><CiImageOn className='text-4xl' /></div>}
-          <div><Link href='/' className='text-sm underline text-gray-400' >{it.title}</Link></div>
+          <div className='max-w-72 text-ellipsis' ><Link href={`/product/${it.slug}`} className='text-sm underline text-gray-400 text-ellipsis' >{it.title}</Link></div>
           <div className='flex items-center gap-5 ml-auto mr-3' ><span>${it.is_sale ? it.sale_price : it.regular_price}</span><span>x {it.quantity}</span><span>${it.is_sale ? it.sale_price * it.quantity : it.regular_price * it.quantity}</span></div>
          </div>
         )) : null}  

@@ -20,7 +20,7 @@ const RecentStories = ({ loading,moreLoading,setMoreLoading,data,page,setPage ,p
           
           <div className="my-10 grid grid-cols-1 gap-x-4 gap-y-10 md:!grid-cols-3 2xl:gap-6 xs:grid-cols-2">
             {loading ?  <CardSkelton count={9} /> : data.length > 0 && data.map((blog, index) => 
-             <BlogCard key={index} image={blog.thumbnail ? blog.thumbnail : '/no-image.jfif'} title={blog.title.substr(0, 50)} date={FormatDate(blog.createdAt)} readMore={blog.slug} />)}
+             <BlogCard key={index} image={blog?.thumbnail ? blog.thumbnail : '/no-image.webp'} title={blog.title.substr(0, 50)} date={FormatDate(blog.createdAt)} readMore={blog.slug} />)}
           </div>
           {page < pageCount ? 
           <div className="flex justify-center">

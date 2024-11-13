@@ -1,6 +1,6 @@
 'use client';
 
-import React, { startTransition, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Table from '@/components/AdminDashboard/Table';
 import Row from '@/components/AdminDashboard/Table/Row';
@@ -30,7 +30,7 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
 
   const [formData, setFormData] = useState({ id: '', name: '', bio: '', role: '', avatar: '' });
   const [files, setFiles] = useState([]);
@@ -69,35 +69,22 @@ const Page = () => {
       return;
     }
 
-    const crtToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Creating Team Member...', // Show pending message
-        success: 'Member created successfully!', // Show success message
-        error: 'Failed to create member', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const crtToastId = toast.loading('Creating Team Member...')
 
     fetch('/api/admin/team-member', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
           ResetFormData();
-          toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'success', autoClose: 1000, isLoading: false });
           setReRender(true);
           setCreatePopup(false);
         } else {
-          toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       })
       .catch((error) => {
-        toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+        toast.update(crtToastId, { type:'error', autoClose: 1000, isLoading: false });
       });
   };
 
@@ -128,20 +115,7 @@ const Page = () => {
     }
 
     // Show pending toast
-    const updToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Updating Team Member...', // Show pending message
-        success: 'Team Member update successfully!', // Show success message
-        error: 'Failed to update Team Member', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(updToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const updToastId = toast.loading('Updating Team Member...')
 
     fetch('/api/admin/team-member', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
@@ -150,9 +124,9 @@ const Page = () => {
           setReRender(true);
           ResetFormData();
           setUpdatePopup(false);
-          toast.update(updToastId, { render: resp.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(updToastId, { render: resp.message, type:'success', autoClose: 1000, isLoading: false });
         } else {
-          toast.update(updToastId, { render: resp.message, type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(updToastId, { type:'error', autoClose: 1000, isLoading: false });
         }
       });
   };
@@ -177,21 +151,7 @@ const Page = () => {
     }
 
     // Show pending toast
-    const delToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Deleting Team Member...', // Show pending message
-        success: 'Team Member deleted successfully!', // Show success message
-        error: 'Failed to delete Team Member', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-
-    toast.update(delToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const delToastId = toast.loading('Deleting Team Member...')
 
     fetch('/api/admin/team-member', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
@@ -199,13 +159,13 @@ const Page = () => {
         if (resp.success) {
           ManagePageCount(id);
           setReRender(true);
-          toast.update(delToastId, { render: resp.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(delToastId, { render: resp.message, type: 'success', autoClose: 1000, isLoading: false });
         } else {
-          toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(delToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       })
       .catch((error) => {
-        toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+        toast.update(delToastId, { type: 'error', autoClose: 1000, isLoading: false });
       });
   };
 
@@ -213,31 +173,17 @@ const Page = () => {
     setRowLoader(true);
 
     // Show pending toast
-    const getToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Getting Team Member...', // Show pending message
-        success: 'Team Members retrived successfully!', // Show success message
-        error: 'Failed to get Team Members', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-
-    toast.update(getToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const getToastId = toast.loading('Getting Team Member...')
 
     fetch(`/api/admin/team-member/?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.members.length > 0) {
-          toast.update(getToastId, { render: data.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(getToastId, { render: data.message, type:'success', autoClose: 1000, isLoading: false });
           setPageCount(data.pagination.pageCount);
           setTeamMembers(data.members);
         } else {
-          toast.update(getToastId, { render: data.message, type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(getToastId, { render: data.message, type: 'error', autoClose: 1000, isLoading: false });
           setTeamMembers([]);
         }
         setRowLoader(false);

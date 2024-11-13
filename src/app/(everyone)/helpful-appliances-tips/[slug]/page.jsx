@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { RiArrowDropRightLine } from 'react-icons/ri';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { FiChevronRight } from 'react-icons/fi';
 import HelpAndSupportCard from '@/components/HelpAndSupportCard';
 import Pagination2 from '@/components/Pagination/Pagination2';
 import Image from 'next/image';
@@ -17,7 +16,7 @@ const Page = ({ params }) => {
   const [helpTabs, setHelpTabs] = useState([]);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
 
   const getTipsCat = async (term) => {
     let search = '';
@@ -53,10 +52,10 @@ const Page = ({ params }) => {
         <div className="flex items-center">
           <h5 className="text-xs text-b3">Home</h5>
           <RiArrowDropRightLine className="text-xl text-b3" />
-          <h5 className="text-xs text-black">Help & Support Center</h5>
+          <h5 className="text-xs text-black">Helpful Appliance Tips</h5>
         </div>
         {/* Bread Crumbs End */}
-        <h1 className="text-32px font-bold text-b18 lg:text-40px">Help & Support</h1>
+        <h1 className="text-32px font-bold text-b18 lg:text-40px">Helpful Appliance Tips</h1>
 
         {/* Search Bar */}
         <div className="relative w-full max-w-[560px]">

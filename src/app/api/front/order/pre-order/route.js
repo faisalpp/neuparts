@@ -20,12 +20,9 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Order no is not generatable!', success: false });    
     }
 
-    // Todo: newsletter subscribe
-    if(shippingAddress.keepUpdates){
-      await SubscribeNewsLetter(shippingAddress.email)
-    }
+    await SubscribeNewsLetter(shippingAddress.email)
 
-    // Todo: create user if not loggedIn
+
     let USER=false;
     const isUser = await  checkSession(request,'neu-user')
     const isAdmin = await checkSession(request,'neu-admin')

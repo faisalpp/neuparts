@@ -28,7 +28,7 @@ export async function GET(request) {
       },
       {
         $lookup: {
-          from: 'helpscategories', // name of the collection to join
+          from: 'appliancecategories', // name of the collection to join
           localField: 'categoryId', // field in the Posts collection (after conversion)
           foreignField: '_id', // field in the faqCategories collection
           as: 'joinedCategory', // name for the field where the joined data will be stored
@@ -130,13 +130,12 @@ export async function PUT(request) {
 
 export async function DELETE(request) {
   try {
+    await connect();
     const { id } = await request.json();
 
     if (id === '') {
       return NextResponse.json({ message: 'Blog ID required!', success: false });
     }
-
-    await connect();
 
     await Post.findByIdAndDelete(id);
 

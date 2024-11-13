@@ -11,7 +11,6 @@ const HelpfulApliancesTips = () => {
   const [tips, setTips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [moreLoading, setMoreLoading] = useState(false);
-  // const [pageCount, setPageCount] = useState(null);
 
   const FetchBlogs = async () => {
     if (!moreLoading) {
@@ -21,10 +20,9 @@ const HelpfulApliancesTips = () => {
     fetch(`/api/front/helpful-appliance-tips/categories`)
       .then((res) => res.json())
       .then((data) => {
-        data;
+        console.log(data)
         if (data.cats.length > 0) {
-          // setPageCount(data.pagination.pageCount);
-          setTips((blogs) => [...blogs, ...data.cats]);
+          setTips(data.cats)
         } else {
           setTips([]);
         }

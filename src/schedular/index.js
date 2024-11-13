@@ -47,7 +47,7 @@ async function SyncProducts() {
   }
 
   const PER_PAGE = 100;
-  let PAGE = 1;
+  let PAGE = 156;
   let LOGIN_URL;
   let TOTAL_PAGES;
 
@@ -73,6 +73,13 @@ async function SyncProducts() {
       let data;
       try {
         const CONDITION = prod.condition != "" ? generateSlug(prod.condition) : null;
+      if(  prod.part_number !== null && prod.part_number !== '' && prod.type !== null && prod.type !== '' &&
+        (
+         (prod.regular_price && prod.regular_price !== '0.00') ||
+         (prod.sale_price && prod.sale_price !== '0.00')
+        )){
+        const regularPrice = prod.regular_price ? prod.regular_price : '0.00'
+        const salePrice = prod.sale_price ? prod.sale_price : '0.00'
         if (prod.is_variant) {
           const catId = await GetProductCategoryId(prod.category);
           const partType = await CreateGetPartType(prod.type);
@@ -85,8 +92,8 @@ async function SyncProducts() {
             is_variant: true,
             parent_sku: parent._id,
             title: prod.title,
-            regular_price: prod.regular_price,
-            sale_price: prod.sale_price,
+            regular_price: regularPrice,
+            sale_price: salePrice,
             sku: prod.sku,
             part_number: prod.part_number,
             is_sale: prod.sale_price !== '0.00',
@@ -108,8 +115,8 @@ async function SyncProducts() {
             is_variant: false,
             parent_sku: null,
             title: prod.title,
-            regular_price: prod.regular_price,
-            sale_price: prod.sale_price,
+            regular_price: regularPrice,
+            sale_price: salePrice,
             sku: prod.sku,
             model_no: prod.model_numbers,
             part_number: prod.part_number,
@@ -123,8 +130,8 @@ async function SyncProducts() {
             thumbnail: prod.images.length > 0 ? prod.images[0].thumbnail : null,
           };
         }
-
         await CreateOrUpdateProduct(data);
+       }
       } catch (error) {
         await CronRec.create({msg:'Neulink api failed!',body:`Error processing product with SKU: ${prod.sku}`,status:false})
         process.exit(1)

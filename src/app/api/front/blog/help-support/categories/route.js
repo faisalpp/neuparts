@@ -33,6 +33,7 @@ export async function GET() {
           slug: 1,
           postCount: 1,
           thumbnail: 1,
+          index:1
         },
       },
       { $sort: { index: 1 } },

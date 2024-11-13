@@ -33,7 +33,6 @@ const HelpAndSupport = () => {
     fetch(`/api/front/blog/help-support/by-category/?category=${category}&page=${page}&limit=${limit}&search=${search}`)
       .then((res) => res.json())
       .then((data) => {
-        (data)
         if (data.blogs.length > 0) {
           setPageCount(data.pagination.pageCount)
           setBlogs(data.blogs)
@@ -47,7 +46,7 @@ const HelpAndSupport = () => {
   // get team members data
   useEffect(() => {
     FetchBlogs()
-  }, [page])
+  }, [page,activeTab])
 
 
   const FetchCats = async () => {
@@ -55,7 +54,6 @@ const HelpAndSupport = () => {
     fetch('/api/front/blog/help-support/categories')
       .then((res) => res.json())
       .then((data) => {
-        (data)
         if (data.cats.length > 0) {
           setCats(data.cats)
           FetchBlogs(data.cats[0]._id)

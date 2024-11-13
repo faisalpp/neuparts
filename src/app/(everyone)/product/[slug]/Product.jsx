@@ -106,7 +106,7 @@ const Product = ({ slug }) => {
           setPartsCount(data.partCount);
           setProduct(data.product);
           setStock(data.product.stock);
-          setPartProducts([...data.partproducts, ...data.partproducts]);
+          setPartProducts(data.partproducts);
           setBuyingOptions(data.buyingOptions);
           setLoading(false);
         } else {

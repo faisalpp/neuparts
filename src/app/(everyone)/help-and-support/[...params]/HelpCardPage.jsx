@@ -4,14 +4,14 @@ import parse from 'html-react-parser';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import Link from 'next/link';
 import connect from '@/lib/db';
-import PostCategories from '@/models/postCategories';
+import HelpCategories from '@/models/helpsCategories';
 import Posts from '@/models/posts';
 import { notFound } from 'next/navigation';
 
 const GetBlog = async (category, slug) => {
   await connect();
 
-  const cat = await PostCategories.findOne({ postType: 'help-support', slug: category });
+  const cat = await HelpCategories.findOne({ slug: category });
   if (cat) {
     const blog = await Posts.findOne({ postType: 'blog-help-support', slug: slug, category: cat._id });
     return { blog, category: cat };

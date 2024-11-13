@@ -26,7 +26,7 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState('');
   const [by, setBy] = useState('all');
 
@@ -56,36 +56,22 @@ const Page = () => {
       return;
     }
 
-    const crtToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Create Review...', // Show pending message
-        success: 'Review created successfully!', // Show success message
-        error: 'Failed to create review', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const crtToastId = toast.loading('Creating Review...')
 
     fetch('/api/admin/review', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
           setFormData({ id: '', name: '', review: '', rating: '', pages: [] });
-          toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'success', autoClose: 1000, isLoading: false });
           setReRender(true);
           setCreatePopup(false);
         } else {
-          toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       })
       .catch((error) => {
-        toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
-        console.error('Error creating review:', error);
+        toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
       });
   };
 
@@ -133,20 +119,7 @@ const Page = () => {
       return;
     }
     // Show pending toast
-    const updToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Updating review...', // Show pending message
-        success: 'Review update successfully!', // Show success message
-        error: 'Failed to update review', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(updToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const updToastId = toast.loading('Updating review...')
 
     fetch('/api/admin/review', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
@@ -155,9 +128,9 @@ const Page = () => {
           setReRender(true);
           setFormData({ id: '', name: '', review: '', rating: '', pages: [] });
           setUpdatePopup(false);
-          toast.update(updToastId, { render: resp.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(updToastId, { render: resp.message, type: 'success', autoClose: 1000, isLoading: false });
         } else {
-          toast.update(updToastId, { render: resp.message, type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(updToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       });
   };
@@ -182,21 +155,7 @@ const Page = () => {
     }
 
     // Show pending toast
-    const delToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Deleting review...', // Show pending message
-        success: 'Review deleted successfully!', // Show success message
-        error: 'Failed to delete review', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-
-    toast.update(delToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const delToastId = toast.loading('Deleting review...')
 
     fetch('/api/admin/review', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
@@ -204,45 +163,30 @@ const Page = () => {
         if (resp.success) {
           ManagePageCount(id);
           setReRender(true);
-          toast.update(delToastId, { render: resp.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(delToastId, { render: resp.message, type: 'success', autoClose: 1000, isLoading: false });
         } else {
-          toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(delToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       })
       .catch((error) => {
-        toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 3000, isLoading: false });
-        console.error('Error deleting review:', error);
+        toast.update(delToastId, { type: 'error', autoClose: 3000, isLoading: false });
       });
   };
 
   const FetchReviews = async () => {
     setRowLoader(true);
     // Show pending toast
-    const getToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Getting reviews...', // Show pending message
-        success: 'Reviews retrived successfully!',
-        error: 'Failed to get reviews', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-
-    toast.update(getToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const getToastId = toast.loading('Getting reviews...')
 
     fetch(`/api/admin/review/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.reviews.length > 0) {
-          toast.update(getToastId, { render: data.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(getToastId, { render: data.message, type: 'success', autoClose: 1000, isLoading: false });
           setPageCount(data.pagination.pageCount);
           setReviews(data.reviews);
         } else {
-          toast.update(getToastId, { render: data.message, type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(getToastId, { render: data.message, type: 'error', autoClose: 1000, isLoading: false });
           setReviews([]);
         }
         setRowLoader(false);

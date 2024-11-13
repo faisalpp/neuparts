@@ -5,9 +5,7 @@ import Post from '@/models/posts';
 
 const GetFaqs = async () => {
   await connect();
-
   const faqs = await Post.find({ postType: 'faq-appliance-repair' });
-  faqs;
   return faqs;
 };
 

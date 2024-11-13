@@ -10,4 +10,6 @@ const applianceCategoriesSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.ApplianceCategories || mongoose.model('ApplianceCategories', applianceCategoriesSchema);
+const Cats = mongoose.models.ApplianceCategories || mongoose.model('ApplianceCategories', applianceCategoriesSchema);
+
+export default Cats 

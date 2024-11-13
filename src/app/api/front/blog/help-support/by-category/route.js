@@ -6,7 +6,7 @@ export async function GET(request) {
   try {
     await connect();
     const searchParams = request.nextUrl.searchParams;
-    const search = searchParams.get('search');
+    const search = searchParams.get('search') || '';
     const category = searchParams.get('category');
     const limit = searchParams.get('limit');
 

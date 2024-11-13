@@ -50,36 +50,22 @@ const Page = () => {
       return;
     }
 
-    const crtToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Create Faq Category...', // Show pending message
-        success: 'Faq category created successfully!', // Show success message
-        error: 'Failed to create faq category', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const crtToastId = toast.loading('Creating Faq Category...')
 
     fetch('/api/admin/faqs/general/category', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
-        resp;
         if (resp.success) {
           setFormData({ id: '', title: '' });
-          toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'success', autoClose: 1000, isLoading: false });
           setReRender(true);
           setCreatePopup(false);
         } else {
-          toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       })
       .catch((error) => {
-        toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+        toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
       });
   };
 
@@ -106,20 +92,7 @@ const Page = () => {
     }
 
     // Show pending toast
-    const updToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Updating faq category...', // Show pending message
-        success: 'Faq category update successfully!', // Show success message
-        error: 'Failed to update faq category', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(updToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const updToastId = toast.loading('Updating faq category...')
 
     fetch('/api/admin/faqs/general/category', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
@@ -128,9 +101,9 @@ const Page = () => {
           setReRender(true);
           setFormData({ id: '', title: '' });
           setUpdatePopup(false);
-          toast.update(updToastId, { render: resp.message, type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(updToastId, { render: resp.message, type: 'success', autoClose: 1000, isLoading: false });
         } else {
-          toast.update(updToastId, { render: resp.message, type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(updToastId, { render: resp.message, type: 'error', autoClose: 1000, isLoading: false });
         }
       });
   };
@@ -155,21 +128,7 @@ const Page = () => {
     }
 
     // Show pending toast
-    const delToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Deleting faq category...', // Show pending message
-        success: 'Faq category deleted successfully!', // Show success message
-        error: 'Failed to delete faq category', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-
-    toast.update(delToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const delToastId = toast.loading('Deleting faq category...')
 
     fetch('/api/admin/faqs/general/category', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
@@ -177,13 +136,13 @@ const Page = () => {
         if (resp.success) {
           ManagePageCount(id);
           setReRender(true);
-          toast.update(delToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(delToastId, { type: 'success', autoClose: 1000, isLoading: false });
         } else {
-          toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(delToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       })
       .catch((error) => {
-        toast.update(delToastId, { type: toast.TYPE?.ERROR, autoClose: 3000, isLoading: false });
+        toast.update(delToastId, { type: 'error', autoClose: 3000, isLoading: false });
       });
   };
 
@@ -191,37 +150,24 @@ const Page = () => {
     setRowLoader(true);
 
     // Show pending toast
-    const getToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Getting faq categories...', // Show pending message
-        success: 'Faq categories retrived successfully!', // Show success message
-        error: 'Failed to get faq categories', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
+    const getToastId = toast.loading('Getting faq categories...')
 
-    toast.update(getToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
     try {
       fetch(`/api/admin/faqs/general/category/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.cats?.length > 0) {
-            toast.update(getToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+            toast.update(getToastId, { type: 'success', autoClose: 1000, isLoading: false });
             setPageCount(data.pagination.pageCount);
             setFaqCat(data.cats);
           } else {
-            toast.update(getToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+            toast.update(getToastId, { type: 'error', autoClose: 1000, isLoading: false });
             setFaqCat([]);
           }
           setRowLoader(false);
         });
     } catch (error) {
-      toast.update(getToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+      toast.update(getToastId, { type: 'error', autoClose: 1000, isLoading: false });
     }
   };
 

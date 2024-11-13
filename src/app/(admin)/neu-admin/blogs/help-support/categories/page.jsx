@@ -52,20 +52,7 @@ const Page = () => {
       return;
     }
 
-    const crtToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Creating Blog Category...', // Show pending message
-        success: 'Blog category created successfully!', // Show success message
-        error: 'Failed to create blog category', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const crtToastId = toast.loading('Creating Blog Category...')
 
     fetch('/api/admin/blog/help-support/category', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
@@ -107,20 +94,7 @@ const Page = () => {
     }
 
     // Show pending toast
-    const updToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Updating blog category...', // Show pending message
-        success: 'Blog category update successfully!', // Show success message
-        error: 'Failed to update blog category', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(updToastId, { type: 'info', autoClose: 1000, isLoading: true });
+    const updToastId = toast.loading('Updating blog category...')
 
     fetch('/api/admin/blog/help-support/category', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
@@ -159,21 +133,7 @@ const Page = () => {
     }
 
     // Show pending toast
-    const delToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        info: 'Deleting blog category...', // Show pending message
-        success: 'Blog category deleted successfully!', // Show success message
-        error: 'Failed to delete blog category', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-
-    toast.update(delToastId, { type: 'info', autoClose: 1000, isLoading: true });
+    const delToastId = toast.loading('Deleting blog category...')
 
     fetch('/api/admin/blog/help-support/category', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: id }) })
       .then((res) => res.json())
@@ -195,21 +155,8 @@ const Page = () => {
     setRowLoader(true);
 
     // Show pending toast
-    const getToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        info: 'Getting blog categories...', // Show pending message
-        success: 'Blog categories retrived successfully!', // Show success message
-        error: 'Failed to get blog categories', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
+    const getToastId = toast.loading('Getting blog categories...')
 
-    toast.update(getToastId, { type: 'info', autoClose: 1000, isLoading: true });
     try {
       fetch(`/api/admin/blog/help-support/category/?page=${page}&limit=${limit}&search=${search}&by=${by}`)
         .then((res) => res.json())
@@ -219,7 +166,6 @@ const Page = () => {
             setPageCount(data.pagination.pageCount);
             setCats(data.cats);
           } else {
-            toast.update(getToastId, { type: 'error', autoClose: 1000, isLoading: false });
             setCats([]);
           }
           setRowLoader(false);

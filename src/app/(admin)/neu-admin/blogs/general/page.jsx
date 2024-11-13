@@ -46,21 +46,7 @@ const Page = () => {
     }
 
      // Show pending toast
-  const delToastId = toast.promise(
-    new Promise((resolve) => {
-      // Placeholder promise that resolves when request completes
-      setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-    }),
-    {
-      pending: 'Deleting Blog...', // Show pending message
-      success: 'Blog deleted successfully!', // Show success message
-      error: 'Failed to delete blog', // Show error message
-      closeOnClick: false,
-      closeOnEscape: false
-    }
-  );
-
-  toast.update(delToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
+  const delToastId = toast.loading('Deleting Blog...')
 
     fetch('/api/admin/blog/general', {method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },body: JSON.stringify({id:id}),
@@ -69,13 +55,13 @@ const Page = () => {
       if(resp.success){
         ManagePageCount(id)
        setReRender(true)
-       toast.update(delToastId,{render:resp.message,type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false})
+       toast.update(delToastId,{render:resp.message,type:'success',autoClose:1000,isLoading: false})
       }else{
-       toast.update(delToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
+       toast.update(delToastId,{type:'error',autoClose:1000,isLoading: false})
       }
      })
      .catch((error) => {
-      toast.update(delToastId,{type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
+      toast.update(delToastId,{type:'error',autoClose:1000,isLoading: false})
     });
   }
 
@@ -83,31 +69,17 @@ const Page = () => {
   setRowLoader(true)
 
      // Show pending toast
-     const getToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Getting Blogs...', // Show pending message
-        success: 'Blogs retrived successfully!', // Show success message
-        error: 'Failed to get Blogs', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false
-      }
-    );
-
-    toast.update(getToastId,{type:toast.TYPE?.PENDING,autoClose:1000,isLoading: true})
+     const getToastId = toast.loading('Getting Blogs...')
 
   fetch(`/api/admin/blog/general/?page=${page}&limit=${limit}&search=${search}&by=${by}`)  
    .then((res) => res.json())
    .then((data) => {
     if(data.blogs.length > 0){
-      toast.update(getToastId,{render:data.message,type:toast.TYPE?.SUCCESS,autoClose:1000,isLoading: false}) 
+      toast.update(getToastId,{render:data.message,type:'success',autoClose:1000,isLoading: false}) 
       setPageCount(data.pagination.pageCount)
       setBlogs(data.blogs)
     }else{
-      toast.update(getToastId,{render:data.message,type:toast.TYPE?.ERROR,autoClose:1000,isLoading: false})
+      toast.update(getToastId,{render:'No blogs found!',type:'error',autoClose:1000,isLoading: false})
        setBlogs([])
     }
     setRowLoader(false)

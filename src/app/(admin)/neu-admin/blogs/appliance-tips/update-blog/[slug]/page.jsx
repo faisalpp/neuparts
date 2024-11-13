@@ -32,7 +32,6 @@ const Page = ({ params }) => {
       fetch(`/api/front/blog/appliance-tips/single?slug=${params.slug}`, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
         .then((res) => res.json())
         .then((data) => {
-          (data);
           if (data.success) {
             const { _id, title, slug, content, thumbnail, joinedCategory } = data.blog[0];
             setFormData({ id: _id, title: title, slug: slug, content: content, thumbnail: thumbnail, category: joinedCategory._id, cat: joinedCategory });
@@ -101,33 +100,20 @@ const Page = ({ params }) => {
       return;
     }
 
-    const crtToastId = toast.promise(
-      new Promise((resolve) => {
-        // Placeholder promise that resolves when request completes
-        setTimeout(resolve, 1000); // Show for 3 seconds or until resolved
-      }),
-      {
-        pending: 'Updating Blog...', // Show pending message
-        success: 'Blog updated successfully!', // Show success message
-        error: 'Failed to update blog', // Show error message
-        closeOnClick: false,
-        closeOnEscape: false,
-      }
-    );
-    toast.update(crtToastId, { type: toast.TYPE?.PENDING, autoClose: 1000, isLoading: true });
+    const crtToastId = toast.loading('Updating Blog...')
 
     fetch('/api/admin/blog/appliance-tips', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
       .then((res) => res.json())
       .then((resp) => {
         if (resp.success) {
-          toast.update(crtToastId, { type: toast.TYPE?.SUCCESS, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'success', autoClose: 1000, isLoading: false });
           router.push('/neu-admin/blogs/appliance-tips');
         } else {
-          toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
         }
       })
       .catch((error) => {
-        toast.update(crtToastId, { type: toast.TYPE?.ERROR, autoClose: 1000, isLoading: false });
+        toast.update(crtToastId, { type: 'error', autoClose: 1000, isLoading: false });
       });
   };
 

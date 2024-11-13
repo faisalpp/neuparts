@@ -78,8 +78,8 @@ async function GetProductCategoryId(title){
   if(isCat){
     return isCat._id;
   }else{
-   const newSlug = generateSlug(title);
-   const newCat = await ProductCategory.create({title:title,slug:newSlug,isvisible:false,thumbnail:'/no-image.webp'})
+   const newSlug = generateSlug(tit);
+   const newCat = await ProductCategory.create({title:tit,slug:newSlug,isvisible:false,thumbnail:'/no-image.webp'})
    return newCat._id
   }
  

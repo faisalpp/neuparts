@@ -84,6 +84,7 @@ const Navbar = () => {
   const getCategories = async () => {
     const res = await fetch('/api/front/navbar');
     const data = await res.json();
+    
     const transformedCategories = data.categories.map((category) => ({
       name: category.title,
       url: `/products?category=${category.slug}`,

@@ -15,6 +15,10 @@ export async function GET(req) {
           localField: '_id',
           foreignField: 'category',
           as: 'products',
+          pipeline: [
+            { $limit: 5 }, // Limit the number of products fetched per category
+            { $project: { _id: 1 } }, // Only include _id or any minimal fields needed
+          ],
         },
       },
       {
@@ -34,9 +38,10 @@ export async function GET(req) {
         },
       },
       {
-        $limit: 10,  // Limit the results to 10
+        $limit: 10, // Limit the results to 10 categories
       },
     ]);
+    
     
     const manufacturers = await Manufacturer.aggregate([
       {
@@ -47,6 +52,7 @@ export async function GET(req) {
           as: 'products',
         },
       },
+
       {
         $match: {
           products: { $ne: [] }, // Only include categories with at least one product
@@ -97,6 +103,4 @@ export async function GET(req) {
   } catch (error) {
     return NextResponse.json({ success: false, message: 'Error retrieving attributes' });
   }
-
-
 }

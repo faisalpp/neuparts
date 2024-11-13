@@ -7,12 +7,15 @@ export async function GET(request) {
   try {
     await connect();
     const searchParams = request.nextUrl.searchParams;
-    const search = searchParams.get('search');
+    const search = searchParams.get('search') || '';
     const category = searchParams.get('category');
-    const limit = searchParams.get('limit');
+    const limit = searchParams.get('limit') || 0;
 
     const page = searchParams.get('page') || 1;
-    const skip = (page - 1) * parseInt(limit);
+    let skip = (page - 1) * limit;
+    if(skip < 0){
+      skip = 0
+    }
 
     const postCategory = await ApplianceCategories.findOne({ slug: category });
 
@@ -21,15 +24,13 @@ export async function GET(request) {
       category: postCategory._id,
     };
 
-    if (search) {
+    if (search != '') {
       query.$or = [{ title: search }, { content: search }];
     }
-
+     console.log(skip)
     const count = await Post.countDocuments(query);
 
-    const blogs = await Post.find(query)
-      .limit(Number(limit) || 10)
-      .skip(Number(skip) || 0);
+    const blogs = await Post.find(query).limit(limit).skip(skip);
 
     const pageCount = Math.ceil(count / limit);
 

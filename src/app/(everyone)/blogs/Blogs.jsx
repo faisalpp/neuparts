@@ -20,7 +20,7 @@ const Blogs = () => {
       setLoading(true)
     }
   
-    fetch(`/api/admin/blog/general/?page=${page}&limit=${limit}`)  
+    fetch(`/api/front/blog/general/all?page=${page}&limit=${limit}`)  
      .then((res) => res.json())
      .then((data) => {
       if(data.blogs.length > 0){

@@ -4,7 +4,6 @@ import MyAccount from '@/components/MyAccount/MyAccountLayout';
 import EmailPreferenceData from '@/components/MyAccount/EmailPreferenceData';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { set } from 'mongoose';
 
 const EmailPreferences = () => {
   return (
@@ -27,26 +26,28 @@ const EmailPreferencesData = () => {
 
   const email = useSelector((state)=>state.auth.email);
 
-  const GetPrefernces = async () => {
-    setLoading(true)
-    fetch(`/api/user/profile/subscriptions/?email=${email}`)
-     .then((res) => res.json())
-     .then((data) => {
-       setIsNews(data.newsletter.is_news)
-       setIsOffers(data.newsletter.is_deals)
-       setLoading(false)
-    }).catch((error)=>{
-      toast.error('Something went wrong!')
-    })
+  const getPreferences = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/user/profile/subscriptions/?email=${email}`);
+      const data = await res.json();
+      setIsNews(data.newsletter.is_news);
+      setIsOffers(data.newsletter.is_deals);
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
+  
 
   useEffect(() => {
-    GetPrefernces();
+    getPreferences();
   },[]);
 
   const HandleIsNews = async (e) => {
     setUpdating('news')
-    await fetch('/api/user/profile/subscriptions', {method: 'PUT',headers: {'Content-Type': 'application/json'},
+    fetch('/api/user/profile/subscriptions', {method: 'PUT',headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({email:email,type:'is_news',value:e.target.checked}),
     }).then((res)=> res.json())
     .then((data)=>{
@@ -61,7 +62,7 @@ const EmailPreferencesData = () => {
 
   const HandleIsDeals = async (e) => {
     setUpdating('deals')
-    await fetch('/api/user/profile/subscriptions', {method: 'PUT',headers: {'Content-Type': 'application/json'},
+    fetch('/api/user/profile/subscriptions', {method: 'PUT',headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({email:email,type:'is_deals',value:e.target.checked}),
     }).then((res)=> res.json())
     .then((data)=>{

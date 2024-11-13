@@ -9,31 +9,31 @@ export async function GET() {
     const categories = await Category.aggregate([
       {
         $lookup: {
-          from: 'products',
+          from: 'products', // Name of the product collection
           localField: '_id',
           foreignField: 'category',
           as: 'products',
-        },
-      },
-      {
-        $addFields: {
-          productCount: { $size: '$products' },
+          pipeline: [
+            { $limit: 5 }, // Limit the number of products fetched per category
+            { $project: { _id: 1 } }, // Only include _id or any minimal fields needed
+          ],
         },
       },
       {
         $match: {
-          productCount: { $gt: 0 },  // Only include categories with at least one product
+          products: { $ne: [] }, // Only include categories with at least one product
         },
       },
       {
         $project: {
-          products: 0,  // Exclude the products array
+          _id: 1,
+          title: 1,
+          slug: 1,
         },
-      },
-      {
-        $sort: { createdAt: -1 },  // Sort by createdAt field
-      },
+      }
     ]);
+    
+
 
     const manufacturers = await Manufacturer.aggregate([
       {

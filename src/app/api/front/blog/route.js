@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import Post from '@/models/posts';
-import PostCategories from '@/models/postCategories';
+import PostCategories from '@/models/applianceCategories';
 
 export async function GET(request) {
   try {
@@ -11,7 +11,7 @@ export async function GET(request) {
     const category = searchParams.get('category');
 
     const postCategory = await PostCategories.findOne({ slug: category });
-    const post = await Post.findOne({ slug: slug }).where('category').equals(postCategory._id);
+    const post = await Post.findOne({ slug: slug }).where('category').equals(postCategory._id.toString());
 
     return NextResponse.json({ post: post, success: true });
   } catch (error) {

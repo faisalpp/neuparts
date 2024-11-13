@@ -19,12 +19,10 @@ export async function GET(request) {
     let partproducts = await Product.find({
       _id: { $ne: product._id },
       is_variant: true,
-    }).populate({
+    }).limit(20).populate({
       path: 'category',
       match: { slug: product.category.slug },
     });
-
-    partproducts = partproducts.filter((product) => product.category !== null);
 
     const buyingOptions = await Product.find({
       parent_id: product.parent_id,
