@@ -117,7 +117,7 @@ const AllCategories = ({ searchParams }) => {
                 <CategoryCard key={index} product={product} />
               ))} 
              <div className='col-span-2 xl:col-span-3'>
-              {data.length > 12 ? <Pagination totalPages={calculateTotalPages(count, 10)} /> : null}
+              {data.length > 12 ? <Pagination totalPages={calculateTotalPages(count, 12)} /> : null}
              </div>
           </div>
             ) : (
