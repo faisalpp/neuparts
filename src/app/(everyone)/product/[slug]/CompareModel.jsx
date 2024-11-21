@@ -7,8 +7,7 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import Link from 'next/link';
 import { BsArrowRightShort } from 'react-icons/bs';
 
-
-const CompareModel = ({ products, condition, defaultProduct, slug }) => {
+const CompareModel = ({ addCart, buyNow, products, condition, defaultProduct, slug }) => {
   const conditions = ['new', 'like-new-open-box', 'certified-refurbished', 'used-part-a-condition-grade', 'used-part-b-condition-grade', 'used-part-c-condition-grade', 'used-part-d-condition-grade'];
 
   const filteredProducts = conditions.map((cond) => {
@@ -24,11 +23,6 @@ const CompareModel = ({ products, condition, defaultProduct, slug }) => {
     }
   });
 
-  const [filters, setFilters] = useState([
-    { title: 'Condition', icon: 'star.webp', items: [] },
-    { title: 'Price', icon: 'percent.webp', items: [] },
-    { title: 'Discount', icon: 'sell-black.webp', items: [] },
-  ]);
   return (
     <div id="inspections" className="maincontainer flex flex-col justify-center py-10 lg:py-16 xl:py-20 2xl:py-120px">
       <div className="flex items-center justify-between gap-2 maxlg:flex-col">
@@ -68,7 +62,7 @@ const CompareModel = ({ products, condition, defaultProduct, slug }) => {
                   <tr key={index} className={`border-b border-b-black/10 bg-white ` + (item.stock ? '' : 'pointer-events-none select-none grayscale')}>
                     <th scope="row" className="flex items-center gap-2 whitespace-nowrap py-6 pr-2 font-semibold text-b1">
                       <Image width={60} height={60} className="h-10 w-10 object-contain" src="/popular-parts.webp" alt={item.title} />
-                      <span className='truncate w-52' >{item.title}</span>
+                      <span className="w-52 truncate">{item.title}</span>
                     </th>
                     <td className="py-6 pr-2">
                       <div className={`inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold text-white ` + condition(item.condition)?.class}>
@@ -93,11 +87,11 @@ const CompareModel = ({ products, condition, defaultProduct, slug }) => {
                     <td className="py-6 pr-2 text-xl font-bold text-b3">${item.sale_price ? item.sale_price : item.regular_price}</td>
                     <td className="py-6">
                       <div className="flex items-center justify-evenly gap-1">
-                        <button type="button" className="button-hover flex w-full items-center justify-center rounded-lg px-1 py-3 font-bold text-white">
+                        <button type="button" onClick={() => addCart(item._id, 1)} className="button-hover flex w-full items-center justify-center rounded-lg px-1 py-3 font-bold text-white">
                           <AiOutlineShoppingCart className="text-sm" />
                           <span className="ml-2 flex items-center text-xs font-bold">Add To Cart</span>
                         </button>
-                        <button type="button" className="flex w-full items-center justify-center rounded-lg bg-[#071822] px-1 py-3 font-bold text-white hover:bg-[#071822]/90">
+                        <button type="button" onClick={() => buyNow(item._id, 1)} className="flex w-full items-center justify-center rounded-lg bg-[#071822] px-1 py-3 font-bold text-white hover:bg-[#071822]/90">
                           <Image width={100} height={100} className="h-4 w-4 object-contain" alt="Sell" src="/svgs/sell.webp" />
                           <span className="ml-2 flex items-center text-xs font-bold">Buy Now</span>
                         </button>
@@ -112,13 +106,14 @@ const CompareModel = ({ products, condition, defaultProduct, slug }) => {
           </table>
         </div>
       </div>
-      {filteredProducts.length > 0 ? 
-      <div className="mt-10 flex justify-center md:mt-16">
-        <Link href={`/product/${slug}/buying-options`} className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
-          <span className="text-xs md:text-sm xl:text-base">View More</span>
-          <BsArrowRightShort className="text-2xl" />
-        </Link>
-      </div>:null}
+      {filteredProducts.length > 0 ? (
+        <div className="mt-10 flex justify-center md:mt-16">
+          <Link href={`/product/${slug}/buying-options`} className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
+            <span className="text-xs md:text-sm xl:text-base">View More</span>
+            <BsArrowRightShort className="text-2xl" />
+          </Link>
+        </div>
+      ) : null}
     </div>
   );
 };

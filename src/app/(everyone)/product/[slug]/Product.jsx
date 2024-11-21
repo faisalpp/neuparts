@@ -121,9 +121,9 @@ const Product = ({ slug }) => {
 
   const cartId = useSelector((state) => state.cart.cartId);
   //add to cart
-  const AddToCart = async () => {
+  const AddToCart = async (productId,quatity_) => {
     setCartLoading(true);
-    const res = await dispatch(addToCart({ productId: product._id, cartId: cartId, quantity: quantity, cartRender: true }));
+    const res = await dispatch(addToCart({ productId: productId, cartId: cartId, quantity: quatity_, cartRender: true }));
     if (res.payload.success) {
       setCartLoading(false);
       setStock(res.payload.stock);
@@ -132,9 +132,9 @@ const Product = ({ slug }) => {
     }
   };
 
-  const BuyNow = async () => {
+  const BuyNow = async (productId,quatity_) => {
     setBuyLoading(true);
-    const res = await dispatch(addToCart({ productId: product._id, cartId: cartId, quantity: quantity, cartRender: false }));
+    const res = await dispatch(addToCart({ productId: productId, cartId: cartId, quantity: quatity_, cartRender: false }));
     if (res.payload.success) {
       setBuyLoading(false);
       router.push('/mycart/information');
@@ -242,7 +242,7 @@ const Product = ({ slug }) => {
         <>
           {/* StickyNavabr */}
           <div className="hidden lg:block">
-            <StickyNavbar addCart={AddToCart} product={product} state={showNavbar} condition={ConditionData} />
+            <StickyNavbar addCart={()=>AddToCart(product._id,quantity)} product={product} state={showNavbar} condition={ConditionData} />
           </div>
 
           <MoreImagesModal medias={product.images} state={imgModal} setState={setImgModal} />
@@ -414,11 +414,11 @@ const Product = ({ slug }) => {
 
                 {/* Buttons */}
                 <div className="grid grid-cols-2 gap-2">
-                  <button type="button" disabled={product.stock === 0 || cartLoading ? true : false} onClick={AddToCart} className={` ${product.stock === 0 || buyLoading ? 'bg-b3/60' : 'button-hover'} relative flex h-full w-full items-center justify-center rounded-lg py-4 font-medium text-white`}>
+                  <button type="button" disabled={product.stock === 0 || cartLoading ? true : false} onClick={()=>AddToCart(product._id,quantity)} className={` ${product.stock === 0 || buyLoading ? 'bg-b3/60' : 'button-hover'} relative flex h-full w-full items-center justify-center rounded-lg py-4 font-medium text-white`}>
                     <AiOutlineShoppingCart className="text-lg" />
                     <span className="ml-2 flex items-center font-medium">Add To Cart {cartLoading ? <BiLoaderAlt className="absolute right-16 animate-spin text-2xl" /> : null}</span>
                   </button>
-                  <button type="button" disabled={product.stock === 0 || buyLoading ? true : false} onClick={BuyNow} className={`relative flex h-full w-full items-center justify-center rounded-lg ${product.stock === 0 || buyLoading ? 'bg-[#071822]/60' : 'bg-[#071822]'} py-4 font-medium text-white hover:bg-[#071822]/90`}>
+                  <button type="button" disabled={product.stock === 0 || buyLoading ? true : false} onClick={()=>BuyNow(product._id,quantity)} className={`relative flex h-full w-full items-center justify-center rounded-lg ${product.stock === 0 || buyLoading ? 'bg-[#071822]/60' : 'bg-[#071822]'} py-4 font-medium text-white hover:bg-[#071822]/90`}>
                     <Image width={100} height={100} className="h-6 w-5 object-contain" alt="Sell" src="/svgs/sell.webp" />
                     <span className="ml-2 flex items-center font-medium">Buy Now {buyLoading ? <BiLoaderAlt className="absolute right-16 animate-spin text-2xl" /> : null}</span>
                   </button>
@@ -458,7 +458,8 @@ const Product = ({ slug }) => {
 
           <ProductSlider />
 
-          <CompareModel products={buyingOptions} condition={ConditionData} defaultProduct={product} slug={slug} />
+          {/* product._id,quantity */}
+          <CompareModel addCart={addToCart} buyNow={BuyNow} products={buyingOptions} condition={ConditionData} defaultProduct={product} slug={slug} />
 
           <LoopSection />
 
