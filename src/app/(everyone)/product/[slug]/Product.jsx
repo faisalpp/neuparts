@@ -309,9 +309,9 @@ const Product = ({ slug }) => {
                 </div>
               </div>
               <div className="mt-10 hidden flex-col items-center justify-center gap-y-3 lg:flex">
-                {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
-                {product.specification ? <FaqAccordion parser="true" title="Specifications" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.specification} chevrown /> : null}
-                {product.delivery ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.delivery} chevrown /> : null}
+                {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full h-auto border-0" headerStyle="py-4 px-6 border border-b33 rounded-xl" contentStyle="py-4 px-6 border border-b33 rounded-xl" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
+                {product.specification ? <FaqAccordion parser="true" title="Specifications" parent="w-full h-auto border-0" headerStyle="py-4 px-6 border border-b33 rounded-xl" contentStyle="py-4 px-6 border border-b33 rounded-xl" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.specification} chevrown /> : null}
+                {product.delivery ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full h-auto border-0" headerStyle="py-4 px-6 border border-b33 rounded-xl" contentStyle="py-4 px-6 border border-b33 rounded-xl" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.delivery} chevrown /> : null}
               </div>
             </div>
 
@@ -441,9 +441,9 @@ const Product = ({ slug }) => {
               <BuyingOtherOptions slug={slug} otherProducts={buyingOptions} defaultProduct={product} condition={ConditionData} handleCondition={handleCloseModal} />
 
               <div className="mt-10 hidden flex-col items-center justify-center gap-y-3 maxlg:flex">
-                {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
-                {product.specification ? <FaqAccordion parser="true" title="Specifications" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.specification} chevrown /> : null}
-                {product.delivery ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full [&>div]:py-4 [&>div]:px-6 [&>div]:border [&>div]:border-b33 [&>div]:rounded-xl h-auto border-0" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.delivery} chevrown /> : null}
+                {product.description ? <FaqAccordion parser="true" title="Appliance Description" parent="w-full h-auto border-0" headerStyle="py-4 px-6 border border-b33 rounded-xl" contentStyle="py-4 px-6 border border-b33 rounded-xl" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.description} chevrown /> : null}
+                {product.specification ? <FaqAccordion parser="true" title="Specifications" parent="w-full h-auto border-0" headerStyle="py-4 px-6 border border-b33 rounded-xl" contentStyle="py-4 px-6 border border-b33 rounded-xl" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.specification} chevrown /> : null}
+                {product.delivery ? <FaqAccordion parser="true" title="Delivery Info" parent="w-full h-auto border-0" headerStyle="py-4 px-6 border border-b33 rounded-xl" contentStyle="py-4 px-6 border border-b33 rounded-xl" icon="text-xl" textStyle="font-bold text-sm" child="[&>p]:text-sm !mt-0" answer={product.delivery} chevrown /> : null}
               </div>
             </div>
           </div>
