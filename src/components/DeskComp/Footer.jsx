@@ -5,6 +5,7 @@ import { FiPhone } from 'react-icons/fi';
 import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from 'react-toastify';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ const Footer = () => {
         if (resp.success) {
           toast.update(crtToastId, { type: 'success',render:'Newsletter subscribed successfully!', autoClose: 1000, isLoading: false });
         } else {
-          toast.update(crtToastId, { type:'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type:'info',render:resp.message, autoClose: 1000, isLoading: false });
         }
         setLoading(false)
         setEmail('')
@@ -110,7 +111,7 @@ const Footer = () => {
             <h4 className="text-lg font-bold">Get Latest Discount Offers</h4>
             <form onSubmit={SubscribeNews} className="col-start-4 col-end-8 mt-3 flex h-10 w-full items-center space-x-2 rounded-lg bg-b2 px-3 ">
               <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" className="w-full bg-b2 text-xs text-white/90 outline-none" />
-              <button disabled={loading === false} type="submit">
+              <button type="submit">
                 <IoSendSharp className="text-white" />
               </button>
             </form>
