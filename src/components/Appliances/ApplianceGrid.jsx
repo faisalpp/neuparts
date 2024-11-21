@@ -87,7 +87,7 @@ const ApplianceGrid = ({ isGrid, product }) => {
               <span className="text-xs font-semibold text-b1 sm:text-sm">Price Range</span>
               <Tag />
               <div className="inline-flex rounded-full bg-b3 px-1 py-1 text-xs font-medium text-white sm:px-3">
-                ${product.sale_price} - ${product.regular_price}
+                ${product.minPrice} - ${product.maxPrice}
               </div>
             </div>
             <Link href={`/product/${product.slug}/buying-options`} className="flex items-center font-semibold text-b3 underline maxsm:text-sm">

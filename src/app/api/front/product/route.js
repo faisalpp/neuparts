@@ -61,3 +61,55 @@ export async function GET(req) {
   
   return NextResponse.json({ success: true, productCount, filteredProductsCount, products: finalProducts });
 }
+
+
+
+// export async function GET(req) {
+//   await connect();
+
+//   const searchParams = req.nextUrl.searchParams;
+//   const paramsObj = {};
+
+//   searchParams.forEach((value, key) => {
+//     paramsObj[key] = value;
+//   });
+
+//   const resPerPage = 10;
+//   const currentPage = Number(paramsObj.page) || 1;
+
+//   let filteredProducts = [];
+//   let query = {}
+//   if(paramsObj.categoery){
+//     query.category = paramsObj.category
+//   }
+
+//   // If model_no is provided, filter products by category that matches the model_no
+//   if (paramsObj.model_no) {
+//     const parents = await Product.find({ is_variant:false,model_no: paramsObj.model_no });
+
+//     if(parents.length > 0) {
+//      for (const parent of parents){
+//       const childs = await Product.find({is_variant:true,parent_id:parent.id})
+//       filteredProducts.push(childs)
+//      }
+//     }
+
+//   }
+//   if(paramsObj.part_number){
+//     const products = await Product.find({is_variant:true,part_number:paramsObj.part_number})
+//     filteredProducts.push(products)
+//   }
+
+//   if(!paramsObj.model_no && ! paramsObj.part_number){
+//     filteredProducts = await Product.find({})
+//   }
+
+//   const productCount = filteredProducts.length
+
+//   // Apply pagination manually
+//   const startIndex = (currentPage - 1) * resPerPage;
+//   const paginatedProducts = filteredProducts.slice(startIndex, startIndex + resPerPage);
+//   console.log(paginatedProducts)
+  
+//   return NextResponse.json({ success: true, productCount:productCount, products: paginatedProducts });
+// }

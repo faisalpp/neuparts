@@ -22,21 +22,40 @@ function Context({ children }) {
 
   const router = useRouter();
 
+  function debounce(func, delay) {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), delay);
+    };
+  }
+  
+
   // Fetch model numbers when the component mounts
-  const fetchModelNumbers = async () => {
+  const debouncedFetchModelSuggestions = debounce(async (query) => {
+    if (!query) {
+      setModelSuggestions([]);
+      return;
+    }
+  
     try {
-      const response = await fetch('/api/front/product/models');
+      setSearchLoading(true);
+      const response = await fetch(`/api/front/product/models?query=${query}`);
       const data = await response.json();
-      setModelSuggestions(data.modelNos);
+      setModelSuggestions(data.modelNos || []);
+      setShowSuggestions(true);
+      setSearchLoading(false);
     } catch (error) {
       console.error('Failed to fetch model numbers:', error);
+      setSearchLoading(false);
     }
-  };
+  }, 500);
 
   const handleModelNoChange = (e) => {
-    setModelNo(e);
-    setShowSuggestions(true); // Show suggestions when user types
-    setError(''); // Clear any previous error
+    const value = e;
+    setModelNo(value);
+    setError('');
+    debouncedFetchModelSuggestions(value);
   };
 
   const handleSuggestionClick = (model) => {
@@ -112,7 +131,7 @@ function Context({ children }) {
   };
 
   useEffect(() => {
-    fetchModelNumbers();
+    debouncedFetchModelSuggestions();
     SearchResult();
   }, []);
 

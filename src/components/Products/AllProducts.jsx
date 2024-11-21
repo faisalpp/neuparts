@@ -52,9 +52,10 @@ const AllProducts = ({ searchParams }) => {
       method: 'GET',
       redirect: 'follow',
     };
-
-    const res = await fetch(`/api/front/product?${searchQuery}`, requestOptions);
+//
+    const res = await fetch(`/api?${searchQuery}`, requestOptions);
     const allData = await res.json();
+    console.log(allData)
     setData(allData);
     setLoading(false);
   };
