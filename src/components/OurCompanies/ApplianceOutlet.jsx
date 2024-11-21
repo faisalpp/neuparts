@@ -50,7 +50,7 @@ const ApplianceParts = () => {
           </ul>
         </div>
         <div className="inline-flex gap-2 pt-6 maxmd:flex-col">
-          <Link href="/products" className="flex items-center justify-center gap-1 rounded-lg bg-[#071822] px-4 py-3 text-xs font-medium text-white">
+          <Link href="/products?sale=true" className="flex items-center justify-center gap-1 rounded-lg bg-[#071822] px-4 py-3 text-xs font-medium text-white">
             <HiOutlineShoppingCart className="text-sm text-white" />
             <span>Shop Now</span>
           </Link>

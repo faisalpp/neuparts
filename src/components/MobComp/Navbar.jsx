@@ -33,11 +33,11 @@ const Navbar = () => {
     const data = await res.json();
     const transformedCategories = data.categories.map((category) => ({
       name: category.title,
-      url: `/products?category=${category.slug}`,
+      url: `/products?sale=true&category=${category.slug}`,
     }));
     const transformedManufacturers = data.manufacturers.map((manufacturer) => ({
       name: manufacturer.title,
-      url: `/products?manufacturer=${manufacturer.slug}&tab=browse-by`,
+      url: `/products?sale=true&manufacturer=${manufacturer.slug}&tab=browse-by`,
     }));
     setCategories(transformedCategories);
     setManufacturers(transformedManufacturers);
@@ -106,7 +106,7 @@ const Navbar = () => {
               </Link>
             </div>
           </DropDown>
-          <Link href="/products" className="block text-base font-semibold text-b1/65">
+          <Link href="/products?sale=true" className="block text-base font-semibold text-b1/65">
             Shop Now
           </Link>
           <DropDown title="Products" titleClass="!text-base !w-full text-b1/65 !font-semibold" iconClass="text-b1/65" noactive={true}>

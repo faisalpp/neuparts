@@ -87,15 +87,15 @@ const Navbar = () => {
     
     const transformedCategories = data.categories.map((category) => ({
       name: category.title,
-      url: `/products?category=${category.slug}`,
+      url: `/products?sale=true&category=${category.slug}`,
     }));
     const transformedManufacturers = data.manufacturers.map((manufacturer) => ({
       name: manufacturer.title,
-      url: `/products?manufacturer=${manufacturer.slug}&tab=browse-by`,
+      url: `/products?sale=true&manufacturer=${manufacturer.slug}&tab=browse-by`,
     }));
     const transformedTypes = data.types.map((type) => ({
       name: type.title,
-      url: `/products?type=${type.slug}`,
+      url: `/products?sale=true&type=${type.slug}`,
     }));
     setCategories(transformedCategories);
     setManufacturers(transformedManufacturers);
@@ -277,7 +277,7 @@ const Navbar = () => {
               />
               {/* <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} /> */}
               <div className="nav____item">
-                <Link href="/products" >Shop&nbsp;Now</Link>
+                <Link href="/products?sale=true&" >Shop&nbsp;Now</Link>
               </div>
               <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Appliance Category" links={categories} bold={600} />
               <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Part Category" links={types} bold={600} />

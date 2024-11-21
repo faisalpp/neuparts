@@ -61,18 +61,18 @@ const Filter = ({ type }) => {
             id="1"
             title="Cosmetic Ratings"
             filters={[
-              { title: '3 Star Rating', link: '/products/?rating=3' },
-              { title: '4 Star Rating', link: '/products/?rating=4' },
-              { title: '5 Star Rating', link: '/products/?rating=5' },
+              { title: '3 Star Rating', link: '/products/?sale=true&rating=3' },
+              { title: '4 Star Rating', link: '/products/?sale=true&rating=4' },
+              { title: '5 Star Rating', link: '/products/?sale=true&rating=5' },
             ]}
           />
           <LaundaryFilter
             id="2"
             title="Popular Features"
             filters={[
-              { title: '3 Star Rating', link: '/products/?rating=3' },
-              { title: '4 Star Rating', link: '/products/?rating=4' },
-              { title: '5 Star Rating', link: '/products/?rating=5' },
+              { title: '3 Star Rating', link: '/products/?sale=true&rating=3' },
+              { title: '4 Star Rating', link: '/products/?sale=true&rating=4' },
+              { title: '5 Star Rating', link: '/products/?sale=true&rating=5' },
             ]}
           />
           <LaundaryFilter

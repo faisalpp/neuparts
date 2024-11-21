@@ -73,7 +73,7 @@ const MoreParts = ({ partNo, data }) => {
           )} */}
         </div>
         <div className="mt-10 flex justify-center md:mt-16">
-          <Link href="/products" className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
+          <Link href="/products?sale=true" className="flex w-full items-center justify-center rounded-md border border-b3 px-4 py-3 font-semibold text-b3 md:w-fit">
             <span className="text-xs md:text-sm xl:text-base">View More</span>
             <BsArrowRightShort className="text-2xl" />
           </Link>
