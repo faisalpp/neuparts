@@ -37,7 +37,7 @@ const ProductCompatible = () => {
               )}
               {error && <span className="absolute -bottom-5 left-1 inline-flex text-left text-[13px] text-red-500">{error}</span>}
             </div>
-            <button type="button" onClick={() => handleSearchClick('search-by')} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white">
+            <button type="button" onClick={() => handleSearchClick('noroute')} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white">
               {searchLoading ? (
                 <Spinner />
               ) : (

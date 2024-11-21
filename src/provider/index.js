@@ -29,7 +29,6 @@ function Context({ children }) {
       timeout = setTimeout(() => func(...args), delay);
     };
   }
-  
 
   // Fetch model numbers when the component mounts
   const debouncedFetchModelSuggestions = debounce(async (query) => {
@@ -37,7 +36,7 @@ function Context({ children }) {
       setModelSuggestions([]);
       return;
     }
-  
+
     try {
       setSearchLoading(true);
       const response = await fetch(`/api/front/product/models?query=${query}`);
@@ -126,8 +125,10 @@ function Context({ children }) {
       queryParams.append('tab', tab);
       queryParams.append('sale', true);
 
-      // Navigate to the URL with only relevant query parameters
-      router.push(`/products?${queryParams.toString()}`);
+      if (tab != 'noroute') {
+        // Navigate to the URL with only relevant query parameters
+        router.push(`/products?${queryParams.toString()}`);
+      }
     }
   };
 
