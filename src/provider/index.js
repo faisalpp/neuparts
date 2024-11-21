@@ -124,6 +124,7 @@ function Context({ children }) {
 
       // Append the tab parameter to URL
       queryParams.append('tab', tab);
+      queryParams.append('sale', true);
 
       // Navigate to the URL with only relevant query parameters
       router.push(`/products?${queryParams.toString()}`);
