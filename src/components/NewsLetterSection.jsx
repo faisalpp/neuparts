@@ -20,7 +20,7 @@ const NewsLetterSection = ({ backimage }) => {
         if (resp.success) {
           toast.update(crtToastId, { type: 'success',render:'Newsletter subscribed successfully!', autoClose: 1000, isLoading: false });
         } else {
-          toast.update(crtToastId, { type:'error',render:'Something went wrong!', autoClose: 1000, isLoading: false });
+          toast.update(crtToastId, { type:'info',render:resp.message, autoClose: 1000, isLoading: false });
         }
         setLoading(false)
         setEmail('')

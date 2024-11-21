@@ -29,8 +29,8 @@ const Page = async () => {
     <>
       <HeroSection />
       <BrandsSlider />
-      {productsData ? <ApplianceSection urlParam='category' data={productsData.categories} title="Shop By Appliance Category" linktitle="View All Appliance Categories" /> : null}
-      {productsData ? <ApplianceSection urlParam='type' data={productsData.parttypes} Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" /> : null}
+      {productsData ? <ApplianceSection urlParam='category' data={productsData.categories} title="Shop By Appliance Category" linktitle="View All Appliance Categories" more="/categories" /> : null}
+      {productsData ? <ApplianceSection urlParam='type' data={productsData.parttypes} Style="!pt-5" title="Shop By Parts Category" linktitle="View All Parts Categories" more="/parttypes" /> : null}
       <PupularParts />
       <ChooseUs />
       {productsData ? <GallerySection data={productsData.homeGallery} /> : null}

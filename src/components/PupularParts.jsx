@@ -80,7 +80,7 @@ const PupularParts = () => {
             </Slider>
           </div>
           <div className="mt-16 flex justify-center">
-            <Link href="/products" className="flex w-fit items-center rounded-md border-[1px] border-b3 px-4 py-3 font-semibold text-b3">
+            <Link href="/products?sale=true" className="flex w-fit items-center rounded-md border-[1px] border-b3 px-4 py-3 font-semibold text-b3">
               <span className="lg:text-sm xl:text-[16px]">View All Parts</span>
               <BsArrowRightShort className="text-2xl" />
             </Link>

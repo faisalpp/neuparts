@@ -10,9 +10,9 @@ import CategoryCard from '@/components/Category/CategoryCard';
 import { StoreData } from '@/provider';
 import { useContext } from 'react';
 import queryString from 'query-string';
-import CardSkelton from '../Loader/CardSkeltons';
+import CardSkelton from '@/components/Loader/CardSkeltons'
 
-const AllCategories = ({ searchParams }) => {
+const AllParts = ({ searchParams }) => {
   const { searchLoading, result,modelNo } = useContext(StoreData);
 
   const [searchModelNo, setSearchModelNo] = useState('');
@@ -33,9 +33,8 @@ const AllCategories = ({ searchParams }) => {
   const searchQuery = queryString.stringify(urlParams);
 
   const GetPartTypes = async () => {
-    const res = await fetch(`/api/front/categories?${searchQuery}`)
+    const res = await fetch(`/api/front/parttypes?${searchQuery}`)
     const data = await res.json()
-    console.log(data)
     if(data.success){
       setCount(data.pagination.count)
       setData(data.types)
@@ -54,7 +53,7 @@ const AllCategories = ({ searchParams }) => {
           <div className="flex items-center">
             <h5 className="text-xs text-b3">Home</h5>
             <RiArrowDropRightLine className="text-xl text-gray-500" />
-            <h5 className="whitespace-nowrap text-xs text-b1">Categories</h5>
+            <h5 className="whitespace-nowrap text-xs text-b1">Part Types</h5>
           </div>
         </div>
 
@@ -133,4 +132,4 @@ const AllCategories = ({ searchParams }) => {
   );
 };
 
-export default AllCategories;
+export default AllParts;
