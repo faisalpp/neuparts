@@ -459,7 +459,7 @@ const Product = ({ slug }) => {
           <ProductSlider />
 
           {/* product._id,quantity */}
-          <CompareModel addCart={addToCart} buyNow={BuyNow} products={buyingOptions} condition={ConditionData} defaultProduct={product} slug={slug} />
+          <CompareModel addCart={AddToCart} buyNow={BuyNow} products={buyingOptions} condition={ConditionData} defaultProduct={product} slug={slug} />
 
           <LoopSection />
 
