@@ -27,7 +27,7 @@ const ModelCategories = ({ data,modelNo }) => {
           </div>
         ))}
       </div>
-      <Link href={`/categories?model_no=${modelNo}`} className="button-hover mt-14 flex w-fit items-center justify-center rounded-lg border-[1px] px-4 py-3 font-semibold text-white maxmd:w-full">
+      <Link href={`/parttypes?model_no=${modelNo}`} className="button-hover mt-14 flex w-fit items-center justify-center rounded-lg border-[1px] px-4 py-3 font-semibold text-white maxmd:w-full">
         <span className="lg:text-sm xl:text-[16px]">View More Part Categories</span>
         <BsArrowRightShort className="text-2xl" />
       </Link>
