@@ -57,7 +57,7 @@ const BuyingOptions = ({ rating, modelNo, threeStarCount, fourStarCount, fiveSta
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(10);
   const [totalCount, setTotalCount] = useState(1);
 
   const GetBuyingOptions = async () => {};

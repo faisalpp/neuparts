@@ -26,7 +26,7 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(10);
 
   const [formData, setFormData] = useState({ id: '',code:'',description:'' ,type:'Percentage',value:''});
   const [types,setTypes] = useState(['Percentage','Flat'])

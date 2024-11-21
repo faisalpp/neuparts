@@ -150,7 +150,7 @@ const Page = ({ params }) => {
                   onChange={(e, editor) => setFormData({ ...formData, content: editor.getData() })}
                   config={{
                     height: '250px', // Set the initial height
-                    toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'blockQuote', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+                    toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'blockQuote', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList','insertTable'],
                   }}
                   onReady={(editor) => {
                     editor.ui.view.editable.element.style.minHeight = '250px';

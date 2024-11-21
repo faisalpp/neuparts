@@ -59,7 +59,7 @@ export async function GET(request) {
     }
 
     const ReviewCountPromise = Product.countDocuments(query);
-    const GetProductsPromise = Product.find(query).populate('category').sort({ createdAt: -1 }).limit(limit).skip(skip);
+    const GetProductsPromise = Product.find(query).populate('category').populate('parttype').sort({ createdAt: -1 }).limit(limit).skip(skip);
 
     const [count, products] = await Promise.all([ReviewCountPromise, GetProductsPromise]);
 

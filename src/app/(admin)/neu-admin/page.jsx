@@ -2,15 +2,16 @@ import React from 'react'
 import { FaBoxes } from "react-icons/fa";
 import { GiWashingMachine } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa";
-import BarChart from '@/components/AdminDashboard/charts/BarChart'
-import PieChart from '@/components/AdminDashboard/charts/PieChart'
 import { FaCartPlus } from "react-icons/fa6";
 import Product from '@/models/product'
 import User from '@/models/user'
 import Cart from '@/models/cart'
 import Order from '@/models/order'
+import connect from '@/lib/db'
 
 const page = async () => {
+
+  await connect()
 
   const products = await Product.countDocuments({is_variant:true});
   const users = await User.countDocuments();
@@ -41,15 +42,7 @@ const page = async () => {
        <span className='font-bold text-2xl' >{carts}</span>
       </div>
      </div>
-     {/* bar and pie chart */}
-     <div className='grid grid-cols-12 gap-10 w-full' >
-      <div className='col-start-1 col-end-9 py-3 rounded-lg shadow-lg bg-white border-2 h-80' >
-       <BarChart/>
-      </div>
-      <div className='col-start-9 col-end-13 rounded-lg bg-white border-2 shadow-lg h-72' >
-        <PieChart/>
-      </div>
-     </div>
+
 
     </div>
   )

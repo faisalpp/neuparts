@@ -15,10 +15,8 @@ const Page = () => {
   const [mediaPopup2, setMediaPopup2] = useState(false);
   const [categories, setCategories] = useState([]);
   const [parttypes, setPartTypes] = useState([]);
-  const [modelNos, setModelNos] = useState([]);
-  const [subcategories, setSubCategories] = useState([]);
-  const [menufacturers, setMenufacturers] = useState([]); 
-  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '',model_no:'',menufacturer:'', condition: '', type: '', category: '', parttype: '', subcategory: '', stock: 0, images: [], thumbnail: '', threesixty: '', description: '', specification: '', delivery: '' });
+  const [manufacturers, setManufacturers] = useState([]); 
+  const [formData, setFormData] = useState({ title: '', regular_price: 0, sale_price: 0, part_number: '',manufacturer:'', condition: '', category: '', parttype: '', stock: 0, images: [], thumbnail: '', threesixty: '', description: '', specification: '', delivery: '' });
   const [files, setFiles] = useState([]);
   const [files2, setFiles2] = useState('');
 
@@ -48,19 +46,16 @@ const Page = () => {
   const RemoveThumbnail = () => {
     setFormData({ ...formData, thumbnail: '' });
   };
-
+//
   const ValProduct = Yup.object({
     title: Yup.string().required('Title is required!'),
     regular_price: Yup.number().required('Regular Price is required!'),
     sale_price: Yup.number().required('Sale Price is required!'),
     part_number: Yup.string().required('Part Number is required!'),
-    model_no: Yup.string().required('Model # is required!'),
-    menufacturer: Yup.string().required('Menufacturer is required!'),
+    manufacturer: Yup.string().required('Manufacturer is required!'),
     condition: Yup.string().required('Condition is required!'),
-    type: Yup.string().required('Type is required!'),
     category: Yup.string().required('Category is required!'),
     parttype: Yup.string().required('Part Type is required!'),
-    subcategory: Yup.string().required('Sub Category is required!'),
     stock: Yup.number().required('Stock is required!'),
     images: Yup.array(),
     threesixty: Yup.string(),
@@ -82,9 +77,7 @@ const Page = () => {
         if (data.success) {
           setCategories(data.categories);
           setPartTypes(data.parttypes);
-          setSubCategories(data.subcategories);
-          setModelNos(data.modelnos);
-          setMenufacturers(data.menufacturers);
+          setManufacturers(data.manufacturers);
         }
       });
   };
@@ -154,6 +147,40 @@ const Page = () => {
     setEditorLoader(true);
   }, []);
 
+  const conds = [
+    {
+      title: 'New',
+      slug: 'new',
+    },
+    {
+      title: 'Like New / Open Box',
+      slug: 'like-new-open-box',
+    },
+    {
+      title: 'Used • Grade A',
+      slug: 'used-part-a-condition-grade',
+    },
+    {
+      title: 'Used • Grade B',
+      slug: 'used-part-b-condition-grade',
+    },
+    {
+      title: 'Used • Grade C',
+      slug: 'used-part-c-condition-grade'
+    },
+    {
+      title: 'Used • Grade D',
+      slug: 'used-part-d-condition-grade',
+    },
+  ];
+
+  const ImageW = ({thumb}) => {
+    const [thumbnail,setThumbnail] = useState(thumb ? thumb : '/no-image.webp')
+   return (
+    <Image width={400} height={400} quality={100} onErrorCapture={()=>setThumbnail('/no-image.webp')} src={thumbnail} alt="" className="h-20 w-24 object-contain" />
+   )
+  }
+
   return (
     <div className="p-5">
       <MediaPopup state={mediaPopup} setState={setMediaPopup} files={files} setFiles={setFiles} isMultiple={true} />
@@ -200,39 +227,7 @@ const Page = () => {
               </label>
               <input name="part_number" value={formData.part_number} onChange={HandleChange} type="text" className="custom-input" />
             </div>
-            <div className="w-6/12">
-              <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-                Model No
-              </label>
-              <select name="model_no" value={formData.model_no} onChange={HandleChange} className="custom-input !py-3">
-                <option value="">Select Model #</option>
-                {modelNos.length > 0 &&
-                  modelNos.map((item, index) => (
-                    <option value={item.model_no} key={index}>
-                      {item.model_no}
-                    </option>
-                  ))}
-              </select>
-            </div>
-          </div>
-          {/* part # & model no end */}
 
-          {/* part # & model no start */}
-          <div className="flex gap-5">
-            <div className="w-6/12">
-              <label htmlFor="part_number" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-                Menufacturer
-              </label>
-              <select name="menufacturer" value={formData.menufacturer} onChange={HandleChange} className="custom-input !py-3">
-                <option value="">Select Menufacturer</option>
-                {menufacturers.length > 0 &&
-                  menufacturers.map((item, index) => (
-                    <option value={item._id} key={index}>
-                      {item.title}
-                    </option>
-                  ))}
-              </select>
-            </div>
             <div className="w-6/12">
               <label htmlFor="condition" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
                 Condition
@@ -248,21 +243,27 @@ const Page = () => {
                 <option value="used-grade-d">Used ● Grade D</option>
               </select>
             </div>
+
           </div>
           {/* part # & model no end */}
 
-          {/* Conditions Start */}
+          {/* part # & model no start */}
           <div className="flex gap-5">
             <div className="w-6/12">
-              <label htmlFor="type" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-                Type
+              <label htmlFor="part_number" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
+                Manufacturer
               </label>
-              <select name="type" value={formData.type} onChange={HandleChange} className="custom-input !py-3">
-                <option value="">Select Type</option>
-                <option value="Genuine OEM Part">Genuine OEM Part</option>
-                <option value="Genuine OEM Part">Aftermarket Replacement Part</option>
+              <select name="manufacturer" value={formData.manufacturer} onChange={HandleChange} className="custom-input !py-3">
+                <option value="">Select Manufacturer</option>
+                {manufacturers.length > 0 &&
+                  manufacturers.map((item, index) => (
+                    <option value={item._id} key={index}>
+                      {item.title}
+                    </option>
+                  ))}
               </select>
             </div>
+
             <div className="w-6/12">
               <label htmlFor="type" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
                 Part Type
@@ -277,8 +278,10 @@ const Page = () => {
                   ))}
               </select>
             </div>
+
           </div>
-          {/* Conditions End */}
+          {/* part # & model no end */}
+
 
           {/* Category & Parttype Start */}
           <div className="flex gap-5">
@@ -295,20 +298,7 @@ const Page = () => {
                 ))}
               </select>
             </div>
-            <div className="w-6/12">
-              <label htmlFor="subcategory" className="block text-base font-semibold text-gray-800 dark:text-gray-300">
-                Sub Category
-              </label>
-              <select name="subcategory" value={formData.subcategory} onChange={HandleChange} className="custom-input !py-3">
-                <option value="">Select Sub Category</option>
-                {subcategories.length > 0 &&
-                  subcategories.map((item, index) => (
-                    <option value={item._id} key={index}>
-                      {item.title}
-                    </option>
-                  ))}
-              </select>
-            </div>
+
           </div>
           {/* Category & Parttype End */}
 
@@ -361,7 +351,7 @@ const Page = () => {
                     ? formData.images.map((img, i) => (
                         <div key={i} className="relative h-fit rounded-md border-2 px-1 py-1">
                           <IoCloseCircle onClick={(e) => RemoveImage(i)} className="absolute right-1 top-1 rounded-full bg-white text-lg text-red-400" />
-                          <Image height={150} width={150} src={img} className="h-20 w-24 rounded-md" />
+                          <Image height={150} width={150} src={formData?.thumbnail ? formData?.thumbnail : '/no-image.webp'} className="h-28 w-32 rounded-md border-2 px-2" />
                         </div>
                       ))
                     : null}
@@ -387,7 +377,7 @@ const Page = () => {
                   onChange={(e, editor) => setFormData({ ...formData, delivery: editor.getData() })}
                   config={{
                     height: '250px',
-                    toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+                    toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList','insertTable'],
                   }}
                   onReady={(editor) => {
                     editor.ui.view.editable.element.style.minHeight = '250px';
@@ -422,7 +412,7 @@ const Page = () => {
                   onChange={(e, editor) => setFormData({ ...formData, specification: editor.getData() })}
                   config={{
                     height: '250px', // Set the initial height
-                    toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+                    toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList','insertTable'],
                   }}
                   onReady={(editor) => {
                     editor.ui.view.editable.element.style.minHeight = '250px';
@@ -457,7 +447,7 @@ const Page = () => {
                   onChange={(e, editor) => setFormData({ ...formData, description: editor.getData() })}
                   config={{
                     height: '250px', // Set the initial height
-                    toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList'],
+                    toolbar: ['alignment', 'autoImage', 'autoLink', 'autoformat', 'bold', 'essentials', 'fontSize', 'heading', 'image', 'imageCaption', 'imageUpload', 'imageToolbar', 'italic', 'link', 'list', 'mediaEmbed', 'paragraph', 'undo', 'redo', 'bulletedList', 'numberedList','insertTable'],
                   }}
                   onReady={(editor) => {
                     editor.ui.view.editable.element.style.minHeight = '250px';

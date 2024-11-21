@@ -17,7 +17,7 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(10);
   const [search, setSearch] = useState('');
   const [by, setBy] = useState('all');
 

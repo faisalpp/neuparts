@@ -17,7 +17,7 @@ function Context({ children }) {
   const [result, setResult] = useState('');
   const [step, setStep] = useState(0);
   // Product Filters Default Values
-  const defaultMinPrice = 200;
+  const defaultMinPrice = 9;
   const defaultMaxPrice = 8000;
 
   const router = useRouter();

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import ProductManufacturer from './productManufacturer';
+import Parttype from './producttype';
 
 const ProductSchema = new mongoose.Schema(
   {

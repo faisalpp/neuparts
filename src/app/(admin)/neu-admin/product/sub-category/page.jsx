@@ -18,7 +18,7 @@ const Page = () => {
   const [reRender, setReRender] = useState(false);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
 
   const DeleteCategory = async (id) => {
     if (!id) {

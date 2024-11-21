@@ -12,7 +12,7 @@ const Blogs = () => {
   const [loading, setLoading] = useState(true)
   const [moreLoading,setMoreLoading] = useState(false)
   const [pageCount,setPageCount] = useState(null)
-  const [limit,setLimit] = useState(9)
+  const [limit,setLimit] = useState(10)
 
   const FetchBlogs = async () => {
 

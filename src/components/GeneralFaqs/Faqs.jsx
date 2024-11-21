@@ -14,7 +14,7 @@ const Faqs = () => {
   const [activeTab, setActiveTab] = useState(null);
   const [page,setPage] = useState(1)
   const [pageCount,setPageCount] = useState(0)
-  const [limit,setLimit] = useState(2)
+  const [limit,setLimit] = useState(10)
 
   const [mobFaqs, setMobFaqs] = useState([]);
 

@@ -4,7 +4,7 @@ import Category from '@/models/productcategory';
 import ProductTyoe from '@/models/producttype';
 import SubCategory from '@/models/subcategory';
 import ModelNo from '@/models/modelno'
-import Menufacturer from '@/models/productManufacturer'
+import Manufacturer from '@/models/productManufacturer'
 
 export async function GET(request) {
   try {
@@ -13,9 +13,9 @@ export async function GET(request) {
     const parttypes = await ProductTyoe.find().sort({ createdAt: -1 });
     const subcategories = await SubCategory.find().sort({ createdAt: -1 });
     const modelnos = await ModelNo.find().sort({ createdAt: -1 });
-    const menufacturers = await Menufacturer.find().sort({ createdAt: -1 });
+    const manufacturers = await Manufacturer.find().sort({ createdAt: -1 });
 
-    return NextResponse.json({ categories,subcategories, parttypes,modelnos,menufacturers, success: true });
+    return NextResponse.json({ categories,subcategories, parttypes,modelnos,manufacturers, success: true });
   } catch (error) {
     return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
