@@ -8,7 +8,7 @@ import { BiSearch } from 'react-icons/bi';
 import { RxCross2 } from 'react-icons/rx';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { StoreData } from '@/provider';
-import Spinner from '../svgs/Spinner';
+import Spinner from '@/components/svgs/Spinner';
 
 const ProductSearchBar = () => {
   const { modelNo, partNo, filteredModels, showSuggestions, error, setPartNo, step, handleSearchClick, handleSuggestionClick, searchLoading, result, handleModelNoChange } = useContext(StoreData);
@@ -67,7 +67,7 @@ const ProductSearchBar = () => {
               <label className="text-sm font-semibold lg:text-xs maxlg:text-b18">Port No.</label>
               <input onChange={(e) => setPartNo(e.target.value)} type="text" value={partNo} className="searchBar-input lg:max-w-40" placeholder="Enter part number" />
             </div>
-            <button type="button" onClick={() => handleSearchClick()} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-3 maxlg:w-full">
+            <button type="button" onClick={() => handleSearchClick('search-by')} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-3 maxlg:w-full">
               {searchLoading ? (
                 <Spinner />
               ) : (
@@ -89,7 +89,7 @@ const ProductSearchBar = () => {
             <div className="relative w-full max-w-96">
               <input onChange={(e) => handleModelNoChange(e.target.value)} type="text" value={modelNo} className="searchBar-input" placeholder="Enter your Model Number" />
               {showSuggestions && modelNo && (
-                <ul className="max:h-32 absolute top-full z-20 mt-2 w-full overflow-y-scroll rounded-lg bg-white text-black">
+                <ul className="max-h-32 absolute top-full z-20 mt-2 overflow-y-scroll rounded-lg bg-white text-black">
                   {filteredModels.map((model, index) => (
                     <li key={index} className="cursor-pointer px-4 py-2 text-left hover:bg-gray-200" onClick={() => handleSuggestionClick(model)}>
                       {model}
@@ -99,7 +99,7 @@ const ProductSearchBar = () => {
               )}
               {error && <span className="absolute -bottom-5 left-1 inline-flex text-left text-[13px] text-red-500">{error}</span>}
             </div>
-            <button type="button" onClick={() => handleSearchClick()} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-4 maxlg:w-full">
+            <button type="button" onClick={() => handleSearchClick('search-by')} className="button-hover flex h-10 cursor-pointer items-center justify-center rounded-md px-4 text-white lg:ml-2 maxlg:mt-4 maxlg:w-full">
               {searchLoading ? (
                 <Spinner />
               ) : (
@@ -158,15 +158,6 @@ const ProductSearchBar = () => {
                 </div>
               </div>
             )}
-            {/* Model and Part Cpmpatible */}
-            {/* {result.modelCategory && result.product && (
-              <div className="flex h-full items-center gap-1 rounded-lg bg-[#00EE34] px-2.5 py-1.5">
-                <div className="grid h-6 min-w-6 place-items-center rounded-full bg-black text-[#00EE34]">
-                  <FiCheck />
-                </div>
-                <span className="block text-xs font-extrabold text-b1">Compatible Part</span>
-              </div>
-            )} */}
 
             {/* Model and Part NotCpmpatible */}
             {!result.modelCategory && !result.product && modelNo != '' && partNo != '' && (
