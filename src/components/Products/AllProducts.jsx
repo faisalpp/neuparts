@@ -15,11 +15,15 @@ import { BiSearch } from 'react-icons/bi';
 import ApplianceGrid from '../Appliances/ApplianceGrid';
 import { StoreData } from '@/provider';
 import { useContext } from 'react';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
 const AllProducts = ({ searchParams }) => {
   const { searchLoading, result, modelNo,defaultMinPrice, defaultMaxPrice } = useContext(StoreData);
 
-  const [searchModelNo, setSearchModelNo] = useState('');
+  const router  = useRouter() ;
+
+  const [searchModelNo, setSearchModelNo] = useState(searchParams?.partno ? searchParams.partno : '');
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [isGrid, setIsGrid] = useState(false);
@@ -118,9 +122,9 @@ const AllProducts = ({ searchParams }) => {
                   <div className="mt-8 flex max-w-[910px] items-center gap-2 maxsm:flex-col">
                     <div className="relative w-full">
                       <CiSearch className="absolute left-4 top-3.5 h-7 w-7 text-b1/30" />
-                      <input onChange={(e) => setSearchModelNo(e.target.value)} type="text" value={searchModelNo} className="h-14 w-full rounded-lg border border-[#F6F7F9] bg-[#F6F7F9] pl-14 text-sm font-medium outline-none duration-200 placeholder:font-medium placeholder:text-b1/30 focus:border-b3" placeholder="Know your part number? Enter it here..." />
+                      <input value={searchModelNo} onChange={(e) => setSearchModelNo(e.target.value)} type="text" className="h-14 w-full rounded-lg border border-[#F6F7F9] bg-[#F6F7F9] pl-14 text-sm font-medium outline-none duration-200 placeholder:font-medium placeholder:text-b1/30 focus:border-b3" placeholder="Know your part number? Enter it here..." />
                     </div>
-                    <button type="button" className="button-hover flex cursor-pointer items-center justify-center rounded-md px-6 py-5 text-white maxmd:w-full">
+                    <button onClick={()=>searchModelNo != '' ? router.push(`/products?partno=${searchModelNo}&modelno=${modelNo}&tab=search-by&sale=true`):toast.info('Part number is required!')} className="button-hover flex cursor-pointer items-center justify-center rounded-md px-6 py-5 text-white maxmd:w-full">
                       <BiSearch />
                       <span className="ml-1 text-xs font-medium">Search</span>
                     </button>

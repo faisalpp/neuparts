@@ -1,6 +1,6 @@
 'use client';
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import {AddToCart,RemoveFromCart,DeleteFromCart,GetCart} from '../api/cart'
+import {AddToCart,RemoveFromCart,DeleteFromCart,GetCart,DeleteCart} from '../api/cart'
 import {ApplyCoupon} from '../api/coupon'
 
 const initialState = {
@@ -94,6 +94,21 @@ export const removeFromCart = createAsyncThunk("cart/remove", async (data) => {
 export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
     try{
       const response = await DeleteFromCart(data); // Call your login API with the provided data
+      if(response.success){
+        return response; // Assuming your API response contains the user data
+      }else{
+        return response
+      }
+    }catch(error){
+      return { payload: error.response, error: true };
+    }
+  });
+
+
+  // Create an async thunk for the Delete from Cart
+export const deleteCart = createAsyncThunk("cart/delete-single", async (data) => {
+    try{
+      const response = await DeleteCart(data); // Call your login API with the provided data
       if(response.success){
         return response; // Assuming your API response contains the user data
       }else{
@@ -406,7 +421,21 @@ export const deleteFromCart = createAsyncThunk("cart/delete", async (data) => {
          }
         }
       })
+      .addCase(deleteCart.fulfilled, (state, action) => {
+        state.cart = {},
+        state.items = [],  
+        state.cartId = null,
+        state.cartCount = 0,
+        state.cartSubTotal = 0.00,
+        state.cartVat = 0.00,
+        state.cartGrandTotal = 0.00,
+        state.roundOff = 0.00
+        state.coupon = {status:false},
+        state.shippingMethod = {method:'Pickup',rate:'Free'}
+      })
     },
+    
+
     
   });
   

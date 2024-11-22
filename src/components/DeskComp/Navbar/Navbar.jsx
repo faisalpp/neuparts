@@ -213,49 +213,49 @@ const Navbar = () => {
             <div className="col-start-1 col-end-2 flex flex-col items-center">
               <h4 className="font-semibold text-white xl:whitespace-nowrap">How It Works</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
-                <Link href="/how-it-works/what-we-sell">What We Sell</Link>
-                <Link href="/how-it-works/rating-system">Rating System</Link>
-                <Link href="/how-it-works/testing-process">Testing&nbsp;Process</Link>
-                <Link href="/how-it-works/product-photos">Product&nbsp;Photos</Link>
-                <Link href="/how-it-works/delivery">Delivery</Link>
-                <Link href="/how-it-works/hassle-free">Warranty&nbsp;&&nbsp;Return</Link>
+                <Link href="/how-it-works/what-we-sell"><span onClick={() => setMegMenu(!megMenu)} >What We Sell</span></Link>
+                <Link href="/how-it-works/rating-system"><span onClick={() => setMegMenu(!megMenu)} >Rating System</span></Link>
+                <Link href="/how-it-works/testing-process"><span onClick={() => setMegMenu(!megMenu)} >Testing&nbsp;Process</span></Link>
+                <Link href="/how-it-works/product-photos"><span onClick={() => setMegMenu(!megMenu)} >Product&nbsp;Photos</span></Link>
+                <Link href="/how-it-works/delivery"><span onClick={() => setMegMenu(!megMenu)} >Delivery</span></Link>
+                <Link href="/how-it-works/hassle-free"><span onClick={() => setMegMenu(!megMenu)} >Warranty&nbsp;&&nbsp;Return</span></Link>
               </div>
             </div>
 
             <div className="col-start-3 col-end-5 ml-8">
               <h4 className="font-semibold text-white">Resources</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
-                <Link href="/appliance-repair">Appliance Repair</Link>
-                <Link href="">Product Reviews</Link>
-                <Link href="/measuring-guide">Measuring Guide</Link>
-                <Link href="/helpful-appliances-tips">Appliance Tips</Link>
-                <Link href="/blogs">Appliance Blog</Link>
+                <Link href="/appliance-repair"><span onClick={() => setMegMenu(!megMenu)} >Appliance Repair</span></Link>
+                <Link href=""><span onClick={() => setMegMenu(!megMenu)} >Product Reviews</span></Link>
+                <Link href="/measuring-guide"><span onClick={() => setMegMenu(!megMenu)} >Measuring Guide</span></Link>
+                <Link href="/helpful-appliances-tips"><span onClick={() => setMegMenu(!megMenu)} >Appliance Tips</span></Link>
+                <Link href="/blogs"><span onClick={() => setMegMenu(!megMenu)} >Appliance Blog</span></Link>
               </div>
             </div>
 
             <div className="col-start-6 col-end-6 flex flex-col">
               <h4 className="font-semibold text-white">About Us</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
-                <Link href="/our-story">Our Story</Link>
-                <Link href="/our-showroom">Our Showroom</Link>
-                <Link href="/our-companies">Our&nbsp;Companies</Link>
-                <Link href="/faqs">FAQ</Link>
+                <Link href="/our-story"><span onClick={() => setMegMenu(!megMenu)} >Our Story</span></Link>
+                <Link href="/our-showroom"><span onClick={() => setMegMenu(!megMenu)} >Our Showroom</span></Link>
+                <Link href="/our-companies"><span onClick={() => setMegMenu(!megMenu)} >Our&nbsp;Companies</span></Link>
+                <Link href="/faqs"><span onClick={() => setMegMenu(!megMenu)} >FAQ</span></Link>
               </div>
             </div>
 
             <div className="col-start-8 col-end-11">
               <h4 className="font-semibold text-white">Help & Support</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
-                <Link href="/help-and-support">Help Placing an Order Us</Link>
-                <Link href="">Returns and Exchange</Link>
-                <Link href="/contact-us">Contact Us</Link>
+                <Link href="/help-and-support"><span onClick={() => setMegMenu(!megMenu)} >Help Placing an Order Us</span></Link>
+                <Link href=""><span onClick={() => setMegMenu(!megMenu)} >Returns and Exchange</span></Link>
+                <Link href="/contact-us"><span onClick={() => setMegMenu(!megMenu)} >Contact Us</span></Link>
               </div>
             </div>
 
             <div className="col-start-11 col-end-13">
               <h4 className="font-semibold text-white">Delivery</h4>
               <div className="mt-4 flex flex-col space-y-4 text-xs font-medium text-white/80">
-                <Link href="">Important Information</Link>
+                <Link href=""><span onClick={() => setMegMenu(!megMenu)} >Important Information</span></Link>
               </div>
             </div>
           </div>
@@ -277,13 +277,13 @@ const Navbar = () => {
               />
               {/* <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} /> */}
               <div className="nav____item">
-                <Link href="/products?sale=true" >Shop&nbsp;Now</Link>
+                <Link href="/products?sale=true" ><span onClick={() => setMegMenu(!megMenu)} >Shop&nbsp;Now</span></Link>
               </div>
               <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Appliance Category" links={categories} bold={600} />
               <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Part Category" links={types} bold={600} />
               <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Popular Brands" links={manufacturers} bold={600} />
               <div className="nav____item">
-                <Link href="/financing">Financing</Link>
+                <Link href="/financing"><span onClick={() => setMegMenu(!megMenu)} >Financing</span></Link>
               </div>
             </div>
             <div className="col-start-10 col-end-13 flex items-center justify-end space-x-10">

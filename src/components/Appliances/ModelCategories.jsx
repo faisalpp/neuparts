@@ -21,10 +21,10 @@ const ModelCategories = ({ data,modelNo }) => {
       </h2>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
         {data.partTypes.slice(0, 10).map((item, index) => (
-          <div key={index} className="rounded-lg border border-b1/10 px-6 pb-6 duration-200 hover:scale-105">
+          <Link href={`/products?type=${item.slug}`} key={index} className="rounded-lg border border-b1/10 px-6 pb-6 duration-200 hover:scale-105">
             <ImageWNull thumb={item.thumbnail} title={item.title} />
             <h3 className="mt-6 font-semibold text-b1">{item.title}</h3>
-          </div>
+          </Link>
         ))}
       </div>
       <Link href={`/parttypes?model_no=${modelNo}`} className="button-hover mt-14 flex w-fit items-center justify-center rounded-lg border-[1px] px-4 py-3 font-semibold text-white maxmd:w-full">

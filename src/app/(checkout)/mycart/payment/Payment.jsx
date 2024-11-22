@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOrderInfo,setOrderLoader,setOrderId,resetOrder } from '@/app/GlobalRedux/slices/OrderSlice';
-import { resetCart } from '@/app/GlobalRedux/slices/CartSlice';
+import { resetCart,deleteCart } from '@/app/GlobalRedux/slices/CartSlice';
 import * as Yup from 'yup'
 import {CardNumberElement,CardExpiryElement,CardCvcElement,useElements,useStripe} from '@stripe/react-stripe-js'
 import Stripe from 'stripe'
@@ -40,6 +40,7 @@ const Payment = ({PRIVATE_KEY}) => {
 
   const order = useSelector((state)=>state.order.orderInfo)
   const orderId = useSelector((state)=>state.order.orderId)
+  const cartId = useSelector((state)=>state.cart.cartId)
   const detail = `${order.shippingAddress?.address} ${order.shippingAddress?.apartment}, ${order.shippingAddress?.city} ${order.shippingAddress?.province}, ${order.shippingAddress?.country}`
   const shipping = useSelector((state)=>state.cart.shippingMethod)
   const cartItems = useSelector((state)=>state.cart.items)
@@ -209,7 +210,7 @@ const Payment = ({PRIVATE_KEY}) => {
     const Intent = isPaid.paymentIntent.client_secret;
     await PostOrder({orderId:isSaved.order_id,intent:{data:Intent,status:true},paymentStatus:'Completed'})
     dispatch(setOrderLoader())
-    dispatch(resetCart())
+    dispatch(deleteCart({id:cartId}))
     dispatch(resetOrder())
     toast.success('Order placed successfully!')
     router.push('/')

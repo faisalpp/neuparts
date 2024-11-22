@@ -34,7 +34,7 @@ const GallerySection = ({data}) => {
           </div>
         </div>
         <div className="flex justify-center py-5">
-          <Link href="/" className="flex w-fit items-center justify-center rounded-md border-[1px] border-white px-4 py-1 font-semibold text-white xl:py-2 maxmd:w-full">
+          <Link href="/products?sale=true" className="flex w-fit items-center justify-center rounded-md border-[1px] border-white px-4 py-1 font-semibold text-white xl:py-2 maxmd:w-full">
             <span className="text-sm xl:text-[16px]">Shop Now</span>
             <BsArrowRightShort className="text-2xl xl:text-3xl" />
           </Link>

@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
         <Link href={`/product/${product.slug}/buying-options`} className="flex items-center text-xs font-semibold text-b3 underline">
-          15 Buying Options →
+          {product.partCount} Buying Options →
         </Link>
       </div>
     </div>

@@ -75,8 +75,8 @@ const Footer = () => {
         <div className="order-2 sm:order-none sm:col-span-6 lg:col-span-3">
           <h4 className="w-max font-reg text-lg font-bold text-white">Quick Links</h4>
           <div className="mt-5 flex flex-col gap-y-5 text-base font-normal text-white/60 sm:mt-10 hover:[&>a]:cursor-pointer hover:[&>a]:underline [&>a]:maxsm:text-sm">
-            <Link href="">Shop Now</Link>
-            <Link href="">Shop On Sale</Link>
+            <Link href="/products?shop=true">Shop Now</Link>
+            <Link href="/products?shop=true">Shop On Sale</Link>
             <Link href="">Live Inventory</Link>
             <Link href="">Virtual Showroom</Link>
             <Link href="/financing">Financing</Link>

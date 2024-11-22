@@ -47,3 +47,15 @@ export const DeleteFromCart = async (data) => {
  }
  return response;
 }
+
+export const DeleteCart = async (data) => {
+ let response;
+ try{
+  const res = await fetch('/api/front/cart', 
+   { method: 'DELETE',headers: { 'Content-Type': 'application/json' },body: JSON.stringify(data)})
+  response = await res.json()
+ }catch(error){
+   return error; 
+ }
+ return response;
+}
