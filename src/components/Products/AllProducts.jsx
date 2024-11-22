@@ -93,7 +93,7 @@ const AllProducts = ({ searchParams }) => {
 
         {/* Product Search Details */}
 
-        {!searchLoading && searchParams.tab !== 'all' && searchParams.tab && result ? (
+        {!searchLoading && searchParams.tab !== 'all' && searchParams.tab && result && modelNo ? (
           <div className="product-search-details">
             {/* Product Model Details */}
             {result.modelCategory ? (

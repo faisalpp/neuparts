@@ -277,7 +277,7 @@ const Navbar = () => {
               />
               {/* <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Products" links={categories} bold={600} /> */}
               <div className="nav____item">
-                <Link href="/products?sale=true&" >Shop&nbsp;Now</Link>
+                <Link href="/products?sale=true" >Shop&nbsp;Now</Link>
               </div>
               <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Appliance Category" links={categories} bold={600} />
               <NavDropDown icon={<RiArrowDropDownLine className="text-2xl" />} title="Part Category" links={types} bold={600} />

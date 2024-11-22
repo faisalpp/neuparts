@@ -86,10 +86,10 @@ function Context({ children }) {
       const data = await response.json();
 
       // For tab = 'browse-by', set modelNo and partNo from the first card
-      if (tab === 'browse-by' && data.firstCard) {
-        setModelNo(data.firstCard.model_no);
-        setPartNo(data.firstCard.part_no);
-      }
+      // if (tab === 'browse-by' && data.firstCard) {
+      //   setModelNo(data.firstCard.model_no);
+      //   setPartNo(data.firstCard.part_no);
+      // }
 
       setResult(data);
 

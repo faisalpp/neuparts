@@ -89,7 +89,7 @@ const Filter = ({ onClose, isFilter, query }) => {
               {Conditions.length > 0 && <RatingFilter filters={Conditions} />}
               {/* {filterheader != false && <HeaderFilter />} */}
               <MultiRangeSlider min={9} max={9999} />
-              {!modelNo && countSale > 0 && <SaleFilter countSale={countSale} />}
+              {countSale > 0 && <SaleFilter countSale={countSale} />}
             </div>
             <div className="sticky bottom-0 z-40 grid grid-cols-2 lg:hidden">
               <button type="button" className="bg-b1 px-2 py-4 text-white">

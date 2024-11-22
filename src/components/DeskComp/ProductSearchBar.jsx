@@ -72,7 +72,7 @@ const ProductSearchBar = () => {
                 <Spinner />
               ) : (
                 <>
-                  <BiSearch className="ml-1 text-xs font-medium" />
+                  <BiSearch className="ml-1 text-md font-medium" />
                   Search
                 </>
               )}
