@@ -39,7 +39,7 @@ const TipsDetails = ({ slug, postslug }) => {
               <CdSvg />
             </div>
             <div className="flex w-full flex-col gap-10 md:gap-16 xl:gap-20">
-              <h1 className="text-28px font-bold text-b18 sm:text-4xl lg:text-40px coxs:text-32px coxs:leading-[48px]">{tip.title}</h1>
+              <h1 className="text-28px font-bold text-b18 sm:text-4xl lg:text-40px coxs:text-32px coxs:leading-[48px]">{tip?.title}</h1>
               <div dangerouslySetInnerHTML={{ __html: tip?.content }}></div>
             </div>
           </>
