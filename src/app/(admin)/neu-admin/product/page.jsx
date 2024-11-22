@@ -81,7 +81,8 @@ const Page = () => {
   return (
     <>
       <div className="mx-10 flex flex-col" style={{ height: 'calc(100vh - 100px)' }}>
-        <ActionBtns buttons={[{ type: 'link', text: 'Add Product', link: '/neu-admin/product/create' },{type:'search',placeholder:'Type here to search by title,model # or category',field:search,setField:setSearch,search:FetchBlogs}]} />
+        {/* <ActionBtns buttons={[{ type: 'link', text: 'Add Product', link: '/neu-admin/product/create' },{type:'search',placeholder:'Type here to search by title,model # or category',field:search,setField:setSearch,search:FetchBlogs}]} /> */}
+        <ActionBtns buttons={[{type:'search',placeholder:'Type here to search by title,model # or category',field:search,setField:setSearch,search:FetchBlogs}]} />
         <div className="flex h-full w-full flex-col items-center">
           <Table header={['Thumbnail', 'Product Title', 'PartType', 'Category', 'Actions']}>
             {/* hello pengea/dnd */}

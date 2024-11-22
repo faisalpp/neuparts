@@ -1,19 +1,19 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import Post from '@/models/posts';
-import PostCategories from '@/models/applianceCategories';
 
 export async function GET(request) {
   try {
     await connect();
     const searchParams = request.nextUrl.searchParams;
     const slug = searchParams.get('slug');
-    const category = searchParams.get('category');
+    
+    const post = await Post.findOne({ slug: slug })
+    if(post){
+      return NextResponse.json({ blog: post, success: true });
+    }
+    return NextResponse.json({ success: false },{status: 404});
 
-    const postCategory = await PostCategories.findOne({ slug: category });
-    const post = await Post.findOne({ slug: slug }).where('category').equals(postCategory._id.toString());
-
-    return NextResponse.json({ post: post, success: true });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
