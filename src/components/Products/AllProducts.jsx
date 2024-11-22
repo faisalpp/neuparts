@@ -1,5 +1,6 @@
 'use client';
-
+import Tag from '@/components/svgs/Tag';
+import { AiOutlineHeart } from 'react-icons/ai';
 import React, { useEffect, useState } from 'react';
 import ProductFilter from '@/components/Product/FIlter';
 import FilterSvg from '@/components/svgs/FilterSvg';
@@ -73,6 +74,43 @@ const AllProducts = ({ searchParams }) => {
   }
 
   const [thumbnail, setThumbnail] = useState(result.modelCategory?.thumbnail ? result.modelCategory.thumbnail : '/no-image.webp');
+
+
+  const ProductsSkelton = () => {
+    return (
+      <div className="flex w-full items-center space-x-2 rounded-2xl border-[1px] border-gray-200 px-2 py-5 lg:space-x-10 lg:px-8 lg:py-10">
+       <div className="h-auto w-[124px] object-contain md:h-60 md:w-60 md:p-4 maxxs:w-[80px] bg-gray-200 rounded-md animate-pulse"></div>
+
+      <div className="flex w-[60%] flex-col gap-3 px-1 lg:px-5 3xl:w-[55%]">
+          <button type="button" className="my-2 flex w-full text-gray-200">
+            <AiOutlineHeart className={`h-6 w-6`} /> Add to favorites
+          </button>
+        
+        <div>
+          <h3 className="line-clamp-2 text-gray-200 text-sm font-semibold lg:text-lg 3xl:text-xl bg-gray-200 rounded-xl">product.title</h3>
+        </div>
+
+        <div className="flex items-center gap-1 coxs:gap-2 maxxs:flex-wrap">
+          <span className="w-[74px] text-xs font-semibold leading-4 text-gray-200 sm:w-[87.1px] sm:text-sm">
+            Part <br /> Number
+          </span>
+          <Tag />
+          <div className="inline-flex rounded-full bg-gray-200 animate-pulse px-3 py-1 text-xs font-medium text-gray-200">product.part_number</div>
+        </div>
+        <div className="flex items-center gap-1 coxs:gap-2 maxxs:flex-wrap">
+          <span className="text-xs font-semibold text-gray-200 sm:text-sm">Price Range</span>
+          <Tag />
+          <div className="inline-flex rounded-full bg-gray-200 animate-pulse px-1 py-1 text-xs font-medium text-white sm:px-3">
+            $0 - $0
+          </div>
+        </div>
+        <span className="flex items-center font-semibold text-gray-200 underline maxsm:text-sm">
+          0 Buying Options →
+        </span>
+      </div>
+    </div>
+    )
+  }
 
   return (
     <>
@@ -148,9 +186,9 @@ const AllProducts = ({ searchParams }) => {
 
           <div className={`grid ${isGrid ? 'grid-cols-2 gap-x-2 xl:grid-cols-3' : 'grid-cols-1'} mb-10 mt-5 w-full items-start gap-y-5`}>
             {loading ? (
-              <div className="mt-5 flex w-full items-center justify-center md:mt-10">
-                <Image width={80} height={80} alt="Loader" quality={100} src="/loader2.gif" className="h-20 w-20" unoptimized />
-              </div>
+              Array.from({ length: 10 }).map((_, i) => (
+                <ProductsSkelton key={i} />
+              ))
             ) : data?.products?.length > 0 ? (
               <>
                 {data.products.map((product, index) => (

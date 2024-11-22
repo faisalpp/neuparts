@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import TypeFilter from '@/components/DeskComp/Filter/TypeFilter';
+import TypeFilterSkelton from '@/components/DeskComp/Filter/TypeFilterSkelton'
 import RatingFilter from '@/components/DeskComp/Filter/RatingFilter';
 import SaleFilter from '@/components/DeskComp/Filter/SaleFilter';
 import MultiRangeSlider from './MultiRangeSlider/MultiRangeSlider';
@@ -10,7 +11,7 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const Filter = ({ onClose, isFilter, query }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [Categories, setCategories] = useState([]);
   const [PartTypes, setPartTypes] = useState([]);
   const [Conditions, setConditions] = useState([]);
@@ -30,7 +31,7 @@ const Filter = ({ onClose, isFilter, query }) => {
   const getFilters = async () => {
     modelNo = searchParams.get('modelno') || 'all';
     partNo = searchParams.get('partno');
-
+    setLoading(true)
     const res = await fetch('/api/front/filters');
     const data = await res.json();
     if (data.success) {
@@ -66,9 +67,23 @@ const Filter = ({ onClose, isFilter, query }) => {
   return (
     <>
       {loading ? (
-        <div style={{ height: 'calc(100vh - 210px)' }} className="mb-2 flex w-72 items-center justify-center rounded-xl">
-          <Image width={400} height={400} quality={100} alt="Loader" src="/loader2.gif" className="h-16 w-auto" />
-        </div>
+                <div className={`z-40 items-end duration-200 lg:sticky lg:top-28 lg:h-full lg:w-full lg:max-w-60 maxlg:fixed maxlg:left-0 maxlg:right-0 maxlg:bg-black/20 maxlg:bg-white`}>
+                <div className="w-full flex-col lg:flex maxlg:h-full maxlg:overflow-y-auto">
+                  <div className="top-0 z-40 flex items-center justify-between border-b border-b1/10 lg:pb-4 maxlg:sticky maxlg:mx-[5%] maxlg:bg-white maxlg:py-4">
+                    <button type="button" className="flex items-center gap-2 text-base font-semibold maxlg:font-bold">
+                      <ArrowLeftIcon className="w- h-4 stroke-[2.5px] lg:hidden" /> Filters
+                    </button>
+                    <span className="cursor-pointer text-sm text-gray-400 hover:underline lg:text-xs">
+                      Reset Filters
+                    </span>
+                  </div>
+                  <div className="pb-5 lg:pb-10 maxlg:px-[5%]">
+                    <TypeFilterSkelton title="Appliance Type" />  
+                    <TypeFilterSkelton title="Part Type" />  
+                    <TypeFilterSkelton title="Manufacturer" />  
+                  </div>
+                </div>
+              </div>
       ) : (
         <div className={`z-40 items-end duration-200 lg:sticky lg:top-28 lg:h-full lg:w-full lg:max-w-60 maxlg:fixed maxlg:left-0 maxlg:right-0 maxlg:bg-black/20 maxlg:bg-white ${modalClass}`} onClick={onClose}>
           <div className="w-full flex-col lg:flex maxlg:h-full maxlg:overflow-y-auto" onClick={handleFilterClick}>
