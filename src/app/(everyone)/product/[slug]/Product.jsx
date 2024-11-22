@@ -456,7 +456,7 @@ const Product = ({ slug }) => {
           {/* Review */}
           <ConditionReview condition={ConditionData} />
 
-          <ProductSlider />
+          {/* <ProductSlider /> */}
 
           {/* product._id,quantity */}
           <CompareModel addCart={AddToCart} buyNow={BuyNow} products={buyingOptions} condition={ConditionData} defaultProduct={product} slug={slug} />

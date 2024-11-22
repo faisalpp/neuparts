@@ -216,7 +216,7 @@ const Page = () => {
 
   const HandleDragEvent = async (result) => {
     if (!result.destination) return;
-
+    const ToastId = toast.loading('Updating indexes...')
     const sourceIndex = result.source.index;
     const destinationIndex = result.destination.index;
 
@@ -232,6 +232,20 @@ const Page = () => {
     });
 
     setTeamMembers(updatedTeamMembers);
+
+    try {
+      // Make an API call to update the database with the new order
+      await fetch('/api/admin/team-member/drag', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ members:teamMembers }),
+      });
+      toast.update(ToastId,{render:'Indexes updated!',type:'success',autoClose:1000,isLoading: false})
+    } catch (error) {
+      toast.update(ToastId,{render:'Indexes update failed!',type:'error',autoClose:1000,isLoading: false})
+    }
   };
 
   return (

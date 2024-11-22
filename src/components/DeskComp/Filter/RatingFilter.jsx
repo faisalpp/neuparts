@@ -33,7 +33,7 @@ const TypeFilter = ({ filters }) => {
   }
 
   const conditionClass = (condition) => {
-    return condition == 'new' ? 'bg-dark-light-cyan' : condition == 'like-new-open-box' ? 'bg-dark-light-cyan' : condition == 'certified' ? 'bg-dark-cyan' : 'bg-[#FF9A3E]';
+    return condition == 'new' ? 'bg-dark-light-cyan' : condition == 'like-new-open-box' ? 'bg-dark-light-cyan' : condition == 'certified-refurbished' ? 'bg-dark-cyan' : 'bg-[#FF9A3E]';
   };
 
   useEffect(() => {

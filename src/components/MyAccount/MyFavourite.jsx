@@ -50,7 +50,7 @@ export default MyFavourite;
 const MyFavouriteData = ({ data, refresh }) => {
   return (
     <>
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <div className="grid grid-cols-1 gap-7 md:grid-cols-2 xl:gap-10 2xl:grid-cols-3">
           {data.map((item, index) => (
             <ProductCard key={index} Id={item._id} product={item.item} reload={refresh} />

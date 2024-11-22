@@ -6,11 +6,14 @@ import Tag from '@/components/svgs/Tag';
 import ProductCard from '@/components/Product/ProductCard';
 import { addToFavoriteUser, removeFromFavoriteUser } from '@/app/GlobalRedux/slices/Favorite';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ApplianceGrid = ({ isGrid, product }) => {
   const [thumbnail, setThumbnail] = useState(product?.thumbnail ? product.thumbnail : '/no-image.webp');
 
+
+  const dispatch = useDispatch()
+  
   const [favLoad, setFavLoad] = useState(false);
   const UserId = useSelector((state) => state.auth.id);
   const Favorites = useSelector((state) => state.favorite.items) || [];

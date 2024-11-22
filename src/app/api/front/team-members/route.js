@@ -6,7 +6,7 @@ export async function GET() {
   try {
     await connect();
 
-    const teamMembers = await TeamMember.find({});
+    const teamMembers = await TeamMember.find({}).sort({index:-1});
 
     return NextResponse.json({ members: teamMembers, success: true });
   } catch (error) {

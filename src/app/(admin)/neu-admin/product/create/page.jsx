@@ -235,12 +235,12 @@ const Page = () => {
               <select name="condition" value={formData.condition} onChange={HandleChange} className="custom-input !py-3">
                 <option value="">Select Condition</option>
                 <option value="new">New</option>
-                <option value="new-open-box">New / Open Box</option>
-                <option value="certified">Certified Refurbished</option>
-                <option value="used-grade-a">Used ● Grade A</option>
-                <option value="used-grade-b">Used ● Grade B</option>
-                <option value="used-grade-c">Used ● Grade C</option>
-                <option value="used-grade-d">Used ● Grade D</option>
+                <option value="like-new-open-box">New / Open Box</option>
+                <option value="certified-refurbished">Certified Refurbished</option>
+                <option value="used-part-a-condition-grade">Used ● Grade A</option>
+                <option value="used-part-b-condition-grade">Used ● Grade B</option>
+                <option value="used-part-c-condition-grade">Used ● Grade C</option>
+                <option value="used-part-d-condition-grade">Used ● Grade D</option>
               </select>
             </div>
 

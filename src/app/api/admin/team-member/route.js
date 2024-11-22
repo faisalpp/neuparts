@@ -14,7 +14,7 @@ export async function GET(request) {
     let query = {};
 
     const MemberCountPromise = TeamMember.estimatedDocumentCount(query);
-    const GetMembersPromise = TeamMember.find(query).sort({ createdAt: -1 }).limit(limit).skip(skip);
+    const GetMembersPromise = TeamMember.find(query).sort({ index: -1 }).limit(limit).skip(skip);
 
     const [count, teamMembers] = await Promise.all([MemberCountPromise, GetMembersPromise]);
 

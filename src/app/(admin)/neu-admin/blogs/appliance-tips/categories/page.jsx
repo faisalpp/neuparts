@@ -218,6 +218,8 @@ const Page = () => {
 
   const HandleDragEvent = async (result) => {
     if (!result.destination) return;
+    
+    const ToastId = toast.loading('Updating indexes...')
 
     const sourceIndex = result.source.index;
     const destinationIndex = result.destination.index;
@@ -244,8 +246,9 @@ const Page = () => {
         },
         body: JSON.stringify({ cats: updatedcats, type: 'appliance-tips' }),
       });
+      toast.update(ToastId,{render:'Indexes updated!',type:'success',autoClose:1000,isLoading: false})
     } catch (error) {
-      console.error('Something went wrong');
+      toast.update(ToastId,{render:'Indexes update failed!',type:'error',autoClose:1000,isLoading: false})
     }
   };
 

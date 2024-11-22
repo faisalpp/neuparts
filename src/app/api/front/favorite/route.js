@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import connect from '@/lib/db';
 import Favorite from '@/models/favorite'
-
+import Product from '@/models/product'
 
 export async function POST(req) {
-  try{
+  // try{
     await connect();
 
     const {userId} = await req.json()
@@ -12,9 +12,9 @@ export async function POST(req) {
     const favorites = await Favorite.find({userId:userId}).populate('item')
 
     return NextResponse.json({favorites:favorites ,success: true },{status:200});
-  } catch (error) {
-    return NextResponse.json({ success: false, message: 'Something went wrong!' },{status:500});
-  }
+  // } catch (error) {
+  //   return NextResponse.json({ success: false, message: 'Something went wrong!' },{status:500});
+  // }
 }
 
 

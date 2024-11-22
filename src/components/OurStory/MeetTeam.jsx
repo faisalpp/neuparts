@@ -6,7 +6,7 @@ import TeamMember from '@/models/teamMembers';
 const GetTeamMembers = async () => {
   await connect();
 
-  const teamMembers = await TeamMember.find({});
+  const teamMembers = await TeamMember.find({}).sort({index:-1});
   return teamMembers;
 };
 
