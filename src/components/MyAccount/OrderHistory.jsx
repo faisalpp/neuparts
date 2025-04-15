@@ -139,6 +139,7 @@ const OrderHistoryData = ({orders}) => {
        <div className='flex flex-col gap-2' >
         <span className='font-bold' >${order.sub_total}</span>
         <span className='font-bold' >$0</span>
+        {/* add shipping */}
         <span className='font-bold' >${order.vat}</span>
         <span className='font-bold text-lg' >${order.grand_total}</span>
        </div>
