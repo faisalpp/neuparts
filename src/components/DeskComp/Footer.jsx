@@ -110,7 +110,7 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold">Get Latest Discount Offers</h4>
             <form onSubmit={SubscribeNews} className="col-start-4 col-end-8 mt-3 flex h-10 w-full items-center space-x-2 rounded-lg bg-b2 px-3 ">
-              <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" className="w-full bg-b2 text-xs text-white/90 outline-none" />
+              <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" className="w-full bg-transparent text-xs text-white/90 outline-none"  />
               <button type="submit">
                 <IoSendSharp className="text-white" />
               </button>
