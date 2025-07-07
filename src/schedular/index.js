@@ -53,8 +53,8 @@ async function SyncProducts() {
 
   while (true) {
     LOGIN_URL = UPDATED_AFTER 
-      ? `https://neulinkapi.neuappliances.com/api/parts?per_page=${PER_PAGE}&page=${PAGE}&updated_after=${UPDATED_AFTER}` 
-      : `https://neulinkapi.neuappliances.com/api/parts?per_page=${PER_PAGE}&page=${PAGE}`;
+      ? `https://neulink.io/api/parts?per_page=${PER_PAGE}&page=${PAGE}&updated_after=${UPDATED_AFTER}` 
+      : `https://neulink.io/api/parts?per_page=${PER_PAGE}&page=${PAGE}`;
     
     const getProducts = await fetch(LOGIN_URL, {
       method: 'GET',
